@@ -32,3 +32,7 @@ packages/
 
 files/
 .well-known/
+.vscode/
+phpMyAdmin
+PHPExcel
+favicon

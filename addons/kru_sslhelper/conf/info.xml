@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon version="0.2">
+	<title xml:lang="ko">SSL접속도우미</title>
+	<description xml:lang="ko">XE내에서 SSL액션이 작동하는경우에만 HTTPS를 강제 리덱션 하며 미작동시 HTTP로 강제 리덱션 시켜주는 애드온입니다.</description>
+	<license link="http://creativecommons.org/licenses/by-sa/2.0/kr/" xml:lang="ko">Creative Commons License 저작자표시-동일조건변경허락 2.0 대한민국</license>
+	<version>3.0.1</version>
+	<date>2013-01-05</date>
+	<link>http://www.koriup.com/</link>
+	<author email_address="oez6474@koriup.com" link="http://www.koriup.com/">
+		<name xml:lang="ko">안태룡(OEZ)</name>
+	</author>
+	<extra_vars>
+		<group>
+			<title xml:lang="ko">애드온 사용전 꼭 읽어주세요!
+				<![CDATA[<hr /><span style="font-size:12px;">
+				먼저 SSL 설치는 하셨나요?<br/>
+				관리자 SSL 설정중 항상사용또는선택적사용설정 중 선택하여 설정 하셨나요?<br/>
+				그래도 안된다면 문의 지원 부탁드립니다.<br/>
+				문의 지원 안내 : 코리업닷컴지원센터('http://www.koriup.com/cs')에서 문의 하세요.<br/><br/></span>]]>
+			</title>
+			<var name="terms" type="select">
+				<title xml:lang="ko">사용전 확인 하셨나요?</title>
+				<options value="N">
+					<title xml:lang="ko">아니오. 아직 하지 않았습니다.</title>
+				</options>
+				<options value="Y">
+					<title xml:lang="ko">예. 확인을 했습니다.</title>
+				</options>
+				<description xml:lang="ko">사용전 확인후 확인 동의를 하지 않으시면 애드온이 실행 되지 않습니다.</description>
+				</var>
+		</group>
+
+		<group>
+			<title xml:lang="ko">HTTPS 사용 의무 설정.
+				<![CDATA[<hr /><span style="font-size:12px;">
+				※ 주의 : 설정을 하지 않으시면 문제가 생길 수 있습니다.<br/><br/></span>]]>
+			</title>
+			<var name="http_host" type="text">
+				<title xml:lang="ko">XE 기본 도메인 지정</title>
+				<description xml:lang="ko">관리자 대쉬보드에 등록된 XE기본 도메인을 입력 해 주세요.</description>
+			</var>
+		</group>
+		<group>
+			<title xml:lang="ko">HTTPS 사용 지정 설정.
+				<![CDATA[<hr /><span style="font-size:12px;">
+				특정 페이지에서도 작동 하게 하고싶으시다구요?<br/>
+				지정 MID또는 ACT을 지정하시면 https가 작동 됩니다.<br/>
+				<br/>
+				MID란 사이트맵의 모율이름이며 ACT이란 XE코어에서 사용중이신 액션이름입니다.<br/>
+				예제 : MID(?mid=welcome_page), ACT(?act=dispBoardWrite)<br/><br/></span>]]>
+			</title>
+			<var name="mids" type="text">
+				<title xml:lang="ko">지정 MID SSL적용.</title>
+				<description xml:lang="ko">지정된 MID값에 https://를 적용 시킵니다.
+				여러 MID 적용시 "," 로 구분 합니다.
+				</description>
+			</var>
+			<var name="acts" type="text">
+				<title xml:lang="ko">지정 ACT SSL적용.</title>
+				<description xml:lang="ko">지정된 ACT값에 https://를 적용 시킵니다.
+				여러 ACT 적용시 "," 로 구분 합니다.
+				</description>
+			</var>
+		</group>
+	</extra_vars>
+</addon>

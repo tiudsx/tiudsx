@@ -1,0 +1,15 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<load target="js/sejin7940_nick_admin.js"  />
+
+<div class="x_page-header">
+	<h1>
+		{$lang->sejin7940_nick}
+	</h1>
+</div>
+
+<ul class="x_nav x_nav-tabs">
+	<li <!--@if($act=='dispSejin7940_nickAdminConfig')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispSejin7940_nickAdminConfig')}">{$lang->config}</a></li>
+    <li <!--@if($act=='dispSejin7940_nickAdminNickChangeLog')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispSejin7940_nickAdminNickChangeLog')}">{$lang->change_nick_log}</a></li>
+    <li <!--@if($act=='dispMemberAdminSignUpConfig')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispMemberAdminSignUpConfig')}">{$lang->deny_nick}</a></li>
+</ul>

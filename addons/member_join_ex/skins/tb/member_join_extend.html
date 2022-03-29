@@ -1,0 +1,42 @@
+<div class="joinContent">
+<style scoped>.member_join_extend input[type='checkbox']{float:none;margin-top:0}.member_join_extend textarea{background-color:#fff;font-size:1em;cursor:default;overflow-x:hidden}.member_join_extend h4{font-weight:normal}.member_join_extend label{font-weight:normal}</style>
+	<form action="" method="post" onsubmit="return false" class="member_join_extend form">
+		<fieldset>
+			<legend>{$lang->member_join_extend_title}</legend>
+			<br />
+			<!--@if($agreement)-->
+				<h4>{$lang->agreement}</h4>
+				<p><textarea class="input-block-level" rows="5" readonly>{$agreement}</textarea></p>
+				<label for="checkAgreement" class="checkbox">
+					<input name="" type="checkbox" value="" id="checkAgreement" />
+					{$lang->agree_agreement}
+				</label>
+			<!--@end-->
+			<hr />
+			<!--@if($private_agreement)-->
+				<h4>{$lang->private_agreement}</h4>
+				<p><textarea class="input-block-level" rows="5" readonly>{$private_agreement}</textarea></p>
+				<!--@if($private_gathering_agreement)-->
+					<p><textarea class="input-block-level" rows="5" readonly>{$private_gathering_agreement}</textarea></p>
+				<!--@end-->
+				<!--@if($private_gathering_agreement2)-->
+					<p><textarea class="input-block-level" rows="5" readonly>{$private_gathering_agreement2}</textarea></p>
+				<!--@end-->
+				<label for="checkPrivateAgreement" class="checkbox">
+					<input name="" type="checkbox" value="" id="checkPrivateAgreement" />
+					{$lang->agree_private_agreement}
+				</label>
+			<!--@end-->
+
+			<div class="form-actions text-center">
+			<!--@if($use_junior_join == 'Y')-->
+				<input name="" class="member_join_agree btn btn-default" type="submit" value="{$lang->junior}" />
+				<input type="button" class="junior_join btn btn-default" value="{$lang->senior}" />
+			<!--@else-->
+				<button type="submit" class="member_join_agree btn btn-primary"><i class="icon-ok"></i> {$lang->agree}</button>
+				<a href="{getURL('')}" class="btn btn-danger"><i class="icon-remove"></i> {$lang->disagree}</a>
+			<!--@end-->
+			</div>
+		</fieldset>
+	</form>
+</div>

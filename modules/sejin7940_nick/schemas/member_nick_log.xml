@@ -1,0 +1,6 @@
+<table name="member_nick_log">
+    <column name="member_srl"  type="number" size="11"  />
+    <column name="nick_name_old" type="varchar" size="80"/>
+    <column name="nick_name_new" type="varchar" size="80"/>
+    <column name="regdate" type="date" />
+</table>

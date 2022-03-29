@@ -1,0 +1,147 @@
+<style>
+    html, body, iframe, h1, h2, h3, h4, h5, h6, a, img, dl, dt, dd, fieldset, form, input, label, table, caption, tbody, tfoot, thead, tr, th, td, embed, hgroup{margin:0; padding:0; font-size:12px;}
+
+    .spaninfo{background-color: #8ac9ff; font-size: .75em;border-radius: 15px; padding: 2px 6px; margin-right: 7px; color:#fff}
+    .phoneimg{ width: 14px;margin-right: 4px;vertical-align: middle;}
+</style>
+    
+<div class="bd" style="padding:0px;" id="s1">
+    <span id="mapnum"></span>
+    <div id="map" style="width:100%;height:100%;">&nbsp;</div>
+</div>
+    
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zhh3svia3i"></script>
+<script>
+    MARKER_SPRITE_POSITION = parent.MARKER_SPRITE_POSITION2;
+    var mapOptions = {
+        zoomControl: true,
+        zoomControlOptions: {
+            style: naver.maps.ZoomControlStyle.SMALL,
+            position: naver.maps.Position.RIGHT_CENTER
+        },
+        useStyleMap: true,
+        center: new naver.maps.LatLng(parent.sLng, parent.sLat),
+        zoom: 18
+    };
+    
+    var map = new naver.maps.Map('map', mapOptions);
+    
+    var bounds = map.getBounds(),
+        southWest = bounds.getSW(),
+        northEast = bounds.getNE(),
+        lngSpan = northEast.lng() - southWest.lng(),
+        latSpan = northEast.lat() - southWest.lat();
+    
+    var markers = [],
+        infoWindows = [];
+    
+    for (var key in MARKER_SPRITE_POSITION) {
+        var position = new naver.maps.LatLng(MARKER_SPRITE_POSITION[key][2],MARKER_SPRITE_POSITION[key][3]);
+    
+        var marker = new naver.maps.Marker({
+            map: map,
+            position: position,
+            title: key,
+            icon: {
+                url: 'https://navermaps.github.io/maps.js.ncp/docs/img/example/ico_pin.jpg',
+                size: new naver.maps.Size(18, 25),
+                scaledSize: new naver.maps.Size(18, 25),
+                origin: new naver.maps.Point(0, 0),
+                anchor: new naver.maps.Point(12, 34)
+            },
+            zIndex: 100
+        });
+    
+    
+        var shopbox2 = '<div style="width:230px;text-align:left;padding:10px;line-height:1.5;"><b>'+ MARKER_SPRITE_POSITION[key][7] +'</b><br/>&nbsp;&nbsp;&nbsp;' + MARKER_SPRITE_POSITION[key][4] + '<br/>&nbsp;&nbsp;&nbsp;' + MARKER_SPRITE_POSITION[key][5] + "</div>";
+    
+   
+        var infoWindow = new naver.maps.InfoWindow({
+            content: shopbox2,
+        });
+        markers.push(marker);
+        infoWindows.push(infoWindow);
+    };
+    
+    naver.maps.Event.addListener(map, 'idle', function() {
+        updateMarkers(map, markers);
+    });
+    
+    function updateMarkers(map, markers) {
+    
+        var mapBounds = map.getBounds();
+        var marker, position;
+    
+        for (var i = 0; i < markers.length; i++) {
+    
+            marker = markers[i]
+            position = marker.getPosition();
+    
+            if (mapBounds.hasLatLng(position)) {
+                showMarker(map, marker);
+            } else {
+                hideMarker(map, marker);
+            }
+        }
+    }
+    
+    function showMarker(map, marker) {
+        if (marker.setMap()) return;
+        marker.setMap(map);
+    }
+    
+    function hideMarker(map, marker) {
+        if (!marker.setMap()) return;
+        marker.setMap(null);
+    }
+    
+    // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
+    function getClickHandler(seq) {
+        return function(e) {
+            var marker = markers[seq],
+                infoWindow = infoWindows[seq];
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            } else {
+                infoWindow.open(map, marker);
+    
+                var position = new naver.maps.LatLng(marker["position"]["y"] + 0.0005,marker["position"]["x"]);
+                //map.panTo(position);
+            }
+        }
+    }
+    
+    for (var i=0, ii=markers.length; i<ii; i++) {
+        naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+    }
+    
+    function onMouseOver(e) {
+        var marker = e.overlay,
+            seq = marker.get('seq'),
+            seq2 = marker.get('seq2');
+    
+        marker.setIcon({
+            url: 'http://static.naver.com/maps2/icons/pin_spot.png'
+        });
+    }
+    function onMouseOut(e) {
+        var marker = e.overlay,
+            seq = marker.get('seq'),
+            seq2 = marker.get('seq2');
+    
+        marker.setIcon({
+            url: 'http://static.naver.com/maps2/icons/marker-default.png'
+        });
+    }
+    
+    function mapMove(vlu){
+        var position = new naver.maps.LatLng(parseFloat(MARKER_SPRITE_POSITION[vlu][2]),MARKER_SPRITE_POSITION[vlu][3]);
+
+        map.panTo(position);
+    
+        var num = MARKER_SPRITE_POSITION[vlu][6];
+        var marker = markers[num],
+            infoWindow = infoWindows[num];
+            infoWindow.open(map, marker);
+    }
+</script>

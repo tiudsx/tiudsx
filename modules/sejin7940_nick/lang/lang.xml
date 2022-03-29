@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<lang>
+	<item name="sejin7940_nick">
+		<value xml:lang="ko"><![CDATA[닉네임 변경 관리 (sejin7940_nick)]]></value>
+	</item>
+	<item name="config">
+		<value xml:lang="ko"><![CDATA[설정]]></value>
+	</item>
+	<item name="change_nick_log">
+		<value xml:lang="ko"><![CDATA[닉네임 변경 내역]]></value>
+	</item>
+	<item name="deny_nick">
+		<value xml:lang="ko"><![CDATA[금지 닉네임]]></value>
+	</item>
+	<item name="use_change_nick">
+		<value xml:lang="ko"><![CDATA[닉네임 변경 기록]]></value>
+	</item>
+	<item name="change_nick_term">
+		<value xml:lang="ko"><![CDATA[닉네임 재변경 기간 제한]]></value>
+	</item>
+	<item name="about_change_nick_term">
+		<value xml:lang="ko"><![CDATA[닉네임 변경 기록 사용하는 경우만 작동<br>닉네임 재변경을 특정기간 이후에만 가능하도록 제한 하고픈 경우 기재 (단위:일) (공백시 제한 없음)]]></value>
+	</item>	
+	<item name="use_same_nick">
+		<value xml:lang="ko"><![CDATA[닉네임 동기화]]></value>
+	</item>
+	<item name="about_use_same_nick">
+		<value xml:lang="ko"><![CDATA[닉네임 변경시 기존에 작성한 글과 댓글의 모든 닉네임을 변경한 닉네임으로 동기화 여부]]></value>
+	</item>
+	<item name="use_deny_nick">
+		<value xml:lang="ko"><![CDATA[금지 닉네임으로 등록]]></value>
+	</item>
+	<item name="about_use_deny_nick">
+		<value xml:lang="ko"><![CDATA[변경 전 닉네임을 금지 닉네임으로 등록하여 누구도 재사용 못하게 막는 기능.]]></value>
+	</item>
+	<item name="use_random_nick">
+		<value xml:lang="ko"><![CDATA[랜덤 닉네임 기능 사용]]></value>
+	</item>
+</lang>

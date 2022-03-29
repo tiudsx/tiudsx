@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+    <grants>
+		<permission action="dispBoard_extendAdminBoardList" target="manager" />
+		<permission action="dispBoard_extendAdminBoardModify" target="manager" />
+		<permission action="procBoard_extendAdminBoardModify" target="manager" />
+		<permission action="procBoard_extendAdminWithOrder" target="manager" />
+    </grants>
+    <permissions>
+    </permissions>
+    <actions>
+		<action name="dispBoard_extendAdminBoardList" type="view" menu_name="board_extend" admin_index="true" />
+		<action name="dispBoard_extendAdminBoardModify" type="view" />
+		
+		<action name="procBoard_extendAdminBoardModify" type="controller" />
+		<action name="procBoard_extendAdminWithOrder" type="controller" />
+    </actions>
+	<menus>
+		<menu name="board_extend" type="all">
+			<title xml:lang="ko">게시판 확장</title>
+		</menu>
+	</menus>
+</module>

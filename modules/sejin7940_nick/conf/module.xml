@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<grants>
+		
+	</grants>
+	<actions>
+		<action name="dispSejin7940_nickAdminConfig" type="view"   />		
+		<action name="procSejin7940_nickAdminConfig" type="controller"  />		
+		<action name="dispSejin7940_nickAdminNickChangeLog" type="view" admin_index="true" />		
+		<action name="procSejin7940_nickAdminInsertNick" type="controller"  />		
+		<action name="procSejin7940_nickAdminDeleteNick" type="controller"  />		
+		<action name="procSejin7940_nickAdminDeleteLog" type="controller"  />		
+	</actions>
+</module>

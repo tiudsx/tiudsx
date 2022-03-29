@@ -1,0 +1,38 @@
+<import target="./filter/ofile_setup.xml"/>
+<include target="./header.html" />
+<form class="x_form-horizontal" action="./" method="get" onsubmit="return procFilter(this, ofile_setup);">
+<section class="section">
+{debugPrint($imageprocess_info)}
+<div class="x_control-group">
+			<label class="x_control-label" for="module_category_srl">{$lang->original_store}</label>
+			<div class="x_controls">
+			<label class="x_inline"><input type="radio" id="original_store_N" name="original_store" value="N" <!--@if($imageprocess_info->original_store!='Y')-->checked="checked"<!--@end--> />{$lang->notuse}</label>
+            <label class="x_inline"><input type="radio" id="original_store_Y" name="original_store" value="Y" <!--@if($imageprocess_info->original_store == 'Y')-->checked="checked"<!--@end--> />{$lang->use}</label>
+            <br />{$lang->msg_original_store}
+		</div>
+	</div>
+<div class="x_control-group">
+			<label class="x_control-label" for="module_category_srl">{$lang->store_path}</label>
+			<div class="x_controls">
+        <input type="text" name="store_path" value="{$imageprocess_info->store_path}" class="inputTypeText w300" /> <br />{$lang->msg_store_path}<b>{realpath("../")}/ofile</b><br />{$lang->msg_store_path2}<b>{realpath("./")}</b>
+	</div>
+    </div>
+<div class="x_control-group">
+			<label class="x_control-label" for="module_category_srl">{$lang->down_group}</label>
+			<div class="x_controls">
+            <!--@foreach($group_list as $key => $val)-->
+            <input type="checkbox" value="{$key}" name="down_group" <!--@if(in_array($key,$imageprocess_info->down_group))-->checked="checked"<!--@end--> id="member_group_{$key}"/> {$val->title} &nbsp;
+            <!--@end-->
+			<br>{$lang->msg_down_group}
+        </div>
+    </div>
+</section>
+	<div class="x_clearfix btnArea">
+		<div class="x_pull-left">
+		</div>
+		<div class="x_pull-right">
+			<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_save}</button>
+	</div>
+</div>
+</form>
+

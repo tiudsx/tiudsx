@@ -1,0 +1,18 @@
+<query id="getNickLatestChange" action="select">
+    <tables>
+        <table name="member_nick_log"/>
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="member_srl" var="member_srl" />
+        <condition operation="more" column="regdate" var="regdate" pipe="and"/>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="desc" />
+        <list_count var="list_count" default="1" />
+        <page_count var="page_count" default="1" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

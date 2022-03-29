@@ -1,0 +1,60 @@
+<!--%import("./css/buttonset.css")-->
+<!--%import("./js/modify_document.js")-->
+<!--#include("header.html")-->
+<h4>순서변경 기능은, 문서출력 순서설정이 "문서번호" "내림차순"인경우에만 동작하고, 다른페이지의 문서와 위치가 변경될 수 없습니다..</h4>
+<p>DB에 접근하지않고서 수정이 불가능한 부분을 반영할 수 있도록 도와줍니다.</p>
+<table border="0" cellspacing="0" summary="" class="rowTable">
+	<caption>한번에 볼 문서갯수 : <input type="text" name="list_count" value="{$list_count}" /> <input type="button" value="적용" onclick="document.location.href = current_url.setQuery('list_count',jQuery(this).prev().val());" /></caption>
+    <thead>
+    <tr>
+    <th>번호</th><th>제목</th><th>조회수</th><th>추천수</th><th>작성일 (yyyymmddhhiiss)</th><th>수정일 (yyyymmddhhiiss)</th><th>순서번호</th><th>반영</th>
+	</tr>
+    </thead>
+    <tbody>
+    <!--// 게시물이 없으면 등록된 글이 없음을 표시 -->
+    <!--@if(!$document_list)-->
+    <tr class="bg0 tCenter">
+        <td colspan="9" class="title">
+            게시글이 없습니다.
+        </td>
+    </tr>
+    <!--@else-->
+		{@$first=true}
+        <!--// 일반 글 출력 -->
+        <tr loop="$document_list => $no,$document" class="bg{($no+1)%2+1}" <!--@if($document_srl == $document->document_srl)-->style="background-color:#ddd;"<!--@endif-->>
+			<td class="num"><!--@if($document_srl == $document->document_srl)--><img src="./images/common/iconArrowD8.gif" border="0" alt="" /><!--@else-->{$no}<!--@end--></td>
+			<td class="title">
+				<!--@if($grant->manager)-->
+					<!--@if($no!=1)-->
+					<a href="#" onclick="moveDocument('{$document->document_srl}','down','{$no}'); return false;" class="buttonSet buttonDown"><span>아래로</span></a>
+					<!--@end-->
+					<!--@if($first==false)-->
+						<a href="#" onclick="moveDocument('{$document->document_srl}','up','{$no}'); return false;" class="buttonSet buttonUp"><span>위로</span></a>
+					<!--@else-->
+						{@ $first=false}
+					<!--@end-->
+				<!--@end-->
+				<a href="{getUrl('document_srl',$document->document_srl, 'listStyle', $listStyle, 'cpage','')}">{$document->getTitle($module_info->subject_cut_size)}</a>{$document->printExtraImages(60*60*$module_info->duration_new)}
+			</td>
+			<td class="reading"><input type="text" style="width:50px;" class="readed_count_{$document->document_srl}" value="{$document->get('readed_count')}" /></td>
+			<td class="recommend"><input type="text" style="width:50px;" class="voted_count_{$document->document_srl}" value="{$document->get('voted_count')}" /></td>
+			<td class="date"><input type="text" style="width:120px;" class="regdate_{$document->document_srl}" value="{$document->get('regdate')}" /></td>
+			<td class="date"><input type="text" style="width:120px;" class="last_update_{$document->document_srl}" value="{$document->get('last_update')}" /></td>
+			<td><input type="text" style="width:80px;" class="list_order_{$document->document_srl}" list_order="{$document->get('list_order')}" id="{$no}_order" value="{$document->get('list_order')}" /></td>
+			<td><span class="btn"><input type="button" onclick="applyModify('{$document->document_srl}')" value="수정반영" /></span></td>
+        </tr>
+    <!--@end-->
+    </tbody>
+    </table>
+	
+<div class="pagination a1">
+	<a href="{getUrl('page','','document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="prevEnd">{$lang->first_page}</a> 
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+		<!--@if($page == $page_no)-->
+			<strong>{$page_no}</strong> 
+		<!--@else-->
+			<a href="{getUrl('page',$page_no,'document_srl','','division',$division,'last_division',$last_division,'entry','')}">{$page_no}</a>
+		<!--@end-->
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="nextEnd">{$lang->last_page}</a>
+</div>

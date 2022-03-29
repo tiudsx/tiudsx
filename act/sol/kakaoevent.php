@@ -1,0 +1,1 @@
+<?header('Location: https://m.cafe.naver.com/ca-fe/web/cafes/29998302/menus/7');?>

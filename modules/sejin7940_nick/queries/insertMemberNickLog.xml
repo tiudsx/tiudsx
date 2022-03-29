@@ -1,0 +1,11 @@
+<query id="insertMemberNickLog" action="insert">
+    <tables>
+        <table name="member_nick_log" />
+    </tables>
+    <columns>
+        <column name="member_srl" var="member_srl" />
+        <column name="nick_name_old" var="nick_name_old" />
+        <column name="nick_name_new" var="nick_name_new" />
+        <column name="regdate" var="regdate" default="curdate()" />
+    </columns>
+</query>

@@ -1,0 +1,9 @@
+<query id="deleteNickLog" action="delete">
+    <tables>
+        <table name="member_nick_log" />
+    </tables>
+    <conditions>
+        <condition operation="equal" column="member_srl" var="member_srl" notnull="notnull" />
+        <condition operation="equal" column="regdate" var="regdate" notnull="notnull" pipe="and" />
+    </conditions>
+</query>

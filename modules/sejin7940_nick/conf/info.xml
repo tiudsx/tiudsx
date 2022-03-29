@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">닉네임 관리 (sejin7940_nick)</title>
+	<description xml:lang="ko">sejin7940_nick</description>
+	<version>1.2</version>
+	<date>2017-04-21</date>
+	<category>service</category>
+	<author email_address="sejin7940@gmail.com" link="http://sejin7940.co.kr">
+		<name xml:lang="ko">sejin7940</name>
+	</author>
+</module>

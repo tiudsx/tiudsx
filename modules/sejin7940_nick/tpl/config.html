@@ -1,0 +1,49 @@
+<include target="_header.html" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+
+<form class="x_form-horizontal" action="./" method="post" >
+	<input type="hidden" name="act" value="procSejin7940_nickAdminConfig">
+	<input type="hidden" name="module" value="{$module}" />
+	<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+
+	<section class="section">
+		<h1>{$lang->subtitle_primary}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="use_change_nick">{$lang->use_change_nick}</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_change_nick_Y"><input type="radio" name="use_change_nick" value="Y" id="use_change_nick_Y"  <!--@if($config->use_change_nick=='Y')-->checked<!--@end-->/>{$lang->use}</label>
+				<label class="x_inline" for="use_change_nick_N"><input type="radio" name="use_change_nick" value="N" id="use_change_nick_N"  <!--@if($config->use_change_nick=='N' || !$config->use_change_nick)-->checked<!--@end--> >{$lang->notuse}</label>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="change_nick_term">{$lang->change_nick_term}</label>
+			<div class="x_controls">
+				<input type="text" name="change_nick_term" value="{$config->change_nick_term}">
+				<p class="x_help-block">{$lang->about_change_nick_term}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="use_same_nick">{$lang->use_same_nick}</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_same_nick_Y"><input type="radio" name="use_same_nick" value="Y" id="use_same_nick_Y" <!--@if($config->use_same_nick=='Y')-->checked<!--@end-->/>{$lang->use}</label>
+				<label class="x_inline" for="use_same_nick_N"><input type="radio" name="use_same_nick" value="N" id="use_same_nick_N" <!--@if($config->use_same_nick=='N' || !$config->use_same_nick)-->checked<!--@end-->>{$lang->notuse}</label>
+				<p class="x_help-block">{$lang->about_use_same_nick}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="use_deny_nick">{$lang->use_deny_nick}</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_deny_nick_Y"><input type="radio" name="use_deny_nick" value="Y" id="use_deny_nick_Y"  <!--@if($config->use_deny_nick=='Y')-->checked<!--@end-->/>{$lang->use}</label>
+				<label class="x_inline" for="use_deny_nick_N"><input type="radio" name="use_deny_nick" value="N" id="use_deny_nick_N"  <!--@if($config->use_deny_nick=='N' || !$config->use_deny_nick)-->checked<!--@end--> >{$lang->notuse}</label>
+				<p class="x_help-block">{$lang->about_use_deny_nick}</p>
+			</div>
+		</div>
+		<div class="btnArea x_clearfix">
+			<span class="x_pull-right"><input class="x_btn x_btn-primary" type="submit" value="{$lang->cmd_save}" /></span>
+		</div>
+	</section>
+</form>

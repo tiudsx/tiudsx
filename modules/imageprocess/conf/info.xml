@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">이미지 프로세스</title>
+	<title xml:lang="jp">イメ―ジプロセス</title>
+	<title xml:lang="en">ImageProcessing Module</title>
+	<description xml:lang="ko">이미지를 축소하고 워터마크와 로고를 넣어주는 모듈입니다.	</description>
+	<description xml:lang="jp">イメ?ジを縮小してウォ?タ?マ?クとロゴを入れてくれるモジュ?ルです.	</description>
+	<description xml:lang="en">This is a module for storage of image files before resizing and printing watermark.</description>
+    <version>2.6.6</version>
+    <date>2019-04-02</date>
+	<category>accessory</category>
+	<author email_address="soonj@nate.com" link="http://soonj.net">
+		<name xml:lang="ko">카르마</name>
+		<name xml:lang="jp">Karma</name>
+		<name xml:lang="en">Karma</name>
+	</author>
+	<link>https://github.com/soonjae/imageprocess</link>	
+</module>

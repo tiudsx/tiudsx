@@ -1,0 +1,129 @@
+@charset "utf-8";
+
+/*common*/
+p{margin: 0; padding: 0;}
+.wrap a{display: block;}
+
+/*layout*/
+#listWrap{background-color: #f8f8f8;}
+#listMenu{width: 100%; height: auto; padding-top: 10px; background-color: #fff; position: relative;}
+#popRest, #allRest{width: 100%; height: 100%; position: relative;  box-shadow: 1px 1px 2px rgba(0,0,0,.1);background-color: #f2ece9;}
+#allRest{margin-top: 15px;background-color: #fff;}
+
+/*listMenu*/
+#listMenu .btnArea{
+width: 100%;
+height: 35px;
+display: inline-block;
+border: none;
+text-decoration: none;
+background-color: #fff;
+cursor: pointer;
+text-align: center;
+font-size: 18px;
+font-weight: 600;
+color: #fff;
+margin: 5px 0 0 0;
+}
+#listMenu .btnArea .btnContent{
+background-color: #3195db!important;
+width: 18%;
+min-width: 110px;
+display: inline-block;
+padding: 5px 0;
+border-radius: 20px;
+height: 25px;
+line-height: 25px;}
+
+#listMenu .listArea{width: 100%; overflow: hidden; text-align: center; font-size: 16px; font-weight: 500; color: #3195db!important; background-color: rgba(255,255,255,.9); position: absolute; top: 55px; z-index: 1; display: none;} 
+#listMenu .listArea li{width: 100%; height: 64px; line-height: 60px; margin: 0 auto; background-color: #fff; padding-left:30px;}
+#listMenu .listArea li:nth-child(2n-1){background-color: #edf8ff;}
+/* #listMenu .listArea li:last-child{border-radius: 0 0 15px 15px ; padding-bottom: 2px; border-bottom: 2px solid rgba(0,0,0,.2)} */
+
+#listMenu .listBeach{width: 95%; height: auto; margin-left: 2.5%; overflow: hidden; font-size: 1.1em; line-height: 2.5em;border-bottom: 1px solid #3195db;}
+#listMenu .listBeach li{float: left; min-width: auto; height: 38px; margin-left: 3%; text-align: center;}
+#listMenu .listBeach li:first-child a{color:#ff905f;}
+#listMenu .listBeach li:last-child a{font-size: .6em; color: #8f8f8f; margin-left: 5px;}
+
+/*taste*/
+#taste{background: #efefef;}
+#taste h2{background: url(https://surfenjoy.cdn3.cafe24.com/act_title/foodbg.jpg) 0 -45px /cover no-repeat; line-height: 0;}
+#taste h2 img{width: 100%;}
+#taste .coupon{display: block; width: 100%; height: 50px; line-height: 50px; font-size: 1.2em;margin: 8px 0; text-indent: 25px; background: #fff; border-bottom: 1px solid #dedede;}
+#taste .coupon a{color:#555555;}
+#taste .coupon a img{height: 25px; vertical-align: middle; margin: 0 7px 4px 0; color: #ff905f}
+#taste .coupon a i{text-indent: 6px;}
+
+/*surfBus*/
+#surfBus{background: #efefef; margin: 0;}
+#surfBus h2{background: url(https://surfenjoy.cdn3.cafe24.com/act_title/busbg.jpg) 0 0 /cover no-repeat; line-height: 0;}
+#surfBus h2 img{width: 100%;}
+#surfBus .coupon{display: block; width: 100%; height: 50px; line-height: 50px; font-size: 1.2em;margin: 8px 0; text-indent: 25px; background: #fff; border-bottom: 1px solid #dedede;}
+#surfBus .coupon a{color:#555555;}
+#surfBus .coupon a img{height: 25px; vertical-align: middle; margin: 0 7px 4px 0; color: #faf5ee}
+#surfBus .coupon a i{text-indent: 6px;}
+
+/*popRest*/
+#popRest h2{width: 100%; text-indent: 5%; line-height: 2em; padding: 5px 0 0;}
+
+/*allRest*/
+#allRest h2{width: 100%; color: #3195db; text-indent: 5%; line-height: 2em; padding: 10px 0 0;}
+
+/*listRest*/
+.listRest{overflow: hidden; border-radius: 10px;}
+.listRest .listRestbox{width: 100%; height: auto;}
+.listRest .listRestbox .listItem{overflow: hidden; padding: 4% 0 0 0; margin: 0 2% 2% 2%; border-bottom: 1px solid #dedede; background-color: #fff; box-sizing: border-box;}
+.listRest .listRestbox .listItem:last-child{border:none;}
+
+/*------------------  listItem  -----------------*/
+/*thumbnail*/
+.listItem .thumbnail{width: 30%; float: left;}
+.listItem .thumbnail a{display: block; font-size: 0;}
+.listItem .thumbnail a img{width: 80%; max-width: 130px; margin: 0 10% 5% 10%; border-radius: 6px}
+
+/*contents*/
+.listItem .contents{width: 70%; float: left; margin-top: 1.3%;}
+.listItem .contents h3{float: left; font-size: 1.7em; line-height: 1em; margin-bottom: 8px;}
+.listItem .contents h3 a i{color:#3195db}
+.listItem .contents span{display: inline-block;height: 25px; line-height: 25px; float: right; margin-right: 7%; font-size: 1.1em;}
+.listItem .contents span img{width: 20px; vertical-align: middle; margin: 0 1px 3px 3px;}
+.listItem .contents p{clear: both; color: #636363; font-size: 1.1em; line-height: 1.7em;}
+.listItem .contents p img{width: 14px; margin-right:4px; vertical-align: middle;}
+.listItem .contents p:last-child{font-size: .9em; font-weight: 600}
+.listItem .contents p span{float: none; font-size: 1em; color:#757575; text-indent: 4px; font-weight: 500}
+
+/*event*/
+.listItem .event{width: 95%; height: 35px; line-height: 35px; clear: both; margin: 0 0 3% 2.5%; background: url(https://surfenjoy.cdn3.cafe24.com/eat/servicebg.jpg) 0 0/cover no-repeat; color: #fff;font-size: 1em; text-align: center; border-radius: 6px;}
+.listItem .event span{background-color: #736957; font-size: .75em; border-radius: 15px; padding: 2px 6px; margin-right: 7px; color: #fff;}
+
+
+/*.noThumb*/
+.noThumb .thumbnail{display: none;}
+.noThumb .contents{width: 95%; margin: 0 0 2% 5%}
+.noThumb .contents h3{width: 58%; height: 34px; margin: 0; font-size: 1.7em; line-height: 1em;}
+.noThumb .contents>span{width: 37%; height: 34px; line-height: 36px; text-align: right; margin-right: 5%;}
+.noThumb .contents p{display: inline-block; margin-right: 3%}
+.noThumb .contents p:last-child{display: block;}
+
+
+/*--------------  hover effect  ---------------*/
+#listMenu .btnArea .btnContent:hover{background-color: #edf8ff;}
+#listMenu .listArea li a:hover{transform: scale(1.02); color:#3195db}
+#listMenu .listBeach li a:hover{opacity: .7}
+
+
+/*--------------- media ----------------*/
+@media screen and (max-width: 414px){
+.listItem .contents{margin-top:.8%}
+.listItem .contents h3{font-size: 1.2em; margin-bottom: 4px;}
+.listItem .contents span{height: 20px; line-height: 20px; font-size: 1em;}
+.listItem .contents span img{width: 15px;}
+.listItem .contents p{font-size: .95em; line-height: 1.55em;}
+.listItem .contents p img{width: 13px;}
+.listItem .contents p:last-child{font-size: .85em;}
+.listItem .event{font-size: .9em;}
+.noThumb .contents{width: 95%; margin: 0 0 2% 5%}
+.noThumb .contents h3{height: 29px; margin:0;}
+.noThumb .contents>span{height: 29px; line-height: 29px;}
+.noThumb .contents p:last-child{line-height: 2em; text-indent: 1%;}
+}

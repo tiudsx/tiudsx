@@ -1,0 +1,107 @@
+<!-- 설명 -->
+<!--#include("_header.html")-->
+<!--%import("filter/delete_checked.xml")-->
+
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/sejin7940_nick/tpl/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+{@
+$oModuleModel = &getModel('module');
+$oMemberModel = &getModel('member');
+$oCommentModel = &getModel('comment');
+$oDocumentModel = &getModel('document');
+}
+<form method="get" action="./" onsubmit="return procFilter(this, delete_checked)" id="message_fo">
+	<input type="hidden" name="delete_type">
+	<table id="memberList" class="x_table x_table-striped x_table-hover">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <thead>
+        <tr>
+            <th scope="col" class="nowr"><div>회원 번호</div></th>
+            <th scope="col" class="nowr"><div>예전 닉네임</div></th>
+            <th scope="col" class="nowr"><div>새 닉네임</div></th>
+            <th scope="col" class="nowr"><div>변경 날짜</div></th>
+			<th scope="col" class="nowr"><div>삭제</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--@foreach($nick_list as $no => $val)-->
+		<tr class="row{$cycle_idx}">
+            <!--<td><input type="checkbox" name="cart" value="{$val->reason_srl}"/></td>-->
+			<td class="nowr"><a href="{getUrl('member_srl',$val->member_srl)}">[{$val->member_srl}] {$val->user_id}</a></td>
+			<td class="nowr">{$val->nick_name_old}</td>
+			<td class="nowr"><a href="#popup_menu_area" class="member_{$val->member_srl}">{$val->nick_name_new}</a></td>
+			<td class="nowr">{zdate($val->regdate,'Y-m-d H:i:s')}</td>
+			<td class="nowr"><a onclick="if(confirm('정말 삭제하시겠습니까?')) {javascript:doCallModuleAction2('sejin7940_nick','procSejin7940_nickAdminDeleteLog',{$val->member_srl},{zdate($val->regdate,'YmdHis')})}"  title="{$lang->cmd_delete}" class="buttonSet buttonDelete" style="cursor:pointer"><span>{$lang->cmd_delete}</span></a></td>
+		</tr>
+        <!--@end-->
+    </tbody>
+    </table>
+</form>
+
+
+<div class="x_clearfix center">
+	<form cond="$page_navigation" action="./" class="x_pagination" no-error-return-url="true" style="margin:0">
+		<input type="hidden" name="module" value="{$module}" />
+		<input type="hidden" name="act" value="{$act}" />
+		<input cond="$order_target" type="hidden" name="order_target" value="{$order_target}" />
+		<input cond="$order_type" type="hidden" name="order_type" value="{$order_type}" />
+		<input cond="$category_srl" type="hidden" name="category_srl" value="{$category_srl}" />
+		<input cond="$childrenList" type="hidden" name="childrenList" value="{$childrenList}" />
+		<input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
+		<ul>
+			<li class="x_disabled"|cond="!$page || $page == 1"><a href="{getUrl('page', '')}">&laquo; {$lang->first_page}</a></li>
+	
+			<block cond="$page_navigation->first_page != 1 && $page_navigation->first_page + $page_navigation->page_count > $page_navigation->last_page - 1 && $page_navigation->page_count != $page_navigation->total_page">
+				{@$isGoTo = true}
+				<li>
+					<a href="#goTo" data-toggle title="{$lang->cmd_go_to_page}">&hellip;</a>
+					<span cond="$isGoTo" id="goTo" class="x_input-append">
+						<input type="number" min="1" max="{$page_navigation->last_page}" required name="page" title="{$lang->cmd_go_to_page}" />
+						<button type="submit" class="x_add-on">Go</button>
+					</span>
+				</li>
+			</block>
+	
+			<!--@while($page_no = $page_navigation->getNextPage())-->
+				{@$last_page = $page_no}
+				<li class="x_active"|cond="$page_no == $page"><a  href="{getUrl('page', $page_no)}">{$page_no}</a></li>
+			<!--@end-->
+	
+			<block cond="$last_page != $page_navigation->last_page && $last_page + 1 != $page_navigation->last_page">
+				{@$isGoTo = true}
+				<li>
+					<a href="#goTo" data-toggle title="{$lang->cmd_go_to_page}">&hellip;</a>
+					<span cond="$isGoTo" id="goTo" class="x_input-append">
+						<input type="number" min="1" max="{$page_navigation->last_page}" required name="page" title="{$lang->cmd_go_to_page}" />
+						<button type="submit" class="x_add-on">Go</button>
+					</span>
+				</li>
+				
+			</block>
+	
+			<li class="x_disabled"|cond="$page == $page_navigation->last_page"><a href="{getUrl('page', $page_navigation->last_page)}" title="{$page_navigation->last_page}">{$lang->last_page} &raquo;</a></li>
+		</ul>
+	</form>
+	<!--
+	<div class="x_pull-right x_btn-group">
+		<a href="" data-value="delete" class="x_btn">{$lang->delete}</a>
+	</div>
+	-->
+</div>
+
+<form action="./" method="get" class="search center x_input-append" no-error-return-url="true">
+	<input type="hidden" name="module" value="{$module}" />
+	<select name="search_target" style="margin-right:4px">
+		<option value="">{$lang->search_target}</option>
+		<!--@foreach($lang->search_target_list as $key => $val)-->
+			<!--@if($key=='nick_name' || $key=='user_id' || $key=='member_srl')-->
+			<option value="{$key}" <!--@if($search_target==$key || (!$search_target && $key=='nick_name'))-->selected="selected"<!--@end-->>{$val}</option>
+			<!--@end-->
+		<!--@end-->
+	</select>
+	<input type="search" name="search_keyword" value="{htmlspecialchars($search_keyword, ENT_COMPAT | ENT_HTML401, 'UTF-8', false)}" style="width:140px">
+	<button class="x_btn x_btn-inverse" type="submit">{$lang->cmd_search}</button>
+	<a class="x_btn" href="{getUrl('', 'module', 'admin', 'act', 'dispMemberAdminList', 'page', $page)}">{$lang->cmd_cancel}</a>
+</form>
