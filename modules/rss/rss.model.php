@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * The model class of the rss module
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class rssModel extends rss
 {

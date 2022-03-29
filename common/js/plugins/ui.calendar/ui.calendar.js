@@ -1,6 +1,6 @@
 /**
  * @brief XE Calendar
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  *
  * 사용법
  * 

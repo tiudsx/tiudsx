@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * ConditionGroupTag class
@@ -29,7 +29,7 @@ class ConditionGroupTag
 	 * @param string $pipe
 	 * @return void
 	 */
-	function __construct($conditions, $pipe = "")
+	function ConditionGroupTag($conditions, $pipe = "")
 	{
 		$this->pipe = $pipe;
 

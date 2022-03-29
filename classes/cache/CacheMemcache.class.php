@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Cache class for memcache
  *
- * @author XEHub (developer@xpressengine.com)
+ * @author NAVER (developer@xpressengine.com)
  */
 class CacheMemcache extends CacheBase
 {
@@ -37,7 +37,7 @@ class CacheMemcache extends CacheBase
 	 * @param string $url url of memcache
 	 * @return void
 	 */
-	function __construct($url)
+	function CacheMemcache($url)
 	{
 		//$config['url'] = array('memcache://localhost:11211');
 		$config['url'] = is_array($url) ? $url : array($url);

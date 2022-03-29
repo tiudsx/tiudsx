@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * adminAdminView class
  * Admin view class of admin module
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/admin
  * @version 0.1
  */

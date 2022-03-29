@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Admin view class in the autoinstall module
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class autoinstallAdminView extends autoinstall
 {

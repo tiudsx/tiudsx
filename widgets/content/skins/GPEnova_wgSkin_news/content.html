@@ -1,0 +1,25 @@
+<!--%import("js/news_ticker.js")-->
+<!--%import("css/none.css")-->
+
+<div class="layG_newsCon" id="layG_newsCon_id" style="left:{$layout_info->display_top_News_padd}px;">
+	<ul>
+	{@$_idx=0}
+	<!--@foreach($widget_info->content_items as $key => $item)-->
+		<li>
+		<!--@foreach($widget_info->option_view_arr as $k => $v)-->
+			<!--@if($v=='title')-->
+			<a href="{$item->getLink()}" class="subject">{$item->getTitle($widget_info->subject_cut_size)}</a>
+			<!--@end-->
+			<!--@if($v=='regdate')-->
+			<span class="date">[{$item->getRegdate("Y-m-d")}]</span>
+			<!--@end-->
+		<!--@end-->
+		</li>
+	{@$_idx++}
+	<!--@end-->
+	</ul>
+</div>
+
+<script>
+    xAddEventListener(window, 'load', function() { doStartScroll("layG_newsCon_id", 26, 40); });
+</script>

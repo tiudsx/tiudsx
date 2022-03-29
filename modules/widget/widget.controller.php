@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  widgetController
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Controller class for widget modules
  */
 class widgetController extends widget

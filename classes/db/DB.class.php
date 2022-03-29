@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * - DB parent class
@@ -9,7 +9,7 @@
  * - query xml has unique query id, and will be created in module
  * - queryid = module_name.query_name
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db
  * @version 0.1
  */
@@ -185,7 +185,7 @@ class DB
 	 * constructor
 	 * @return void
 	 */
-	function __construct()
+	function DB()
 	{
 		$this->count_cache_path = _XE_PATH_ . $this->count_cache_path;
 		$this->cache_file = _XE_PATH_ . $this->cache_file;

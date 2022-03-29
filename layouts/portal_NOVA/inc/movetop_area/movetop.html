@@ -1,0 +1,80 @@
+<div class="gpe_movetop">
+	<!--위+아래버튼-->
+	<!--@if($layout_info->display_movetop_se != 'no')-->
+	<div class="gpe_mt top"></div>
+	<div class="gpe_mt bottom"></div>
+	<script>
+	var j_mt = jQuery;
+	j_mt(document).ready(function(){
+		// scroll top
+		j_mt('.gpe_movetop>.gpe_mt.top').click(function () {
+			j_mt('body,html').animate({
+				scrollTop: 0
+			}, 500);
+			return false;
+		});
+		// scroll bottom
+		j_mt('.gpe_movetop>.gpe_mt.bottom').click(function () {
+			j_mt('body,html').animate({
+				scrollTop: document.body.scrollHeight
+			}, 500);
+			return false;
+		});
+	});
+	</script>
+	<!--@end-->
+	<!--//위+아래버튼-->
+	<!--마이메뉴-->
+	<!--@if($layout_info->display_myMenu_se == 'yes')-->
+		<div class="gpe_myMenu">
+			<ul>
+				<li class="gpe_myMenu_relative">
+					<a <!--@if(!$My_menu->list)-->onclick="alert('메뉴가 미선택 되었습니다!! / 레이아웃설정 > 메뉴 > 마이메뉴에서 생성한메뉴를 선택해주세요.');"<!--@end-->></a>
+					<!--마이메뉴 리스트 ul-->
+					<ul>
+						<li loop="$My_menu->list=>$key1,$val1" cond="$val1['link']">
+							<a href="{$val1['href']}" target="_blank"|cond="$val1['open_window']=='Y'">{$val1['text']}</a>
+						</li>
+						<!--마이메뉴 타이틀-->
+						<!--@if($My_menu->list)-->
+						<li class="titleBox"><span class="title">바로가기</span><span class="close" onclick="jQuery('.gpe_myMenu_relative>ul').slideToggle(200);"></span></li>
+						<!--@end-->
+						<!--//마이메뉴 타이틀-->
+					</ul>
+					<!--//마이메뉴 리스트 ul-->
+				</li>
+			</ul>
+		</div>
+
+		<!--@if($My_menu->list)-->
+		<script>
+		jQuery(function (e) {
+			var g = e(".gpe_myMenu>ul");
+			var d = g.find(">li");
+			var c = g.find(">ul>li");
+			var b = null;
+			d.find(">ul").hide();
+			d.filter(":first").addClass("first");
+
+			function f() {
+				var h = e(this);
+				if (h.next("ul").is(":hidden") || h.next("ul").length == 0) {
+					d.find(">ul").slideUp(200);
+					d.find("a").removeClass("hover");
+					h.next("ul").slideDown(200);
+					h.addClass("hover")
+				}
+			}
+
+			function a() {
+				d.find("ul").slideUp(200);
+				d.find("a").removeClass("hover")
+			}
+			d.find(">a").click(f).focus(f);
+			d.mouseleave(a)
+		});
+		</script>
+		<!--@end-->
+	<!--@end-->
+	<!--//마이메뉴-->
+</div>

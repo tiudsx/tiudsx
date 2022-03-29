@@ -1,0 +1,34 @@
+<style type="text/css">
+.gpe_copytxt p{
+	<!--@if($layout_info->copytxt_c_d01)-->color:#{$layout_info->copytxt_c_d01};<!--@end-->
+}
+</style>
+
+<!--풋터-->
+<div class="footer_Util_wrap00">
+<div class="footer_Util_wrap0" style="<!--@if(!$Util_menu->list)-->padding-top:0;<!--@end-->">
+	<!--유틸메뉴-->
+	<div class="gpe_utilMenu">
+		<ul>
+			<li loop="$Util_menu->list=>$key1,$val1">
+				<a href="{$val1['href']}" target="_blank"|cond="$val1['open_window']=='Y'">{$val1['text']}</a>
+			</li>
+		</ul>
+	</div>
+	<!--//유틸메뉴-->
+	<!--카피라이트-->
+	<div class="gpe_copytxt">
+		<p>
+		<!--@if($layout_info->footer_copy)-->
+		{$layout_info->footer_copy}
+		<!--@else-->
+		상호명: 포탈NOVA / 대표자: 홍길동 / 사업자등록번호: 123-23-456789<br />
+		소재지: 서울시 심플구 심플동 251-1112-1404 / 대표전화: 123-1112-2345 / 팩스: 0202-1234-5678<br />
+		Copyright ⓒ 2016 <span style="font-weight:bold; color:#f53144;">the Portal</span> <span style="font-weight:bold; color:#00a6d4;">nova.</span> All rights reserved
+		<!--@end-->
+		</p>
+	</div>
+	<!--//카피라이트-->
+</div>
+</div>
+<!--//풋터-->

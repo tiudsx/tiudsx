@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * GeneralXmlParser class
  * Generic XML parser for XE
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml
  * @version 0.1
  */

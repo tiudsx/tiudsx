@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/condition
  * @version 0.1
  */
@@ -17,9 +17,9 @@ class ConditionWithoutArgument extends Condition
 	 * @param string $pipe
 	 * @return void
 	 */
-	function __construct($column_name, $argument, $operation, $pipe = "")
+	function ConditionWithoutArgument($column_name, $argument, $operation, $pipe = "")
 	{
-		parent::__construct($column_name, $argument, $operation, $pipe);
+		parent::Condition($column_name, $argument, $operation, $pipe);
 		$tmpArray = array('in' => 1, 'notin' => 1, 'not_in' => 1);
 		if(isset($tmpArray[$operation]))
 		{

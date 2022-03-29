@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  editorAdminView
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief editor admin view of the module class
  */
 class editorAdminView extends editor

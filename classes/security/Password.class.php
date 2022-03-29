@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * This class can be used to hash passwords using various algorithms and check their validity.

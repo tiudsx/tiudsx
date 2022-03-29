@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * File containing the QueryParser class
@@ -30,7 +30,7 @@ class QueryParser
 	 * @param bool $isSubQuery
 	 * @return void
 	 */
-	function __construct($query = NULL, $isSubQuery = FALSE)
+	function QueryParser($query = NULL, $isSubQuery = FALSE)
 	{
 		if($query)
 		{

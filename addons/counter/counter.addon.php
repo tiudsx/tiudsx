@@ -1,12 +1,12 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 if(!defined('__XE__'))
 	exit();
 
 /**
  * @file counter.addon.php
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Counter add-on
  */
 // Execute if called_position is before_display_content

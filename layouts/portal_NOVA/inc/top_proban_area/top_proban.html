@@ -1,0 +1,104 @@
+<!--@if($layout_info->display_top_proban == 'yes')-->
+	<!--기본js-->
+	<script> 
+		function gpe_tban_getCookie1(name) { 
+				var Found = false 
+				var start, end 
+				var i = 0 
+
+				while(i <= document.cookie.length) { 
+								start = i 
+								end = start + name.length 
+								if(document.cookie.substring(start, end) == name) { 
+									Found = true 
+									break 
+								} 
+								 i++ 
+							 } 
+
+				if(Found == true) { 
+							   start = end + 1 
+							   end = document.cookie.indexOf(";", start) 
+							   if(end < start) 
+								   end = document.cookie.length 
+								   return document.cookie.substring(start, end) 
+							  } 
+							   return "" 
+							} 
+
+
+		function gpe_setCookie1( name, value, expiredays ) { 
+			var todayDate = new Date(); 
+				todayDate.setDate( todayDate.getDate() + expiredays ); 
+				document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";" 
+			}
+	</script>
+
+	<!--배너이미지+닫기버튼-->
+	<div id="top_proban_wrap00" style="height:{$layout_info->display_top_proban_height}px; <!--@if($layout_info->display_top_proban_line == 'yes')-->border-bottom:1px solid #e7e7e7;<!--@end--> <!--@if(!$layout_info->display_top_proban_WG)--><!--@if($layout_info->display_top_proban_img)-->background:url({$layout_info->display_top_proban_img}) no-repeat center top;<!--@end--><!--@end-->">	
+		<form name="gpe_tban_form"> 
+			<!--@if($layout_info->display_top_proban_WG)-->
+			<div class="top_proban_wrap0" style="height:{$layout_info->display_top_proban_height}px;">
+				{$layout_info->display_top_proban_WG}
+			</div>
+			<!--@else-->
+			<a href="{$layout_info->display_top_proban_link}" class="top_proban_wrap0 link" style="height:{$layout_info->display_top_proban_height}px;" target="_blank"|cond="$layout_info->display_top_proban_link_blank == '02'"></a>
+			<!--@end-->
+			<div class="top_proban_day">
+				<div class="close_day">
+					<span><input name="tban_event1" type="checkbox" value="tban_checkbox1"/></span>
+					<span class="day"><!--@if($layout_info->display_top_proban_day == 'day7')-->7일동안 안보기<!--@elseif($layout_info->display_top_proban_day == 'day3')-->3일동안 안보기<!--@else-->1일동안 안보기<!--@end--></span>
+				</div>
+			</div>
+			<div class="top_proban_close" onclick="javascript:gpe_tban_closeWin1();"></div>
+		</form>
+	</div>
+
+	<!--일별 닫기-->
+	<!--@if($layout_info->display_top_proban_day == 'day7')-->
+	<script> 
+		var eventCookie=gpe_tban_getCookie1("gpe_tban_memo1");
+		if ( eventCookie != "tbna_no1" ){  
+			document.all['top_proban_wrap00'].style.visibility = "visible";
+		} else if(eventCookie == "tbna_no1") {
+			document.getElementById('top_proban_wrap00').style.display='none'; 
+		}
+		function gpe_tban_closeWin1() { 
+		if ( document.gpe_tban_form.tban_event1.checked ){ 
+			gpe_setCookie1( "gpe_tban_memo1", "tbna_no1" , 7 ); 
+		}
+		document.getElementById('top_proban_wrap00').style.display='none';
+		}
+	</script>
+	<!--@elseif($layout_info->display_top_proban_day == 'day3')-->
+	<script> 
+		var eventCookie=gpe_tban_getCookie1("gpe_tban_memo1");
+		if ( eventCookie != "tbna_no1" ){  
+			document.all['top_proban_wrap00'].style.visibility = "visible";
+		} else if(eventCookie == "tbna_no1") {
+			document.getElementById('top_proban_wrap00').style.display='none'; 
+		}
+		function gpe_tban_closeWin1() { 
+		if ( document.gpe_tban_form.tban_event1.checked ){ 
+			gpe_setCookie1( "gpe_tban_memo1", "tbna_no1" , 3 ); 
+		}
+		document.getElementById('top_proban_wrap00').style.display='none';
+		}
+	</script>
+	<!--@else-->
+	<script> 
+		var eventCookie=gpe_tban_getCookie1("gpe_tban_memo1");
+		if ( eventCookie != "tbna_no1" ){  
+			document.all['top_proban_wrap00'].style.visibility = "visible";
+		} else if(eventCookie == "tbna_no1") {
+			document.getElementById('top_proban_wrap00').style.display='none'; 
+		}
+		function gpe_tban_closeWin1() { 
+		if ( document.gpe_tban_form.tban_event1.checked ){ 
+			gpe_setCookie1( "gpe_tban_memo1", "tbna_no1" , 1 ); 
+		}
+		document.getElementById('top_proban_wrap00').style.display='none';
+		}
+	</script>
+	<!--@end-->
+<!--@end-->

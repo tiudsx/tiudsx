@@ -1,0 +1,25 @@
+<!--%import("css/default.css")-->
+<div class="gpe_wgPointDIV">
+<table class="gpe_wgPoint" cellspacing="0">
+	<thead>
+		<tr class="wgP_titGroup">
+			<th class="title red">순위</th>
+			<th class="nick red">닉네임</th>
+			<th class="point red TextRight">포인트</th>
+		</tr>
+	</thead>
+	<tbody>
+	<!--@if(count($widget_info->point_list))-->
+		{@ $no = 1}
+		<!--@foreach($widget_info->point_list as $val)-->
+		<tr class="wgP_listGroup">
+			<td class="Ncolor <!--@if($no==1)-->wgp_num01<!--@end--> <!--@if($no==2)-->wgp_num02<!--@end--> <!--@if($no==3)-->wgp_num03<!--@end-->">{$no}위</td>
+			<td class="TextBold"><span class="member_{$val->member_srl}"></span>{$val->nick_name}</td>
+			<td class="Pcolor TextRight TextBold">{$val->point}점</td>
+		</tr>
+		{@ $no++}
+		<!--@end-->
+	<!--@end-->
+	</tbody>
+</table>
+</div>

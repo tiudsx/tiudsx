@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Contains methods for accessing file system
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class FileHandler
 {
@@ -281,8 +281,6 @@ class FileHandler
 	 */
 	function makeDir($path_string)
 	{
-		$path_string = preg_replace("/[^a-z0-9-_\\\\\/\.]+/i", '', $path_string);
-		$path_string = self::getRealPath($path_string);
 		if(self::exists($path_string) !== FALSE)
 		{
 			return TRUE;

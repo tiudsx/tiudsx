@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * JoinConditionsTag class
@@ -16,9 +16,9 @@ class JoinConditionsTag extends ConditionsTag
 	 * @param object $xml_conditions
 	 * @return void
 	 */
-	function __construct($xml_conditions)
+	function JoinConditionsTag($xml_conditions)
 	{
-		parent::__construct($xml_conditions);
+		parent::ConditionsTag($xml_conditions);
 		$this->condition_groups[0]->conditions[0]->setPipe("");
 	}
 

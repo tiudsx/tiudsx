@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/limit
  * @version 0.1
  */
@@ -41,7 +41,7 @@ class Limit
 	 * @param int $offset
 	 * @return void
 	 */
-	function __construct($list_count, $page = NULL, $page_count = NULL, $offset = NULL)
+	function Limit($list_count, $page = NULL, $page_count = NULL, $offset = NULL)
 	{
 		$this->list_count = $list_count;
 		if($page)

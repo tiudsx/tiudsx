@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 @set_time_limit(0);
 @require_once('./modules/importer/extract.class.php');
 
@@ -7,7 +7,7 @@
  * ttimport class
  * ttxml import class
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/importer
  * @version 0.1
  */

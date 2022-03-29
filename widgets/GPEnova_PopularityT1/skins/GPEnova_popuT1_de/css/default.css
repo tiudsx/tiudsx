@@ -1,0 +1,48 @@
+@charset "utf-8";
+/*공통*/
+.gpe_wgPopularT1{position:relative; overflow:hidden; *zoom:1;}
+.gpe_wgPopularT1 ul{list-style:none; margin:0; padding:0;}
+.gpe_wgPopularT1 p{margin:0; padding:0;}
+.gpe_wgPopularT1 a{color:#5c5c5c; text-decoration:none; font-size:13px; line-height:24px;}
+.gpe_wgPopularT1 a:hover{text-decoration:underline;}
+/*글박스*/
+.gpe_wgPopularT1 .gpe_wgPoTapbg{position:absolute; top:33px; left:0; width:100%; height:1px; border-bottom:2px solid #676767;}
+.gpe_wgPopularT1 .gpe_wgPoTapbg2{position:absolute; top:0; left:0; width:100%; height:33px; background-color:#f9f9f9; border-top:1px solid #dadada;}
+.gpe_wgPopularT1 .gpe_wgPoTapbg3{position:absolute; top:0; right:0; width:1px; height:33px; background-color:#dadada;}
+.gpe_wgPopularT1 ul{position:relative; overflow:hidden; *zoom:1;}
+.gpe_wgPopularT1 ul:after{content:""; display:block; clear:both;}
+/*탭*/
+.gpe_wgPopularT1 li{float:left; border-left:1px solid #ebebeb; margin-bottom:-1px;}
+.gpe_wgPopularT1 li .wgP_title{display:block; font-size:14px; color:#5c5c5c; height:33px; line-height:34px; text-align:center; border-top:1px solid #dadada; border-bottom:1px solid #676767; background-color:#f9f9f9; cursor:pointer;}/*탭 타이틀*/
+.gpe_wgPopularT1 li .wgP_title:hover{text-decoration:underline; color:#333;}
+/*탭 활성시*/
+.gpe_wgPopularT1 li.active .wgP_title{text-decoration:none; height:33px; border-bottom:2px solid #676767; background-color:#fff; font-weight:bold; letter-spacing:0; cursor:default;}
+/*탭 컬러셋*/
+.gpe_wgPopularT1.rb li.active .wgP_title{color:#0cabd0;}
+.gpe_wgPopularT1.r li.active .wgP_title{color:#ff4948;}
+.gpe_wgPopularT1.gn li.active .wgP_title{color:#39b54a;}
+.gpe_wgPopularT1.gn_p li.active .wgP_title{color:#2baab1;}
+.gpe_wgPopularT1.b li.active .wgP_title{color:#007bd3;}
+.gpe_wgPopularT1.p li.active .wgP_title{color:#6976d3;}
+.gpe_wgPopularT1.p_d li.active .wgP_title{color:#734ba9;}
+.gpe_wgPopularT1.y li.active .wgP_title{color:#ff9000;}
+.gpe_wgPopularT1.op li.active .wgP_title{color:#e36159;}
+.gpe_wgPopularT1.cp li.active .wgP_title{color:#c71c77;}
+.gpe_wgPopularT1.gy li.active .wgP_title{color:#8491af;}
+.gpe_wgPopularT1.gy_d li.active .wgP_title{color:#4a5b7d;}
+.gpe_wgPopularT1.bk li.active .wgP_title{color:#333;}
+.gpe_wgPopularT1 li.active ul{display:block;}
+/* 내용*/
+.gpe_wgPopularT1 ul .wgP_contents{position:absolute; padding-top:7px; width:100%; left:0; top:39px; display:none;}
+.gpe_wgPopularT1 ul .wgP_contents li{float:none; border-left:0;}
+/*1,2,3등 컬러*/
+.gpe_wgPopularT1 ul .wgP_contents .Ncolor{font-size:13px; color:#5c5c5c;}
+.gpe_wgPopularT1 ul .wgP_contents .wgp_num01{font-size:13px; color:#f53144; font-weight:bold;}
+.gpe_wgPopularT1 ul .wgP_contents .wgp_num02{font-size:13px; color:#00a6d4; font-weight:bold;}
+.gpe_wgPopularT1 ul .wgP_contents .wgp_num03{font-size:13px; color:#333; font-weight:bold;}
+.gpe_wgPopularT1 ul .wgP_contents .reNum{font-size:12px; color:#ff4948;}
+.gpe_wgPopularT1 ul .wgP_contents .wgPdate{float:right; margin-top:3px; font-size:13px; color:#6d6d6d;}
+
+.gpe_wgPopularT1 ul .wgP_contents li:first-child .subject{color:#333; font-weight:700;}
+
+/*.gpe_wgPopularT1>ul{background:url(../imgs/default/tap_top_bg.png) repeat; border-bottom:1px solid #dadada;}*/

@@ -4,8 +4,8 @@
 	<description xml:lang="ko">XE 1.8 기본 테마</description>
 	<version>1.9</version>
 	<date>2015-06-25</date>
-	<author email_address="developer@xpressengine.com" link="https://www.xehub.io">
-		<name xml:lang="ko">XEHub</name>
+	<author email_address="developer@xpressengine.com" link="https://www.xpressengine.com/">
+		<name xml:lang="ko">NAVER</name>
 	</author>
 	<menus>
 		<menu name="GNB" maxdepth="3" default="true">
@@ -73,7 +73,7 @@
 				</options>
 			</var>
 			<var name="content_fixed_width" type="select" default="index">
-				<title xml:lang="ko">content_fixed_width</title>
+				<title xml:lang="ko">contet_fixed_width</title>
 				<options value="index">
 					<title xml:lang="ko">시작 모듈만 전체 폭</title>
 				</options>

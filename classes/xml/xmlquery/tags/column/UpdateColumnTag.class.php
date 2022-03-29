@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Models the &lt;column&gt; tag inside an XML Query file whose action is 'update'
@@ -31,9 +31,9 @@ class UpdateColumnTag extends ColumnTag
 	 * @param object $column
 	 * @return void
 	 */
-	function __construct($column)
+	function UpdateColumnTag($column)
 	{
-		parent::__construct($column->attrs->name);
+		parent::ColumnTag($column->attrs->name);
 
 		$dbParser = DB::getParser();
 		$this->name = $dbParser->parseColumnName($this->name);

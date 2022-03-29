@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * commentItem class
  * comment BaseObject
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/comment
  * @version 0.1
  */
@@ -30,7 +30,7 @@ class commentItem extends BaseObject
 	 * @param array $columnList
 	 * @return void
 	 */
-	function __construct($comment_srl = 0, $columnList = array())
+	function commentItem($comment_srl = 0, $columnList = array())
 	{
 		$this->comment_srl = $comment_srl;
 		$this->columnList = $columnList;
@@ -255,7 +255,7 @@ class commentItem extends BaseObject
 			$url = "http://" . $url;
 		}
 
-		return escape($url, false);
+		return htmlspecialchars($url, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 	}
 
 	function getMemberSrl()
@@ -265,17 +265,17 @@ class commentItem extends BaseObject
 
 	function getUserID()
 	{
-		return escape($this->get('user_id'), false);
+		return htmlspecialchars($this->get('user_id'), ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 	}
 
 	function getUserName()
 	{
-		return escape($this->get('user_name'), false);
+		return htmlspecialchars($this->get('user_name'), ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 	}
 
 	function getNickName()
 	{
-		return escape($this->get('nick_name'), false);
+		return htmlspecialchars($this->get('nick_name'), ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 	}
 
 	/**
@@ -296,7 +296,7 @@ class commentItem extends BaseObject
 			return cut_str(strip_tags($content), $strlen, '...');
 		}
 
-		return escape($content, false);
+		return htmlspecialchars($content, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 	}
 
 	/**
@@ -593,7 +593,7 @@ class commentItem extends BaseObject
 			}
 			else
 			{
-				return $thumbnail_url . '?' . date('YmdHis', filemtime($thumbnail_file));
+				return $thumbnail_url;
 			}
 		}
 
@@ -685,13 +685,18 @@ class commentItem extends BaseObject
 		// Remove lockfile
 		FileHandler::removeFile($thumbnail_lockfile);
 
+		// Return the thumbnail path if it was successfully generated
+		if($output)
+		{
+			return $thumbnail_url;
+		}
 		// Create an empty file if thumbnail generation failed
-		if(!$output)
+		else
 		{
 			FileHandler::writeFile($thumbnail_file, '','w');
 		}
 
-		return $thumbnail_url . '?' . date('YmdHis', filemtime($thumbnail_file));
+		return;
 	}
 
 	function isCarted()

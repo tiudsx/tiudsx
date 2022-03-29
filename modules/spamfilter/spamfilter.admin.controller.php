@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  spamfilterAdminController
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief The admin controller class of the spamfilter module
  */
 class spamfilterAdminController extends spamfilter

@@ -1,6 +1,6 @@
 /**
  * @file   modules/widget/js/widget.js
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief  위젯 관리용 자바스크립트
  **/
 

@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * menuAdminController class
  * admin controller class of the menu module
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/menu
  * @version 0.1
  */

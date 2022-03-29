@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 require_once(_XE_PATH_ . 'modules/addon/addon.controller.php');
 
 /**
  * Admin controller class of addon modules
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class addonAdminController extends addonController
 {

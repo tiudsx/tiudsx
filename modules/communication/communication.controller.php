@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * @class  communicationController
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * communication module of the Controller class
  */
 class communicationController extends communication
@@ -125,8 +125,6 @@ class communicationController extends communication
 			return $output;
 		}
 
-		$message_srl = $output->get('message_srl');
-
 		// send an e-mail
 		if($send_mail == 'Y')
 		{
@@ -142,7 +140,7 @@ class communicationController extends communication
 
 		if(!in_array(Context::getRequestMethod(), array('XMLRPC', 'JSON')))
 		{
-			if(Context::get('is_popup') === 'Y')
+			if(Context::get('is_popup') != 'Y')
 			{
 				global $lang;
 				htmlHeader();
@@ -155,7 +153,7 @@ class communicationController extends communication
 			else
 			{
 				$this->setMessage('success_sended');
-				$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('act', 'dispCommunicationMessages', 'message_type', 'S', 'message_srl', $message_srl);
+				$returnUrl = Context::get('success_return_url') ? Context::get('success_return_url') : getNotEncodedUrl('','act', 'dispCommunicationMessages', 'message_type', 'S', 'receiver_srl', $receiver_srl, 'message_srl', '');
 				$this->setRedirectUrl($returnUrl);
 			}
 		}
@@ -264,10 +262,7 @@ class communicationController extends communication
 
 		$oDB->commit();
 
-		$result = new BaseObject(0, 'success_sended');
-		$result->add('message_srl', $message_srl);
-
-		return $result;
+		return new BaseObject(0, 'success_sended');
 	}
 
 	/**

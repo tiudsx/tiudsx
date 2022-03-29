@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * SelectExpression
@@ -30,9 +30,9 @@ class SelectExpression extends Expression
 	 * @param string $alias
 	 * @return void
 	 */
-	function __construct($column_name, $alias = NULL)
+	function SelectExpression($column_name, $alias = NULL)
 	{
-		parent::__construct($column_name);
+		parent::Expression($column_name);
 		$this->column_alias = $alias;
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 define('FOLLOW_REQUEST_SSL', 0);
 define('ENFORCE_SSL', 1);
@@ -9,7 +9,7 @@ define('RELEASE_SSL', 2);
  * Manages Context such as request arguments/environment variables
  * It has dual method structure, easy-to use methods which can be called as self::methodname(),and methods called with static object.
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class Context
 {
@@ -175,7 +175,7 @@ class Context
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function Context()
 	{
 		$this->oFrontEndFileHandler = new FrontEndFileHandler();
 		$this->get_vars = new stdClass();
@@ -204,7 +204,7 @@ class Context
 		if(!isset($GLOBALS['HTTP_RAW_POST_DATA']) && version_compare(PHP_VERSION, '5.6.0', '>=') === TRUE)
 		{
 			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents("php://input");
-
+			
 			// If content is not XML JSON, unset
 			if(!preg_match('/^[\<\{\[]/', $GLOBALS['HTTP_RAW_POST_DATA']) && strpos($_SERVER['CONTENT_TYPE'], 'json') === FALSE && strpos($_SERVER['HTTP_CONTENT_TYPE'], 'json') === FALSE)
 			{
@@ -336,7 +336,6 @@ class Context
 		{
 			$oSessionModel = getModel('session');
 			$oSessionController = getController('session');
-			ini_set('session.serialize_handler', 'php');
 			session_set_save_handler(
 					array(&$oSessionController, 'open'), array(&$oSessionController, 'close'), array(&$oSessionModel, 'read'), array(&$oSessionController, 'write'), array(&$oSessionController, 'destroy'), array(&$oSessionController, 'gc')
 			);
@@ -486,15 +485,6 @@ class Context
 
 			$oInstallController = getController('install');
 			$oInstallController->makeConfigFile();
-		}
-
-		if(version_compare(PHP_VERSION, '7.0', '>='))
-		{
-			$db_info->master_db["db_type"] = preg_replace('/^mysql(_.+)?$/', 'mysqli$1', $db_info->master_db["db_type"]);
-			foreach($db_info->slave_db as &$slave_db_info)
-			{
-				$slave_db_info["db_type"] = preg_replace('/^mysql(_.+)?$/', 'mysqli$1', $slave_db_info["db_type"]);
-			}
 		}
 
 		if(!$db_info->use_prepared_statements)
@@ -718,7 +708,7 @@ class Context
 					echo self::get('lang')->msg_invalid_request;
 					return false;
 				}
-
+				
 				setcookie(session_name(), $session_name);
 
 				$url = preg_replace('/[\?\&]SSOID=.+$/', '', self::getRequestUrl());
@@ -1230,7 +1220,7 @@ class Context
 				continue;
 			}
 			$key = htmlentities($key);
-			$val = $this->_filterRequestVar($key, $val, false, ($requestMethod == 'GET'));
+			$val = $this->_filterRequestVar($key, $val);
 
 			if($requestMethod == 'GET' && isset($_GET[$key]))
 			{
@@ -1297,7 +1287,6 @@ class Context
 
 		foreach($params as $key => $val)
 		{
-			$key = htmlentities($key);
 			$this->set($key, $this->_filterRequestVar($key, $val, 1), TRUE);
 		}
 	}
@@ -1398,7 +1387,7 @@ class Context
 	 * @param string $do_stripslashes Whether to strip slashes
 	 * @return mixed filtered value. Type are string or array
 	 */
-	function _filterRequestVar($key, $val, $do_stripslashes = true, $remove_hack = false)
+	function _filterRequestVar($key, $val, $do_stripslashes = 1)
 	{
 		if(!($isArray = is_array($val)))
 		{
@@ -1408,26 +1397,22 @@ class Context
 		$result = array();
 		foreach($val as $k => $v)
 		{
-			$k = escape($k);
-			$result[$k] = $v;
-
-			if($remove_hack && !is_array($result[$k])) {
-				if(stripos($result[$k], '<script') || stripos($result[$k], 'lt;script') || stripos($result[$k], '%3Cscript'))
-				{
-					$result[$k] = escape($result[$k]);
-				}
-			}
-
+			$k = htmlentities($k);
 			if($key === 'page' || $key === 'cpage' || substr_compare($key, 'srl', -3) === 0)
 			{
-				$result[$k] = !preg_match('/^[0-9,]+$/', $result[$k]) ? (int) $result[$k] : $result[$k];
+				$result[$k] = !preg_match('/^[0-9,]+$/', $v) ? (int) $v : $v;
 			}
-			elseif(in_array($key, array('mid','search_keyword','search_target','xe_validator_id'))) {
-				$result[$k] = escape($result[$k], false);
+			elseif($key === 'mid' || $key === 'search_keyword')
+			{
+				$result[$k] = htmlspecialchars($v, ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE);
 			}
 			elseif($key === 'vid')
 			{
-				$result[$k] = urlencode($result[$k]);
+				$result[$k] = urlencode($v);
+			}
+			elseif($key === 'xe_validator_id')
+			{
+				$result[$k] = htmlspecialchars($v, ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE);
 			}
 			elseif(stripos($key, 'XE_VALIDATOR', 0) === 0)
 			{
@@ -1435,26 +1420,7 @@ class Context
 			}
 			else
 			{
-				if(in_array($k, array(
-					'act',
-					'addon',
-					'cur_mid',
-					'full_browse',
-					'http_status_message',
-					'l',
-					'layout',
-					'm',
-					'mid',
-					'module',
-					'selected_addon',
-					'selected_layout',
-					'selected_widget',
-					'widget',
-					'widgetstyle',
-				)))
-				{
-					$result[$k] = urlencode(preg_replace("/[^a-z0-9-_]+/i", '', $result[$k]));
-				}
+				$result[$k] = $v;
 
 				if($do_stripslashes && version_compare(PHP_VERSION, '5.4.0', '<') && get_magic_quotes_gpc())
 				{
@@ -1475,11 +1441,6 @@ class Context
 				else
 				{
 					$result[$k] = trim($result[$k]);
-				}
-
-				if($remove_hack)
-				{
-					$result[$k] = escape($result[$k], false);
 				}
 			}
 		}
@@ -1513,41 +1474,35 @@ class Context
 		foreach($_FILES as $key => $val)
 		{
 			$tmp_name = $val['tmp_name'];
-
 			if(!is_array($tmp_name))
 			{
-				if(!UploadFileFilter::check($tmp_name, $val['name']))
+				if(!$tmp_name || !is_uploaded_file($tmp_name))
 				{
-					unset($_FILES[$key]);
 					continue;
 				}
-				$val['name'] = escape($val['name'], FALSE);
+				$val['name'] = htmlspecialchars($val['name'], ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE);
 				$this->set($key, $val, TRUE);
 				$this->is_uploaded = TRUE;
 			}
 			else
 			{
 				$files = array();
-				foreach ($tmp_name as $i => $j)
+				$count_files = count($tmp_name);
+
+				for($i = 0; $i < $count_files; $i++)
 				{
-					if(!UploadFileFilter::check($val['tmp_name'][$i], $val['name'][$i]))
+					if($val['size'][$i] > 0)
 					{
-						$files = array();
-						unset($_FILES[$key]);
-						break;
+						$file = array();
+						$file['name'] = $val['name'][$i];
+						$file['type'] = $val['type'][$i];
+						$file['tmp_name'] = $val['tmp_name'][$i];
+						$file['error'] = $val['error'][$i];
+						$file['size'] = $val['size'][$i];
+						$files[] = $file;
 					}
-					$file = array();
-					$file['name'] = $val['name'][$i];
-					$file['type'] = $val['type'][$i];
-					$file['tmp_name'] = $val['tmp_name'][$i];
-					$file['error'] = $val['error'][$i];
-					$file['size'] = $val['size'][$i];
-					$files[] = $file;
 				}
-				if(count($files))
-				{
-					self::set($key, $files, true);
-				}
+				if($files) $this->set($key, $files, TRUE);
 			}
 		}
 	}

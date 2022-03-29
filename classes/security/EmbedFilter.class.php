@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 include _XE_PATH_ . 'classes/security/phphtmlparser/src/htmlparser.inc';
 
@@ -260,7 +260,7 @@ class EmbedFilter
 	 * @constructor
 	 * @return void
 	 */
-	function __construct()
+	function EmbedFilter()
 	{
 		$this->_makeWhiteDomainList();
 

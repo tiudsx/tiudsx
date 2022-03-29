@@ -1,0 +1,24 @@
+<!--@if($is_logged)-->
+<style type="text/css">
+    .gpe_levelpoint {
+        <!--@if($layout_info->display_top_login=='tl_no' && $layout_info->display_top_lang=='L_no')-->right: 5px;
+        <!--@elseif($layout_info->display_top_login=='tl_no')-->right: 70px;
+        <!--@elseif($layout_info->display_top_lang=='L_no')-->right: 222px;
+        <!--@end-->
+    }
+</style>
+
+{@ $oPointModel = &getModel('point'); $point = $oPointModel->getPoint($logged_info->member_srl); $oModuleModel = &getModel('module'); $config = $oModuleModel->getModuleConfig('point'); $level = $oPointModel->getLevel($point, $config->level_step); $logged_info
+= Context::get('logged_info'); $args->receiver_srl = $logged_info->member_srl; $args->readed = 'N'; $args->message_type = 'R'; $args->list_count = 9999; $output = executeQuery('communication.getNewMessage', $args); }
+<?
+/*
+<div class="gpe_levelpoint">
+<span>레벨(<span class="LPcolor">{$level}</span>)</span> <span>포인트(<span class="LPcolor">{$point}</span>)</span>
+</div>
+*/
+?>
+
+    <div class="gpe_levelpoint" style="display: none;">
+        <span><b>예약조회</b></span> <span class="LPcolor">장바구니</span>
+    </div>
+    <!--@end-->

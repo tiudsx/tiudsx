@@ -1,0 +1,1165 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Bootstrap Core CSS -->
+<load target="vendor/bootstrap/css/bootstrap.min.css" />
+<!-- Bootstrap Core JavaScript -->
+<load target="vendor/bootstrap/js/bootstrap.min.js" />
+
+<!-- Root CSS -->
+<load target="css/root.css" />
+<!-- Root JavaScript -->
+<load target="js/root.js" />
+
+<!-- Owlcaroucel CSS file -->
+<load target="vendor/owlcarousel/assets/owl.carousel.min.css" />
+<load target="vendor/owlcarousel/assets/owl.theme.default.min.css" />
+<!-- Owlcaroucel Javascript file -->
+<load target="vendor/owlcarousel/owl.carousel.min.js" />
+<!-- Owlcaroucel plugin fixed Javascript file -->
+<load target="js/jquery.plugins.min.js" />
+
+<!-- Custom Fonts -->
+<load target="vendor/font-awesome/css/font-awesome.min.css" />
+<load target="stylesheet" href="//cdn.jsdelivr.net/xeicon/2/xeicon.min.css" />
+<load target='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' />
+<load target='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' />
+
+<!-- Plugin CSS(갤러리) -->
+<load target="vendor/magnific-popup/magnific-popup.css" />
+<!-- Plugin CSS(갤러리) JavaScript -->
+<load target="vendor/magnific-popup/jquery.magnific-popup.min.js" />
+
+<!-- Plugin JavaScript -->
+<load target="vendor/scrollreveal/scrollreveal.min.js" />
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+<body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    
+        <div class="container-fluid">
+        
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+				<a class="navbar-brand page-scroll" href="">
+					<img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/yflogo.jpg" alt="">
+				</a>
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            
+                <ul class="navbar-nav nav navbar-right root_m_po page-scroll">
+					<block loop="$main_menu->list=>$key1,$val1">
+                    
+                    <li class="<!--@if($val1['list'])-->dropdown <!--@end--><!--@if($val1['selected'] && $mid!=='root_section_1')-->active<!--@end-->"|cond="$val1['list'] || $val1['selected']">
+                        
+                        <a class="page-scroll" href="#{$val1['text']}" <!--@if($val1['list'])--> class="dropdown-toggle" data-toggle="dropdown" <!--@end-->>
+                        	{$val1['link']}<!--@if($val1['list'])--> <span class="caret"></span><!--@end-->
+                        </a>
+                        
+                        <ul cond="$val1['list']" class="dropdown-menu dropdown-menu-left">
+                        
+                            <block loop="$val1['list']=>$key2,$val2">
+                            
+                            <li class="<!--@if($val2['list'])-->dropdown-submenu <!--@end--><!--@if($val2['selected'])-->active<!--@end-->"|cond="$val2['list'] || $val2['selected']">
+                                <a href="{$val2['href']}">{$val2['link']}
+                                    <!--@if($val2['list'])-->
+                                    	&nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i>
+                                    <!--@end-->
+                                </a>
+                                
+                                <!-- 3차메뉴 시작--> 
+                                <ul class="main depth3" cond="$val2['list']">
+                                    <li loop="$val2['list']=>$key3,$val3" class="active"|cond="$val3['selected']">
+                                    {@ 
+                                        $depth3 = explode('-', $val3['link']);
+                                        trim($depth3[0]);
+                                        trim($depth3[1]);
+                                    }					
+                                    <a href="{$val3['href']}" target="_blank"|cond="$val3['open_window']=='Y'">{$depth3[0]}</a>
+                                    </li>
+                                </ul>
+                                <!-- // 3차메뉴 종료-->
+                                
+                            </li>
+                            
+                            </block>
+                            
+                        </ul>
+                        
+                    </li>
+                    
+                    </block>
+
+					<li><a class="page-scroll" href="#페스티벌소개">행사개요</a></li>
+					<li><a class="page-scroll" href="#대회안내">대회안내</a></li>
+					<li><a class="page-scroll" href="#참가신청">참가신청</a></li>
+					<!--li><a class="page-scroll" href="#참가신청">참가자조회<br><em>Information</em></a></li-->
+					<li><a class="page-scroll" href="#뮤직페스티벌">뮤직페스티벌</a></li>
+					<li><a class="page-scroll" href="#부대행사">부대행사</a></li>
+					<li><a class="page-scroll" href="#셔틀버스">셔틀버스 안내</a></li>
+					<!--li><a class="page-scroll" href="#셔틀버스">서핑 초급 강습 안내<br><em>Check your registeration</em></a></li-->
+                    <li cond="$li->navbar_search!='N'" class="dropdown" id="dropdown-toggle-search" cond="$layout_info -> root_search!=='n'">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search" area-hidden="true"></i><span class="visible-xs-inline-block"> {$lang->cmd_search}</span></a>
+                        <div class="dropdown-menu dropdown-form" role="search">
+                            <form action="{getUrl()}" method="get">
+                                <input type="hidden" name="vid" value="{$vid}" />
+                                <input type="hidden" name="mid" value="{$mid}" />
+                                <input type="hidden" name="act" value="IS" />
+                                <input type="text" name="is_keyword"  value="{$is_keyword}" placeholder="{$lang->ss_enter_to_search}" class="form-control" />
+                                <button type="submit" class="sr-only btn btn-{$colorset} btn-block"><i class="fa fa-search" area-hidden="true"></i> {$lang->cmd_search}</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="dropdown" id="dropdown-toggle-login" cond="!$is_logged" cond="$layout_info -> root_login!=='n'">
+						<a href="#" data-toggle="modal" data-target="#modal-login"><i class="fa fa-sign-in" area-hidden="true"></i> {$lang->cmd_login}</a>
+                    </li>
+                    <li cond="$is_logged" class="dropdown" cond="$layout_info -> root_login!=='n'">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><!--@if($logged_info->profile_image->src)--><img src="{$logged_info->profile_image->src}" alt="" class="img-circle" /><!--@else--><i class="fa fa-user" area-hidden="true"></i><!--@end--> {$logged_info->nick_name}</a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li id="profile-in-navbar" cond="$logged_info->profile_image->src">
+                                <a href="{getURL('act','dispMemberInfo')}">
+                                    <img src="{$logged_info->profile_image->src}" class="img-circle" alt="Profile Image" cond="$logged_info->profile_image->src" /> <strong>{$logged_info->nick_name}</strong>
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <block cond="$li->navbar_member_point=='Y'">
+                                {@
+                                    $member_srl = $logged_info->member_srl;
+                                    $oPointModel = getModel('point');   
+                                    $member_point = $oPointModel->getPoint($member_srl);
+                                }
+                                <block cond="$li->navbar_member_point=='Y2'">
+                                {@
+                                    $oCashModel = &getModel('cash');
+                                    $member_cash = $oCashModel->getCash($member_srl);
+                                }
+                                </block>
+                                <li><a href="#" onClick="return false">{$member_point} {$lang->point}</a></li>
+                                <li><a href="#" onClick="return false" cond="$li->navbar_member_point=='Y2'">{$member_cash} 캐쉬</a></li>
+                                <li role="separator" class="divider"></li>
+                            </block>
+                            <li loop="$logged_info->menu_list=>$key, $val"><a href="{getUrl('act',$key,'member_srl','')}">{Context::getLang($val)}</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{getUrl('act','dispMemberLogout')}"><i class="fa fa-sign-out" area-hidden="true"></i> {$lang->cmd_logout}</a></li>
+                            <li cond="$logged_info->is_admin=='Y'"><a href="{getUrl('','module','admin')}" target="_blank"><i class="fa fa-cog" area-hidden="true"></i> {$lang->cmd_management}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+            
+        </div>
+        <!-- /.container-fluid -->
+        
+    </nav>
+    
+    <!-- 메인 페이지 시작--> 
+    <block cond="$layout_info -> layout_type == 'main'">
+        
+        <!-- 메인 이미지-->
+        </header-->
+		<header style="margin-top:65px;background-image:url('https://surfenjoy.cdn3.cafe24.com/yangfe2/2019_1920.jpg');"></header>
+
+        <!-- 메인 이미지-->
+        
+        
+           
+        <!-- 전체 섹션-->
+        <div cond="$act!=='dispMemberSignUpForm' && $act!=='dispMemberInfo' && $act!=='dispMemberScrappedDocument' && $act!=='dispMemberSavedDocument' && $act!=='dispMemberOwnDocument' && $act!=='dispMemberFindAccount' && $act!=='dispCommunicationFriend' && $act!=='dispCommunicationMessages'" cond="$act!=IS" >
+
+        <!-- 섹션1 -->
+        <section id="{$layout_info->menu_section_1}" style="padding-bottom:0px;">
+        
+            <div class="container">
+            
+                <div class="row">
+
+                    <div class="text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">행사개요</span><div class="span12 eng-txt" style="font-size:21px; text-align:center; margin-top:10px">OVERVIEW</div></h2>
+                        <hr class="primary">
+						<table>
+							<tbody>
+								<tr>
+									<th style="border-bottom:1px solid #fff" width="90">행사명</th>
+									<td style="text-align:left; padding-left:20px; border-right:1px solid #e2e2e2;">2019 양양 서핑 페스티벌</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">행사기간</th>
+									<td style="text-align:left; padding-left:20px; border-right:1px solid #e2e2e2">2019년 10월 11일(금) - 13일(일) / 3일간</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">행사장소</th>
+									<td style="text-align:left; padding-left:20px; border-right:1px solid #e2e2e2">죽도해변 및 동산항해변 일원
+ / 현남면 인구중앙길 122(현남면 두리 10-11)
+</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">주최</th>
+									<td style="text-align:left; padding-left:20px;border-bottom:1px solid #e2e2e2; border-right:1px solid #e2e2e2">
+									강원도, 양양군
+									</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">주관</th>
+									<td style="text-align:left; padding-left:20px;border-bottom:1px solid #e2e2e2; border-right:1px solid #e2e2e2">중앙일보, 대한서핑협회(KSA), 강원도서핑협회(KGSA)</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">후원</th>
+									<td style="text-align:left; padding-left:20px;border-bottom:1px solid #e2e2e2; border-right:1px solid #e2e2e2">해양수산부, 문화체육관광부, 부산시서핑협회, 울산시서핑협회<br>서울시서핑협회, 포항시서핑협회, 서귀포시서핑협회, 호남서핑협회, 해운대구서핑협회<div class="eng-txt font-13"></div></td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">대상</th>
+									<td style="text-align:left; padding-left:20px;border-bottom:1px solid #e2e2e2; border-right:1px solid #e2e2e2">국내외 서핑선수, 서핑동호회원, 서핑입문자, 일반인 등<br>* 국내 거주 외국인이 참가 신청 등록을 할 경우, 현장에서 외국인등록증 제시 必</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">행사구성</th>
+									<td style="text-align:left; padding-left:20px;border-bottom:1px solid #e2e2e2; border-right:1px solid #e2e2e2">2019 양양 서핑대회<br>공식 행사(개회식, 폐회식, 시상식 등)<br>뮤직페스티벌<br>기타 부대행사 (이벤트, 서핑강습, 비치클린캠페인 등)
+									</td>
+								</tr>
+								<tr>
+									<th style="border-bottom:1px solid #fff">대회<br>포스터</th>
+									<td style="text-align:left; padding-left:20px;border-bottom:1px solid #e2e2e2; border-right:1px solid #e2e2e2">
+										<img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/2019yangfe4.png" alt="" class="" style="vertical-align:middle; margin-right:20px; margin-bottom:20px;  max-width:150px; height:auto">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+                    </div>
+                    
+                </div>
+
+				 <div class="row" style="text-align:center;"><img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/DAYTABLE.jpg?v=1" alt="" class="" style="vertical-align:middle;margin-bottom:20px; max-width:100%; height:auto"><a href="https://surfenjoy.cdn3.cafe24.com/yangfe2/DAYTABLE.jpg" class="btnPost" target="_blank">전체일정표 크게 보기</a></div>
+                
+				<div class="row" style="text-align:center;"><img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/map.jpg?v=1" alt="" class="" style="vertical-align:middle;margin-bottom:20px; max-width:100%; height:auto"><a href="https://surfenjoy.cdn3.cafe24.com/yangfe2/map.jpg" class="btnPost" target="_blank">지도 크게 보기</a></div>
+            </div>
+            
+        </section>
+        <!-- 섹션1 -->
+        
+        <!-- 섹션2 -->
+        <section id="대회안내">
+        
+            <div class="container">
+            
+                <div class="row">
+                
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">대회안내</span><div class="span12 eng-txt" style="font-size:21px; text-align:center; margin-top:10px">INFORMATION</div></h2>
+                        <hr class="primary">
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="container">
+            
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p style="color:#000; font-size:20px">⊙ 10월 11일 금요일 / 1일차</p>
+                    </div>
+                
+                    <table class="whiteTable">
+						<colgroup>
+							<col width="50%" />
+							<col width="50%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>구분</th>
+								<th>시간</th>
+							</tr>
+							<tr>
+								<td>프리서핑</th>
+								<td>~ 17:00</td>
+							</tr>
+						</tbody>
+					</table>
+                
+                    <div class="col-lg-12">
+                        <p style="color:#000; font-size:20px">⊙ 10월 12일 토요일 / 2일차</p>
+                    </div>
+                    <table class="whiteTable">
+						<colgroup>
+							<col width="50%" />
+							<col width="50%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>구분</th>
+								<th>시간</th>
+							</tr>
+							<tr>
+								<td>대회 접수 및 운영본부 오픈</th>
+								<td>06:00 ~ 08:00</td>
+							</tr>
+							<tr>
+								<td>예선경기 (비기너, 롱보드 오픈부)</th>
+								<td>08:00 ~ 12:00</td>
+							</tr>
+							<tr>
+								<td>중식</th>
+								<td>12:00 ~ 13:00</td>
+							</tr>
+							<tr>
+								<td>예선경기 (롱보드 오픈부, 주니어부, 숏보드 오픈)</th>
+								<td>13:00 ~ 17:00</td>
+							</tr>
+						</tbody>
+					</table>
+                
+                    <div class="col-lg-12">
+                        <p style="color:#000; font-size:20px">⊙ 10월 13일 일요일 / 3일차</p>
+                    </div>
+                    <table class="whiteTable">
+						<colgroup>
+							<col width="50%" />
+							<col width="50%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>구분</th>
+								<th>시간</th>
+							</tr>
+							<tr>
+								<td>예선경기 (롱보드 프로, 숏보드 프로)</th>
+								<td>08:00 ~ 09:30</td>
+							</tr>
+							<tr>
+								<td>준결승 (전종목)</th>
+								<td>09:30 ~ 12:00</td>
+							</tr>
+							<tr>
+								<td>중식</th>
+								<td>12:00 ~ 13:00</td>
+							</tr>
+							<tr>
+								<td>결승전 (전종목)</th>
+								<td>13:00 ~ 17:30</td>
+							</tr>
+						</tbody>
+					</table>
+                    
+                    <div class="col-lg-12">
+                        <p class="text-faded c_black">
+						※ 상기 일정은 경기 당일의 파도 상황에 따라 변경 될 수 있습니다.
+						</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+        <!-- 섹션2 -->
+
+
+        <!-- 섹션2 bg-primary -->
+        <section class="" style="padding-top:0px;">
+        
+            <div class="container">
+            
+                <div class="row">
+                
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">참가부문 및 등록</span></h2>
+                        <hr class="primary">
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <p class="text-faded c_black">※ 각 종목당 참가 선수는 아래의 인원으로 선착순 제한합니다.</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="container">
+            
+                <div class="row">
+                
+					<table class="whiteTable">
+						<tbody>
+							<tr>
+								<th>종목구분</th>
+								<th>성별</th>
+								<th>인원</th>
+								<th>서핑보드 규격 (단위 ft.)</th>
+								<th>참가자격</th>
+							</tr>
+							<tr>
+								<td rowspan="2">숏보드 프로</th>
+								<td>남</td>
+								<td>50</td>
+								<td rowspan="2">6’6” 이하의 숏보드 사용</td>
+								<td rowspan="2" style="text-align:left">• 타 대회 수상경력이 있거나 업체의 협찬을 받고 있는 선수.</td>
+							</tr>
+							<tr>
+								<td>여</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td rowspan="2">롱보드 프로</th>
+								<td>남</td>
+								<td>50</td>
+								<td rowspan="2">9’ 이상의 롱보드 사용</td>
+								<td rowspan="2" style="text-align:left">• 타 대회 수상경력이 있거나 업체의 협찬을 받고 있는 선수.</td>
+							</tr>
+							<tr>
+								<td>여</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td rowspan="2">숏보드 오픈</th>
+								<td>남</td>
+								<td>50</td>
+								<td rowspan="2">6’6” 이하의 숏보드 사용</td>
+								<td rowspan="2" style="text-align:left">• 제한없음</td>
+							</tr>
+							<tr>
+								<td>여</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td rowspan="2">롱보드 오픈</th>
+								<td>남</td>
+								<td>80</td>
+								<td rowspan="2">9’ 이상의 롱보드 사용</td>
+								<td rowspan="2" style="text-align:left">• 제한없음</td>
+							</tr>
+							<tr>
+								<td>여</td>
+								<td>80</td>
+							</tr>
+							<tr>
+								<td rowspan="2">비기너부</th>
+								<td>남</td>
+								<td>50</td>
+								<td rowspan="2">10’ 이하의 서핑보드<br>(숏보드,펀보드,소프트보드 무관)</td>
+								<td rowspan="2" style="text-align:left">• 2018년 1월 1일 이후 입문자.<br>(대회 수상경력자 무관)</td>
+							</tr>
+							<tr>
+								<td>여</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td>주니어부</th>
+								<td>통합</td>
+								<td>50</td>
+								<td>10’ 이하의 서핑보드<br>(숏보드,펀보드,소프트보드 무관)</td>
+								<td style="text-align:left">
+									• 2004년 이후 출생자(중학생까지)<br>
+									• 남녀 통합진행<br>
+									• 경기전 부모 동의서 제출<br>
+									• 고등학생 이상은 오픈부 및 프로부 출전<br>
+								</td>
+							</tr>
+
+							<tr>
+								<th>참가신청</th>
+								<td colspan="4" style="text-align:left">대회 참가선수 : 본 홈페이지에 [참가신청] 에서 신청서 작성<br>페스티벌 참가 : 본 홈페이지에 [참가신청] 에서 신청서 작성, 현장 신청 가능</td>
+							</tr>
+							<tr>
+								<th>대회등록</th>
+								<td colspan="4" style="text-align:left">대회 참가 신청자들은 운영본부에서 본인 확인</td>
+							</tr>
+							<tr>
+								<th>대회규정</th>
+								<td colspan="4" style="text-align:left">
+								<textarea name="" id="" style="width:100%; height:200px; font-size:12px; color:#4d4d4d; line-height:22px" readonly="readonly">⊙ 2019양양서핑페스티벌 서핑대회는 INTERNATIONAL SURFING ASSOCIATION (이하 ISA) 국제서핑협회에 정의된 대회 규칙이 적용되며, 
+    ISA의 한국지부인 KOREA SURFING ASSOCIATION (이하 KSA) 대한서핑협회에 소속된 국제심판자격 보유 심판들의 판정하에 진행됩니다.
+
+⊙ 아래 기술하는 경기 방식 및 심판 구성은 2019양양서핑페스티벌 서핑대회에 적용되는 규정이며,
+    규정은 해당 시도지부의 대회운영 여건을 반영하여 일부 조정됩니다.
+
+
+가. 경기 방식
+경기의 종목 구분은 Division 이라 한다.
+각각의 경기를 Round라고 부른다. 
+각각의 Round는 여러 개의 Heat(조)로 구성된다.
+
+모든 Heat는 4~8명이 한 조를 이루고 과반수 이상이 다음 라운드에 진출한다.
+각 조의 경기시간은 예선 10분 본선 15분(또는 20분)이며 참가자는 10분전에 준비 완료하여 대기한다. 
+배정된 선수가 본인의 Heat 시간에 불참했을 경우에도 경기는 예정된 시간에 진행된다.
+파도 횟수 제한은 경기 당일 파도 사항에 따라 대회본부에서 결정하며 대회 당일 공지할 수 있다. 
+별도로 정하지 않은 사항은 대회운영위원 및 심판위원회에서 결정한다.
+
+
+나. 심판구성
+심판은 5명의 채점심판과 1명의 헤드심판으로 구성된다.
+대회전 심판교육에 참가하지 않은 심판과 갱신되지 않은 심판은 심사 할수 없다.
+
+
+다. 채점방법
+경기시작 - 1회 사이렌신호 이후 라이딩 부터 점수가 인정된다.
+경기종료 - 2회 사이렌신호 이전의 테이크오프까지 점수가 인정된다.
+채점은 Heat에서 선수가 획득한 모든 라이딩 점수 중 가장 높은 두 개의 점수를 합산되는 방식을 취한다.
+
+
+라.벌점
+채점심판 과반에 의하여 제기되고 헤드심판에 의해 결정된다.
+채점심판 과반에 의하여 제기되고 헤드심판에 의해 결정된 반칙행위 판정이 2회일 경우, 실격 처리된다.
+다른 선수 라이딩 방해시 해당 Heat에서 본인 획득한 점수 중 차점의 절반을 감점한다.
+레쉬가드 잘 못 착용시 실격 처리된다.
+경기시작 1회 사이렌신호 이전에 라이딩을 시작할 경우 실격 처리된다.
+
+
+마. 방해에 대한 규정
+기본적으로 파도의 피크에 가까이 위치한 서퍼에게 우선권이 있다.
+방해는 우선권을 가진 선수의 라이딩 점수에 조금이라도 좋지 않은 영향을 준다면 채점심판 과반에 의해 제기되고 헤드심판에 의해 성립된다.
+각종 인터페어런스(스네이킹,패들링 방해)에 의한 방해도 점수에 영향이 있을 경우에도 방해에 성립된다.
+
+
+바. 이의제기
+선수는 어떤한 경우에도 심판에게 직접 이의제기를 할 수 없다.
+경기 종료 후 30분 이내 대회운영본부에 서면으로 작성하여 제출 해야 한다.
+선수는 채점된 점수에 대한 이의제기를 할 수 없다.
+선수는 반칙(드롭)의 대한 이의제기는 할 수 없다.
+
+
+사. 주요설명
+심판은 선수의 주요기술과 연결기술에 대한 점수를 0.1~10.0 까지 스케일에 따라 제한된 파도 갯수안에 라이딩을 채점 기록한다.
+심판은 매 Heat마다 가장 난이도가 높고 예술성이 있는 주요기술과 연결기술을 선보인 라이딩에는 10.0의 점수를 줄 수 있다.
+평가 등급에 따라 Bad Wave (0.1~1.9) Poor Wave (2.0~3.9) Average Wave (4.0~5.9) Good Wave (6.0~7.9) Excellent Wave (8.0~10.0) 로 구분하여 채점 가능하다.
+
+각라운드 / 각히트 마다 주어진 시간내에 그 Heat에 속한 선수가 얼만큼의 점수를 받는가에 따른 순위를 결정하여 다름 라운드로 진출하는 방식으로 각 히트별 상대평가로 볼 수 있다.
+</textarea>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+                    
+                    
+                    <div class="col-lg-12">
+                        <p class="text-faded c_black">
+						<strong style="color:red;">※ 종목당 중복 출전은 불가능합니다.</strong><br>
+						※ 주니어부에 해당하는 연령의 선수는 다른 종목에 출전 가능합니다.<br>
+						※ 국내 거주 외국인이 참가 신청 등록을 할 경우, 현장에서 외국인등록증 제시 必<br>
+						</p>
+                    </div>
+                </div>
+                
+            </div>
+
+		</section>
+
+        <section style="padding-top:0px;">
+
+            <div class="container">
+            
+                <div class="row">
+                
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">대회 시상</span></h2>
+                        <hr class="primary">
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <p class="text-faded c_black">⊙ 전체 상금 현금 <span style="color:#ff6666;font-weight: 600;">30,800,000원</span>, 비기너부와 주니어부는 상품제공</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="container">
+            
+                <div class="row">
+                
+                    <table class="whiteTable">
+						<tbody>
+							<tr>
+								<th>종목구분</th>
+								<th>성별</th>
+								<th>1위</th>
+								<th>2위</th>
+								<th>3위</th>
+							</tr>
+							<tr>
+								<td rowspan="2">숏보드 프로</th>
+								<td>남</td>
+								<td rowspan="2">300만원</td>
+								<td rowspan="2">150만원</td>
+								<td rowspan="2">100만원</td>
+							</tr>
+							<tr>
+								<td>여</td>
+							</tr>
+							<tr>
+								<td rowspan="2">롱보드 프로</th>
+								<td>남</td>
+								<td rowspan="2">300만원</td>
+								<td rowspan="2">150만원</td>
+								<td rowspan="2">100만원</td>
+							</tr>
+							<tr>
+								<td>여</td>
+							</tr>
+							<tr>
+								<td rowspan="2">숏보드 오픈</th>
+								<td>남</td>
+								<td rowspan="2">100만원</td>
+								<td rowspan="2">70만원</td>
+								<td rowspan="2">50만원</td>
+							</tr>
+							<tr>
+								<td>여</td>
+							</tr>
+							<tr>
+								<td rowspan="2">롱보드 오픈</th>
+								<td>남</td>
+								<td rowspan="2">100만원</td>
+								<td rowspan="2">70만원</td>
+								<td rowspan="2">50만원</td>
+							</tr>
+							<tr>
+								<td>여</td>
+							</tr>
+							<tr>
+								<td rowspan="2">비기너부</th>
+								<td>남</td>
+								<td rowspan="3">상품</td>
+								<td rowspan="3">상품</td>
+								<td rowspan="3">상품</td>
+							</tr>
+							<tr>
+								<td>여</td>
+							</tr>
+							<tr>
+								<td>주니어부</th>
+								<td>통합</td>
+							</tr>
+						</tbody>
+					</table>
+                    
+                    
+                    <div class="col-lg-12">
+                        <p class="text-faded c_black">
+						※ 모든 수상자에게 트로피 수여
+						</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+        <!-- 섹션2 -->
+
+        <!-- 섹션4 -->
+        <section class="bg-dark1" style="background-color: #484848; color: white;" id="{$layout_info->menu_section_2}">
+        
+            <div class="container text-center">
+            
+                <div class="call-to-action">
+					<h2 class="section-heading"><span class="sec_title_bold">참가신청</span><div class="span12 eng-txt" style="font-size:21px; text-align:center; margin-top:10px">REGISTRATION</div></h2>
+                    <hr class="light">
+                </div>
+
+				<div style="text-align:center; margin-top:26px;font-size:15px;">
+2019 양양서핑페스티벌은 대회에 출전하시는 분들과 행사에 참가하시는 갤러리 모두 참가 또는 참관 신청을 하셔야 합니다.<br>모든 참가/참관자에게는 동일한 참가경품이 제공 되며 행사장내 시설을 자유롭게 즐기실 수 있습니다.<br>
+또한 입장권 확인을 통해 뮤직페스티벌 공연 시 우선적으로 정해진 Zone의 입장이 가능합니다.<br><br>온라인 <strong>참가 신청 마감일 : 2019년 10월 06일(일) 24:00시까지</strong><br>참관자에 한해서 현장등록 가능합니다.<br><br>
+
+Yang-yang Surfing Festival 2019 requires registration of both Participating Surfer and Observing Gallery.<br>
+All participants/observers are given the same participating sourvenir and you will be able to enjoy the facilities in the festival area.<br>
+Also, the admission pass allows you to enter a designated Zone during the Music Festival.<br><br>
+
+Online registration is available until 24:00 of October 6, 2019.<br>
+On-site registration is limited to Observers only.<br>
+During the Festival, Observers can register On-Site at the Registration Desk.<br>
+
+				</div>
+                
+            </div>
+<?
+$datetime = date('Y-m-d');
+
+include __DIR__."/../../userAdd/db.php";
+
+
+?>
+
+		<div class="container">
+
+			<!--div class="rowFrm" style="margin-top:20px"-->
+             <div class="row" style="margin-top:20px">
+				<form name="frmRes" id="frmRes" method="post" action="/userAdd/yangfeSave.php" target="ifrmResize" autocomplete="off">
+                
+                    <div class="col-md-6 col-sm-6">
+
+						<label for="SCV002">신청구분 Category</label>
+						<select name="userGubun" id="userGubun" style="width:100%; display:inline-block; height:40px">
+							<option value="참관">참관 Observer</option>
+							<?if($datetime <= "2019-10-06"){?>
+							<option value="비기너">비기너 Lower Class</option>
+							<option value="롱보드(오픈)">롱보드(오픈) Long-Board(Open)</option>
+							<option value="숏보드(오픈)">숏보드(오픈) Short-Board(Open)</option>
+							<option value="롱보드(프로)">롱보드(프로) Long-Board(Pro)</option>
+							<option value="숏보드(프로)">숏보드(프로) Short-Board(Pro)</option>
+							<option value="주니어">주니어 Junior</option>
+							<?}?>
+						</select>
+					
+
+						<label for="SCV003">소속 (동호회, 팀 서핑샵 등 소속 입력) Name of Organization</label>
+						<input type="text" id="userClub" name="userClub" style="width:100%; display:inline-block">
+						
+						<label for="SCV004">이름/ 성별 Name / Sex</label>
+						<input type="text" id="userName" name="userName" style="width:50%; display:inline-block">
+						<select name="userSex" id="userSex" style="width:30%; display:inline-block; height:40px">
+							<option value="남">남(Male)</option>
+							<option value="여">여(Female)</option>
+						</select>
+
+						<label for="SCV006">연락처 Tel number</label>
+						<input type="text" id="userPhone1" name="userPhone1" maxlength="3" style="width:21%; display:inline-block"> - <input type="text" id="userPhone2" name="userPhone2" maxlength="4" style="width:25%; display:inline-block"> - <input type="text" id="userPhone3" name="userPhone3" maxlength="4" style="width:25%; display:inline-block">
+
+						<label for="SCV004">차량번호 car number (ex.12가 1234)</label>
+						<input type="text" id="userCarnum1" name="userCarnum1" maxlength="5" style="width:21%; display:inline-block">&nbsp;&nbsp;
+						<input type="text" id="userCarnum2" name="userCarnum2"maxlength="14"  style="width:25%; display:inline-block"><br>
+						(조기 마감될 수 있습니다.It may close early.)
+					</div>
+					<div class="col-md-6 col-sm-6">
+
+						<label for="">개인정보 수집 안내 Personal Information to Use Guidelines</label>
+						<textarea name="" id="" style="width:100%; height:145px; font-size:12px; color:#797979; line-height:22px" readonly="readonly">2019 양양 서핑 페스티벌 조직위원회(이하 ＂조직위"라고 함)는 원활한 대회 운영 및 보험 가입을 위해 접수 시 아래와 같은 최소한의 개인정보를 필수 항목으로 수집하고 있습니다.
+Yang-yang Surfing Festival Organizing Committee (YSFOC) is collecting personal information only for YANG-YANG SURFING FESTIVAL 2019 below.
+
+■ 수집하는 개인정보의 항목 (List of personal information)
+>참가접수(Register)< : 이름(Name), 성별(Sex), 연락처(Contact Number), 소속(Affiliation)
+
+■ 개인정보의 보유 및 이용기간(Period of possession and use of personal information)
+신청자의 개인정보는 원칙적으로 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다.
+단, 조직위는 관계법령의 규정에 의하여 보존할 필요가 있는 경우에는 아래와 같이 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다.
+After the personal information, in principle, personal information collection and use objective has been achieved without delay to destroy the information.
+If YSFOC once that need to be preserved in accordance with the provisions of relevant laws and regulations,
+keep your personal information for a certain period specified in the relevant laws and regulations as follows.
+Ο 보존 항목 (List of preservability) : 이름(Name), 성별(Sex), 전화번호(Contact Number)
+Ο 보존 근거 (Basis of preservability) : 국고보조금 정산 지침, 증빙 서류 구비 (Guidelines for balance accounts of subsidy)
+Ο 보존 기간(Period of preservability) : 5년 (5 years)
+
+■ 참가자 유의사항(Note for participants)
+가. 참가신청서 작성 시 허위정보 및 타인의 정보를 기재하지 않습니다. 
+Do not write false information and other information for Register.
+나. 본 대회의 원활한 진행과 안전을 위하여 진행․안전요원의 지시에 반드시 따릅니다.
+Always follow the instructions to proceed marshal and safety guard to the safety and smooth progress of the surfing event.
+다. 본 대회는 행사보험이 가입되어 있으나 개인 부주의, 과실로 발생한 사고에 대해서는 책임지지 않습니다. 
+This event has insurance subscribed, but it is not responsible for any accident caused by personal negligence.
+라. 미취학 아동은 반드시 보호자 또는 인솔자의 동의가 필요하며, 동의 없이 발생한 사고에 대해서는 책임지지 않습니다.
+Preschoolers must require the consent of their parents or guardian, YSFOC is not responsible for accidents that occurred without parental consent.
+마. 행사장 내에서는 절대 쓰레기를 투기하지 않습니다.
+It is forbidden to drop litter within the venue.
+바. 본 대회에서 촬영된 사진의 초상권은 주최 측에 있습니다.
+Portrait rights of photos in the festival are to YSFOC.
+</textarea>
+						<label for="agree"><input type="checkbox" id="agree" name="agree" value="1" style="display:inline-block;"> <span style="color:#efefef; font-size:13px">개인정보 수집 내용에 동의합니다. I agree to the collection of personal information.<!-- (I agree with the collection of personal information details.)--></span></label>
+
+						<label for="">비고 (Note)</label>
+						<textarea name="etc" id="etc" style="width:100%; height:80px"></textarea>
+						<input type="hidden" id="resparam" name="resparam" value="yangfeI" />
+						
+						
+						<p style="text-align: center;">
+						<?if($datetime <= "2019-10-11"){?>
+						<input type="button" value="등록 Register" style="width:100%;background:#37b8bd;color:#fff" onclick="fnSave();">
+						<?}else{?>
+						온라인 사전 등록이 마감되었습니다.
+						<?}?>
+						</p>
+					</div>
+				</form>  					
+			</div>
+
+			<div class="row" style="margin-top:30px">
+				<div style="border:1px solid #ccc; padding:20px; border-radius:4px;line-height:24px;font-size:15px;">
+					<p><strong>알아두세요! (Notice)</strong></p>
+					<ul style="margin-bottom:0;">
+						<li>● 신청대상 : 대한민국 누구나 (단, 미성년 출전의 경우 보호자의 동의가 반드시 필요 합니다.)				</li>
+						<li>● 비기너 : 2018년 1월1일 이후 입문자에 한합니다. 서핑보드의 구분은 없으며 심판과 운영진의 판단에 의해<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;초급수준 이상으로 판단 될 경우 출전 자격이 상실 될 수 있습니다. (2018년 이전의 대회 수상자는 참가 할 수 없습니다.)
+						</li>
+						<li>● 롱보드(오픈) : 9’이상의 롱보드만 출전 가능 합니다. SUP는 해당 되지 않습니다.
+						</li>
+						<li>● 숏보드(오픈) : 6’6” 이하의 숏보드만 출전 가능 합니다.
+						</li>
+						<li>● 롱보드(프로) : 9’이상의 롱보드만 출전 가능 합니다. SUP는 해당 되지 않습니다.
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;타 대회 수상경력이 있거나 업체의 협찬을 받고 있는 선수.
+						</li>
+						<li>● 숏보드(프로) : 6’6” 이하의 숏보드만 출전 가능 합니다.
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;타 대회 수상경력이 있거나 업체의 협찬을 받고 있는 선수.
+						</li>
+						<li>● 주니어부 : 주니어부는 남녀 통합
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2004년 이후 출생자(중학생까지) 선수는 보호자의 승낙에 의한 서명날인을 받은 자에 한하여 참가할 수 있습니다.
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;다운로드 후 이메일로 보내주세요.
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일(hyeju@anpcomm.com) <a href="https://surfenjoy.cdn3.cafe24.com/yangfe2/2019.hwp" target="_blank" style="text-decoration:underline; color:#ff6600">[보호자 동의서] 다운로드 ([AGREEMENT] DOWNLOAD)</a>
+						</li>
+						<li>● 신청내용 : 대회참가 (비기너, 롱보드(오픈), 숏보드(오픈), 롱보드(프로), 숏보드(프로), 주니어)
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;대회참관(Observer)
+						</li>
+						<li>● <strong>참가비용 : 대회 참가자/참관자 4만원(예금주 중앙일보(주). KEB하나은행 109-910025-52604)</strong>
+						</li>
+						<li>● <strong>참가비/참관비 기본제공 사항</strong>
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 중식 2회(토, 일)
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 페스티벌 기념 후드티 및 모자
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 기타 기념품
+						</li>
+						<li>● 접수기간
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 참관 : 2019년 10월 12일(토) 당일까지 (단, 기념품 수량 조기 마감될 수 있습니다.)
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 참가 : 2019년 10월 06일(일) 24:00시까지 (단, 선착순 조기 마감될 수 있습니다.)
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;대진표 확정 등 운영 위해 1주일 전 마감됩니다.
+						
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;※ 참관, 참가 모두 현장접수 운영
+						</li>
+						<li>● 참가문의 : 02-512-9879 <!--02-456-1500--> (참가비 관련 문의)
+						</li>
+						<li>● 환불 안내 : 환불은 2019년 10월 05일(토) 마감이전 신청한 접수자에 한해 전액환불 가능합니다.
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2019년 10월 5일(토) 마감이후 환불없이 불참처리 됩니다.
+						<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일(hyeju@anpcomm.com)로 접수자명(입금자명)과 환불 받을 계좌 정보(은행명, 계좌번호)을 보내주시기 바랍니다.<br><br>
+						</li>
+
+
+<li>
+● Subject of Applicants: Any surfers from South Korea (Please keep in mind, surfers under 18 must have consent agreement of their parents/guardians)<br>
+● Beginner League: Only beginners who started surfing after January 1, 2018. There is no distinction between surfboards, and surfers may be disqualified of entry according to the judgement of the referee and the host of the competition.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Competition award winners before 2018 cannot participate.)<br>
+● Long Board (Open): Only longboards of 9 'or larger are allowed to participate. SUP is not applicable.<br>
+● Short Board (Open): Only 6'6 ”or less short boards are allowed to participate.<br>
+● Long Board (Pro): Only longboards of 9 'or larger can participate. SUP is not applicable. Surfers who have won an award from other competitions or are sponsored by a company.<br>
+● Short Board (Pro): Only 6'6 ”or less short boards are allowed to play. Surfers who have won an award from other competitions or are sponsored by the company.<br>
+● Junior League: Junior section is unisex<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Athletes born after 2004 (up to middle school) can participate only if they have their consent agreement of parents/guardians in the form of signed agreement below. Please download and e-mail it to : Email. hyeju@anpcomm.com <a href="https://surfenjoy.cdn3.cafe24.com/yangfe2/2019.hwp" target="_blank" style="text-decoration:underline; color:#ff6600">([AGREEMENT] DOWNLOAD)</a><br>
+● Category: Competition Entrance (Beginner, Long Board (Open), Short Board (Open), Long Board (Pro), Short Board (Pro), Junior) / Observer<br>
+● Registration Fee: KRW 40,000 for Participant / Observer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Bank Name: KEB Hana Bank <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Beneficiary: Jeongang Ilbo Co., Ltd. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Account No: 109-910025-52604<br>
+● Benefit: Participation Fees include - 2 Lunches (Sat, Sun), Festival Souvenir Hoodies and Hats, and Other Souvenirs.<br>
+● Due Date: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Participant : Online registration is available until October 6, 2019. (Early closing of registration may occur based on the arrival of application)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Observer : Online and On-site registration available until October 12, 2019 (Early closing of souvenirs may occur based on the arrival of application)<br>
+  ※ On-site registration is limited to Observers only.<br>
+● Participation Inquiries: +82-2-512-9879<br>
+● Cancellation & Refund Policy: Refunds are fully refundable to applicants who applied before the deadline of October 5 (Sat), 2019.<br>
+● No refunds will be made after October 5 (Sat), 2019<br>
+● Please send an email to hyeju@anpcomm.com with your name (the name of the sender) and the account information (bank name and account number) for the refund.<br>
+</li>
+
+
+
+					</ul>
+				</div>
+			</div>
+
+		</div>
+        </section>
+        <!-- 섹션4 -->
+
+
+        <!-- 섹션2 -->
+        <section id="뮤직페스티벌" style="padding-bottom:0px;">
+        
+            <div class="container">
+            
+                <div class="row">
+                
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">뮤직페스티벌</span><div class="span12 eng-txt" style="font-size:21px; text-align:center; margin-top:10px">MUSIC FESTIVAL</div></h2>
+                        <hr class="primary">
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="container">
+            
+                <div class="row">
+                    <table class="whiteTable">
+						<colgroup>
+							<col width="25%" />
+							<col width="25%" />
+							<col width="25%" />
+							<col width="25%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>일자</th>
+								<th>시간</th>
+								<th>라인업</th>
+								<th>비고</th>
+							</tr>
+							<tr>
+								<td rowspan="3">10월 11일(금)</th>
+								<td>15:00 ~ 18:00</td>
+								<td>창현거리노래방</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>18:00 ~ 18:40</td>
+								<td>걸그룹 네온펀치</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>18:40 ~ 19:30</td>
+								<td>마이티마우스</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td rowspan="5">10월 12일(토)</th>
+								<td>17:00 ~ 개회식</td>
+								<td>오로라 출신 윤희</td>
+								<td>트로트 사전공연</td>
+							</tr>
+							<tr>
+								<td rowspan="4">18:00 ~ 20:00</td>
+								<td>미스트롯 하유비</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>지조</td>
+								<td>쇼미더머니 인기 래퍼</td>
+							</tr>
+							<tr>
+								<td>슈퍼밴드 호피폴라</td>
+								<td>슈퍼밴드 1등 밴드</td>
+							</tr>
+							<tr>
+								<td>DJ 이재원</td>
+								<td>HOT 멤버</td>
+							</tr>
+						</tbody>
+					</table>
+
+                    <!--div class="col-lg-12">
+                        <p class="text-faded c_black">
+						※ 상기 일정은 경기 당일의 파도 상황에 따라 변경 될 수 있습니다.
+						</p>
+                    </div-->
+                    
+                </div>
+                
+				<div class="row" style="text-align:center;"><img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/LINEUP.jpg" alt="" class="" style="vertical-align:middle;margin-bottom:20px; max-width:100%; height:auto"></div>
+            </div>
+            
+        </section>
+        <!-- 섹션2 -->
+        
+        <!-- 섹션3 -->
+        <section class="" style="padding-bottom:0px;" id="부대행사">
+        
+            <div class="container">
+            
+                <div class="row">
+                
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">부대행사</span></h2><div class="span12 eng-txt" style="font-size:21px; text-align:center; margin-top:10px">SIDE EVENT</div>
+                        <hr class="primary">
+                    </div>
+    
+                    <div class="row" style="text-align:center;"><img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/SURF.jpg" alt="" class="" style="vertical-align:middle;max-width:100%; height:auto"></div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+        <!-- 섹션3 -->
+        
+        <!-- 섹션4 -->
+        <section class="bg-dark" style="background-color: #484848; padding:20px;">
+        
+            <div class="container text-center">
+            
+
+				<div style="margin-top:40px">
+					<table>
+						<tbody>
+							<tr>
+								<th style="border-bottom:1px solid #fff">서핑 초급<br>유료 강습</th>
+								<td style="border:1px solid #e2e2e2; padding:10px; text-align:left">
+									<ul>
+										<li>서핑을 접해보지 못한 일반인들을 위한 전문 강사의 서핑 초급 강습</li>
+										<li>온라인 및 현장 신청을 통해 <strong>선착순</strong>으로 진행</li>
+										<li><strong>서핑 강습 이용금액 : 7만원</strong> (서핑보드, 슈트, 샤워 포함)</li>
+										<li><strong>서핑 초급강습 참가자 접수</strong><br>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;온라인 접수 : 서프엔조이 웹사이트에서 서핑강습 사전접수<br>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;현장 접수 : 당일 09시부터 현장에서 접수 (선착순으로 조기마감 될 수 있습니다.)</li>
+										<li>서핑 초급강습 일정 : 오전 – 10시 ~ 12시 (2시간) / 오후 – 15시 ~ 17시 (2시간)</li>
+										<li>서핑 초급강습은 당일 파도 상황에 따라 변경될 수 있으며, 기상 상황에 따라 취소될 수 있습니다.</li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+            
+                <div class="call-to-action">
+                    <a href="https://actrip.co.kr/surfres?seq=69" target="_blank" class="page-scroll btn btn-default btn-xl sr-button">서핑초급강습 신청하기</a> 
+                </div>
+                
+            </div>
+            
+        </section>
+        <!-- 섹션4 -->
+        
+        <!-- 섹션3 -->
+        <section class="" style="padding-bottom:0px;" id="{$layout_info->menu_section_4}">
+        
+            <div class="container">
+            
+                <div class="row">
+                
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading"><span class="sec_title_bold">셔틀버스 안내</span></h2><div class="span12 eng-txt" style="font-size:21px; text-align:center; margin-top:10px">SHUTTLE BUS</div>
+                        <hr class="primary">
+                    </div>
+    
+                     <div class="row" style="text-align:center;"><img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/BUS.jpg" alt="" class="" style="vertical-align:middle;max-width:100%; height:auto"></div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </section>
+        <!-- 섹션3 -->
+        
+        <!-- 섹션4 -->
+        <section class="bg-dark" style="background-color: #484848; padding:20px;">
+        
+            <div class="container text-center">
+            
+                <div class="call-to-action">
+                    <a href="https://actrip.co.kr/surfbus" target="_blank" class="page-scroll btn btn-default btn-xl sr-button">셔틀버스 신청하기</a>
+                </div>
+                
+            </div>
+            
+        </section>
+        <!-- 섹션4 -->
+        
+        <!-- 섹션7 : SPONSOR -->
+        <section style="padding-top:35px;padding-bottom:30px;">
+        
+            <div class="container root_contact">            
+                <div class="row" style="text-align:center;"><img src="https://surfenjoy.cdn3.cafe24.com/yangfe2/sp_list.jpg?v=1" alt="" class="" style="vertical-align:middle;max-width:100%; height:auto"></div>
+            </div>
+            
+        </section>
+        <!-- 섹션7 -->
+
+        </div>
+        <!-- 전체 섹션-->
+        
+        <div class="container">
+            {$content}
+        </div>
+        
+    </block>
+    <!-- //메인 레이아웃 종료-->
+ 
+        
+        
+    <!-- 푸터 시작 --> 
+    <div class="container-fruid root_footer" cond="$layout_info -> root_footer == 'y'">
+         <!-- sns -->
+        <div class="root_sns" cond="$layout_info -> root_sns == 'y'">
+        
+            <div class="sns_o">
+                <a href="{$layout_info->sns_url_1}" target="_blank">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+            </div>
+            
+            <div class="sns_o">
+                <a href="#" target="_blank">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </div>
+            
+            <div class="sns_o">
+                <a href="#" target="_blank">
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+            </div>
+            
+        </div>
+        <!-- sns -->
+        
+        <!-- 저작권 -->
+        <ul class="root_copyright">
+            <p>Copyright ⓒ 2017 <span style="font-weight:bold;">Yang-yang surfing festival 2019</span> All rights reserved</p>
+        </ul>
+        <!-- 저작권 -->
+        
+    </div>
+    <!-- 푸터 종료 --> 
+    
+</body>
+
+
+
+<!-- 모달로그인 시작 -->
+<div id="modal-login" class="modal fade" cond="!$is_logged">
+	<include target="./custom/custom_login_modal.html" cond="in_array('custom_login_modal',$li->custom)" />
+	<div class="modal-dialog modal-sm" cond="!in_array('custom_login_modal',$li->custom)">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">LOG IN</h4>
+                <i class="fa fa-unlock-alt fa-3x" aria-hidden="true"></i>
+			</div>
+			<div class="modal-body">
+				<div class="form-group socialxe-login" cond="$li->socialxe_login == 'Y'">
+					<a href="{getSiteUrl($domain,'', 'mid', $mid, 'vid', $vid, 'act', 'dispSocialxeLogin', 'provider', twitter, 'mode', 'socialLogin', 'query', getNotEncodedFullUrl('', 'mid', $mid))}" class="btn btn-info btn-block"><i  class="fa fa-twitter" area-hidden="true"></i> Twitter</a>
+					<a href="{getSiteUrl($domain,'', 'mid', $mid, 'vid', $vid, 'act', 'dispSocialxeLogin', 'provider', facebook, 'mode', 'socialLogin', 'query', getNotEncodedFullUrl('', 'mid', $mid))}" class="btn btn-primary btn-block"><i class="fa fa-facebook-official" area-hidden="true"></i> Facebook</a>
+					 <a href="{getSiteUrl($domain,'', 'mid', $mid, 'vid', $vid, 'act', 'dispSocialxeLogin', 'provider', google, 'mode', 'socialLogin', 'query', getNotEncodedFullUrl('', 'mid', $mid))}" class="btn btn-danger btn-block"><i class="fa fa-google-plus" area-hidden="true"></i> Google+</a>
+					 <p class="login-hr"><span>{$lang->ss_or}</span></p>
+				</div>
+				
+                <!-- 오류메세지 창 -->
+                <div id="error_msg" cond="$XE_VALIDATOR_MESSAGE">
+                    <p class="message {$XE_VALIDATOR_MESSAGE_TYPE}">{$XE_VALIDATOR_MESSAGE} <button type="button" class="close" data-dismiss="alert">×</button></p>
+                </div>
+
+				<form action="./" method="post" ruleset="@login">
+					{@$member_config=MemberModel::getMemberConfig();$identifierForm->name=$member_config->identifier;}
+					<input type="hidden" name="act" value="procMemberLogin" />
+					<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+					<div class="form-group"><input type="<!--@if($identifierForm->name=='email_address')-->email<!--@else-->text<!--@end-->" name="user_id" id="uid" value=""  placeholder="<!--@if($identifierForm->name=='email_address')-->{$lang->email}<!--@else-->{$lang->user_id}<!--@end-->" class="form-control" required /></div>
+					<div class="form-group"><input type="password" name="password" id="upw" value="" placeholder="{$lang->password}" class="form-control" required /></div>
+					<div class="checkbox">
+						<label for="keep_signed" onClick="jQuery('#modal-login input[name=\'keep_signed\']').click();"><input type="checkbox" name="keep_signed" value="Y" onClick="if(this.checked) return confirm('{$lang->about_keep_signed}');" /> {$lang->keep_signed}</label>
+					</div>
+					
+					<button type="submit" class="btn btn-{$colorset} btn-block"><i class="fa fa-sign-in" area-hidden="true"></i> {$lang->cmd_login}</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<div class="btn-group btn-group-justified">
+					<a cond="$li->signup_on_login_modal!='Y'" href="{getUrl('act','dispMemberSignUpForm')}" class="btn btn-default btn-sm"><i class="fa fa-user-plus" area-hidden="true"></i> {$lang->cmd_signup}</a>
+					<a href="{getUrl('act','dispMemberFindAccount')}" class="btn btn-default btn-sm"><i class="fa fa-question-circle" area-hidden="true"></i> {$lang->cmd_find_member_account}</a>
+					<!--// <a href="{getUrl('act','dispMemberResendAuthMail')}" class="btn btn-default">{$lang->cmd_resend_auth_mail}</a> -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 모달로그인 종료 -->
+
+<iframe id="ifrmResize" name="ifrmResize" src="/userAdd/yangfeSave.php" style="width:800px;height:400px;display:none;"></iframe>

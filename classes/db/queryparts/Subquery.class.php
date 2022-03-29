@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts
  * @version 0.1
  */
@@ -33,7 +33,7 @@ class Subquery extends Query
 	 * @param string $join_type
 	 * @return void
 	 */
-	function __construct($alias, $columns, $tables, $conditions, $groups, $orderby, $limit, $join_type = null)
+	function Subquery($alias, $columns, $tables, $conditions, $groups, $orderby, $limit, $join_type = null)
 	{
 		$this->alias = $alias;
 

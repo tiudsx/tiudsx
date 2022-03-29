@@ -1,6 +1,6 @@
 /**
  * @file common.js
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief 몇가지 유용한 & 기본적으로 자주 사용되는 자바스크립트 함수들 모음
  **/
 
@@ -176,8 +176,6 @@ if(typeof window.XE == "undefined") {
 
 	/* jQuery(document).ready() */
 	(function($, global){
-		var isChrome = window.navigator.userAgent.indexOf('Chrome/') > -1;
-
 		$(function() {
 		$('a[target]').each(function() {
 			var $this = $(this);
@@ -221,10 +219,8 @@ if(typeof window.XE == "undefined") {
 					$this.attr('rel', 'noopener');
 				}
 
-				if(!isChrome) {
-					e.preventDefault();
 					blankshield.open(href);
-				}
+				e.preventDefault();
 			}
 		});
 
@@ -403,18 +399,11 @@ if(typeof window.XE == "undefined") {
 		if(typeof target == 'undefined') target = '_blank';
 		if(typeof attribute == 'undefined') attribute = '';
 
-		var win;
-
 		if(!window.XE.isSameHost(url)) {
-			win = window.open(url, target, attribute);
-			if(win) {
-				win.opener = null;
-			}
+			window.blankshield.open(url, target, attribute);
 		} else {
-			win = window.open(url, target, attribute);
-			if(win) {
-				win.focus();
-			}
+			var win = window.open(url, target, attribute);
+			win.focus();
 			if(target != '_blank') winopen_list[target] = win;
 		}
 
@@ -1058,8 +1047,7 @@ if(typeof window.XE == "undefined") {
 				win = window.open(href, name, features);
 				if(win) win.focus();
 			} else {
-				win = window.open(href, name, features);
-				if(win) win.opener = null;
+				window.blankshield.open(href, name, features);
 			}
 
 			event.preventDefault();

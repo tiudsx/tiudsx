@@ -1,0 +1,67 @@
+<div class="gpe_wgListADIV" style="<!--@if($widget_info->tab_type == 'none')-->margin-top:-5px;<!--@end-->">
+<table class="gpe_wgListA" cellspacing="0">
+	<tbody>
+	{@$_idx=0}
+	<!--@foreach($widget_info->content_items as $key => $item)-->
+		<tr<!--@if($_idx >= $widget_info->list_count)--> style="display:none"<!--@end-->>
+		<!--@foreach($widget_info->option_view_arr as $k => $v)-->
+			<!--@if($v=='title')-->
+				<!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
+				<td class="board <!--@if($widget_info->list_con_se == 'sideContents')-->sideContents<!--@end-->">
+					<a href="<!--@if($item->contents_link)-->{$item->contents_link}<!--@else-->{getSiteUrl($item->domain, '', 'mid', $item->get('mid'))}<!--@end-->" target="_blank"|cond="$widget_info->new_window">{$item->getBrowserTitle()} /</a>
+				</td>
+				<!--@end-->
+				<!--@if($widget_info->show_category=='Y' && $item->get('category_srl') )-->
+				<td class="category <!--@if($widget_info->list_con_se == 'sideContents')-->sideContents<!--@end-->">
+					<a href="{getSiteUrl($item->domain,'','mid',$item->get('mid'),'category',$item->get('category_srl'))}" target="_blank"|cond="$widget_info->new_window">[{$item->getCategory()}]</a>
+				</td>
+				<!--@elseif($widget_info->show_category=='Y' && !$item->get('category_srl') )-->
+				<td class="category <!--@if($widget_info->list_con_se == 'sideContents')-->sideContents<!--@end-->">
+					<span style="color:#7c7c7c;">[DEFAULT]</span>
+				</td>
+				<!--@end-->
+				<td class="title <!--@if($widget_info->list_con_se == 'sideContents')-->sideContents<!--@end-->">
+					<a href="{$item->getLink()}" class="title min481" target="_blank"|cond="$widget_info->new_window">{$item->getTitle($widget_info->subject_cut_size)}</a>
+					<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+					<block cond="!preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">
+					<a href="{$item->getLink()}" class="title max480" target="_blank"|cond="$widget_info->new_window">{$item->getTitle($widget_info->subject_cut_size_m480)}</a>
+					<a href="{$item->getLink()}" class="title max320" target="_blank"|cond="$widget_info->new_window">{$item->getTitle($widget_info->subject_cut_size_m)}</a>
+					</block>
+					<!--@end-->
+					<!--@if($widget_info->show_comment_count=='Y' && $item->getCommentCount())-->
+						<a href="{$item->getLink()}#comment" target="_blank"|cond="$widget_info->new_window" class="replyNum">+{$item->getCommentCount()}</a>
+					<!--@end-->
+					<!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
+						<em class="trackbackNum" title="Trackbacks"><a href="{$item->getLink()}#trackback">{$item->getTrackbackCount()}</a></em>
+					<!--@end-->
+					<!--@if($widget_info->show_icon=='Y')-->
+						<span class="icon">{$item->printExtraImages()}</span>
+					<!--@end-->
+				</td>
+			<!--@end-->
+			<!--@if($v=='nickname')-->
+				<td class="<!--@if($widget_info->list_con_se == 'sideContents')-->sideContents<!--@end-->">
+					<a <!--@if($item->getMemberSrl())-->href="#" onclick="return false;" class="name member_{$item->getMemberSrl()}"<!--@elseif($item->getAuthorSite())-->href="{$item->getAuthorSite()}" onclick="window.open(this.href); return false;" class="name member"<!--@else-->href="#" onclick="return false;" class="name member"<!--@end-->>{$item->getNickName()}</a>
+				</td>
+			<!--@end-->
+			<!--@if($v=='regdate')-->
+				<td class="date <!--@if($widget_info->list_con_se == 'sideContents')-->sideContents<!--@end-->">	
+					<span>{$item->getRegdate("Y-m-d")}</span>
+					<!--<span class="hour">{$item->getRegdate("H:i")}</span>-->
+				</td>
+			<!--@end-->
+		<!--@end-->
+		</tr>
+	{@$_idx++}
+	<!--@end-->
+	</tbody>
+</table>
+</div>
+
+<!--prev_next_bottom-->
+<!--@if($widget_info->page_count > 1 && $widget_info->list_count<$_idx)-->
+<ul class="widgetNavigator_GPE" style="<!--@if($widget_info->list_type == 'normal')-->top:-36px;<!--@end-->">
+	<li><span class="wgn_gpe_prev" onclick="content_wgNOVA_prev(jQuery(this).parents('ul.widgetNavigator_GPE').prev('.gpe_wgListADIV'),{$widget_info->list_count})" style="cursor:pointer;" title="{$lang->cmd_prev}"></span></li>
+	<li><span class="wgn_gpe_next" onclick="content_wgNOVA_next(jQuery(this).parents('ul.widgetNavigator_GPE').prev('.gpe_wgListADIV'),{$widget_info->list_count})" style="cursor:pointer;" title="{$lang->cmd_next}"></span></li>
+</ul>
+<!--@end-->

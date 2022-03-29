@@ -1,0 +1,29 @@
+<!--상단 모바일버튼-->
+<div class="layG_munu_MobileBtn layG_iecss3">	
+	<a href="https://www.instagram.com/surfenjoy.sc" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/icon/top_sns01.png?v=1" style="padding-right:0px;"></a>
+	<a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/icon/kakako.png?v=1" style="padding-right:0px;width: 32px; height: 29px;"></a>
+	<a href="https://blog.naver.com/surfenjoy" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/icon/top_sns03.png?v=1" style="padding-right:0px;"></a>
+	<i class="fa fa-bars" onclick="jQuery('.layG_mobileM_G_bg').on('touchmove', false); jQuery('.layG_mobileM_G_bg, .layG_mobileM_G').fadeToggle(); jQuery('html').addClass('sb-scroll-lock');"></i>
+</div>
+<!--하단 모바일버튼-->
+<!--@if(Mobile::isMobileCheckByAgent())-->
+<div class="layG_munu_MobileBtn_b layG_iecss3" onclick="jQuery('.layG_mobileM_G_bg').on('touchmove', false); jQuery('.layG_mobileM_G_bg, .layG_mobileM_G').fadeToggle(); jQuery('html').addClass('sb-scroll-lock');"><i class="fa fa-bars"></i></div>
+<script>
+var j_mtop = jQuery;
+j_mtop(document).ready(function(){
+	// hide #back-top first
+	j_mtop(".layG_munu_MobileBtn_b").hide();
+
+	// fade in #back-top
+	j_mtop(function () {
+		j_mtop(window).scroll(function () {
+			if (j_mtop(this).scrollTop() > 50) {
+				j_mtop('.layG_munu_MobileBtn_b').show();
+			} else {
+				j_mtop('.layG_munu_MobileBtn_b').hide();
+			}
+		});
+	});
+});
+</script>
+<!--@end--> 

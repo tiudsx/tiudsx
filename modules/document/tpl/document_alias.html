@@ -29,7 +29,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td rowspan="{count($aliases)+1}">{$oDocument->getTitle()|noescape}</td>
+				<td rowspan="{count($aliases)+1}">{$oDocument->getTitle()}</td>
 				{@ $bFirst = true; }
 				<!--@foreach($aliases as $val)-->
 				<!--@if(!$bFirst)-->

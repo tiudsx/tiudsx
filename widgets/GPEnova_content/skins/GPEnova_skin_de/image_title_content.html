@@ -1,0 +1,93 @@
+<div class="gpe_wgZineADIV">
+<ul class="gpe_wgZineA">
+{@$_idx=0}
+	<!--@foreach($widget_info->content_items as $key => $item)-->
+	<li<!--@if($_idx >= $widget_info->list_count)--> style="display:none"<!--@end-->>
+        <!--thumbArea-->
+		<span class="thumbArea" style="width:{$widget_info->thumbnail_width+2}px;margin-right:-{$widget_info->thumbnail_width}px;">
+            <a href="{$item->getLink()}" class="thumb" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px" target="_blank"|cond="$widget_info->new_window">
+				<!--@if($item->getThumbnail())-->
+				<img src="{$item->getThumbnail()}" style="width:{$widget_info->thumbnail_width}px;height:{$widget_info->thumbnail_height}px" alt="thumbnail"/>
+				<!--@else-->
+				<span class="imgNone"></span>
+				<!--@end-->
+				<!--
+				@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())
+				<span class="board">{$item->getBrowserTitle()}</span>
+				@end
+				//BrowserTitle hide-->
+				<!--@if($widget_info->show_category=='Y' && $item->getCategory())-->
+				<span class="category_bg"></span>
+				<span class="category">{$item->getCategory()}</span>
+				<!--@end-->
+            </a>
+        </span>
+		<!--//thumbArea-->
+	<!--@for($j=0,$c=count($widget_info->option_view_arr);$j<$c;$j++)-->
+       	<!--titleArea-->
+			<!--@if($widget_info->option_view_arr[$j]=='title')-->
+			<p class="titleArea" style="margin-left:{$widget_info->thumbnail_width+11}px;">
+				<!--@if($widget_info->show_browser_title=='Y' && $item->getBrowserTitle())-->
+					<a href="{getSiteUrl($item->domain, '', 'mid', $item->get('mid'))}" class="board" target="_blank"|cond="$widget_info->new_window">{$item->getBrowserTitle()}/</a>
+				<!--@end-->
+				<!--@if($widget_info->show_category=='Y' && $item->get('category_srl') )-->
+					<a href="{getSiteUrl($item->domain,'','mid',$item->get('mid'),'category',$item->get('category_srl'))}" class="category" target="_blank"|cond="$widget_info->new_window">[{$item->getCategory()}]</a>
+				<!--@end-->
+					<a href="{$item->getLink()}" class="title min481" target="_blank"|cond="$widget_info->new_window">{$item->getTitle($widget_info->subject_cut_size)}</a>
+					<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+					<block cond="!preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">
+					<a href="{$item->getLink()}" class="title max480" target="_blank"|cond="$widget_info->new_window">{$item->getTitle($widget_info->subject_cut_size_m_w480)}</a>
+					</block>
+					<!--@end-->
+				<!--@if($widget_info->show_comment_count=='Y' && $item->getCommentCount())-->
+					<a href="{$item->getLink()}#comment" target="_blank"|cond="$widget_info->new_window" class="replyNum" target="_blank"|cond="$widget_info->new_window">+{$item->getCommentCount()}</a>
+				<!--@end-->
+				<!--@if($widget_info->show_trackback_count=='Y' && $item->getTrackbackCount())-->
+					<em class="trackbackNum" title="Trackbacks"><a href="{$item->getLink()}#trackback">{$item->getTrackbackCount()}</a></em>
+				<!--@end-->
+				<!--@if($widget_info->show_icon=='Y')-->
+					<span class="icon">{$item->printExtraImages()}</span>
+				<!--@end-->
+				<!--@if($widget_info->option_view_arr[$j+1]=='regdate')-->
+					<span class="date">{$item->getRegdate("Y-m-d")}</span> 
+					<!-- <span class="hour">{$item->getRegdate("H:i")}</span>-->
+				<!--@end-->
+			</p>
+			<!--@end-->
+       	<!--//titleArea-->
+       	<!--text-->
+			<!--@if($widget_info->option_view_arr[$j]=='content')-->
+			<p class="textArea" style="margin-left:{$widget_info->thumbnail_width+11}px;">
+					{$item->getContent()}
+				<!--@if($widget_info->option_view_arr[$j+1]=='regdate')-->
+					<span class="date">{$item->getRegdate("Y-m-d")}</span> <span class="hour">{$item->getRegdate("H:i")}</span>
+				<!--@end-->
+			</p>
+			<!--@end-->
+       	<!--//text-->
+       	<!--authorArea-->
+			<!--@if($widget_info->option_view_arr[$j]=='nickname')-->
+			<p class="authorArea" style="margin-left:{$widget_info->thumbnail_width+11}px;">
+					<a href="#" onclick="return false;" class="author member_{$item->getMemberSrl()}">{$item->getNickName()},</a>
+				<!--@if($widget_info->option_view_arr[$j+1]=='regdate')-->
+					<span class="date">{$item->getRegdate("Y-m-d")}</span> 
+					<!-- <span class="hour">{$item->getRegdate("H:i")}</span>-->
+				<!--@end-->
+			</p>
+			<!--@end-->
+       	<!--//authorArea-->
+	<!--@end-->
+	</li>
+{@$_idx++}
+<!--@end-->
+</ul>
+</div>
+
+<!--prev_next_bottom-->
+<!--@if($widget_info->page_count > 1 && $widget_info->list_count<$_idx)-->
+<ul class="widgetNavigator_GPE">
+	<li><span class="wgn_gpe_prev" onclick="content_wgNOVA_prev(jQuery(this).parents('ul.widgetNavigator_GPE').prev('.gpe_wgZineADIV'),{$widget_info->list_count})" style="cursor:pointer;" title="{$lang->cmd_prev}"></span></li>
+	<li><span class="wgn_gpe_next" onclick="content_wgNOVA_next(jQuery(this).parents('ul.widgetNavigator_GPE').prev('.gpe_wgZineADIV'),{$widget_info->list_count})" style="cursor:pointer;" title="{$lang->cmd_next}"></span></li>
+</ul>
+<!--@end-->
+<!--//prev_next_bottom-->

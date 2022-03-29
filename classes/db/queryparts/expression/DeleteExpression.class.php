@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * DeleteExpression
@@ -24,9 +24,9 @@ class DeleteExpression extends Expression
 	 * @param mixed $value
 	 * @return void
 	 */
-	function __construct($column_name, $value)
+	function DeleteExpression($column_name, $value)
 	{
-		parent::__construct($column_name);
+		parent::Expression($column_name);
 		$this->value = $value;
 	}
 

@@ -1,0 +1,95 @@
+@charset "utf-8";
+/* 전체영역 */
+	.gpe_MDsearch_area, .gpe_MDsearch_Darea, .gpe_MDsearch_Carea, .gpe_MDsearch_Tarea, .gpe_MDsearch_Marea, .gpe_MDsearch_Farea{position:relative; background-color:#fff; overflow:hidden;}
+/* 탭 */
+	ul.gpe_MDTab{position:relative; margin:0; padding:0; list-style:none; margin:5px 0 0 0; border-bottom:1px solid #ccc; font-size:12px; *zoom:1;}
+	ul.gpe_MDTab:after {content:"";display:block;clear:both}
+	ul.gpe_MDTab li{position:relative; float:left; margin:0 -1px 0 0; background-color:#fff;}
+	ul.gpe_MDTab li a{display:block; text-align:center; color:#666; text-decoration:none; width:104px; height:28px; background-color:#f9f9f9; border:1px solid #ddd; border-bottom:0;}
+	ul.gpe_MDTab li a span{display:block; padding-top:7px;}
+	ul.gpe_MDTab li.on{margin-bottom:-1px}
+	ul.gpe_MDTab li.on a{height:29px; font-weight:bold; background-color:#fff;}
+	/* 레이아웃 컬러셋 변수*/
+	ul.gpe_MDTab.red li.on a{color:#f53144; border-top:1px solid #f53144;}
+	ul.gpe_MDTab.gn li.on a{color:#06b952; border-top:1px solid #06b952;}
+	ul.gpe_MDTab.bl li.on a{color:#008edb; border-top:1px solid #008edb;}
+	ul.gpe_MDTab.pu li.on a{color:#606dca; border-top:1px solid #606dca;}
+	ul.gpe_MDTab.ye li.on a{color:#ff7800; border-top:1px solid #ff7800;}
+	ul.gpe_MDTab.gy li.on a{color:#565b67; border-top:1px solid #565b67;}
+/* 결과영역 */
+	.gpe_MDsearch_con, .gpe_MDsearch_Dcon, .gpe_MDsearch_Ccon, .gpe_MDsearch_Tcon, .gpe_MDsearch_Mcon, .gpe_MDsearch_Fcon{position:relative; border:1px solid #dadada; border-top:0; padding:0 20px 11px 18px;}
+/* 문서 서브네비*/
+	.subNavigation{*zoom:1;margin:0 0 20px 0;padding:0 0 10px 0;overflow:hidden;border-bottom:1px solid #EFEFEF}
+	.subNavigation:after {content:"";display:block;clear:both}
+	.subNavigation li{ position:relative;list-style:none;float:left;margin:0 -1px 0 0;padding:0 }
+	.subNavigation li a{color:#666;text-decoration:none;text-decoration:none;float:left;padding:0 10px 0 0;margin-right:10px;border-right:1px solid #ddd}
+	.subNavigation li.last a{border-right:0}
+	.subNavigation li.on{margin-bottom:-1px}
+	.subNavigation li.on a{font-weight:bold}
+/* 검색어 미입력시*/
+	strong.noKeyword{display:block; text-align:center; font-size:16px; padding:40px 0 40px 0;}
+/* 타이틀*/
+	h3.subTitle{padding:10px 0 0 0; margin:0 0 8px 0; font-size:12px; color:#333;}
+	h3.subTitle span{font-family:verdana; font-weight:normal; font-size:11px}
+/* 결과없을시*/
+	.noResult{display:block;margin:0 0 30px 0;color:#666;padding:0 0 10px 0;border-bottom:1px solid #EFEFEF;line-height:160%}
+/* 결과있을시*/
+	.searchResult{margin:10px 0 0 0;padding:0}
+	.searchResult li{width:100%;margin-bottom:15px;clear:both;overflow:hidden;list-style:none}
+	.searchResult li .thumb{display:block;float:left;margin-right:14px;padding:1px;border:1px solid #DDD}
+	.searchResult li dl{margin:5px 0 0 0;padding:0}
+	.searchResult li dl dt{padding:0;margin:0;color:#d8d8d8;margin-bottom:1px}
+	.searchResult li dl dt a{color:#1a3588;text-decoration:underline;font-weight:bold}
+	.searchResult.comment li dl dt a{color:#444444;text-decoration:none}
+	.searchResult.comment li dl dt a:hover{text-decoration:underline}
+	.searchResult li dl dt .reply{color:#fe6700;font:.9em Tahoma}
+	.searchResult li dl dt .reply em{color:#fe6700;font:normal 10px Tahoma}
+	.searchResult li dl dt .category{color:#818181}
+	.searchResult li dl dt .category a{color:#818181;border:none;text-decoration:none}
+	.searchResult li dl dd{padding:0;margin:0;line-height:18px;color:#555555;margin-bottom:4px}
+	.searchResult li address{color:#d8d8d8;font-size:12px;margin-top:5px;font-style:normal}
+	.searchResult li address strong{color:#3e3e3e;font-size:1em;font-weight:normal}
+	.searchResult li address img{vertical-align:middle;margin-right:2px}
+	.searchResult li address .time{color:#818181;font:.8em Tahoma}
+	.searchResult li address .read{font:11px "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif;color:#818181}
+	.searchResult li address .readNum{color:#818181;font:.8em Tahoma}
+	.searchResult li address .recom{font:11px "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif;color:#818181}
+	.searchResult li address .recomNum{color:#fe6700;font:bold .8em Tahoma}
+	.searchImageResult{margin:10px 0 0 10px;padding:0;overflow:hidden;*zoom:1}
+	.searchImageResult li{width:124px;height:190px;padding:0;margin:0 20px 15px 0;list-style:none;float:left;overflow:hidden;vertical-align:top}
+	.searchImageResult li img{display:block;margin-bottom:10px;padding:1px;border:1px solid #DDD}
+	.searchImageResult li dl{margin:0;padding:0}
+	.searchImageResult li dl dt{padding:0;margin:0;color:#d8d8d8;margin-bottom:1px}
+	.searchImageResult li dl dt a{color:#1a3588;text-decoration:underline}
+	.searchImageResult li address{color:#d8d8d8;font-size:12px;margin-top:5px}
+	.searchImageResult li address strong{color:#3e3e3e;font-size:1em;font-weight:normal}
+	.searchImageResult li address img{vertical-align:middle;margin-right:2px}
+	.searchImageResult li address .time{color:#818181;font:.8em Tahoma}
+	.searchImageResult li address .read{font:11px "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif;color:#818181}
+	.searchImageResult li address .readNum{color:#818181;font:.8em Tahoma}
+	.searchImageResult li address .recom{font:11px "돋움", Dotum, "굴림", Gulim, AppleGothic, Sans-serif;color:#818181}
+	.searchImageResult li address .recomNum{color:#fe6700;font:bold .8em Tahoma}
+	.searchImageResult li address .time{color:#818181;font:.8em Tahoma}
+	div.isMore{color:#666;text-align:right;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #EFEFEF}
+	div.isMore a{color:#666;text-decoration:underline}
+/* 하단네비*/
+	.pagination{ padding:15px 0;margin:0;text-align:center}
+	.pagination *{ margin:0;padding:0}
+	.pagination img{ border:0}
+	.pagination a,
+	.pagination strong{ position:relative;display:inline-block;text-decoration:none;line-height:normal;color:#333;font-family:Tahoma, Sans-serif;vertical-align:middle}
+	.pagination a:hover,
+	.pagination a:active,
+	.pagination a:focus{ background-color:#f4f4f4 !important}
+	.pagination strong{ color:#ff6600 !important}
+	.pagination a.prev,
+	.pagination a.prevEnd,
+	.pagination a.next,
+	.pagination a.nextEnd{ font-weight:normal !important;border:none !important;margin:0 !important;white-space:nowrap}
+	/**/
+	.pagination.a1 a,
+	.pagination.a1 strong{ margin:0 -4px;padding:1px 10px 1px 8px;border:none;border-left:1px solid #ccc;border-right:1px solid #ddd;font-weight:bold;font-size:12px;background:#fff}
+	.pagination.a1 a.prev{ padding-left:10px;background:#fff url(images/white/arrowPrevA1.gif) no-repeat left center}
+	.pagination.a1 a.prevEnd{ padding-left:15px;background:#fff url(images/white/arrowPrevEndA1.gif) no-repeat left center}
+	.pagination.a1 a.next{ padding-right:10px;background:#fff url(images/white/arrowNextA1.gif) no-repeat right center}
+	.pagination.a1 a.nextEnd{ padding-right:15px;background:#fff url(images/white/arrowNextEndA1.gif) no-repeat right center}

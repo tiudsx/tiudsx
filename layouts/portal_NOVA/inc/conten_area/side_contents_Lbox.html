@@ -1,0 +1,55 @@
+<style type="text/css">
+.gpe_side_contents_L{
+	width:{$layout_info->display_conten_Wsize_Lcustom}px;
+	}
+.gpe_side_contents_L .paddSide{
+	<!--@if($layout_info->display_backimg_se == 'color' or $layout_info->display_backimg_se == 'img' or $layout_info->display_backimg_se == 'colorimg')-->
+	padding-left:0;
+	<!--@end-->
+	}
+</style>
+<!--SIDE 컨텐츠(좌측)-->
+<!--@if($layout_info->display_conten_sidebox_RL == 'L' or $layout_info->display_conten_sidebox_RL == 'LR')-->
+<div class="gpe_side_contents_L">
+	<!--로그인-->
+	<!--@if($layout_info->display_conten_sideLogin != 'no')-->
+		<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+			<!--@if($layout_info->display_conten_sideLogin_LR == 'L')--><div><img class="zbxe_widget_output" widget="login_info" skin="gpeNOVA_login_de"/></div><!--@end-->
+		<!--@elseif($layout_info->display_conten_sidebox_RL == 'L')-->
+			<div><img class="zbxe_widget_output" widget="login_info" skin="gpeNOVA_login_de"/></div>
+		<!--@end-->
+	<!--@end-->
+	<!--사이드메뉴-->
+	<!--@if($layout_info->display_conten_sidemenu != 'no')-->
+		<!--@if($layout_info->display_conten == 's_dan2')-->
+			<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+				<!--@if($layout_info->display_conten_sidemenu_LR == 'L')--><div><include target="./side_menu.html"/></div><!--@end-->
+			<!--@elseif($layout_info->display_conten_sidebox_RL == 'L')-->
+				<div><include target="./side_menu.html"/></div>
+			<!--@end-->
+		<!--@end-->
+	<!--@end-->
+	<!--공지사항-->
+	<!--@if($layout_info->display_conten_sideNotice != 'no')-->
+		<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+			<!--@if($layout_info->display_conten_sideNotice_LR == 'L')--><div class="paddSide"><include target="./side_notice.html"/></div><!--@end-->
+		<!--@elseif($layout_info->display_conten_sidebox_RL == 'L')-->
+			<div class="paddSide"><include target="./side_notice.html"/></div>
+		<!--@end-->
+	<!--@end-->
+	<!--사이드배너-->	
+	<div><include target="../banner_area/ban_sideL.html"/></div>
+	<!--위젯코드1-10번-->
+	<div class="paddSide <!--@if($layout_info->side_01_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_01_wgHtml_L">{$layout_info->side_01_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_02_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_02_wgHtml_L">{$layout_info->side_02_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_03_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_03_wgHtml_L">{$layout_info->side_03_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_04_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_04_wgHtml_L">{$layout_info->side_04_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_05_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_05_wgHtml_L">{$layout_info->side_05_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_06_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_06_wgHtml_L">{$layout_info->side_06_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_07_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_07_wgHtml_L">{$layout_info->side_07_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_08_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_08_wgHtml_L">{$layout_info->side_08_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_09_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_09_wgHtml_L">{$layout_info->side_09_wgHtml_L}</div>
+	<div class="paddSide <!--@if($layout_info->side_10_wgHtml_L)-->boderB1px<!--@end-->" cond="$layout_info->side_10_wgHtml_L">{$layout_info->side_10_wgHtml_L}</div>
+</div>
+<!--@end-->
+<!--//SIDE 컨텐츠(좌측)-->

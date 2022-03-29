@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * ConditionTag
@@ -59,7 +59,7 @@ class ConditionTag
 	 * @param object $condition
 	 * @return void
 	 */
-	function __construct($condition)
+	function ConditionTag($condition)
 	{
 		$this->operation = $condition->attrs->operation;
 		$this->pipe = $condition->attrs->pipe;

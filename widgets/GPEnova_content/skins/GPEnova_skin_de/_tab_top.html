@@ -1,0 +1,63 @@
+<!--탭-->
+<!--사용자 컬러만 스타일뺏음-->
+<style type="text/css">
+.gpe_wgTabA.colorUser li.active .gpe_wTA_item, .gpe_wgTabA.colorUser li.active_t2 .gpe_wTA_item{
+	color:#{$layout_info->display_main_colorset_user};
+	}
+</style>
+<!--//사용자 컬러만 스타일뺏음-->
+<span class="gpe_wgTabAbg" style="<!--@if($widget_info->tab_type == 'tab_left' or $widget_info->tab_type == 'tab_left_t2')-->width:108px; height:100%; border-top:0; border-right:1px solid #dadada; <!--@if($widget_info->tap_wg_width)-->width:{$widget_info->tap_wg_width}px;<!--@end--><!--@end-->"></span>
+<ul class="
+<!--@if($widget_info->tab_color == 'layout')-->
+	gpe_wgTabA <!--@if($layout_info->display_main_colorset_se == 'rb')-->rb
+	<!--@elseif($layout_info->display_main_colorset_se == 'r')-->r
+	<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->gn
+	<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->gn_p
+	<!--@elseif($layout_info->display_main_colorset_se == 'b')-->b
+	<!--@elseif($layout_info->display_main_colorset_se == 'p')-->p
+	<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->p_d
+	<!--@elseif($layout_info->display_main_colorset_se == 'y')-->y
+	<!--@elseif($layout_info->display_main_colorset_se == 'op')-->op
+	<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->cp
+	<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->gy
+	<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->gy_d
+	<!--@end-->
+	/*레이아웃 사용자컬러*/
+	<!--@if($layout_info->display_main_colorset_user)-->colorUser<!--@end-->
+<!--@else-->
+	gpe_wgTabA <!--@if($widget_info->tab_color == 'rb')-->rb
+	<!--@elseif($widget_info->tab_color == 'r')-->r
+	<!--@elseif($widget_info->tab_color == 'gn')-->gn
+	<!--@elseif($widget_info->tab_color == 'gn_p')-->gn_p
+	<!--@elseif($widget_info->tab_color == 'b')-->b
+	<!--@elseif($widget_info->tab_color == 'p')-->p
+	<!--@elseif($widget_info->tab_color == 'p_d')-->p_d
+	<!--@elseif($widget_info->tab_color == 'y')-->y
+	<!--@elseif($widget_info->tab_color == 'op')-->op
+	<!--@elseif($widget_info->tab_color == 'cp')-->cp
+	<!--@elseif($widget_info->tab_color == 'gy')-->gy
+	<!--@elseif($widget_info->tab_color == 'gy_d')-->gy_d
+	<!--@elseif($widget_info->tab_color == 'bk')-->bk
+	<!--@end-->
+<!--@end--> <!--@if($widget_info->tab_type == 'tab_left' or $widget_info->tab_type == 'tab_left_t2')-->tableft<!--@end-->" style="<!--@if($widget_info->tab_type == 'tab_left' or $widget_info->tab_type == 'tab_left_t2')-->float:left;<!--@end--><!--@if($widget_info->list_type == 'image_title_content')-->margin-bottom:14px;<!--@end-->">
+{@$i=0}
+<!--@foreach($widget_info->tab as $module_srl => $tab)-->
+	<li<!--@if($i==0)--> <!--@if($widget_info->tab_type == 'tab_top' or $widget_info->tab_type == 'tab_left')-->class="active"<!--@elseif($widget_info->tab_type == 'tab_top_t2' or $widget_info->tab_type == 'tab_left_t2')-->class="active_t2"<!--@end--><!--@end--> style="<!--@if($widget_info->tab_type == 'tab_left' or $widget_info->tab_type == 'tab_left_t2')-->float:none; border-left:0;<!--@end-->">
+		<p class="gpe_wTA_item" style="width:{$widget_info->tap_wg_width}px;" <!--@if($widget_info->tab_type == 'tab_top' or $widget_info->tab_type == 'tab_left')-->onclick<!--@elseif($widget_info->tab_type == 'tab_top_t2' or $widget_info->tab_type == 'tab_left_t2')-->onmouseover<!--@end-->="<!--@if($widget_info->tab_type == 'tab_top' or $widget_info->tab_type == 'tab_left')-->content_wgNOVA_tab_show<!--@elseif($widget_info->tab_type == 'tab_top_t2' or $widget_info->tab_type == 'tab_left_t2')-->content_wgNOVA_tabClick_show<!--@end-->(jQuery(this),jQuery(this).parents('ul.gpe_wgTabA').next('dl.widgetNovaDivider'),{$i})" <!--@if($widget_info->tab_type == 'tab_top_t2' or $widget_info->tab_type == 'tab_left_t2')-->onclick="window.open('{$tab->url}','_self')"<!--@end-->>{$tab->title}</p>
+	</li>
+{@$i++}
+<!--@end-->
+</ul>
+
+<!--위젯컨텐츠-->
+<dl class="widgetNovaDivider" style="<!--@if($widget_info->tab_type == 'tab_left' or $widget_info->tab_type == 'tab_left_t2')-->margin-left:108px;<!--@if($widget_info->tap_wg_width)-->margin-left:{$widget_info->tap_wg_width}px;<!--@end--><!--@end-->">
+{@$i=0}
+<!--@foreach($widget_info->tab as $module_srl => $tab)-->
+	<dt>{$tab->title}</dt>
+	<dd<!--@if($i==0)--> class="open"<!--@end-->>
+		{@$widget_info->content_items = $tab->content_items}
+		<!--#include("_tab_none.html")-->
+	</dd>
+{@$i++}
+<!--@end-->
+</dl>

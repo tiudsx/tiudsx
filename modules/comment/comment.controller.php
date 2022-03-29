@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * commentController class
  * controller class of the comment module
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/comment
  * @version 0.1
  */
@@ -279,7 +279,7 @@ class commentController extends comment
 
 			if($obj->homepage)
 			{
-				$obj->homepage = escape($obj->homepage, false);
+				$obj->homepage = removeHackTag($obj->homepage);
 				if(!preg_match('/^[a-z]+:\/\//i',$obj->homepage))
 				{
 					$obj->homepage = 'http://'.$obj->homepage;
@@ -692,7 +692,7 @@ class commentController extends comment
 
 		if($obj->homepage) 
 		{
-			$obj->homepage = escape($obj->homepage);
+			$obj->homepage = removeHackTag($obj->homepage);
 			if(!preg_match('/^[a-z]+:\/\//i',$obj->homepage))
 			{
 				$obj->homepage = 'http://'.$obj->homepage;
@@ -1095,44 +1095,35 @@ class commentController extends comment
 			return new BaseObject(-1, $failed_voted);
 		}
 
-		// Call a trigger (before)
-		$trigger_obj = new stdClass;
-		$trigger_obj->member_srl = $oComment->get('member_srl');
-		$trigger_obj->module_srl = $oComment->get('module_srl');
-		$trigger_obj->document_srl = $oComment->get('document_srl');
-		$trigger_obj->comment_srl = $oComment->get('comment_srl');
-		$trigger_obj->update_target = ($point < 0) ? 'blamed_count' : 'voted_count';
-		$trigger_obj->point = $point;
-		$trigger_obj->before_point = ($point < 0) ? $oComment->get('blamed_count') : $oComment->get('voted_count');
-		$trigger_obj->after_point = $trigger_obj->before_point + $point;
-		$trigger_output = ModuleHandler::triggerCall('comment.updateVotedCount', 'before', $trigger_obj);
-		if(!$trigger_output->toBool())
-		{
-			return $trigger_output;
-		}
-
 		// begin transaction
 		$oDB = DB::getInstance();
 		$oDB->begin();
 
 		// update the number of votes
-		if($trigger_obj->update_target === 'blamed_count')
+		if($point < 0)
 		{
-			$args->blamed_count = $trigger_obj->after_point;
+			$args->blamed_count = $oComment->get('blamed_count') + $point;
 			$output = executeQuery('comment.updateBlamedCount', $args);
 		}
 		else
 		{
-			$args->voted_count = $trigger_obj->after_point;
+			$args->voted_count = $oComment->get('voted_count') + $point;
 			$output = executeQuery('comment.updateVotedCount', $args);
 		}
 
 		// leave logs
-		$args->point = $trigger_obj->point;
+		$args->point = $point;
 		$output = executeQuery('comment.insertCommentVotedLog', $args);
 
-		// Call a trigger (after)
-		$trigger_output = ModuleHandler::triggerCall('comment.updateVotedCount', 'after', $trigger_obj);
+		$obj = new stdClass();
+		$obj->member_srl = $oComment->get('member_srl');
+		$obj->module_srl = $oComment->get('module_srl');
+		$obj->comment_srl = $oComment->get('comment_srl');
+		$obj->update_target = ($point < 0) ? 'blamed_count' : 'voted_count';
+		$obj->point = $point;
+		$obj->before_point = ($point < 0) ? $oComment->get('blamed_count') : $oComment->get('voted_count');
+		$obj->after_point = ($point < 0) ? $args->blamed_count : $args->voted_count;
+		$trigger_output = ModuleHandler::triggerCall('comment.updateVotedCount', 'after', $obj);
 		if(!$trigger_output->toBool())
 		{
 			$oDB->rollback();
@@ -1146,13 +1137,13 @@ class commentController extends comment
 
 		// Return the result
 		$output = new BaseObject(0, $success_message);
-		if($trigger_obj->update_target === 'voted_count')
+		if($point > 0)
 		{
-			$output->add('voted_count', $trigger_obj->after_point);
+			$output->add('voted_count', $obj->after_point);
 		}
 		else
 		{
-			$output->add('blamed_count', $trigger_obj->after_point);
+			$output->add('blamed_count', $obj->after_point);
 		}
 
 		return $output;

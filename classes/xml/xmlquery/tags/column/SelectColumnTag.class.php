@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Models the &lt;column&gt; tag inside an XML Query file whose action is 'select'
@@ -31,16 +31,16 @@ class SelectColumnTag extends ColumnTag
 	 * @param string|object $column
 	 * @return void
 	 */
-	function __construct($column)
+	function SelectColumnTag($column)
 	{
 		if($column == "*" || $column->attrs->name == '*')
 		{
-			parent::__construct(NULL);
+			parent::ColumnTag(NULL);
 			$this->name = "*";
 		}
 		else
 		{
-			parent::__construct($column->attrs->name);
+			parent::ColumnTag($column->attrs->name);
 			$dbParser = DB::getParser();
 			$this->name = $dbParser->parseExpression($this->name);
 

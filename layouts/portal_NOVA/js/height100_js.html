@@ -1,0 +1,17 @@
+<!--검색결과 컨텐츠 높이값구하기(*메인)-->
+<!--@if($layout_info->display_conten == 'm_st1')-->
+	<script>
+	var j_height_m = jQuery;
+	var MDsearchHeight = j_height_m(".contents_area_wrap0").height();
+	j_height_m(".gpe_MDsearch_con, .gpe_MDsearch_Dcon, .gpe_MDsearch_Ccon, .gpe_MDsearch_Tcon, .gpe_MDsearch_Mcon, .gpe_MDsearch_Fcon").css('height', MDsearchHeight);
+	</script>
+<!--@end-->
+
+<!--검색결과 컨텐츠 높이값구하기(*서브)-->
+<!--@if($layout_info->display_conten == 's_dan2')-->
+	<script>
+	var j_height_s = jQuery;
+	var MDsearchHeight = j_height_s(".contents_area_wrap0").height();
+	j_height_s(".gpe_MDsearch_con, .gpe_MDsearch_Dcon, .gpe_MDsearch_Ccon, .gpe_MDsearch_Tcon, .gpe_MDsearch_Mcon, .gpe_MDsearch_Fcon").css('height', MDsearchHeight);
+	</script>
+<!--@end-->

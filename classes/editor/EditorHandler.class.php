@@ -1,12 +1,12 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Superclass of the edit component.
  * Set up the component variables
  *
  * @class EditorHandler
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class EditorHandler extends BaseObject
 {

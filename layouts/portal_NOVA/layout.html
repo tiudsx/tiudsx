@@ -1,0 +1,170 @@
+<!--포탈NOVA 버젼:v1.1.7-->
+<!--레이아웃개발 : 심플아이(*그레이브디자인)-->
+<!--고객센터: http://simpleeye.ivyro.net/xe/gdesign_sub_qna-->
+<!--저작권: 개발코드(css+html)및 디자인도용, 소스재판매는 xe마켓 지적저작권법에 반드시 처벌받으니 이점유의하시기 바랍니다.-->
+<!--라이선스: 1도메인(1웹사이트) 1라이선스 입니다.-->
+
+<!--메타태그-->
+<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+{@
+	Context::addMetaTag('viewport', 'width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;');
+	Context::addMetaTag('format-detection', 'telephone=no');
+	}
+	<!--@end-->
+	
+	<!--익스9미만 접속시 활성-->
+	<!--[if lt IE 9 ]>
+		<include target="inc/browser6Cond_area/browser6Cond.html"/>
+	<![endif]-->
+	<!--//익스9미만 접속시 활성-->
+	
+	<!--CSS+JS-->
+		<!--폰트CSS-->
+		<load target="css/font_default.css"/>
+		<!--기본CSS-->
+		<load target="css/basic.css"/>
+		<include target="css/basic_indexCss.html"/>
+		<load target="css/font-awesome.min.css"/>
+		<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+		<load target="css/mediaQ.css"/>
+		<load target="css/mediaQ_wg.css" index="1000000"/>
+		<!--@end-->
+		<!--배너중요JS-->
+		<load target="js/m_pm_ban.js"/>
+		<!--브라우져hack-->
+		<include target="css/hackCSS/ie9.html"/>
+		<include target="css/hackCSS/ie8.html"/>
+		<include target="css/hackCSS/Cr_Sf.html"/>
+		<include target="css/hackCSS/bootstrap_reset.html"/>
+		<!--사이트넓이변수css-->
+		<include target="css/etcCSS/widthCSS.html"/>
+		<!--컬러셋 변수css-->
+		<include target="css/etcCSS/colorSet.html"/>
+	<!--//CSS+JS-->
+	
+	<!--사이트로딩-->
+		<include target="inc/siteLoding_area/siteLoding.html"/>
+	
+	<!--테블릿+모바일용 메뉴-->
+		<include target="inc/mobileMenu_area/mobileMenu.html" cond="$layout_info->display_conten_respon_se != 'basic'"/>
+	
+	<!--배경컬러+이미지-->
+		<include target="inc/backImg_area/backImg.html"/>
+	
+	<!--즐찾+시작-->
+		<include target="inc/fovStart_area/fovStart.html"/>
+	
+	<!--상단 프로모션배너-->
+		<include target="inc/top_proban_area/top_proban.html"/>
+	
+	<!--로고+로그인+메뉴+검색[gnb1]-->
+	<div class="gnb1_area_wrap00">
+	<div class="gnb1_area_wrap0">
+		<!--[공지팝업]-->
+		<!--@if($layout_info->display_notice_01_s == 'yes')-->
+		<include target="inc/popup_area/popup_de1.html"/>
+		<!--@end-->
+		<!--@if($layout_info->display_notice_02_s == 'yes')-->
+		<include target="inc/popup_area/popup_de2.html"/>
+		<!--@end-->
+		<!--[스크롤배너]-->
+		<include target="inc/scroll_ban_area/sc_ban.html"/>	
+		<!--[로고]-->
+		<include target="inc/top_gnb1_area/logo.html"/>	
+		<!--[롤링공지]-->
+		<include target="inc/top_gnb1_area/top_notice.html"/>
+		<!--[레벨+포인트]-->
+		<include target="inc/top_gnb1_area/level.html"/>
+		<!--[회원정보]-->
+		<include target="inc/top_gnb1_area/meminfo.html"/>
+		<!--[언어선택]-->
+		<include target="inc/top_gnb1_area/lang.html"/>
+		<!--[TOP메뉴+전체메뉴]-->
+		<include target="inc/top_menu_area/topmenu_st1.html"/>
+		<!--[TOP메뉴_모바일버튼]-->
+		<include target="inc/mobileMenu_area/mobileMenu_showBtn.html" cond="$layout_info->display_conten_respon_se != 'basic'"/>
+		<!--[검색]-->
+		<include target="inc/top_gnb1_area/search.html"/>
+	</div>
+	<span class="gnb1_area_cenLine1"></span><!--중앙구분라인1-->
+	<span class="gnb1_area_cenLine2"></span><!--중앙구분라인2-->
+	<span class="gnb1_area_botline"></span><!--하단 명암라인-->
+	<span class="gnb1_area_top2typeBG layG_iecss3" cond="$layout_info->display_topmenu_type == '2'"></span><!--top영역 2타입-->
+	<span class="gnb1_area_top3typeBG" cond="$layout_info->display_topmenu_type == '3'"></span><!--top영역 3타입-->
+	</div>
+	<!--//로고+로그인+메뉴+검색[gnb1]-->
+	
+	<!--공지사항 모바일배경-->
+	<div class="notice_MQarea"></div>
+	
+	<!--펼침메뉴(상단)-->
+	<include target="inc/openmenu_area/openmenu.html" cond="$layout_info->display_area_openmenu_area == 'top'"/>
+	<!--//펼침메뉴(상단)-->
+	
+	<!--컨텐츠영역 wrap0-->
+	<div class="gpe_allcon_wrap0">
+		<!--컨텐츠-->
+		<div class="contents_area_wrap0">
+		<!--사이드영역 배경bg-->
+		<!--@if($layout_info->display_conten_sidebox_se != 'no')-->
+		<span class="con_left_line" cond="$layout_info->display_conten_sidebox_RL == 'L' or $layout_info->display_conten_sidebox_RL == 'LR'"></span>
+		<span class="con_right_line" cond="$layout_info->display_conten_sidebox_RL != 'L' or $layout_info->display_conten_sidebox_RL == 'LR'"></span>
+		<!--@end-->
+		<!--[SIDE컨텐츠_좌측]-->	
+		<include target="inc/conten_area/side_contents_Lbox.html" cond="$layout_info->display_conten_sidebox_se != 'no'"/>
+		<!--[중앙컨텐츠]-->
+		<div class="gpe_contents_box">
+			<!--컨텐츠배너-->
+			<include target="inc/banner_area/ban_conten.html"/>
+			<!--XE컨텐츠-->	
+			<include target="inc/conten_area/contents_box.html"/>
+		</div>
+		<!--[SIDE컨텐츠_우측]-->	
+		<include target="inc/conten_area/side_contents_Rbox.html" cond="$layout_info->display_conten_sidebox_se != 'no'"/>
+		</div>
+		<!--//컨텐츠-->
+	</div>
+	<!--//펼침메뉴+컨텐츠영역 wrap0-->
+	
+	<!--펼침메뉴(하단)-->
+	<include target="inc/openmenu_area/openmenu.html" cond="$layout_info->display_area_openmenu_area != 'top'"/>
+	<!--//펼침메뉴(하단)-->
+	
+	<div id="gpe_googlead" class="gpe_googlead" style="text-align:center;">
+		<!-- 모바일 최하단 -->
+	</div>
+	
+	
+	
+	<!--풋터-->
+	<include target="inc/footer_area/copyright.html"/>
+	<!--//풋터-->
+	
+	<!--마이메뉴+상하이동-->
+	<include target="inc/movetop_area/movetop.html"/>
+	<include target="inc/myMenu_area/myMenu.html"/>
+	<!--//마이메뉴+상하이동-->
+	
+	<!--높이100%js(검색부분)-->
+	<include target="js/height100_js.html"/>
+	
+	<!--공통 JS호출-->
+	<script>
+		//side메뉴+모바일메뉴 구동JS
+		jQuery(function($){
+			$(function(){
+				var go_leftM = $('.gpe_sideMenu>.sleft_d_02_m, .layG_mobileM_menu>.mbM_sleft_d_01_m, .layG_mobileM_menu>.mbM_sleft_d_01_m>.mbM_sleft_d_02_m');
+				go_leftM.find("li").click(function(){
+					var t = $(this);
+					t.find(">span, >a").siblings("ul:not(:animated)").slideDown(200);
+					t.siblings().find(">span, >a").siblings("ul").slideUp(200);
+				}).mouseleave(function(){
+				});
+			});	
+		});
+	</script>
+	<!--//공통 JS호출-->
+	
+	<!--기술지원css-->
+	<include target="css/userCSS/userCSS.html"/>
+	<!--//기술지원css-->

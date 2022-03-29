@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * StarExpression
@@ -16,9 +16,9 @@ class StarExpression extends SelectExpression
 	 * constructor, set the column to asterisk
 	 * @return void
 	 */
-	function __construct()
+	function StarExpression()
 	{
-		parent::__construct("*");
+		parent::SelectExpression("*");
 	}
 
 	function getArgument()

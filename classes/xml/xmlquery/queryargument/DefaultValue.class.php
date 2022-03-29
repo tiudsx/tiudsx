@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * DefaultValue class
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml/xmlquery/queryargument
  * @version 0.1
  */
@@ -58,7 +58,7 @@ class DefaultValue
 	 * @param mixed $value value
 	 * @return void
 	 */
-	function __construct($column_name, $value)
+	function DefaultValue($column_name, $value)
 	{
 		$dbParser = DB::getParser();
 		$this->column_name = $dbParser->parseColumnName($column_name);

@@ -1,0 +1,63 @@
+<!--@if($layout_info->display_scban_se == 'yes')-->
+<!--좌측-->
+<div class="scban_wrap" style="
+<!--@if($layout_info->display_conten_Wsize == 'w1280')-->right:1290px;
+<!--@else-->right:1034px;
+<!--@end-->
+<!--@if($layout_info->display_conten_Wsize_custom)-->right:{$layout_info->display_conten_Wsize_custom+10}px;<!--@end-->
+text-align:right;">
+	<div class="<!--@if(!$layout_info->display_scban_se_stop == '2')-->scban_wrap_box<!--@else-->scban_wrap_box_stop<!--@end-->">
+		<div class="sc_div" cond="$layout_info->display_scban_L_01_img or $layout_info->display_scban_L_01_html"><!--@if($layout_info->display_scban_L_01_html)-->{$layout_info->display_scban_L_01_html}<!--@else--><a href="{$layout_info->display_scban_L_01_url}" target="_blank"|cond="$layout_info->display_scban_L_01_url_blank == '02'"><img src="{$layout_info->display_scban_L_01_img}"/></a><!--@end--></div>
+		<div class="sc_div" cond="$layout_info->display_scban_L_02_img or $layout_info->display_scban_L_02_html"><!--@if($layout_info->display_scban_L_02_html)-->{$layout_info->display_scban_L_02_html}<!--@else--><a href="{$layout_info->display_scban_L_02_url}" target="_blank"|cond="$layout_info->display_scban_L_02_url_blank == '02'"><img src="{$layout_info->display_scban_L_02_img}"/></a><!--@end--></div>
+		<div class="sc_div" cond="$layout_info->display_scban_L_03_img or $layout_info->display_scban_L_03_html"><!--@if($layout_info->display_scban_L_03_html)-->{$layout_info->display_scban_L_03_html}<!--@else--><a href="{$layout_info->display_scban_L_03_url}" target="_blank"|cond="$layout_info->display_scban_L_03_url_blank == '02'"><img src="{$layout_info->display_scban_L_03_img}"/></a><!--@end--></div>
+		<div class="sc_div" cond="$layout_info->display_scban_L_04_img or $layout_info->display_scban_L_04_html"><!--@if($layout_info->display_scban_L_04_html)-->{$layout_info->display_scban_L_04_html}<!--@else--><a href="{$layout_info->display_scban_L_04_url}" target="_blank"|cond="$layout_info->display_scban_L_04_url_blank == '02'"><img src="{$layout_info->display_scban_L_04_img}"/></a><!--@end--></div>
+	</div>
+</div>
+<!--우측-->
+<div class="scban_wrap2" id="sidebarTmp">
+
+	<div class="scban_wrap_box2">
+		<div class="sc_div">
+		<!-- 우측 사이드 배너 -->
+
+		</div>
+	</div>
+</div>
+
+
+<div class="scban_wrap2" style="
+<!--@if($layout_info->display_conten_Wsize == 'w1280')-->left:1290px;
+<!--@else-->left:1034px;
+<!--@end-->
+<!--@if($layout_info->display_conten_Wsize_custom)-->left:{$layout_info->display_conten_Wsize_custom+10}px;<!--@end-->
+text-align:left;">
+	<div class="<!--@if(!$layout_info->display_scban_se_stop == '2')-->scban_wrap_box2<!--@else-->scban_wrap_box_stop2<!--@end-->">
+		<div class="sc_div" cond="$layout_info->display_scban_R_01_img or $layout_info->display_scban_R_01_html"><!--@if($layout_info->display_scban_R_01_html)-->{$layout_info->display_scban_R_01_html}<!--@else--><a href="{$layout_info->display_scban_R_01_url}" target="_blank"|cond="$layout_info->display_scban_R_01_url_blank == '02'"><img src="{$layout_info->display_scban_R_01_img}"/></a><!--@end--></div>
+		<div class="sc_div" cond="$layout_info->display_scban_R_02_img or $layout_info->display_scban_R_02_html"><!--@if($layout_info->display_scban_R_02_html)-->{$layout_info->display_scban_R_02_html}<!--@else--><a href="{$layout_info->display_scban_R_02_url}" target="_blank"|cond="$layout_info->display_scban_R_02_url_blank == '02'"><img src="{$layout_info->display_scban_R_02_img}"/></a><!--@end--></div>
+		<div class="sc_div" cond="$layout_info->display_scban_R_03_img or $layout_info->display_scban_R_03_html"><!--@if($layout_info->display_scban_R_03_html)-->{$layout_info->display_scban_R_03_html}<!--@else--><a href="{$layout_info->display_scban_R_03_url}" target="_blank"|cond="$layout_info->display_scban_R_03_url_blank == '02'"><img src="{$layout_info->display_scban_R_03_img}"/></a><!--@end--></div>
+		<div class="sc_div" cond="$layout_info->display_scban_R_04_img or $layout_info->display_scban_R_04_html"><!--@if($layout_info->display_scban_R_04_html)-->{$layout_info->display_scban_R_04_html}<!--@else--><a href="{$layout_info->display_scban_R_04_url}" target="_blank"|cond="$layout_info->display_scban_R_04_url_blank == '02'"><img src="{$layout_info->display_scban_R_04_img}"/></a><!--@end--></div>
+	</div>
+</div>
+<!--공통 스크립트-->
+<!--@if($layout_info->display_scban_se_stop != '2')-->
+<script>
+	var j_scb = jQuery;
+	j_scb(document).ready(function(){
+		var top = j_scb('.scban_wrap_box, .scban_wrap_box2').offset().top - parseFloat(j_scb('.scban_wrap_box, .scban_wrap_box2').css('marginTop').replace(/auto/, 0));
+		j_scb(window).scroll(function (event) {
+		var y = j_scb(this).scrollTop();
+  
+	   if (y >= top) {
+		  j_scb('.scban_wrap_box, .scban_wrap_box2').addClass('fixed');
+			var testWidth = j_scb(".scban_wrap_box").outerWidth();
+			j_scb(".scban_wrap").css('left', -testWidth-10);
+	   } else {
+		  j_scb('.scban_wrap_box, .scban_wrap_box2').removeClass('fixed');
+			var testWidth = j_scb(".scban_wrap_box").outerWidth();
+			j_scb(".scban_wrap").css('right', <!--@if($layout_info->display_conten_Wsize_custom)-->{$layout_info->display_conten_Wsize_custom+10}<!--@elseif($layout_info->display_conten_Wsize == 'w1280' or $layout_info->display_conten_Wsize != 'w1280')--><!--@if($layout_info->display_conten_Wsize == 'w1280')-->1290<!--@else-->1034<!--@end--><!--@end-->);	
+	  }
+  });
+});
+</script>
+<!--@end-->
+<!--@end-->

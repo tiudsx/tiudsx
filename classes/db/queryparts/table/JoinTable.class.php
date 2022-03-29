@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * class JoinTable
@@ -32,9 +32,9 @@ class JoinTable extends Table
 	 * @param array $conditions
 	 * @return void
 	 */
-	function __construct($name, $alias, $join_type, $conditions)
+	function JoinTable($name, $alias, $join_type, $conditions)
 	{
-		parent::__construct($name, $alias);
+		parent::Table($name, $alias);
 		$this->join_type = $join_type;
 		$this->conditions = $conditions;
 	}

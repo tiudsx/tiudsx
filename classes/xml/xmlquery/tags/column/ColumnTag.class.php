@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Models the &lt;column&gt; tag inside an XML Query file <br />
@@ -25,7 +25,7 @@ class ColumnTag
 	 * @param string $name
 	 * @return void
 	 */
-	function __construct($name)
+	function ColumnTag($name)
 	{
 		$this->name = $name;
 	}

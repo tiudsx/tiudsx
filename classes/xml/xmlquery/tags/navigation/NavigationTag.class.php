@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * NavigationTag class
@@ -46,7 +46,7 @@ class NavigationTag
 	 * @param object $xml_navigation
 	 * @return void
 	 */
-	function __construct($xml_navigation)
+	function NavigationTag($xml_navigation)
 	{
 		$this->order = array();
 		if($xml_navigation)

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * ConditionsTag class
@@ -22,7 +22,7 @@ class ConditionsTag
 	 * @param object $xml_conditions
 	 * @return void
 	 */
-	function __construct($xml_conditions)
+	function ConditionsTag($xml_conditions)
 	{
 		$this->condition_groups = array();
 		if(!$xml_conditions)

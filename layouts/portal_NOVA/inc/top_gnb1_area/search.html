@@ -1,0 +1,38 @@
+<!--@if($layout_info->display_top_search != 'S_no')-->
+<style type="text/css">
+	.gpe_search .inputText{
+	<!--@if($layout_info->display_topmenu_type == '2')-->border-top:1px solid #ccc; border-left:1px solid #ccc;<!--@end-->
+	}
+	/* 모바일ios submit버튼 문제해결*/
+	input[type='submit']
+	{
+	   -webkit-appearance: none;
+	   -moz-appearance: none;
+	   appearance: none; 
+	}
+</style>
+<span class="gpe_search_btn" onclick="jQuery('.gpe_search').fadeToggle();"></span><!--검색 버튼-->
+<div class="gpe_search">
+	<!--검색폼-->
+	<form action="{getUrl()}" method="post">
+		<input type="hidden" name="mid" value="{$layout_info->default_page}"|cond="$layout_info->default_page" value="{$mid}"|cond="!$layout_info->default_page"/>
+		<input type="hidden" name="act" value="IS" />
+		<!--검색필드-->
+		<input name="is_keyword" type="text" class="inputText" title="검색어"/>
+		<!--검색버튼-->			
+		<input type="submit" alt="{$lang->cmd_search}" value="검색" class="submit"/>
+		<!--좌측 검색아이콘-->
+		<div class="search_iconbg"></div>
+		<div class="search_iconpng"></div>
+	</form>
+	<!--//검색폼-->
+	<!--선택키워드-->
+	<ul class="gpe_search_key">
+		<li class="keyTitle">인기검색어</li>
+		<li loop="$search_menu->list=>$key1,$val1">
+			<a href="{$val1['href']}" target="_blank"|cond="$val1['open_window']=='Y'">{$val1['link']}</a>
+		</li>
+	</ul>
+	<span class="gpe_search_close" onclick="jQuery('.gpe_search').fadeToggle();"></span>
+</div>
+<!--@end-->

@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Argument class
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml/xmlquery/argument
  * @version 0.1
  */
@@ -64,7 +64,7 @@ class Argument
 	 * @return void
 	 */
 
-	function __construct($name, $value)
+	function Argument($name, $value)
 	{
 		$this->value = $value;
 		$this->name = $name;

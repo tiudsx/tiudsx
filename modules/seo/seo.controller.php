@@ -92,14 +92,6 @@ class seoController extends seo
 			$single_image = true;
 		}
 
-
-		if($current_module_info->module_srl !== $site_module_info->module_srl) {
-			$mdoulePartConfig = $oModuleModel->getModulePartConfig('seo', $current_module_info->module_srl);
-			if($mdoulePartConfig && isset($mdoulePartConfig->meta_description) && trim($mdoulePartConfig->meta_description)) {
-				$piece->description = trim($mdoulePartConfig->meta_description);
-			}
-		}
-
 		if ($document_srl) {
 			$oDocument = Context::get('oDocument');
 			if (!is_a($oDocument, 'documentItem')) {
@@ -191,7 +183,9 @@ class seoController extends seo
 		$this->addMeta('og:type', $piece->type);
 		$this->addMeta('og:url', $piece->url);
 		$this->addMeta('og:site_name', $config->site_name);
-		$this->addMeta('og:title', $piece->title);
+		//$this->addMeta('og:title', $piece->title);
+		$this->addMeta('og:title', "액트립 - 대한민국 액티비티 No.1 ");
+		//$this->addMeta('og:title', "2019 양양서핑 페스티벌");
 		$this->addMeta('og:description', $piece->description);
 		if($is_article) {
 			if(Context::getLangType() !== $oDocument->getLangCode()) {
@@ -210,9 +204,9 @@ class seoController extends seo
 				$img['url'] = $request_uri . $img['filepath'];
 			}
 
-			$this->addMeta('og:image', $img['url']);
-			$this->addMeta('og:image:width', $img['width']);
-			$this->addMeta('og:image:height', $img['height']);
+			//$this->addMeta('og:image', $img['url']);
+			//$this->addMeta('og:image:width', $img['width']);
+			//$this->addMeta('og:image:height', $img['height']);
 			if($single_image) break;
 		}
 
@@ -226,7 +220,7 @@ class seoController extends seo
 	function triggerAfterFileDeleteFile($data)
 	{
 		$document_srl = $data->upload_target_srl;
-		if(!$document_srl) return $this->makeObject();
+		if(!$document_srl) return new Object();
 
 		$this->deleteCacheDocumentImages($document_srl);
 	}

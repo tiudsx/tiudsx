@@ -1,0 +1,51 @@
+<!--@if($layout_info->display_side_ban_L == 'b_yes')-->
+	<!--@if($layout_info->display_side_ban_num_L == '2')--> 
+		<div class="gpe_pm_sideban_L"> 
+			<div class="gpe_pm_ban_imgbox">
+			<!--@if($layout_info->side_ban_img1_L or $layout_info->side_ban_img1_T_L)-->
+			<a href="{$layout_info->side_ban_img1_url_L}" target="_blank"|cond="$layout_info->side_ban_img1_url_blank_L == '02'"><!--@if($layout_info->side_ban_img1_T_L)--><img src="{$layout_info->side_ban_img1_T_L}"alt="banner1"/><!--@else--><img src="{$layout_info->side_ban_img1_L}" alt="롤링배너1번"/><!--@end--></a>
+			<!--@end-->
+			<!--@if($layout_info->side_ban_img2_L or $layout_info->side_ban_img2_T_L)-->
+			<a href="{$layout_info->side_ban_img2_url_L}" target="_blank"|cond="$layout_info->side_ban_img2_url_blank_L == '02'"><!--@if($layout_info->side_ban_img2_T_L)--><img src="{$layout_info->side_ban_img2_T_L}" alt="banner2"/><!--@else--><img src="{$layout_info->side_ban_img2_L}" alt="롤링배너2번"/><!--@end--></a>
+			<!--@end-->
+			<!--@if($layout_info->side_ban_img3_L or $layout_info->side_ban_img3_T_L)-->
+			<a href="{$layout_info->side_ban_img3_url_L}" target="_blank"|cond="$layout_info->side_ban_img3_url_blank_L == '02'"><!--@if($layout_info->side_ban_img3_T_L)--><img src="{$layout_info->side_ban_img3_T_L}" alt="banner3"/><!--@else--><img src="{$layout_info->side_ban_img3_L}" alt="롤링배너3번"/><!--@end--></a>
+			<!--@end-->
+			<!--@if($layout_info->side_ban_img4_L or $layout_info->side_ban_img4_T_L)-->
+			<a href="{$layout_info->side_ban_img4_url_L}" target="_blank"|cond="$layout_info->side_ban_img4_url_blank_L == '02'"><!--@if($layout_info->side_ban_img4_T_L)--><img src="{$layout_info->side_ban_img4_T_L}" alt="banner4"/><!--@else--><img src="{$layout_info->side_ban_img4_L}" alt="롤링배너4번"/><!--@end--></a>
+			<!--@end-->
+			<!--@if($layout_info->side_ban_img5_L or $layout_info->side_ban_img5_T_L)-->
+			<a href="{$layout_info->side_ban_img5_url_L}" target="_blank"|cond="$layout_info->side_ban_img5_url_blank_L == '02'"><!--@if($layout_info->side_ban_img5_T_L)--><img src="{$layout_info->side_ban_img5_T_L}" alt="banner5"/><!--@else--><img src="{$layout_info->side_ban_img5_L}" alt="롤링배너5번"/><!--@end--></a>
+			<!--@end-->
+			</div>
+				<span class="gpe_prev"></span>
+				<span class="gpe_next"></span>
+		</div>
+	<!--@elseif($layout_info->display_side_ban_num_L == '3')-->
+		<div class="gpe_pm_sideban_code_L">
+			{$layout_info->side_ban_img_code_L}
+		</div>
+	<!--@else-->
+		<div class="gpe_pm_sideban_num1_L">
+			<!--@if($layout_info->side_ban_img0_L or $layout_info->side_ban_img0_T_L)-->
+			<a href="{$layout_info->side_ban_img0_url_L}" target="_blank"|cond="$layout_info->side_ban_img0_url_blank_L == '02'"><!--@if($layout_info->side_ban_img0_T_L)--><img src="{$layout_info->side_ban_img0_T_L}" alt="banner1"/><!--@else--><img src="{$layout_info->side_ban_img0_L}" alt="단일배너"/><!--@end--></a>
+			<!--@end-->
+		</div>			
+	<!--@end-->
+
+	<!--@if($layout_info->display_side_ban_L_random == 'ran')-->
+		<script>
+		var j_bsl = jQuery;
+		j_bsl(function(){
+					j_bsl('.gpe_pm_sideban_L').slides({preload: true,preloadImage:'layouts/portal_NOVA/imgs/default/loading.gif',play:5800,randomize:100,pause:1,hoverPause:true});
+				});
+		</script>
+	<!--@else-->
+		<script>
+		var j_bsl = jQuery;
+		j_bsl(function(){
+					j_bsl('.gpe_pm_sideban_L').slides({preload: true,preloadImage:'layouts/portal_NOVA/imgs/default/loading.gif',play:5800,pause:1,hoverPause:true});
+				});
+		</script>
+	<!--@end-->
+<!--@end-->

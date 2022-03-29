@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * HintTableTag
@@ -25,9 +25,9 @@ class HintTableTag extends TableTag
 	 * @param array $index
 	 * @return void
 	 */
-	function __construct($table, $index)
+	function HintTableTag($table, $index)
 	{
-		parent::__construct($table);
+		parent::TableTag($table);
 		$this->index = $index;
 	}
 

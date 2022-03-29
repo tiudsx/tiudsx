@@ -1,0 +1,54 @@
+<!--%import("style.css")-->
+{@ $ws_more_url = trim($widgetstyle_extra_var->ws_more_url); }
+
+<div class="gpe_WS_box"> 
+    <div class="gpe_WS_h2box" style="margin-bottom:{$widgetstyle_extra_var->ws_con_bottpadd}px;">
+		<h2 class="<!--@if($widgetstyle_extra_var->ws_con_se == 'contents')-->gpe_contents_wsTitle<!--@else-->gpe_side_contents_wsTitle<!--@end-->" style="
+		/*위젯스타일 컬러셋에 경우 html 직접삽입방식*/
+		<!--@if($widgetstyle_extra_var->ws_titcolor == 'layout')-->
+			/*레이아웃 컬러셋선택*/
+			<!--@if($layout_info->display_main_colorset_se == 'rb')-->color:#1891e8;
+			<!--@elseif($layout_info->display_main_colorset_se == 'r')-->color:#ff4948;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->color:#39b54a;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->color:#2baab1;
+			<!--@elseif($layout_info->display_main_colorset_se == 'b')-->color:#007bd3;
+			<!--@elseif($layout_info->display_main_colorset_se == 'p')-->color:#6976d3;
+			<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->color:#734ba9;
+			<!--@elseif($layout_info->display_main_colorset_se == 'y')-->color:#ff9000;
+			<!--@elseif($layout_info->display_main_colorset_se == 'op')-->color:#e36159;
+			<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->color:#c71c77;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->color:#8491af;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->color:#4a5b7d;
+			<!--@end-->
+			/*레이아웃 사용자컬러*/
+			<!--@if($layout_info->display_main_colorset_user)-->color:#{$layout_info->display_main_colorset_user};<!--@end-->
+		<!--@else-->
+			<!--@if($widgetstyle_extra_var->ws_titcolor == 'rb')-->color:#1891e8;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'r')-->color:#ff4948;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'gn')-->color:#39b54a;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'gn_p')-->color:#2baab1;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'b')-->color:#007bd3;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'p')-->color:#6976d3;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'p_d')-->color:#734ba9;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'y')-->color:#ff9000;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'op')-->color:#e36159;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'cp')-->color:#c71c77;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'gy')-->color:#8491af;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'gy_d')-->color:#4a5b7d;
+			<!--@elseif($widgetstyle_extra_var->ws_titcolor == 'bk')-->color:#333;
+			<!--@end-->
+		<!--@end-->
+		<!--@if($widgetstyle_extra_var->ws_titcolor_user)-->color:#{$widgetstyle_extra_var->ws_titcolor_user};<!--@end-->">
+		{$widgetstyle_extra_var->ws_title}
+		</h2>
+	</div>
+	<!--@if($ws_more_url)-->
+		<!--@if(strtolower(substr($ws_more_url,0,4))=='http')-->
+		<a href="{$ws_more_url}" class="widgetMoreLink <!--@if($widgetstyle_extra_var->ws_more_area == 'yes')-->area<!--@end-->">
+		<!--@else-->
+		<a href="http://{$ws_more_url}" class="widgetMoreLink <!--@if($widgetstyle_extra_var->ws_more_area == 'yes')-->area<!--@end-->">
+		<!--@end-->
+		</a>
+	<!--@end-->
+    {$widget_content}
+</div>

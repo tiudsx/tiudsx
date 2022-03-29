@@ -1,21 +1,23 @@
 jQuery(function($){
-	$("#magic_use").click(function() {
+var asel = $("#magic_use").find('input:radio:checked').val();
+if(asel !='Y') {
+	$("#magic_conversion").css('display','none');
+	$("#original_format").css('display','none');
+	$("#target_format").css('display','none');
+}
+$("#magic_use").click(function() {
 	var sel = $(this).find('input:radio:checked').val();
 	if(sel =='Y') {
-		$(".magick").css('display','block');
-		$(".magickpath").css('display','block');
-		$(".imagic").css('display','none')
-	}
-	else if(sel =='I')
-	{
-		$(".imagic").css('display','block');
-		$(".magickpath").css('display','none');
-		$(".magick").css('display','block');
+		$("#magic_conversion").css('display','block');
+		$("#original_format").css('display','block');
+		$("#target_format").css('display','block');
 	}
 	else {
-		$(".magick, .imagic, .magickpath").css('display','none');
+		$("#magic_conversion").css('display','none');
+		$("#original_format").css('display','none');
+		$("#target_format").css('display','none');
 	}
-	});
+});
 });
 
 jQuery(function($) {

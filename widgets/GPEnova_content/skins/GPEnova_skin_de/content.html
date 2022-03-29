@@ -1,0 +1,10 @@
+<load target="./js/content_widget.js" cond="$widget_info->page_count || count($widget_info->tab)" />
+<load target="./css/widget.css"/>
+
+<div class="widgetNOVAContainer">
+    <!--@if($widget_info->tab_type != "none")-->
+        <!--#include("./_tab_top.html")-->
+    <!--@else-->
+        <!--#include("./_tab_none.html")-->
+    <!--@end-->
+</div>

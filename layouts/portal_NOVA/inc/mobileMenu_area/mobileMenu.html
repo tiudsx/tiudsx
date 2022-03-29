@@ -1,0 +1,148 @@
+<div class="layG_mobileM_G_bg" onclick="jQuery('.layG_mobileM_G_bg, .layG_mobileM_G').fadeToggle('fast'); jQuery('html').removeClass('sb-scroll-lock');"></div>
+<div class="layG_mobileM_G">
+    <!--3가지 그룹핑-->
+    <!--닫기버튼-->
+    <div class="layG_mobileM_nameClose">
+        <div class="layG_mobileM_G_name">
+            <!--@if(!$is_logged)-->방문을 환영합니다.
+            <!--@else-->{$logged_info->nick_name}
+            <!--@end-->
+        </div>
+        <div class="layG_mobileM_G_close" onclick="jQuery('.layG_mobileM_G_bg, .layG_mobileM_G').fadeToggle('fast'); jQuery('html').removeClass('sb-scroll-lock');"><i class="fa fa-times"></i></div>
+    </div>
+    <!--모바일로그인-->
+    <div class="layG_mobileM_login">
+        <ul>
+            <!--로그인-->
+            <li>
+                <span class="Log" onclick="<!--@if(!$is_logged)-->location.href='{getUrl('act','dispMemberLoginForm')}';<!--@else-->window.open('{getUrl('act','dispMemberLogout')}','_self')<!--@end-->" style="cursor:pointer;">
+					<i class="fa fa-power-off"></i>
+					<!--@if($lang_type=='ko')-->
+						<!--@if(!$is_logged)-->로그인<!--@else-->로그아웃<!--@end-->
+					<!--@elseif($lang_type=='en')-->
+						<!--@if(!$is_logged)-->LOGIN<!--@else-->LOGOUT<!--@end-->
+					<!--@end-->
+				</span>
+                <ul class="Log_popup" cond="!$is_logged">
+                    <li style="float:none; width:0; border-right:0;"><span class="triang" style="top:-10px; left:15%; border-width:6px; border-color:transparent transparent #656565 transparent;"></span></li>
+                    <li><a href="{getUrl('act','dispMemberLoginForm')}">일반로그인</a></li>
+                    <li><a href="{getUrl('act','dispMemberLoginForm')}">SNS로그인</a></li>
+                </ul>
+            </li>
+            <!--//로그인-->
+            <!--회원가입-->
+            <li>
+                <a <!--@if(!$is_logged)-->href="{getUrl('act','dispMemberSignUpForm')}"<!--@else-->onclick="jQuery('.Mem_popup').fadeToggle(); jQuery('.Lang_popup').hide();" style="cursor:pointer;"<!--@end--> class="Mem">
+					<i class="fa fa-check-square-o"></i>
+					<!--@if($lang_type=='ko')-->
+						<!--@if(!$is_logged)-->회원가입<!--@else-->회원정보<!--@end-->
+					<!--@elseif($lang_type=='en')-->
+						<!--@if(!$is_logged)-->JOIN<!--@else-->INFO<!--@end-->
+					<!--@end-->
+				</a>
+                <ul class="Mem_popup" style="right:0;">
+                    <li style="float:none; width:0; border-right:0;"><span class="triang" style="top:-10px; right:48%; border-width:6px; border-color:transparent transparent #656565 transparent;"></span></li>
+                    <!--@foreach($logged_info->menu_list as $key => $val)-->
+                    <li><a href="{getUrl('act',$key,'member_srl','')}">{Context::getLang($val)}</a></li>
+                    <!--@end-->
+                </ul>
+            </li>
+            <!--//회원가입-->
+            <!--언어선택-->
+            <li>
+                <span class="Lang" style="cursor:pointer;">
+					<i class="fa fa-globe"></i>예약조회
+				</span>
+            </li>
+            <li style="display: none;">
+                <span class="Lang" onclick="jQuery('.Lang_popup').fadeToggle(); jQuery('.Mem_popup').hide();" style="cursor:pointer;">
+					<i class="fa fa-globe"></i>{$lang_supported[$lang_type]}
+				</span>
+                <ul class="Lang_popup" style="right:0;">
+                    <li style="float:none; width:0; border-right:0;"><span class="triang" style="top:-10px; right:15%; border-width:6px; border-color:transparent transparent #656565 transparent;"></span></li>
+                    <!--@foreach($lang_supported as $key => $val)-->
+                    <!--@if($key!= $lang_type)-->
+                    <li><a href="#" onclick="doChangeLangType('{$key}');return false;">{$val}</a></li>
+                    <!--@end-->
+                    <!--@end-->
+                </ul>
+            </li>
+            <!--//언어선택-->
+        </ul>
+    </div>
+    <!--//모바일로그인-->
+    <!--모바일검색-->
+    <div class="layG_mobileM_search" style="height:2px;">
+        <form action="{getUrl()}" method="post" class="form_layG_mobileM_search" style="display:none;">
+            <input type="hidden" name="mid" value="{$layout_info->default_page}" |cond="$layout_info->default_page" value="{$mid}" |cond="!$layout_info->default_page" />
+            <input type="hidden" name="act" value="IS" />
+            <input name="is_keyword" type="text" class="inputText" title="검색어를 입력하세요." />
+            <input type="submit" alt="{$lang->cmd_search}" value="검색" class="submit" />
+        </form>
+        <!--i class="fa fa-search"></i-->
+    </div>
+    <!--//모바일검색-->
+    <!--모바일메뉴-->
+    <div class="layG_mobileM_menu">
+        <!--1차메뉴-->
+        <ul class="mbM_sleft_d_01_m">
+            <li loop="$top_menu->list=>$key1,$val1" class="mbM_sleft_d_01 <!--@if($val1['selected'])-->mbM_sleft_d_01_active<!--@end-->" |cond="$val1['text']">
+                <!--@if($val1['selected'])-->
+                <!--@if($val1['list'])-->
+                <span class="on1_active">{$val1['text']}<i class="fa fa-chevron-down"></i></span>
+                <!--@else-->
+                <a href="{$val1['href']}" target="_blank" |cond="$val1['open_window']=='Y'" class="on1_active">{$val1['text']}<i class="fa fa-chevron-down"></i></a>
+                <!--@end-->
+                <!--@else-->
+                <!--@if($val1['list'])-->
+                <span class="on1_no">{$val1['text']}<i class="fa fa-chevron-down"></i></span>
+                <!--@else-->
+                <a href="{$val1['href']}" target="_blank" |cond="$val1['open_window']=='Y'" class="on1_no">{$val1['text']}<i class="fa fa-chevron-down"></i></a>
+                <!--@end-->
+                <!--@end-->
+                <!--2차메뉴-->
+                <ul cond="$val1['list']" class="mbM_sleft_d_02_m" style="<!--@if(!$val1['selected'])-->display:none;<!--@end-->">
+                    <li loop="$val1['list']=>$key2,$val2" cond="$val2['text']" class="mbM_sleft_d_02">
+                        <!--@if($val2['selected'])-->
+                        <!--@if($val2['list'])-->
+                        <span class="on2_active"><i class="fa fa-angle-right"></i>{$val2['text']}</span>
+                        <!--@else-->
+                        <a href="{$val2['href']}" target="_blank" |cond="$val2['open_window']=='Y'" class="on2_active"><i class="fa fa-angle-right"></i>{$val2['text']}</a>
+                        <!--@end-->
+                        <!--@else-->
+                        <!--@if($val2['list'])-->
+                        <span class="on2_no"><i class="fa fa-angle-right"></i>{$val2['text']}</span>
+                        <!--@else-->
+                        <a href="{$val2['href']}" target="_blank" |cond="$val2['open_window']=='Y'" class="on2_no"><i class="fa fa-angle-right"></i>{$val2['text']}</a>
+                        <!--@end-->
+                        <!--@end-->
+                        <!--3차메뉴-->
+                        <ul cond="$val2['list']" class="mbM_sleft_d_03_m" style="<!--@if(!$val2['selected'])-->display:none;<!--@end-->">
+                            <li loop="$val2['list']=>$key3,$val3" cond="$val3['text']" class="mbM_sleft_d_03">
+                                <a href="{$val3['href']}" target="_blank" |cond="$val3['open_window']=='Y'" class="on3_active" |cond="$val3['selected']" class="on3_no">-{$val3['text']}</a>
+                            </li>
+                        </ul>
+                        <!--3//-->
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!--//모바일메뉴-->
+</div>
+
+<!--
+<script>
+if (matchMedia){
+	var mq = window.matchMedia("(min-width:1024px)");
+	mq.addListener(WidthChange);
+	WidthChange(mq);
+}
+function WidthChange(mq) {
+	if (mq.matches) {
+		jQuery(".layG_mobileM_G_bg, .layG_mobileM_G").hide();
+		jQuery('html').removeClass('sb-scroll-lock');
+	}
+}
+</script>
+-->

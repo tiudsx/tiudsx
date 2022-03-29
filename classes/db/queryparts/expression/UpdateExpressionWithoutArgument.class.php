@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * UpdateExpression
@@ -23,9 +23,9 @@ class UpdateExpressionWithoutArgument extends UpdateExpression
 	 * @param object $argument
 	 * @return void
 	 */
-	function __construct($column_name, $argument)
+	function UpdateExpressionWithoutArgument($column_name, $argument)
 	{
-		Expression::__construct($column_name);
+		parent::Expression($column_name);
 		$this->argument = $argument;
 	}
 

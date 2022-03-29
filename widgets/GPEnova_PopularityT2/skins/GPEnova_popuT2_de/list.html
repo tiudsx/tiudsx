@@ -1,0 +1,108 @@
+<!--%import("css/default.css")-->
+<div class="gpe_wgPopularT2 <!--@if($widget_info->popu_colorset == 'layout')-->
+/*레이아웃 컬러셋선택*/
+<!--@if($layout_info->display_main_colorset_se == 'rb')-->rb
+<!--@elseif($layout_info->display_main_colorset_se == 'r')-->r
+<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->gn
+<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->gn_p
+<!--@elseif($layout_info->display_main_colorset_se == 'b')-->b
+<!--@elseif($layout_info->display_main_colorset_se == 'p')-->p
+<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->p_d
+<!--@elseif($layout_info->display_main_colorset_se == 'y')-->y
+<!--@elseif($layout_info->display_main_colorset_se == 'op')-->op
+<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->cp
+<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->gy
+<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->gy_d
+<!--@end-->
+/*레이아웃 사용자컬러*/
+<!--@if($layout_info->display_main_colorset_user)-->colorUser<!--@end-->
+<!--@else-->
+<!--@if($widget_info->popu_colorset == 'rb')-->rb
+<!--@elseif($widget_info->popu_colorset == 'r')-->r
+<!--@elseif($widget_info->popu_colorset == 'gn')-->gn
+<!--@elseif($widget_info->popu_colorset == 'gn_p')-->gn_p
+<!--@elseif($widget_info->popu_colorset == 'b')-->b
+<!--@elseif($widget_info->popu_colorset == 'p')-->p
+<!--@elseif($widget_info->popu_colorset == 'p_d')-->p_d
+<!--@elseif($widget_info->popu_colorset == 'y')-->y
+<!--@elseif($widget_info->popu_colorset == 'op')-->op
+<!--@elseif($widget_info->popu_colorset == 'cp')-->cp
+<!--@elseif($widget_info->popu_colorset == 'gy')-->gy
+<!--@elseif($widget_info->popu_colorset == 'gy_d')-->gy_d
+<!--@elseif($widget_info->popu_colorset == 'bk')-->bk
+<!--@end-->
+<!--@end-->
+">
+	<!--@if($widget_info->popu_style == '01')-->
+	<h3 class="wgP_title">조회수베스트<!--@if($widget_info->popu_moreurl)--><a href="{$widget_info->popu_moreurl}" class="popu_more"></a><!--@else--><!--@end--></h3><!--타이틀+더보기-->
+	<ul class="wgP_contents" cond="$widget_info->popular_documents">
+		{@ $no = 1}
+		<!--@foreach($widget_info->popular_documents as $k => $v)-->
+		<li class="popu_li">
+			<span class="Ncolor <!--@if($no==1)-->wgp_num01<!--@end--> <!--@if($no==2)-->wgp_num02<!--@end--> <!--@if($no==3)-->wgp_num03<!--@end-->">{$no}<span class="wgp_numR">위</span></span>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="min481">{$v->getTitle($widget_info->subject_cut_size)}</a>
+			<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+			<block cond="!preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="max480">{$v->getTitle($widget_info->subject_cut_size_m1)}</a>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="max320">{$v->getTitle($widget_info->subject_cut_size_m2)}</a>
+			</block>
+			<!--@end-->
+			<a href="{$v->getPermanentUrl()}#comment" class="reNum" cond="$v->getCommentCount()">+{$v->getCommentCount()}</a>
+			<span class="wgPdate" cond="$widget_info->popu_dayset == 'yes'">{$v->getRegdate("Y-m-d")}</span>
+			<span class="wgPicon jo"></span>
+			<span class="wgPiconTxt jo"></span>
+		</li>
+		{@ $no++}
+		<!--@end-->
+	</ul>
+	<!--@elseif($widget_info->popu_style == '02')-->
+	<h3 class="wgP_title">추천수베스트<!--@if($widget_info->popu_moreurl)--><a href="{$widget_info->popu_moreurl}" class="popu_more"></a><!--@else--><!--@end--></h3><!--타이틀+더보기-->
+	<ul class="wgP_contents" cond="$widget_info->popular_vot_documents">
+		{@ $no = 1}
+		<!--@foreach($widget_info->popular_vot_documents as $k => $v)-->
+		<li class="popu_li">
+			<span class="Ncolor <!--@if($no==1)-->wgp_num01 wgp_num01M480<!--@end--> <!--@if($no==2)-->wgp_num02<!--@end--> <!--@if($no==3)-->wgp_num03<!--@end-->">{$no}<span class="wgp_numR">위</span></span>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="min481">{$v->getTitle($widget_info->subject_cut_size)}</a>
+			<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+			<block cond="!preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">			
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="max480">{$v->getTitle($widget_info->subject_cut_size_m1)}</a>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="max320">{$v->getTitle($widget_info->subject_cut_size_m2)}</a>
+			</block>
+			<!--@end-->
+			<a href="{$v->getPermanentUrl()}#comment" class="reNum" cond="$v->getCommentCount()">+{$v->getCommentCount()}</a>
+			<span class="wgPdate" cond="$widget_info->popu_dayset == 'yes'">{$v->getRegdate("Y-m-d")}</span>
+			<span class="wgPicon chu"></span>
+			<span class="wgPiconTxt chu"></span>
+		</li>
+		{@ $no++}
+		<!--@end-->
+	</ul>
+	<!--@elseif($widget_info->popu_style == '03')-->
+	<h3 class="wgP_title">전체최신글<!--@if($widget_info->popu_moreurl)--><a href="{$widget_info->popu_moreurl}" class="popu_more"></a><!--@else--><!--@end--></h3><!--타이틀+더보기-->
+	<ul class="wgP_contents" cond="$widget_info->newest_documents">
+		<!--@foreach($widget_info->newest_documents as $k => $v)-->
+		<li>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="min481">{$v->getTitle($widget_info->subject_cut_size)}</a>
+			<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+			<block cond="!preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">					
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="max480">{$v->getTitle($widget_info->subject_cut_size_m1)}</a>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="max320">{$v->getTitle($widget_info->subject_cut_size_m2)}</a>
+			</block>
+			<!--@end-->
+			<a href="{$v->getPermanentUrl()}#comment" class="reNum" cond="$v->getCommentCount()">+{$v->getCommentCount()}</a>
+			<span class="wgPdate" cond="$widget_info->popu_dayset == 'yes'">{$v->getRegdate("Y-m-d")}</span>
+		</li>
+		<!--@end-->
+	</ul>
+	<!--@elseif($widget_info->popu_style == '04')-->
+	<h3 class="wgP_title">전체최신댓글<!--@if($widget_info->popu_moreurl)--><a href="{$widget_info->popu_moreurl}" class="popu_more"></a><!--@else--><!--@end--></h3><!--타이틀+더보기-->
+	<ul class="wgP_contents" cond="$widget_info->newest_comments">
+		<!--@foreach($widget_info->newest_comments as $k => $v)-->
+		<li>
+			<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}">{$v->getSummary($widget_info->subject_cut_size)}</a>
+			<span class="wgPdate" cond="$widget_info->popu_dayset == 'yes'">{$v->getRegdate("Y-m-d")}</span>
+		</li>
+		<!--@end-->
+	</ul>
+	<!--@end-->
+</div>

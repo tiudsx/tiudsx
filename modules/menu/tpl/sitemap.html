@@ -189,7 +189,7 @@
 							<div class="x_tab-content">
 								<div class="x_tab-pane x_active" id="add_linkUrl">
 									<input type="url" class="_linkUrl" required title="{$lang->url_link}" />
-									<p>ex) 'https://www.xpressengine.com' or '/board'</p>
+									<p>ex) 'http://naver.com' or '/board'</p>
 								</div>
 								<div class="x_tab-pane" id="add_linkMenu">
 									<input type="text" class="_linkMenuTitle" title="{$lang->menu_link}" disabled placeholder="{$lang->about_menu_link}" />
@@ -870,6 +870,9 @@ function onSiteMapReceived(htData){
 		.bind("select_node.jstree", function(event, data){
 			// move scroll
 			var ul = $($("#siteMapTree").jstree("get_container")[0]);
+			ul.parent("div.cnt").stop().animate({
+				scrollTop: data.rslt.obj.offset().top - ul.offset().top
+			}, 800);
 
 			$("#siteMapTree input").blur();
 			//console.log($("#siteMapTree input"));

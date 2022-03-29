@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Cache class for APC
  *
- * @author XEHub (developer@xpressengine.com)
+ * @author NAVER (developer@xpressengine.com)
  * */
 class CacheApc extends CacheBase
 {
@@ -30,7 +30,7 @@ class CacheApc extends CacheBase
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function CacheApc()
 	{
 	}
 

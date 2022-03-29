@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * documentItem class
  * document object
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/document
  * @version 0.1
  */
@@ -58,7 +58,7 @@ class documentItem extends BaseObject
 	 * @param array columnList
 	 * @return void
 	 */
-	function __construct($document_srl = 0, $load_extra_vars = true, $columnList = array())
+	function documentItem($document_srl = 0, $load_extra_vars = true, $columnList = array())
 	{
 		$this->document_srl = $document_srl;
 		$this->columnList = $columnList;
@@ -345,7 +345,7 @@ class documentItem extends BaseObject
 
 		if(strncasecmp('http://', $url, 7) !== 0 && strncasecmp('https://', $url, 8) !== 0)  $url = 'http://' . $url;
 
-		return escape($url, false);
+		return $url;
 	}
 
 	function getMemberSrl()
@@ -781,9 +781,6 @@ class documentItem extends BaseObject
 		Context::set('cpage', $output->page_navigation->cur_page);
 		if($output->total_page>1) $this->comment_page_navigation = $output->page_navigation;
 
-		// Call trigger (after)
-		$output = ModuleHandler::triggerCall('document.getComments', 'after', $comment_list);
-
 		return $comment_list;
 	}
 
@@ -868,7 +865,7 @@ class documentItem extends BaseObject
 			}
 			else
 			{
-				return $thumbnail_url . '?' . date('YmdHis', filemtime($thumbnail_file));
+				return $thumbnail_url;
 			}
 		}
 
@@ -962,13 +959,18 @@ class documentItem extends BaseObject
 		// Remove lockfile
 		FileHandler::removeFile($thumbnail_lockfile);
 
+		// Return the thumbnail path if it was successfully generated
+		if($output_file)
+		{
+			return $thumbnail_url;
+		}
 		// Create an empty file if thumbnail generation failed
-		if(!$output_file)
+		else
 		{
 			FileHandler::writeFile($thumbnail_file, '','w');
 		}
 
-		return $thumbnail_url . '?' . date('YmdHis', filemtime($thumbnail_file));
+		return;
 	}
 
 	/**

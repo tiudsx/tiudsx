@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Expression
@@ -27,7 +27,7 @@ class Expression
 	 * @param string $column_name
 	 * @return void
 	 */
-	function __construct($column_name)
+	function Expression($column_name)
 	{
 		$this->column_name = $column_name;
 	}

@@ -12,8 +12,7 @@ class seo extends ModuleObject
 		array('display', 'seo', 'controller', 'triggerBeforeDisplay', 'before'),
 		array('file.deleteFile', 'seo', 'controller', 'triggerAfterFileDeleteFile', 'after'),
 		array('document.updateDocument', 'seo', 'controller', 'triggerAfterDocumentUpdateDocument', 'after'),
-		array('document.deleteDocument', 'seo', 'controller', 'triggerAfterDocumentDeleteDocument', 'after'),
-		array('module.dispAdditionSetup', 'seo', 'view', 'triggerDispSeoAdditionSetup', 'before')
+		array('document.deleteDocument', 'seo', 'controller', 'triggerAfterDocumentDeleteDocument', 'after')
 	);
 
 	public function getConfig()
@@ -121,9 +120,9 @@ GASCRIPT;
 		// Naver Analytics
 		if ($config->na_id && !($config->na_except_admin == 'Y' && $logged_info->is_admin == 'Y')) {
 			$na_script = <<< NASCRIPT
-<!-- XEHub Analytics -->
+<!-- NAVER Analytics -->
 <script src="//wcs.naver.net/wcslog.js"></script>
-<script>if(!wcs_add){var wcs_add={};};wcs_add['wa']='{$config->na_id}';if(typeof wcs_do!="undefined"){wcs_do();}</script>
+<script>if(!wcs_add){var wcs_add={wa:'{$config->na_id}'};}if(typeof wcs_do!="undefined"){wcs_do();}</script>
 NASCRIPT;
 			Context::addHtmlFooter($na_script . PHP_EOL);
 		}
@@ -131,7 +130,7 @@ NASCRIPT;
 
 	function moduleInstall()
 	{
-		return $this->makeObject();
+		return new Object();
 	}
 
 	function checkUpdate()
@@ -164,7 +163,7 @@ NASCRIPT;
 			}
 		}
 
-		return $this->makeObject(0, 'success_updated');
+		return new Object(0, 'success_updated');
 	}
 
 	function moduleUninstall()
@@ -175,12 +174,7 @@ NASCRIPT;
 			$oModuleController->deleteTrigger($trigger[0], $trigger[1], $trigger[2], $trigger[3], $trigger[4]);
 		}
 
-		return $this->makeObject();
-	}
-
-	public function makeObject($code = 0, $message = 'success')
-	{
-		return class_exists('BaseObject') ? new BaseObject($code, $message) : new Object($code, $message);
+		return new Object();
 	}
 }
 /* !End of file */

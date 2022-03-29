@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * File abstraction class 
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class FileObject extends BaseObject
 {
@@ -34,7 +34,7 @@ class FileObject extends BaseObject
 	 * @param string $mode File open mode 
 	 * @return void
 	 */
-	function __construct($path, $mode)
+	function FileObject($path, $mode)
 	{
 		if($path != NULL)
 		{

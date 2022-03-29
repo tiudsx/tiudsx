@@ -1,6 +1,6 @@
 /**
  * @brief  Watch Input box
- * @author XEHub (developers@xpresseingine.com)
+ * @author NAVER (developers@xpresseingine.com)
  **/
 (function($){
 

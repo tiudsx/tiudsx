@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * - Security class
  * - This class helps to solve security problems.
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/security
  * @version 0.1
  */
@@ -22,7 +22,7 @@ class Security
 	 * @param mixed $var Target context
 	 * @return void
 	 */
-	function __construct($var = NULL)
+	function Security($var = NULL)
 	{
 		$this->_targetVar = $var;
 	}

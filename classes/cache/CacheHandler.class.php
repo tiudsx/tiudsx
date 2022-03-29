@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * CacheHandler
  *
- * @author XEHub (developer@xpressengine.com)
+ * @author NAVER (developer@xpressengine.com)
  */
 class CacheHandler extends Handler
 {
@@ -49,7 +49,7 @@ class CacheHandler extends Handler
 	 * @param boolean $always_use_file If set true, use a file cache always
 	 * @return CacheHandler
 	 */
-	function __construct($target, $info = null, $always_use_file = false)
+	function CacheHandler($target, $info = null, $always_use_file = false)
 	{
 		if(!$info)
 		{
@@ -281,7 +281,7 @@ class CacheHandler extends Handler
 /**
  * Base class of Cache
  *
- * @author XEHub (developer@xpressengine.com)
+ * @author NAVER (developer@xpressengine.com)
  */
 class CacheBase
 {

@@ -1,0 +1,17 @@
+		<li class="<!--@if($widget_info->popu_tapstep == '03' or $widget_info->popu_tapstep == '06')-->active<!--@end-->" onclick="jQuery(this).parent().find('li.active').removeClass('active');jQuery(this).addClass('active');return false;">
+			<p class="wgP_title" style="width:109px; width:{$widget_info->popu_tapwidth}px;">{$lang->ip_newest_comments}</p><!--comments title-->
+			<!--comments contents-->
+			<ul class="wgP_contents" cond="$widget_info->newest_comments">
+				<!--@foreach($widget_info->newest_comments as $k => $v)-->
+				<li>
+				<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="subject min321">- {$v->getSummary($widget_info->subject_cut_size)}</a>
+				<!--@if($layout_info->display_conten_respon_se != 'basic')-->
+				<block cond="!preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">
+				<a onClick="window.open('{$v->getPermanentUrl()}','_self')" href="{$v->getPermanentUrl()}" class="subject max320">- {$v->getSummary($widget_info->subject_cut_size_m)}</a>
+				</block>
+				<!--@end-->
+				<span class="wgPdate" cond="$widget_info->popu_dayset == 'yes'">{$v->getRegdate("Y-m-d")}</span>
+				</li>
+				<!--@end-->
+			</ul>
+		</li>

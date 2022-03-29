@@ -1,0 +1,47 @@
+<!--사이드메뉴-->
+<div class="gpe_sideMenu" style="
+<!--@if($layout_info->display_backimg_se == 'color' or $layout_info->display_backimg_se == 'img' or $layout_info->display_backimg_se == 'colorimg')-->padding-right:0;
+<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->padding-left:0;<!--@end-->
+<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+	<!--@if($layout_info->display_conten_sidemenu_LR == 'L')-->
+	padding-left:0;
+	<!--@else-->
+	padding-right:0;
+	<!--@end-->
+<!--@end-->
+<!--@end-->
+">
+<!--@if(!$layout_info->display_conten_sidemenu_b == 'b')-->
+	<h2 loop="$top_menu->list=>$key1,$val1" cond="$val1['selected']">{$val1['text']}</h2><!--1차메뉴-->
+	 <ul loop="$top_menu->list=>$key1,$val1" cond="$val1['selected'] && $val1['list']" class="sleft_d_02_m">
+		<li loop="$val1['list']=>$key2,$val2" class="sleft_d_02 <!--@if($val2['selected'])-->sleft_d_02_active<!--@end-->"|cond="$val2['link']">
+			<!--@if($val2['selected'])-->
+			<a href="<!--@if($val2['list'])-->#<!--@else-->{$val2['href']}<!--@end-->" target="_blank"|cond="$val2['open_window']=='Y'" class="on2_active">{$val2['text']}</a><!--2차메뉴-->
+			<!--@else-->
+			<a href="<!--@if($val2['list'])-->#<!--@else-->{$val2['href']}<!--@end-->" target="_blank"|cond="$val2['open_window']=='Y'" onmouseover="this.style.backgroundColor='#ebebeb';" onmouseout="this.style.backgroundColor='#f9f9f9';" style="background-color:#f9f9f9;" class="on2_no">{$val2['text']}</a><!--2차메뉴-->
+			<!--@end-->
+			<ul cond="$val2['list']" class="sleft_d_03_m" style="<!--@if(!$val2['selected'])-->display:none;<!--@end-->">
+				<li loop="$val2['list']=>$key3,$val3" cond="$val3['link']" class="sleft_d_03">
+					<a href="{$val3['href']}" target="_blank"|cond="$val3['open_window']=='Y'" class="on3_active"|cond="$val3['selected']" class="on3_no">{$val3['text']}</a><!--3차메뉴-->
+				</li>
+			</ul>
+		</li>
+	</ul>
+<!--@else-->
+	<h2 loop="$side_menu->list=>$key1,$val1"><span>{$val1['text']}</span></h2><!--1차메뉴-->
+	 <ul loop="$side_menu->list=>$key1,$val1" cond="$val1['list']" class="sleft_d_02_m">
+		<li loop="$val1['list']=>$key2,$val2" class="sleft_d_02 <!--@if($val2['selected'])-->sleft_d_02_active<!--@end-->"|cond="$val2['link']">
+			<!--@if($val2['selected'])-->
+			<a href="<!--@if($val2['list'])-->#<!--@else-->{$val2['href']}<!--@end-->" target="_blank"|cond="$val2['open_window']=='Y'" style="<!--@if($layout_info->display_conten_sidemenu_2depC)-->background-color:#{$layout_info->display_conten_sidemenu_2depC};<!--@else-->background-color:#f4293b;<!--@end-->" class="on2_active">{$val2['text']}</a><!--2차메뉴-->
+			<!--@else-->
+			<a href="<!--@if($val2['list'])-->#<!--@else-->{$val2['href']}<!--@end-->" target="_blank"|cond="$val2['open_window']=='Y'" onmouseover="this.style.backgroundColor='#ebebeb';" onmouseout="this.style.backgroundColor='#f9f9f9';" style="background-color:#f9f9f9;" class="on2_no">{$val2['text']}</a><!--2차메뉴-->
+			<!--@end-->
+			<ul cond="$val2['list']" class="sleft_d_03_m" style="<!--@if(!$val2['selected'])-->display:none;<!--@end-->">
+				<li loop="$val2['list']=>$key3,$val3" cond="$val3['link']" class="sleft_d_03">
+					<a href="{$val3['href']}" target="_blank"|cond="$val3['open_window']=='Y'" class="on3_active"|cond="$val3['selected']" class="on3_no">{$val3['text']}</a><!--3차메뉴-->
+				</li>
+			</ul>
+		</li>
+	</ul>
+<!--@end-->
+</div>

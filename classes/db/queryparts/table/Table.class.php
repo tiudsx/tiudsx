@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/table
  * @version 0.1
  */
@@ -27,7 +27,7 @@ class Table
 	 * @param string $alias
 	 * @return void
 	 */
-	function __construct($name, $alias = NULL)
+	function Table($name, $alias = NULL)
 	{
 		$this->name = $name;
 		$this->alias = $alias;

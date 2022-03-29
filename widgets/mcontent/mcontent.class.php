@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class mcontent
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief widget to display mcontent
  * @version 0.1
  */
@@ -671,7 +671,7 @@ class mcontentItem extends BaseObject
 	var $contents_link = null;
 	var $domain = null;
 
-	function __construct($browser_title='')
+	function mcontentItem($browser_title='')
 	{
 		$this->browser_title = $browser_title;
 	}
@@ -754,7 +754,7 @@ class mcontentItem extends BaseObject
 
 	function getLink()
 	{
-		return escape($this->get('url'), false);
+		return $this->get('url');
 	}
 	function getModuleSrl()
 	{

@@ -1,0 +1,31 @@
+<!--layout.html css변수설정-->
+
+<!--익스8이하 css3호환-->
+<block cond="preg_match('/ie 8/i', getenv('HTTP_USER_AGENT')) or preg_match('/ie 7/i', getenv('HTTP_USER_AGENT'))">
+<load target="http://cdnjs.cloudflare.com/ajax/libs/css3pie/2.0beta1/PIE_IE678.js"/>
+<style type="text/css">
+.layG_iecss3{behavior:url(layouts/portal_NOVA/css/ie-css3.htc);}
+</style>
+</block>
+
+<style type="text/css">
+body{<!--@if($layout_info->display_conten_respon_se != 'basic')-->overflow-x:hidden;<!--@end-->}
+.xe_point_level_icon{padding-bottom:2px;}/*레벨 아이콘 재정렬*/
+.gpe_allcon_wrap0{
+	<!--@if($layout_info->display_conten_sidebox_se != 'no')-->
+	<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->border-left:1px solid #e6e6e6;
+	<!--@elseif($layout_info->display_conten_sidebox_RL == 'LR')-->border-left:1px solid #e6e6e6; border-right:1px solid #e6e6e6;
+	<!--@else-->border-right:1px solid #e6e6e6;
+	<!--@end-->
+	<!--@end-->
+}
+.gpe_contents_box{
+<!--@if($layout_info->display_conten_sidebox_se != 'no' && $layout_info->display_conten_sidebox_RL == 'L' or $layout_info->display_conten_sidebox_se != 'no' && $layout_info->display_conten_sidebox_RL == 'LR')-->margin-left:1px;<!--@end-->
+<!--@if($layout_info->display_conten_sidebox_se != 'no')-->
+	<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->padding-left:10px;
+	<!--@elseif($layout_info->display_conten_sidebox_RL == 'LR')-->padding-left:10px; padding-right:10px;
+	<!--@else-->padding-right:10px;
+	<!--@end-->
+<!--@end-->
+}
+</style>

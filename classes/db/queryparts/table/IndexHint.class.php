@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/table
  * @version 0.1
  */
@@ -27,7 +27,7 @@ class IndexHint
 	 * @param string $index_hint_type
 	 * @return void
 	 */
-	function __construct($index_name, $index_hint_type)
+	function IndexHint($index_name, $index_hint_type)
 	{
 		$this->index_name = $index_name;
 		$this->index_hint_type = $index_hint_type;

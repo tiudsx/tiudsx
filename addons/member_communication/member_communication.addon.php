@@ -1,12 +1,12 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 if(!defined('__XE__'))
 	exit();
 
 /**
  * @file member_communication.addon.php
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Promote user communication
  *
  * - Pop-up the message if new message comes in

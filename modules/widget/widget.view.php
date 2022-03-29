@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  widgetView
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief View class of the widget modules
  */
 class widgetView extends widget
@@ -38,7 +38,7 @@ class widgetView extends widget
 	function dispWidgetSkinInfo()
 	{
 		$widget = Context::get('selected_widget');
-		$skin = urlencode(preg_replace("/[^a-z0-9-_]+/i", '', Context::get('skin')));
+		$skin = Context::get('skin');
 
 		$path = sprintf('./widgets/%s/', $widget);
 		// Wanted widget is selected information

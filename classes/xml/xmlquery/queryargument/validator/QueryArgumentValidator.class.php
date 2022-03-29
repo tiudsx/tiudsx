@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * QueryArgumentValidator class
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml/xmlquery/queryargument/validator
  * @version 0.1
  */
@@ -59,7 +59,7 @@ class QueryArgumentValidator
 	 * @param QueryArgument $argument
 	 * @return void
 	 */
-	function __construct($tag, $argument)
+	function QueryArgumentValidator($tag, $argument)
 	{
 		$this->argument = $argument;
 		$this->argument_name = $this->argument->getArgumentName();

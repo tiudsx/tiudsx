@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * TableTag
@@ -66,7 +66,7 @@ class TableTag
 	 * @param object $table XML <table> tag
 	 * @return void
 	 */
-	function __construct($table)
+	function TableTag($table)
 	{
 		$dbParser = DB::getParser();
 

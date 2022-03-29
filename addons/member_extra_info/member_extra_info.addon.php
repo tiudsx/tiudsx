@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 if(!defined('__XE__'))
 {
@@ -8,7 +8,7 @@ if(!defined('__XE__'))
 
 /**
  * @file image_name.addon.php
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Display user image name/image mark
  *
  * Find member_srl in the part with <div class="member_MemberSerialNumber"> .... </div>

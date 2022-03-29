@@ -1,0 +1,8 @@
+.gpe_WS_box{position:relative; overflow:hidden; *zoom:1;}
+.gpe_WS_h2box{position:relative; margin-bottom:15px;}
+.gpe_WS_box h2{position:relative; font-size:16px; font-weight:700; border-bottom:2px solid #676767;}
+.gpe_WS_box h2.gpe_contents_wsTitle{height:34px; line-height:34px;}/*¸ŞÀÎÄÁÅÙÃ÷¸¸ Àû¿ë*/
+.gpe_WS_box h2.gpe_side_contents_wsTitle{font-size:14px; height:30px; line-height:30px;}/*sideÄÁÅÙÃ÷¸¸ Àû¿ë*/
+.gpe_WS_box a.widgetMoreLink{position:absolute; display:block; top:10px; right:1px; width:14px; height:14px; background:url(imgs/default/default_01.png) no-repeat -10px -12px;}
+.gpe_WS_box a.widgetMoreLink.area{right:33px;}
+.gpe_WS_box a.widgetMoreLink:hover{background:url(imgs/default/default_01.png) no-repeat -34px -12px;}

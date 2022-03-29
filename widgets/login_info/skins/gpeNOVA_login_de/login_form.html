@@ -1,0 +1,81 @@
+<!--포탈MAX_로그인위젯스킨-->
+<!--고객센터: http://simpleeye.ivyro.net/xe/gdesign_sub_qna-->
+<!--저작권: 개발코드(css+html)및 디자인도용, 소스재판매는 xe마켓 지적저작권법에 반드시 처벌받으니 이점유의하시기 바랍니다.-->
+<!--라이선스: 1도메인(1웹사이트) 1라이선스 입니다.-->
+
+<!--%import("css/LoginWidget.css")-->
+<!--%import("filter/login.xml")-->
+<!--%import("filter/openid_login.xml")-->
+<!--%import("js/login.js")-->
+
+<!--애러메시지-->
+	<block cond="$XE_VALIDATOR_MESSAGE">
+		<script type="text/javascript">
+			alert("{$XE_VALIDATOR_MESSAGE}");
+		</script>
+	</block>
+<!--//애러메시지-->
+
+<!--로그인폼-->
+	<div class="GPE_login_area" style="
+	<!--@if($layout_info->display_backimg_se == 'color' or $layout_info->display_backimg_se == 'img' or $layout_info->display_backimg_se == 'colorimg')-->border-right:1px solid #e6e6e6;
+	<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->border-right:0; border-left:1px solid #e6e6e6;<!--@end-->
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+		<!--@if($layout_info->display_conten_sideLogin_LR == 'L')-->
+		border-right:0; border-left:1px solid #e6e6e6;
+		<!--@else-->
+		border-right:1px solid #e6e6e6;
+		<!--@end-->
+	<!--@end-->
+	<!--@end-->
+	">
+	<form action="./" method="post" ruleset="@login" class="formGPE_login">
+		<fieldset>
+			<!--히든값-->
+			<input type="hidden" name="act" value="procMemberLogin"/>
+			<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}"/>
+			<!--//히든값-->
+			<!--회원가입+아이디비번찾기+인증메일-->
+			<ul class="help">
+				<li>
+					<a href="<!--@if($layout_info->default_page)-->{getUrl('act','dispMemberSignUpForm','mid', $layout_info->default_page)}<!--@else-->{getUrl('act','dispMemberSignUpForm')}<!--@end-->" class="help_join">회원가입</a>
+				</li>
+				<ul class="help_IM">
+					<li style="*padding:0 2px 0 0;">
+						<a href="<!--@if($layout_info->default_page)-->{getUrl('act','dispMemberFindAccount','mid', $layout_info->default_page)}<!--@else-->{getUrl('act','dispMemberFindAccount')}<!--@end-->" class="help_idpw">아이디/비번</a>
+					</li>
+					<li>
+						<a href="<!--@if($layout_info->default_page)-->{getUrl('act','dispMemberResendAuthMail','mid', $layout_info->default_page)}<!--@else-->{getUrl('act','dispMemberResendAuthMail')}<!--@end-->" class="help_mail">인증메일</a>
+					</li>
+				</ul>
+			</ul>
+			<!--//회원가입+아이디비번찾기+인증메일-->
+			<!--아이디+패스워드+로긴버튼-->
+			<div class="idpwWrap">
+				<span class="idpw"><!--아이디+패스워드-->
+					<input name="user_id" type="text" title="아이디 입력" value="아이디" onblur="if(this.value == ''){this.style.border='1px solid #bebebe';this.value='아이디'}" onfocus="if(this.value == '아이디'){this.style.border='1px solid #333';this.value=''}" class="idpw_id"/><!--아이디-->
+					<input name="password" type="password" title="비밀번호 입력" value="비밀번호" onblur="if(this.value == ''){this.style.border='1px solid #bebebe';this.value='비밀번호'}" onfocus="if(this.value == '비밀번호'){this.style.border='1px solid #333';this.value=''}" class="idpw_pass"/><!--패스워드-->
+				</span>
+				<span class="loginbutton">
+					<input type="submit" alt="로그인" value="{$lang->cmd_login}"/>
+				</span>
+			</div>
+			<!--//아이디+패스워드+로긴버튼-->
+			<!--로긴유지-->
+			<div class="keep_login">
+				<input type="checkbox" name="keep_signed" id="keep_signed" value="Y" title="체크하시면 로그인이 유지됩니다."/><label for="keep_signed">{$lang->keep_signed}</label>
+			</div>
+			<!--//로긴유지-->
+			<!--쇼셜로그인-->
+			<div class="btn_sns" cond="$layout_info->display_top_login_sns == 'tl_yes'">
+				<a href="<!--@if($layout_info->display_top_login_snsType == '2')-->{getUrl('act','dispSocialxeLoginForm')}<!--@else-->{getUrl('act','dispMemberLoginForm')}<!--@end-->">쇼셜로그인</a>
+			</div>
+			<!--//쇼셜로그인-->
+		</fieldset>
+	</form> 
+	</div>
+<!--//로그인폼-->
+<block cond="preg_match('/ie 8/i', getenv('HTTP_USER_AGENT'))">
+	<style type="text/css">
+	</style>
+</block>

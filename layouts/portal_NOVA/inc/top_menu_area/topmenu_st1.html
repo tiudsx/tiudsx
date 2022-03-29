@@ -1,0 +1,145 @@
+<style type="text/css">
+<!--@if($layout_info->display_topmenu_type == '2')-->
+.tmenu1_wrap00.fixed, .tmenu1_wrap0.fixed{background-color:#fff;}
+.tmenu1_wrap00.fixed{box-shadow:1px 1px 4px rgba(0,0,0,0.1); -moz-box-shadow:1px 1px 4px rgba(0,0,0,0.1); -webkit-box-shadow:1px 1px 4px rgba(0,0,0,0.1);}
+<!--@end-->
+.gpe_munu{<!--@if($layout_info->display_area_allmenu_se == 'no')-->left:-20px;<!--@end-->}
+.gpe_munu ul.topnav a.mnav{width:{$layout_info->display_topmenu_mwidth}px; <!--@if($layout_info->display_topmenu_type == '2')-->color:#333;<!--@else-->color:#fff;<!--@end-->}
+.gpe_munu ul.topnav a.mnav.active{<!--@if($layout_info->display_topmenu_type == '2')-->color:#f92f24;<!--@end-->color:#{$layout_info->display_topmenu_1depColor};}
+.gpe_munu li.subnav_d02 a{width:{$layout_info->display_topmenu_mwidth-2}px;}
+.gpe_munu ul.subnav_d03_m{<!--@if($layout_info->display_topmenu_mwidth)-->left:{$layout_info->display_topmenu_mwidth-5}px;<!--@end-->}
+.gpe_munu li.subnav_d03 a{width:{$layout_info->display_topmenu_mwidth-2}px;}
+.allmenu_list li.section_group{padding-right:{$layout_info->area_allmenu_pad}px; *padding-right:{$layout_info->area_allmenu_pad-3}px;}
+</style>
+
+<div class="tmenu1_wrap00_Fheight">
+<div class="tmenu1_wrap00">
+	<div class="tmenu1_wrap0">
+	<!--메인메뉴-->
+		<div class="gpe_munu">
+			<ul class="topnav">
+				<li loop="$top_menu->list=>$key1,$val1" cond="$val1['link']" class="mnav_li">
+					<a href="{$val1['href']}" target="_blank"|cond="$val1['open_window']=='Y'" class="mnav <!--@if($val1['selected'])-->active<!--@end-->">{$val1['link']}</a><!--1차메뉴-->
+					<ul cond="$val1['list']" class="subnav_d02_m">
+						<li><span class="triang" style="top:-8px; left:50%; margin-left:-2px;<!--@if($layout_info->display_topmenu_type == '2')-->top:-10px;<!--@end-->"></span></li><!--삼각형-->
+						<li loop="$val1['list']=>$key2,$val2" cond="$val2['link']" class="subnav_d02">
+							<a href="{$val2['href']}" target="_blank"|cond="$val2['open_window']=='Y'" class="on2"|cond="$val2['selected']" class="on2_no">{$val2['link']}</a><!--2차메뉴-->	
+							<ul cond="$val2['list']" class="subnav_d03_m">
+								<div class="subnav_triang_3dep_border"></div><div class="subnav_triang_3dep"></div><!--3차 활성삼각형-->
+								<li loop="$val2['list']=>$key3,$val3" cond="$val3['link']" class="subnav_d03">
+									<a href="{$val3['href']}" target="_blank"|cond="$val3['open_window']=='Y'" class="on3"|cond="$val3['selected']" class="on3_no">{$val3['link']}</a><!--3차메뉴-->	
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	<!--//메인메뉴-->
+	<!--전체메뉴-->
+		<!--@if($layout_info->display_area_allmenu_se != 'no')-->
+		<span class="allmenu" onclick="jQuery('.allmenu_list').fadeToggle();"></span><!--전체메뉴 버튼-->
+		<!--전체메뉴 박스-->
+		<div class="allmenu_list">
+			<span class="allmenu_close" onclick="jQuery('.allmenu_list').fadeToggle();"></span><!--전체메뉴 닫기-->
+			<div style="position:relative;"><span class="triang" style="top:-21px; top:-23px\9; left:8px; border-color:transparent transparent #353940 transparent;"></span></div><!--삼각형-->
+			<div class="allmenu_left_margin"></div><!--전체메뉴 좌측마진값-->
+			<!--개별그룹(1+2차)-->
+			<ul class="allmenu_ul">
+				<!--@if($layout_info->display_area_allmenu_bjong != 'b')-->
+				<li class="section_group" loop="$top_menu->list=>$key1,$val1" cond="$val1['link']">
+				<a href="{$val1['href']}" cond="$val1['link']" target="_blank"|cond="$val1['open_window']=='Y'" class="section_1dep">{$val1['text']}</a><!--전체메뉴 1차-->
+				  <ul cond="$val1['list']">
+					<li loop="$val1['list']=>$key2,$val2" cond="$val2['link']">
+						<a href="{$val2['href']}" target="_blank"|cond="$val2['open_window']=='Y'" class="section_2dep">{$val2['text']}</a><!--전체메뉴 2차-->
+					</li>
+				  </ul>
+				</li>
+				<!--@else-->
+				<li class="section_group" loop="$all_menu->list=>$key1,$val1" cond="$val1['link']">
+				<a href="{$val1['href']}" cond="$val1['link']" target="_blank"|cond="$val1['open_window']=='Y'" class="section_1dep">{$val1['text']}</a><!--전체메뉴 1차-->
+				  <ul cond="$val1['list']">
+					<li loop="$val1['list']=>$key2,$val2" cond="$val2['link']">
+						<a href="{$val2['href']}" target="_blank"|cond="$val2['open_window']=='Y'" class="section_2dep">{$val2['text']}</a><!--전체메뉴 2차-->
+					</li>
+				  </ul>
+				</li>
+				<!--@end-->
+			</ul>
+		</div>
+		<!--@end-->
+	<!--//전체메뉴-->
+	</div>
+</div>
+</div>
+
+<script>
+//탑메뉴 2차활성
+jQuery(function (e) {
+    var g = e(".topnav");
+    var d = g.find(">li");
+    var c = g.find(">ul>li");
+    var b = null;
+    d.find(">ul").hide();
+    d.filter(":first").addClass("first");
+
+    function f() {
+        var h = e(this);
+        if (h.next("ul").is(":hidden") || h.next("ul").length == 0) {
+            d.find(">ul").fadeOut(200);
+            d.find("a").removeClass("hover");
+            h.next("ul").fadeIn(200);
+            h.addClass("hover")
+        }
+    }
+
+    function a() {
+        d.find("ul").fadeOut(200);
+        d.find("a").removeClass("hover")
+    }
+    d.find(">a").mouseover(f).focus(f);
+    d.mouseleave(a)
+});
+//탑메뉴 3차활성
+jQuery(function (e) {
+    var g = e(".subnav_d02_m");
+    var d = g.find(">li");
+    var c = g.find(">ul>li");
+    var b = null;
+    d.find(">ul").hide();
+    d.filter(":first").addClass("first");
+
+    function f() {
+        var h = e(this);
+        if (h.next("ul").is(":hidden") || h.next("ul").length == 0) {
+            d.find(">ul").fadeOut(200);
+            d.find("a").removeClass("hover");
+            h.next("ul").fadeIn(200);
+            h.addClass("hover")
+        }
+    }
+
+    function a() {
+        d.find("ul").fadeOut(200);
+        d.find("a").removeClass("hover")
+    }
+    d.find(">a").mouseover(f).focus(f);
+    d.mouseleave(a)
+});
+</script>
+
+<script>
+//탑메뉴 고정
+var j_stm = jQuery;
+j_stm(document).ready(function () {
+    var a = j_stm(".tmenu1_wrap00").offset().top - parseFloat(j_stm(".tmenu1_wrap00").css("marginTop").replace(/auto/, 0));
+    j_stm(window).scroll(function (b) {
+        var c = j_stm(this).scrollTop();
+        if (c >= a) {
+            j_stm(".tmenu1_wrap00, .tmenu1_wrap0").addClass("fixed")
+        } else {
+            j_stm(".tmenu1_wrap00, .tmenu1_wrap0").removeClass("fixed")
+        }
+    })
+});
+</script>

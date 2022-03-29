@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  editorModel
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief model class of the editor odule
  */
 class editorModel extends editor
@@ -141,14 +141,14 @@ class editorModel extends editor
 		$component_info->license_link = $xml_doc->component->license->attrs->link;
 
 		$buff = '<?php if(!defined("__XE__")) exit(); ';
-		$buff .= sprintf('$xml_info->component_name = %s;', var_export($component_info->component_name, true));
-		$buff .= sprintf('$xml_info->title = %s;', var_export($component_info->title, true));
-		$buff .= sprintf('$xml_info->description = %s;', var_export($component_info->description, true));
-		$buff .= sprintf('$xml_info->version = %s;', var_export($component_info->version, true));
-		$buff .= sprintf('$xml_info->date = %s;', var_export($component_info->date, true));
-		$buff .= sprintf('$xml_info->homepage = %s;', var_export($component_info->homepage, true));
-		$buff .= sprintf('$xml_info->license = %s;', var_export($component_info->license, true));
-		$buff .= sprintf('$xml_info->license_link = %s;', var_export($component_info->license_link, true));
+		$buff .= sprintf('$xml_info->component_name = "%s";', $component_info->component_name);
+		$buff .= sprintf('$xml_info->title = "%s";', $component_info->title);
+		$buff .= sprintf('$xml_info->description = "%s";', $component_info->description);
+		$buff .= sprintf('$xml_info->version = "%s";', $component_info->version);
+		$buff .= sprintf('$xml_info->date = "%s";', $component_info->date);
+		$buff .= sprintf('$xml_info->homepage = "%s";', $component_info->homepage);
+		$buff .= sprintf('$xml_info->license = "%s";', $component_info->license);
+		$buff .= sprintf('$xml_info->license_link = "%s";', $component_info->license_link);
 
 		// Author information
 		if(!is_array($xml_doc->component->author)) $author_list[] = $xml_doc->component->author;
@@ -156,9 +156,9 @@ class editorModel extends editor
 
 		for($i=0; $i < count($author_list); $i++)
 		{
-			$buff .= sprintf('$xml_info->author['.$i.']->name = %s;', var_export($author_list[$i]->name->body, true));
-			$buff .= sprintf('$xml_info->author['.$i.']->email_address = %s;', var_export($author_list[$i]->attrs->email_address, true));
-			$buff .= sprintf('$xml_info->author['.$i.']->homepage = %s;', var_export($author_list[$i]->attrs->link, true));
+			$buff .= sprintf('$xml_info->author['.$i.']->name = "%s";', $author_list[$i]->name->body);
+			$buff .= sprintf('$xml_info->author['.$i.']->email_address = "%s";', $author_list[$i]->attrs->email_address);
+			$buff .= sprintf('$xml_info->author['.$i.']->homepage = "%s";', $author_list[$i]->attrs->link);
 		}
 
 		// List extra variables (text type only in the editor component)
@@ -175,8 +175,8 @@ class editorModel extends editor
 				$xml_info->extra_vars->{$key}->title = $title;
 				$xml_info->extra_vars->{$key}->description = $description;
 
-				$buff .= sprintf('$xml_info->extra_vars->%s->%s = %s;', $key, 'title', var_export($title));
-				$buff .= sprintf('$xml_info->extra_vars->%s->%s = %s;', $key, 'description', var_export($description));
+				$buff .= sprintf('$xml_info->extra_vars->%s->%s = "%s";', $key, 'title', $title);
+				$buff .= sprintf('$xml_info->extra_vars->%s->%s = "%s";', $key, 'description', $description);
 			}
 		}
 
@@ -228,9 +228,6 @@ class editorModel extends editor
 		// Set Height
 		if(!$option->height) $editor_height = 300;
 		else $editor_height = $option->height;
-		if(Mobile::isFromMobilePhone()) {
-			$editor_height = 150;
-		}
 		// Skin Setting
 		$skin = $option->skin;
 		if(!$skin) $skin = 'ckeditor';
@@ -597,38 +594,20 @@ class editorModel extends editor
 		return $cache_file;
 	}
 
-	function getComponentListCacheKey($filter_enabled = true, $site_srl = 0)
-	{
-		$cache_key = array();
-		$cache_key[] = Context::getLangType();
-		if ($filter_enabled) $cache_key[] = 'filter';
-		if ($site_srl) $cache_key[] = $site_srl;
-
-		return 'editor.component_list:' . implode('.', $cache_key);
-	}
-
 	/**
 	 * @brief Return a component list (DB Information included)
 	 */
 	function getComponentList($filter_enabled = true, $site_srl=0, $from_db=false)
 	{
-		$component_list = false;
-
-		$oCacheHandler = CacheHandler::getInstance('object', null, true);
-		if($oCacheHandler->isSupport()) {
-			$cache_key = $this->getComponentListCacheKey(false, $site_srl);
-			$component_list = $oCacheHandler->get($cache_key);
-		}
-
-		if($from_db || $component_list === false)
+		$cache_file = $this->getCacheFile(false, $site_srl);
+		if($from_db || !file_exists($cache_file))
 		{
 			$oEditorController = getController('editor');
-			$component_list = $oEditorController->makeCache(false, $site_srl);
-
+			$oEditorController->makeCache(false, $site_srl);
 		}
 
-		if(!$component_list) return array();
-
+		if(!file_exists($cache_file)) return;
+		include($cache_file);
 		$logged_info = Context::get('logged_info');
 		if($logged_info && is_array($logged_info->group_list))
 		{

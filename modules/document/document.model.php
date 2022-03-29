@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * documentModel class
  * model class of the module document
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/document
  * @version 0.1
  */
@@ -747,8 +747,6 @@ class documentModel extends document
 	 */
 	function getCategoryList($module_srl, $columnList = array())
 	{
-		$module_srl = (int)$module_srl;
-
 		// Category of the target module file swollen
 		$filename = sprintf("%sfiles/cache/document_category/%s.php", _XE_PATH_, $module_srl);
 		// If the target file to the cache file regeneration category
@@ -982,7 +980,7 @@ class documentModel extends document
 		$extra_keys = $this->getExtraKeys($module_srl);
 		Context::set('extra_keys', $extra_keys);
 		$security = new Security();
-		$security->encodeHTML('extra_keys..', 'selected_var_idx');
+		$security->encodeHTML('extra_keys..');
 
 		// Get information of module_grants
 		$oTemplate = &TemplateHandler::getInstance();

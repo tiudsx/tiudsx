@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * File containing the XE 1.5 XmlQueryParserClass
@@ -24,7 +24,7 @@ class XmlQueryParser extends XmlParser
 	 * constructor
 	 * @return void
 	 */
-	function __construct()
+	function XmlQueryParser()
 	{
 
 	}

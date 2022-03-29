@@ -1,0 +1,67 @@
+.GPE_login_area{position:relative; border-bottom:1px solid #c9c9c9;}
+	.formGPE_login{position:relative; display:block; background-color:#fbfbfb; height:119px; overflow:hidden;}
+	.formGPE_login ul{list-style:none; margin:0; padding:0;}
+	.formGPE_login li{float:left;}
+	.formGPE_login a{font-size:11px; text-decoration:none;}
+	.formGPE_login a:hover{text-decoration:underline;}
+	.formGPE_login p{margin:0; padding:0;}
+	.formGPE_login fieldset{position:relative; border:0;}
+/*로그인 전*/
+	/*회원가입+아이디비번+인증메일*/
+	.formGPE_login fieldset ul.help{position:absolute; left:8px; top:11px; width:202px; white-space:nowrap;}/*회원가입+아이디비번*/
+	.formGPE_login fieldset ul.help li a{color:#676767;}
+	.formGPE_login fieldset ul.help li a.help_join{font-weight:bold;}
+	.formGPE_login fieldset ul.help .help_IM{float:right;}
+	.formGPE_login fieldset ul.help .help_IM li a{}
+	.formGPE_login fieldset ul.help .help_IM li a.help_idpw{}
+	.formGPE_login fieldset ul.help .help_IM li a.help_mail{padding-left:4px;}
+	.formGPE_login fieldset ul.help li a:hover{}
+	/*아이디+비밀번호+로긴버튼*/
+	.formGPE_login fieldset .idpwWrap{position:absolute; left:8px; top:32px; width:202px;}/*아이디+패스워드+로긴버튼*/
+	.formGPE_login fieldset .idpw{float:left; width:123px;}/*아이디+패스워드 그룹*/
+	.formGPE_login fieldset .idpw input{
+	color:#676767; width:140px; height:27px; font-size:11px; font-family:dotum,Sans-serif; background-color:#fff; padding-left:5px; border:1px solid #c8c8c8; zoom:1;
+	-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;
+	}
+	.formGPE_login fieldset .idpw input.idpw_pass{margin-top:3px; zoom:1;}
+	.formGPE_login fieldset .loginbutton{float:right; zoom:1;}/*로긴보더값*/
+	.formGPE_login fieldset .loginbutton input{width:57px; height:57px; border:1px solid #fff; background-color:#353940; color:#fff; letter-spacing:-0.06em; font-size:12px; font-weight:700; cursor:pointer; zoom:1;}/*로긴버튼*/
+	/*로긴유지*/
+	.formGPE_login fieldset .keep_login{position:absolute; left:8px; top:95px; white-space:nowrap;}
+	.formGPE_login fieldset .keep_login input{}
+	.formGPE_login fieldset .keep_login label{ font-size:11px; vertical-align:top; padding-left:3px; color:#676767;}
+	/*쇼셜로그인*/
+	.formGPE_login fieldset .btn_sns{position:absolute; right:9px; top:94px; white-space:nowrap;}
+	.formGPE_login fieldset .btn_sns a{color:#f92f24;}
+
+/*로그인 후*/
+	.formGPE_logoutBg{}
+	/*닉네임*/
+	.formGPE_login fieldset .userName{position:relative; height:24px; line-height:24px; padding-left:8px; border-bottom:1px solid #ebebeb; background-color:#e7e7e7;}
+	.formGPE_login fieldset .userName span{color:#333; font-weight:bold;  font-size:11px;}
+
+	.formGPE_login fieldset .userMenu{position:relative; height:71px; border-bottom:1px solid #ececec; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;}
+	.formGPE_login fieldset .userMenu ul{padding:5px 0 5px 0;}
+	.formGPE_login fieldset .userMenu li{display:block; height:60px; padding-top:12px; text-align:center;  font-size:11px; color:#676767; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;}
+	.formGPE_login fieldset .userMenu ul li.umL{width:29%; border-right:1px solid #ececec;}
+	.formGPE_login fieldset .userMenu ul li.umL .L{}
+	.formGPE_login fieldset .userMenu ul li.umP{width:40%; border-right:1px solid #ececec;}
+	.formGPE_login fieldset .userMenu ul li.umP .P{}
+	.formGPE_login fieldset .userMenu ul li.umA{width:29%;}
+	.formGPE_login fieldset .userMenu ul li.umA .M{}
+	.formGPE_login fieldset .userMenu ul li p.umL_Tahoma{padding-top:3px; font-family:Tahoma,Sans-serif; font-size:14px; font-weight:bold;}
+	
+	.formGPE_login fieldset .userInfo{position:relative; padding:4px 0 0 10px; zoom:1;}
+	.formGPE_login fieldset .userInfo>ul li a{color:#4f4f4f;}
+	.formGPE_login fieldset .userInfo>ul li a.uiM{display:block; padding-top:1px; padding-left:12px; padding-bottom:4px; background:url(../imgs/default/default_01.png) no-repeat -10px -76px; cursor:pointer;}
+	.formGPE_login fieldset .userInfo>ul li a.uiO{display:block; padding-top:1px; padding-left:12px; padding-bottom:4px; background:url(../imgs/default/default_01.png) no-repeat -10px -97px;}
+	.formGPE_login fieldset .userInfo>ul>ul{float:right; padding-right:6px; zoom:1;}
+	.formGPE_login fieldset .userInfo>ul>ul>li>a.uiC{display:block; width:15px; height:15px; background:url(../imgs/default/default_01.png) no-repeat -10px -118px; zoom:1;}
+	.formGPE_login fieldset .userInfo>ul>ul>li>a.uiC:hover{background:url(../imgs/default/default_01.png) no-repeat -30px -118px;}			
+	/*[회원정보 레이어]*/
+	.formGPE_login fieldset .userInfo .memProfileCon{position:relative; margin-top:20px; margin-left:-10px; background:#f1f1f1; border-top:1px solid #676767; display:none; zoom:1; overflow:hidden;}/*회원정보 그룹*/
+	.formGPE_login fieldset .userInfo .memProfileCon ul{padding:3px 7px 7px 10px; zoom:1;}
+	.formGPE_login fieldset .userInfo .memProfileCon li{white-space:nowrap; width:50%; zoom:1;}
+	.formGPE_login fieldset .userInfo .memProfileCon li a{display:block; padding:3px 0 2px 0; color:#676767; zoom:1;}/*리스트*/
+	.formGPE_login fieldset .userInfo .memProfileCon li a:hover{text-decoration:underline;}/*리스트 over*/
+	.formGPE_login fieldset .userInfo .memProfileCon .close{position:absolute; display:block; right:0; top:0; width:13px; height:15px; background:url(../imgs/default/default_02.png) no-repeat -231px -37px; cursor:pointer;}

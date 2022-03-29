@@ -389,7 +389,7 @@
 	.xc .form-horizontal .controls{*display:inline-block;*padding-left:0;margin-left:0;*margin-left:0}
 	.xc .form-horizontal .controls:first-child{*padding-left:0}
 	.xc .signin{margin:0 5px}
-	.xc .nav {display:none}
+	/*.xc .nav {display:none}*/
 	.xc .pagination{font-size:9px}
 	.xc .pagination ul>li>a,
 	.xc .pagination ul>li>span{padding:4px 6px}

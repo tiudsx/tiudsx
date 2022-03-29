@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  image_link
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Add an image, or to modify the properties of components
  */
 class image_link extends EditorHandler
@@ -14,7 +14,7 @@ class image_link extends EditorHandler
 	/**
 	 * @brief editor_sequence and components out of the path
 	 */
-	function __construct($editor_sequence, $component_path)
+	function image_link($editor_sequence, $component_path)
 	{
 		$this->editor_sequence = $editor_sequence;
 		$this->component_path = $component_path;

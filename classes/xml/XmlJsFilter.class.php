@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * filter class traslate xml content into javascript code
@@ -42,7 +42,7 @@
  *  tag = key : name of variable that will contain the result of the execution
  * }</pre>
  * @class XmlJsFilter
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml
  * @version 0.2
  */
@@ -79,7 +79,7 @@ class XmlJsFilter extends XmlParser
 	 * @return void
 	 */
 
-	function __construct($path, $xml_file)
+	function XmlJsFilter($path, $xml_file)
 	{
 		if(substr($path, -1) !== '/')
 		{

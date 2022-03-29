@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgetstyle>
+    <title xml:lang="ko">포탈NOVA_위젯스타일_기본</title>
+    <description xml:lang="ko">포탈NOVA 위젯스타일 입니다.</description>
+    <version>0.0</version>
+    <date>0000-00-00</date>
+    <preview>preview.gif</preview>
+
+    <author email_address="simpleeye79@naver.com" link="http://simpleeye.ivyro.net/xe/gdesign_sub_qna">
+        <name xml:lang="ko">그레이브디자인</name>
+    </author>
+
+    <extra_vars>      
+		<var name="ws_title" type="text">
+            <title xml:lang="ko">▼제목</title>
+            <description xml:lang="ko">제목 텍스트</description>
+        </var>
+        <var name="ws_titcolor" type="select">
+            <title xml:lang="ko">└제목컬러 선택</title>
+            <description xml:lang="ko">제목텍스트 컬러를 지정해주세요</description>
+			<options>
+				<value>layout</value>
+				<name xml:lang="ko">레이아웃 컬러셋(*기본)</name>
+			</options>                
+			<options>
+				<value>rb</value>
+				<name xml:lang="ko">라이트블루</name>
+			</options>
+			<options>
+				<value>r</value>
+				<name xml:lang="ko">레드</name>
+			</options>
+			<options>
+				<value>gn</value>
+				<name xml:lang="ko">소프트그린</name>
+			</options>
+			<options>
+				<value>gn_p</value>
+				<name xml:lang="ko">파스텔그린</name>
+			</options>
+			<options>
+				<value>b</value>
+				<name xml:lang="ko">다크블루</name>
+			</options>
+			<options>
+				<value>p</value>
+				<name xml:lang="ko">스위트퍼플</name>
+			</options>
+			<options>
+				<value>p_d</value>
+				<name xml:lang="ko">다크퍼플</name>
+			</options>
+			<options>
+				<value>y</value>
+				<name xml:lang="ko">옐로우</name>
+			</options>
+			<options>
+				<value>op</value>
+				<name xml:lang="ko">오렌지핑크</name>
+			</options>
+			<options>
+				<value>cp</value>
+				<name xml:lang="ko">클래시핑크</name>
+			</options>
+			<options>
+				<value>gy</value>
+				<name xml:lang="ko">라이트그레이</name>
+			</options>
+			<options>
+				<value>gy_d</value>
+				<name xml:lang="ko">다크그레이</name>
+			</options>
+			<options>
+				<value>bk</value>
+				<name xml:lang="ko">블랙</name>
+			</options>
+        </var>
+        <var name="ws_titcolor_user" type="text">
+            <title xml:lang="ko">└제목 사용자컬러</title>
+            <description xml:lang="ko">원하시는 제목컬러를 작성해주세요.(* #빼고 숫자코드만 입력 / 레이아웃설정 컬러셋및 선택컬러보다 우선적용됨.)</description>
+        </var>
+        <var name="ws_more_url" type="text">
+            <title xml:lang="ko">▼더보기 이동URL</title>
+            <description xml:lang="ko">http:// 포함한 URL를 등록합니다.</description>
+        </var>
+        <var name="ws_more_area" type="select">
+            <title xml:lang="ko">└더보기 위치선택</title>
+            <description xml:lang="ko">컨텐츠위젯에서 [이전,다음버튼]이 있을경우 선택하세요.</description>
+            <options>
+                <value>no</value>
+                <name xml:lang="ko">1번위치(*버튼 없음)</name>
+            </options>
+			<options>
+                <value>yes</value>
+                <name xml:lang="ko">2번위치(*버튼 있음)</name>
+            </options>
+        </var>
+        <var name="ws_con_se" type="select">
+            <title xml:lang="ko">▼사용위치</title>
+            <description xml:lang="ko">위젯스킨이 사용될 위치를 선택하세요.(*중앙컨텐츠/SIDE컨텐츠 중에 선택)</description>
+            <options>
+                <value>contents</value>
+                <name xml:lang="ko">중앙컨텐츠(*기본)</name>
+            </options>
+			<options>
+                <value>sideContents</value>
+                <name xml:lang="ko">SIDE컨텐츠</name>
+            </options>
+        </var>
+	</extra_vars>
+</widgetstyle>

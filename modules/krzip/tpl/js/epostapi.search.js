@@ -1,4 +1,4 @@
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 (function ($) {
 	"use strict";

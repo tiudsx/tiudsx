@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * @class ModuleHandler
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * Handling modules
  *
  * @remarks This class is to excute actions of modules.
@@ -32,7 +32,7 @@ class ModuleHandler extends Handler
 	 * @return void
 	 * */
 
-	function __construct($module = '', $act = '', $mid = '', $document_srl = '', $module_srl = '')
+	function ModuleHandler($module = '', $act = '', $mid = '', $document_srl = '', $module_srl = '')
 	{
 		// If XE has not installed yet, set module as install
 		if(!Context::isInstalled())
@@ -45,9 +45,12 @@ class ModuleHandler extends Handler
 		$oContext = Context::getInstance();
 		if($oContext->isSuccessInit == FALSE)
 		{
-			// @see https://github.com/xpressengine/xe-core/issues/2304
-			$this->error = 'msg_invalid_request';
-			return;
+			$logged_info = Context::get('logged_info');
+			if($logged_info->is_admin != "Y")
+			{
+				$this->error = 'msg_invalid_request';
+				return;
+			}
 		}
 
 		// Set variables from request arguments
@@ -218,8 +221,6 @@ class ModuleHandler extends Handler
 		$dbInfo = Context::getDBInfo();
 		$defaultUrlInfo = parse_url($dbInfo->default_url);
 		$defaultHost = $defaultUrlInfo['host'];
-		$siteDomain = parse_url($site_module_info->domain);
-		$siteDomain = $siteDomain['host'];
 
 		foreach($urls as $url)
 		{
@@ -228,16 +229,12 @@ class ModuleHandler extends Handler
 				continue;
 			}
 
-			$urlInfo = parse_url(urldecode($url));
+			$urlInfo = parse_url($url);
 			$host = $urlInfo['host'];
 
-			if($host && ($host !== $defaultHost && ($host !== $site_module_info->domain || $host !== $siteDomain)))
+			if($host && ($host != $defaultHost && $host != $site_module_info->domain))
 			{
 				throw new Exception('msg_default_url_is_null');
-			}
-			else if((!$host || !$urlInfo || !$urlInfo['scheme']) && preg_match("/^(https?|[a-z0-9])+\:(\/)*/i", urldecode($url)))
-			{
-				throw new exception('msg_invalid_request');
 			}
 		}
 
@@ -472,14 +469,7 @@ class ModuleHandler extends Handler
 		// get type, kind
 		$type = $xml_info->action->{$this->act}->type;
 		$ruleset = $xml_info->action->{$this->act}->ruleset;
-		$meta_noindex = $xml_info->action->{$this->act}->meta_noindex;
 		$kind = stripos($this->act, 'admin') !== FALSE ? 'admin' : '';
-
-		if ($meta_noindex === 'true')
-		{
-			Context::addMetaTag('robots', 'noindex');
-		}
-
 		if(!$kind && $this->module == 'admin')
 		{
 			$kind = 'admin';
@@ -607,7 +597,6 @@ class ModuleHandler extends Handler
 					$forward->module = $module;
 					$forward->type = $xml_info->action->{$this->act}->type;
 					$forward->ruleset = $xml_info->action->{$this->act}->ruleset;
-					$forward->meta_noindex = $xml_info->action->{$this->act}->meta_noindex;
 					$forward->act = $this->act;
 				}
 				else
@@ -634,10 +623,6 @@ class ModuleHandler extends Handler
 				$ruleset = $forward->ruleset;
 				$tpl_path = $oModule->getTemplatePath();
 				$orig_module = $oModule;
-
-				if($forward->meta_noindex === 'true') {
-					Context::addMetaTag('robots', 'noindex');
-				}
 
 				$xml_info = $oModuleModel->getModuleActionXml($forward->module);
 
@@ -851,10 +836,6 @@ class ModuleHandler extends Handler
 					Context::setBrowserTitle($module_config->siteTitle);
 				}
 			}
-		}
-
-		if ($kind === 'admin') {
-			Context::addMetaTag('robots', 'noindex');
 		}
 
 		// if failed message exists in session, set context

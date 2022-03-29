@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * XML Generater
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class XmlGenerater
 {
@@ -55,7 +55,7 @@ class XmlGenerater
 
 /**
  * High class of the autoinstall module
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class autoinstall extends ModuleObject
 {
@@ -70,7 +70,7 @@ class autoinstall extends ModuleObject
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function autoinstall()
 	{
 		$oModuleModel = getModel('module');
 		$config = $oModuleModel->getModuleConfig('autoinstall');

@@ -1,12 +1,12 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * - DB child class
  * - Cubrid DBMS to use the class
  * - Works with CUBRID up to 8.4.1
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db
  * @version 0.1
  */
@@ -49,7 +49,7 @@ class DBCubrid extends DB
 	 * constructor
 	 * @return void
 	 */
-	function __construct($auto_connect = TRUE)
+	function DBCubrid($auto_connect = TRUE)
 	{
 		$this->_setDBInfo();
 		if($auto_connect) $this->_connect();

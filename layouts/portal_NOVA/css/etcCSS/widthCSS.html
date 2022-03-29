@@ -1,0 +1,266 @@
+<style type="text/css">
+/*본문컨텐츠 넓이*/	
+.gnb1_area_wrap0, .tmenu1_wrap0, .allmenu_list, .gpe_allcon_wrap0, .openmenu_wrap0, .footer_Util_wrap0{
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		width:1280px;
+	<!--@end-->
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		width:{$layout_info->display_conten_Wsize_custom}px;
+	<!--@end-->
+}
+.gpe_contents_box{
+	/*양쪽형선택시*/
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:580px;<!--@end-->
+	/*스마트넓이 선택시*/
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		width:1058px;
+		<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:836px;<!--@end-->
+	<!--@end-->
+	/*사용자넓이 있을경우*/
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		width:{$layout_info->display_conten_Wsize_custom-222}px;
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:{$layout_info->display_conten_Wsize_custom-444}px;<!--@end-->
+	<!--@end-->
+	/*좌측형 선택시*/
+	<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->
+		<!--@if($layout_info->display_conten_Wsize_Lcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->
+				width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom+1)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+					width:{1280-($layout_info->display_conten_Wsize_Lcustom+1)}px;
+				<!--@else-->
+					width:{1024-($layout_info->display_conten_Wsize_Lcustom+1)}px;
+				<!--@end-->
+			<!--@end-->
+		<!--@end-->
+	/*양쪽형 선택시*/
+	<!--@elseif($layout_info->display_conten_sidebox_RL == 'LR')-->
+		/*좌측+우측같이*/
+		<!--@if($layout_info->display_conten_Wsize_Lcustom && $layout_info->display_conten_Wsize_Rcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom+$layout_info->display_conten_Wsize_Rcustom+2)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->width:{1280-($layout_info->display_conten_Wsize_Lcustom+$layout_info->display_conten_Wsize_Rcustom+2)}px;
+				<!--@else-->width:{1024-($layout_info->display_conten_Wsize_Lcustom+$layout_info->display_conten_Wsize_Rcustom+2)}px;
+				<!--@end-->
+			<!--@end-->
+		/*좌측만 있을경우*/
+		<!--@elseif($layout_info->display_conten_Wsize_Lcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom+221+2)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->width:{1280-($layout_info->display_conten_Wsize_Lcustom+221+2)}px;
+				<!--@else-->width:{1024-($layout_info->display_conten_Wsize_Lcustom+221+2)}px;
+				<!--@end-->
+			<!--@end-->
+		/*우측만 있을경우*/
+		<!--@elseif($layout_info->display_conten_Wsize_Rcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->width:{$layout_info->display_conten_Wsize_custom-(221+$layout_info->display_conten_Wsize_Rcustom+2)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->width:{1280-(221+$layout_info->display_conten_Wsize_Rcustom+2)}px;
+				<!--@else-->width:{1024-(221+$layout_info->display_conten_Wsize_Rcustom+2)}px;
+				<!--@end-->
+			<!--@end-->
+		<!--@end-->
+	/*우측형 선택시*/
+	<!--@else-->
+		<!--@if($layout_info->display_conten_Wsize_Rcustom)-->
+		<!--@if($layout_info->display_conten_Wsize_custom)-->
+			width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Rcustom+1)}px;
+		<!--@else-->
+			<!--@if($layout_info->display_conten_Wsize == 'w1280')-->width:{1280-($layout_info->display_conten_Wsize_Rcustom+1)}px;
+			<!--@else-->width:{1024-($layout_info->display_conten_Wsize_Rcustom+1)}px;
+			<!--@end-->
+		<!--@end-->
+		<!--@end-->
+	<!--@end-->
+	/*오픈형일 경우*/
+	<!--@if($layout_info->display_conten_sidebox_se == 'no')-->width:100%;<!--@end-->	
+}
+
+/*컨텐츠배너 넓이,높이*/
+.gpe_pm_conban, .gpe_pm_conban_code, .gpe_pm_conban_num1{height:{$layout_info->display_con_ban_height}px;}
+.gpe_pm_conban .gpe_pm_ban_imgbox, .gpe_pm_conban .gpe_pm_ban_imgbox a, .gpe_pm_conban_num1 a{
+/*side영역 사용시*/
+<!--@if(!$layout_info->display_conten_sidebox_se == 'no')-->
+	/*양쪽형선택시*/
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:558px;<!--@end-->
+	/*스마트넓이 선택시*/
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+	width:1046px;
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:814px;<!--@end-->/*양쪽형*/
+	<!--@else-->
+	width:790px;
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:558px;<!--@end-->/*양쪽형*/
+	<!--@end-->
+	/*사용자넓이 있을경우*/
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+	width:{$layout_info->display_conten_Wsize_custom-234}px;/*좌측형+우측형*/
+	<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->width:{$layout_info->display_conten_Wsize_custom-466}px;<!--@end-->/*양쪽형*/
+	<!--@end-->
+	/*좌측형 선택시*/
+	<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->
+		<!--@if($layout_info->display_conten_Wsize_Lcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->
+			width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom+1+12)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+				width:{1280-($layout_info->display_conten_Wsize_Lcustom+1+12)}px;
+				<!--@else-->
+				width:{1024-($layout_info->display_conten_Wsize_Lcustom+1+12)}px;
+				<!--@end-->
+			<!--@end-->
+		<!--@end-->
+	/*양쪽형 선택시*/
+	<!--@elseif($layout_info->display_conten_sidebox_RL == 'LR')-->
+		/*좌측+우측같이*/
+		<!--@if($layout_info->display_conten_Wsize_Lcustom && $layout_info->display_conten_Wsize_Rcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->
+			width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom+$layout_info->display_conten_Wsize_Rcustom+2+20)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+				width:{1280-($layout_info->display_conten_Wsize_Lcustom+$layout_info->display_conten_Wsize_Rcustom+2+20)}px;
+				<!--@else-->
+				width:{1024-($layout_info->display_conten_Wsize_Lcustom+$layout_info->display_conten_Wsize_Rcustom+2+20)}px;
+				<!--@end-->
+			<!--@end-->
+		/*좌측만 있을경우*/
+		<!--@elseif($layout_info->display_conten_Wsize_Lcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->
+			width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom+221+2+20)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+				width:{1280-($layout_info->display_conten_Wsize_Lcustom+221+2+20)}px;
+				<!--@else-->
+				width:{1024-($layout_info->display_conten_Wsize_Lcustom+221+2+20)}px;
+				<!--@end-->
+			<!--@end-->
+		/*우측만 있을경우*/
+		<!--@elseif($layout_info->display_conten_Wsize_Rcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->
+			width:{$layout_info->display_conten_Wsize_custom-(221+$layout_info->display_conten_Wsize_Rcustom+2+20)}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+				width:{1280-(212+$layout_info->display_conten_Wsize_Rcustom+2+20)}px;
+				<!--@else-->
+				width:{1024-(221+$layout_info->display_conten_Wsize_Rcustom+2+20)}px;
+				<!--@end-->
+			<!--@end-->
+		<!--@end-->
+	/*우측형 선택시*/
+	<!--@else-->
+		<!--@if($layout_info->display_conten_Wsize_Rcustom)-->
+		<!--@if($layout_info->display_conten_Wsize_custom)-->
+		width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Rcustom+1+12)}px;
+		<!--@else-->
+			<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+			width:{1280-($layout_info->display_conten_Wsize_Rcustom+1+12)}px;
+			<!--@else-->
+			width:{1024-($layout_info->display_conten_Wsize_Rcustom+1+12)}px;
+			<!--@end-->
+		<!--@end-->
+		<!--@end-->
+	<!--@end-->
+/*side영역 미사용시*/
+<!--@else-->
+	/*스마트넓이 선택시*/
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		width:1280px;
+	<!--@else-->
+		width:1024px;
+	<!--@end-->
+	/*사용자넓이 있을경우*/
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		width:{$layout_info->display_conten_Wsize_custom}px;
+	<!--@end-->
+<!--@end-->
+
+	/*높이값 있을경우*/
+	height:{$layout_info->display_con_ban_height}px;
+}
+
+/*사이드배너_좌측 넓이,높이*/
+.gpe_pm_sideban_L, .gpe_pm_sideban_code_L, .gpe_pm_sideban_num1_L{height:{$layout_info->display_side_ban_height_L}px;}
+.gpe_pm_sideban_L .gpe_pm_ban_imgbox, .gpe_pm_sideban_L .gpe_pm_ban_imgbox a, .gpe_pm_sideban_num1_L a{
+	/*우측형 선택시*/
+	<!--@if($layout_info->display_conten_sidebox_RL == 'L' or $layout_info->display_conten_sidebox_RL == 'LR')-->
+		<!--@if($layout_info->display_conten_Wsize_Lcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Lcustom))+1}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->width:{1280-(1280-($layout_info->display_conten_Wsize_Lcustom))+1}px;
+				<!--@else-->width:{1024-(1024-($layout_info->display_conten_Wsize_Lcustom))+1}px;
+				<!--@end-->
+			<!--@end-->
+		<!--@end-->
+	<!--@end-->
+	/*높이값 있을경우*/
+	height:{$layout_info->display_side_ban_height_L}px;
+}
+
+/*사이드배너_우측 넓이,높이*/
+.gpe_pm_sideban, .gpe_pm_sideban_code, .gpe_pm_sideban_num1{height:{$layout_info->display_side_ban_height}px;}
+.gpe_pm_sideban .gpe_pm_ban_imgbox, .gpe_pm_sideban .gpe_pm_ban_imgbox a, .gpe_pm_sideban_num1 a{
+	/*우측형 선택시*/
+	<!--@if(!$layout_info->display_conten_sidebox_RL == 'L' or $layout_info->display_conten_sidebox_RL == 'LR')-->
+		<!--@if($layout_info->display_conten_Wsize_Rcustom)-->
+			<!--@if($layout_info->display_conten_Wsize_custom)-->width:{$layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_custom-($layout_info->display_conten_Wsize_Rcustom))+1}px;
+			<!--@else-->
+				<!--@if($layout_info->display_conten_Wsize == 'w1280')-->width:{1280-(1280-($layout_info->display_conten_Wsize_Rcustom))+1}px;
+				<!--@else-->width:{1024-(1024-($layout_info->display_conten_Wsize_Rcustom))+1}px;
+				<!--@end-->
+			<!--@end-->
+		<!--@end-->
+	<!--@end-->
+	/*높이값 있을경우*/
+	height:{$layout_info->display_side_ban_height}px;
+}
+
+/*넓이변수에 따른 검색폼 넓이*/
+.gpe_search .inputText{
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		width:1233px;
+	<!--@end-->
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		width:{$layout_info->display_conten_Wsize_custom-47}px;
+	<!--@end-->
+}
+.gpe_search .gpe_search_key{
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		width:1280px;
+	<!--@end-->
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		width:{$layout_info->display_conten_Wsize_custom}px;
+	<!--@end-->
+}
+.gpe_search .submit{
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		left:1233px;
+	<!--@end-->
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		left:{$layout_info->display_conten_Wsize_custom-47}px;
+	<!--@end-->	
+}
+.gpe_search .gpe_search_close{
+	<!--@if($layout_info->display_conten_Wsize == 'w1280')-->
+		left:1234px;
+	<!--@end-->
+	<!--@if($layout_info->display_conten_Wsize_custom)-->
+		left:{$layout_info->display_conten_Wsize_custom-46}px;
+	<!--@end-->	
+}
+
+/*넓이변수에 따른 컨텐츠구분라인위치*/
+.con_left_line{left:{$layout_info->display_conten_Wsize_Lcustom}px;}
+.con_right_line{right:{$layout_info->display_conten_Wsize_Rcustom}px;}
+
+/*넓이변수에 따른 로그인위젯 세부넓이*/
+.formGPE_login fieldset ul.help, .formGPE_login fieldset .idpwWrap{
+	<!--@if($layout_info->display_conten_Wsize_Rcustom)-->
+	width:{202+($layout_info->display_conten_Wsize_Rcustom-202)-19}px;
+	<!--@end-->
+}
+.formGPE_login fieldset .idpw input{
+	<!--@if($layout_info->display_conten_Wsize_Rcustom)-->
+	width:{140+($layout_info->display_conten_Wsize_Rcustom-140)-81}px;
+	<!--@end-->
+}
+</style>

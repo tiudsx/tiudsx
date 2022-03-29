@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  emoticon
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Emoticons image connected components
  */
 class emoticon extends EditorHandler
@@ -15,7 +15,7 @@ class emoticon extends EditorHandler
 	/**
 	 * @brief editor_sequence and components out of the path
 	 */
-	function __construct($editor_sequence, $component_path)
+	function emoticon($editor_sequence, $component_path)
 	{
 		$this->editor_sequence = $editor_sequence;
 		$this->component_path = $component_path;

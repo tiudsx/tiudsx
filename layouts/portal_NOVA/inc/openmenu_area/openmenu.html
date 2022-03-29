@@ -1,0 +1,29 @@
+<!--@if($layout_info->display_area_openmenu_se == 'yes')-->
+<style type="text/css">
+ul.openmenu_ul li.om_section_group{
+	padding-left:{$layout_info->display_area_openmenu_left}px;
+}
+</style>
+
+<div class="openmenu_wrap00">
+<div class="openmenu_wrap0">
+	<!--@if($open_menu->list)-->
+	<!--개별그룹(1+2차)-->
+	<ul class="openmenu_ul">
+		<li class="om_section_group" loop="$open_menu->list=>$key1,$val1" cond="$val1['link']">
+		<a href="{$val1['href']}" cond="$val1['link']" target="_blank"|cond="$val1['open_window']=='Y'" class="om_section_1dep">{$val1['text']}</a><!--전체메뉴 1차-->
+		  <ul cond="$val1['list']">
+			<li loop="$val1['list']=>$key2,$val2" cond="$val2['link']">
+				<a href="{$val2['href']}" target="_blank"|cond="$val2['open_window']=='Y'" class="om_section_2dep">{$val2['text']}</a><!--전체메뉴 2차-->
+			</li>
+		  </ul>
+		</li>
+	</ul>
+	<!--@else-->
+	<div style="height:70px; padding-top:30px; line-height:18px; font-weight:700; text-align:center;">
+		<span style="color:red; font-size:17px;">! 메뉴가 미선택 되었습니다.</span><br />레이아웃설정 > 메뉴 > "하단 펼침메뉴"에서 생성한메뉴를 선택해 주세요.
+	</div>
+	<!--@end-->
+</div>
+</div>
+<!--@end-->

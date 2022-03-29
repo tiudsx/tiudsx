@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * IndexTag class
@@ -46,7 +46,7 @@ class IndexTag
 	 * @param object $index
 	 * @return void
 	 */
-	function __construct($index)
+	function IndexTag($index)
 	{
 		$this->argument_name = $index->attrs->var;
 

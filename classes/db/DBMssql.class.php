@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * - DBMSSQL
  * - Modified to use MSSQL driver by sol (sol@ngleader.com)
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db
  * @version 0.1
  */
@@ -42,7 +42,7 @@ class DBMssql extends DB
 	 * Constructor
 	 * @return void
 	 */
-	function __construct($auto_connect = TRUE)
+	function DBMssql($auto_connect = TRUE)
 	{
 		$this->_setDBInfo();
 		if($auto_connect) $this->_connect();

@@ -12,7 +12,7 @@ class imageprocess extends ModuleObject
 	 **/ 
 	function moduleInstall() 
 	{
-		return class_exists('BaseObject') ? new BaseObject() : new Object();
+		return new Object();
 	}
 	
 	/**
@@ -33,7 +33,6 @@ class imageprocess extends ModuleObject
         if(!$oModuleModel->getTrigger('document.deleteDocument', 'imageprocess', 'controller', 'triggerDeleteDocument', 'before')) return true;
 		if(!$oModuleModel->getTrigger('document.moveDocumentModule','imageprocess', 'controller', 'triggerMoveDocument', 'before')) return true;
 		if (!extension_loaded('exif') && $ipConfig->rotate_use == 'Y') return true; 
-		if(!$oModuleModel->getTrigger('module.dispAdditionSetup', 'imageprocess', 'view', 'triggerDispImageprocessAdditionSetup', 'before')) return true;
 		return false;
 	}
 
@@ -116,10 +115,7 @@ class imageprocess extends ModuleObject
 		
 		if(!$oModuleModel->getTrigger('document.moveDocumentModule','imageprocess', 'controller', 'triggerMoveDocument', 'before')) $oModuleController->insertTrigger('document.moveDocumentModule','imageprocess', 'controller', 'triggerMoveDocument', 'before');
 
-		if(!$oModuleModel->getTrigger('module.dispAdditionSetup', 'imageprocess', 'view', 'triggerDispImageprocessAdditionSetup', 'before')) $oModuleController->insertTrigger('module.dispAdditionSetup', 'imageprocess', 'view', 'triggerDispImageprocessAdditionSetup', 'before');
-
-		if (class_exists('BaseObject')) return new BaseObject(0,"success_updated");
-                else return new Object(0, 'success_updated');
+		return new Object(0, 'success_updated');
 	}
 
 	function moduleUninstall()
@@ -131,8 +127,7 @@ class imageprocess extends ModuleObject
         $oModuleController->deleteTrigger('document.deleteDocument', 'imageprocess', 'controller', 'triggerDeleteDocument', 'before');
 		$oModuleController->deleteTrigger('document.moveDocumentModule','imageprocess', 'controller', 'triggerMoveDocument', 'before');
 
-        if (class_exists('BaseObject')) return new BaseObject(0,"success_deleted");
-        else return new Object(0, 'success_deleted');
+        return new Object(0, 'success_deleted'); 
     }
 
 

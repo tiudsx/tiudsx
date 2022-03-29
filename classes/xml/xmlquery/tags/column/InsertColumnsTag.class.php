@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Models the &lt;columns&gt; tag inside an XML Query file whose action is 'insert'
@@ -24,7 +24,7 @@ class InsertColumnsTag
 	 * @param array|string $xml_columns
 	 * @return void
 	 */
-	function __construct($xml_columns)
+	function InsertColumnsTag($xml_columns)
 	{
 		$this->columns = array();
 

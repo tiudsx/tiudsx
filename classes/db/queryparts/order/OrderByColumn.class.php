@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/order
  * @version 0.1
  */
@@ -27,7 +27,7 @@ class OrderByColumn
 	 * @param string $sort_order
 	 * @return void
 	 */
-	function __construct($column_name, $sort_order)
+	function OrderByColumn($column_name, $sort_order)
 	{
 		$this->column_name = $column_name;
 		$this->sort_order = $sort_order;

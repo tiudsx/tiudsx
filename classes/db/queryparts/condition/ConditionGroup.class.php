@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/condition
  * @version 0.1
  */
@@ -29,7 +29,7 @@ class ConditionGroup
 	 * @param string $pipe
 	 * @return void
 	 */
-	function __construct($conditions, $pipe = "")
+	function ConditionGroup($conditions, $pipe = "")
 	{
 		$this->conditions = array();
 		foreach($conditions as $condition)

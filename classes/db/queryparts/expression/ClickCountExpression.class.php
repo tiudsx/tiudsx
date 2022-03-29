@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * ClickCountExpression
@@ -23,9 +23,9 @@ class ClickCountExpression extends SelectExpression
 	 * @param bool $click_count
 	 * @return void
 	 */
-	function __construct($column_name, $alias = NULL, $click_count = false)
+	function ClickCountExpression($column_name, $alias = NULL, $click_count = false)
 	{
-		parent::__construct($column_name, $alias);
+		parent::SelectExpression($column_name, $alias);
 
 		if(!is_bool($click_count))
 		{

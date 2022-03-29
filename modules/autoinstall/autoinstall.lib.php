@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 require_once(_XE_PATH_ . 'libs/ftp.class.php');
 
 /**
  * Module installer
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class ModuleInstaller
 {
@@ -315,7 +315,7 @@ class ModuleInstaller
 
 /**
  * Module installer for SFTP
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class SFTPModuleInstaller extends ModuleInstaller
 {
@@ -344,7 +344,7 @@ class SFTPModuleInstaller extends ModuleInstaller
 	 * @param object $package Package information
 	 * @return void
 	 */
-	function __construct(&$package)
+	function SFTPModuleInstaller(&$package)
 	{
 		$this->package = &$package;
 		$this->ftp_info = Context::getFTPInfo();
@@ -490,7 +490,7 @@ class SFTPModuleInstaller extends ModuleInstaller
 
 /**
  * Module installer for PHP FTP
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class PHPFTPModuleInstaller extends ModuleInstaller
 {
@@ -513,7 +513,7 @@ class PHPFTPModuleInstaller extends ModuleInstaller
 	 * @param object $package Package information
 	 * @var void
 	 */
-	function __construct(&$package)
+	function PHPFTPModuleInstaller(&$package)
 	{
 		$this->package = &$package;
 		$this->ftp_info = Context::getFTPInfo();
@@ -710,7 +710,7 @@ class PHPFTPModuleInstaller extends ModuleInstaller
 
 /**
  * Module installer for FTP
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class FTPModuleInstaller extends ModuleInstaller
 {
@@ -732,7 +732,7 @@ class FTPModuleInstaller extends ModuleInstaller
 	 *
 	 * @param object $package Package information
 	 */
-	function __construct(&$package)
+	function FTPModuleInstaller(&$package)
 	{
 		$this->package = &$package;
 		$this->ftp_info = Context::getFTPInfo();
@@ -889,7 +889,7 @@ class FTPModuleInstaller extends ModuleInstaller
 
 /**
  * Module installer for Direct. Not use FTP
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class DirectModuleInstaller extends ModuleInstaller
 {
@@ -898,7 +898,7 @@ class DirectModuleInstaller extends ModuleInstaller
 	 *
 	 * @param object $package Package information
 	 */
-	function __construct(&$package)
+	function DirectModuleInstaller(&$package)
 	{
 		$this->package = &$package;
 	}

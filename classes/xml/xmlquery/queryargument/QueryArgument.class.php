@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * QueryArgument class
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml/xmlquery/queryargument
  * @version 0.1
  */
@@ -58,7 +58,7 @@ class QueryArgument
 	 * @param bool $ignore_value
 	 * @return void
 	 */
-	function __construct($tag, $ignore_value = FALSE)
+	function QueryArgument($tag, $ignore_value = FALSE)
 	{
 		static $number_of_arguments = 0;
 

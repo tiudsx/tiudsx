@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Models the &lt;column&gt; tag inside an XML Query file whose action is 'insert'
@@ -25,9 +25,9 @@ class InsertColumnTag extends ColumnTag
 	 *
 	 * @return void
 	 */
-	function __construct($column)
+	function InsertColumnTag($column)
 	{
-		parent::__construct($column->attrs->name);
+		parent::ColumnTag($column->attrs->name);
 		$dbParser = DB::getParser();
 		$this->name = $dbParser->parseColumnName($this->name);
 		$this->argument = new QueryArgument($column);

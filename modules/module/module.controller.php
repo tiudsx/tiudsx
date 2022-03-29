@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  moduleController
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief controller class of the module module
  */
 class moduleController extends module
@@ -1276,11 +1276,7 @@ class moduleController extends module
 			$path = $oModuleModel->getModuleFileBoxPath($vars->module_filebox_srl);
 			FileHandler::makeDir($path);
 
-			$random = new Password();
-			$ext = explode($vars->addfile['name'], '.');
-			$ext = strtolower(array_pop($ext));
-
-			$save_filename = sprintf('%s%s.%s', $path, $random->createSecureSalt(32, 'hex'), $ext);
+			$save_filename = sprintf('%s%s.%s',$path, $vars->module_filebox_srl, $ext);
 			$tmp = $vars->addfile['tmp_name'];
 
 			// Check uploaded file
@@ -1291,7 +1287,7 @@ class moduleController extends module
 				return false;
 			}
 
-			$args->fileextension = $ext;
+			$args->fileextension = strtolower(substr(strrchr($vars->addfile['name'],'.'),1));
 			$args->filename = $save_filename;
 			$args->filesize = $vars->addfile['size'];
 		}
@@ -1317,11 +1313,7 @@ class moduleController extends module
 		$oModuleModel = getModel('module');
 		$path = $oModuleModel->getModuleFileBoxPath($vars->module_filebox_srl);
 		FileHandler::makeDir($path);
-		$random = new Password();
-		$ext = explode($vars->addfile['name'], '.');
-		$ext = strtolower(array_pop($ext));
-
-		$save_filename = sprintf('%s%s.%s',$path, $random->createSecureSalt(32, 'hex'), $vars->ext);
+		$save_filename = sprintf('%s%s.%s',$path, $vars->module_filebox_srl, $vars->ext);
 		$tmp = $vars->addfile['tmp_name'];
 
 		// Check uploaded file

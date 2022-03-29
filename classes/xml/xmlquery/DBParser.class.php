@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * File containing the DBParser class
@@ -60,7 +60,7 @@ class DBParser
 	 *
 	 * @return void
 	 */
-	function __construct($escape_char_left, $escape_char_right = "", $table_prefix = "xe_")
+	function DBParser($escape_char_left, $escape_char_right = "", $table_prefix = "xe_")
 	{
 		$this->escape_char_left = $escape_char_left;
 		if($escape_char_right !== "")

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 class Purifier
 {
@@ -9,7 +9,7 @@ class Purifier
 	private $_config;
 	private $_def;
 
-	public function __construct()
+	public function Purifier()
 	{
 		$this->_checkCacheDir();
 
@@ -35,7 +35,6 @@ class Purifier
 		//$allowdClasses = array('emoticon');
 
 		$this->_config = HTMLPurifier_Config::createDefault();
-		$this->_config->autoFinalize = false;
 		$this->_config->set('HTML.TidyLevel', 'light');
 		$this->_config->set('Output.FlashCompat', TRUE);
 		$this->_config->set('HTML.SafeObject', TRUE);
@@ -50,13 +49,6 @@ class Purifier
 
 		$this->_def = $this->_config->getHTMLDefinition(TRUE);
 		$this->_def->addAttribute('iframe', 'allowfullscreen', 'Text');
-	}
-
-	public function setConfig($name, $value)
-	{
-		if($this->_config->isFinalized()) return;
-
-		$this->_config->set($name, $value);
 	}
 
 	private function _setDefinition(&$content)

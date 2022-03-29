@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  pointController
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief Controller class of point modules
  */
 class pointController extends point
@@ -563,25 +563,9 @@ class pointController extends point
 		$oDB->begin();
 
 		// If there are points, update, if no, insert
-		if($current_point > 0)
-		{
-			$output = executeQuery("point.updatePoint", $args);
-		}
-		else
-		{
-			// 많은 동접시 넣는 과정에서 insert가 미리 이루어졌지만 이 공간으로 넘어올 경우 다시 한번 더 업데이트를 처리.
-			$output = executeQuery("point.insertPoint", $args);
-			if(!$output->toBool())
-			{
-				$output = executeQuery("point.updatePoint", $args);
-			}
-		}
-
-		if(!$output->toBool())
-		{
-			$oDB->rollback();
-			return $output;
-		}
+		$oPointModel = getModel('point');
+		if($oPointModel->isExistsPoint($member_srl)) executeQuery("point.updatePoint", $args);
+		else executeQuery("point.insertPoint", $args);
 
 		// Get a new level
 		$level = $oPointModel->getLevel($point, $config->level_step);

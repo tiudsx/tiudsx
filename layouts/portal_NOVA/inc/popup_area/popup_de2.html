@@ -1,0 +1,106 @@
+<!-- 팝업2 기본js -->
+<script> 
+	function gpe_getCookie2(name) { 
+			var Found = false 
+			var start, end 
+			var i = 0 
+
+			while(i <= document.cookie.length) { 
+							start = i 
+							end = start + name.length 
+							if(document.cookie.substring(start, end) == name) { 
+								Found = true 
+								break 
+							} 
+							 i++ 
+						 } 
+
+			if(Found == true) { 
+						   start = end + 1 
+						   end = document.cookie.indexOf(";", start) 
+						   if(end < start) 
+							   end = document.cookie.length 
+							   return document.cookie.substring(start, end) 
+						  } 
+						   return "" 
+						} 
+
+
+	function gpe_setCookie2( name, value, expiredays ) { 
+		var todayDate = new Date(); 
+			todayDate.setDate( todayDate.getDate() + expiredays ); 
+			document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";" 
+		}
+</script>
+<!-- 팝업2 페이지 -->
+<div id="gpe_divpop2" style="left:{$layout_info->display_notice_02_left}px; top:{$layout_info->display_notice_02_top}px;">
+<form name="gpe_form2"> 
+<div class="pop_area_out">
+	<div class="pop_area_in">
+		<div class="pop_middle">
+			<!--@if(!$layout_info->display_notice_02_s2 == '02')-->
+				<!--@if($layout_info->display_notice_02_img)-->
+				<a href="{$layout_info->display_notice_02_url}" target="_blank"|cond="$layout_info->display_notice_02_url_blank == '02'"><img src="{$layout_info->display_notice_02_img}" alt="팝업 이미지"/></a>
+				<!--@else-->
+				<img src="../../imgs/ex_popup_sam01.jpg" alt="팝업 이미지"/>
+				<!--@end-->
+			<!--@else-->
+			{$layout_info->display_notice_02_html}
+			<!--@end-->
+		</div>
+		<div class="pop_bott">
+			<div class="pop_bott_1day"><input name="event2" type="checkbox" value="checkbox2"/></div>
+			<div class="pop_bott_1day_txt"><!--@if($layout_info->display_notice_02_day == 'day7')-->7일간 이 창 안뛰우기<!--@elseif($layout_info->display_notice_02_day == 'day3')-->3일간 이 창 안뛰우기<!--@else-->오늘 이 창 안뛰우기<!--@end--></div>
+			<div class="pop_bott_close"><a href="javascript:gpe_closeWin2();"></a></div>
+		</div>
+	</div>
+</div>
+</form>
+</div>
+<!-- 팝업 쿠키+클로즈 JS-->
+<!--@if($layout_info->display_notice_02_day == 'day7')-->
+	<script> 
+		var eventCookie=gpe_getCookie2("gpe_memo2");
+		if ( eventCookie != "no2" ){  
+			document.all['gpe_divpop2'].style.visibility = "visible";
+		} else if(eventCookie == "no2") {
+			document.getElementById('gpe_divpop2').style.display='none'; 
+		}
+		function gpe_closeWin2() { 
+		if ( document.gpe_form2.event2.checked ){ 
+			gpe_setCookie2( "gpe_memo2", "no2" , 7 ); 
+		}
+		document.getElementById('gpe_divpop2').style.display='none';
+		}
+	</script>
+<!--@elseif($layout_info->display_notice_02_day == 'day3')-->
+	<script> 
+		var eventCookie=gpe_getCookie2("gpe_memo2");
+		if ( eventCookie != "no2" ){  
+			document.all['gpe_divpop2'].style.visibility = "visible";
+		} else if(eventCookie == "no2") {
+			document.getElementById('gpe_divpop2').style.display='none'; 
+		}
+		function gpe_closeWin2() { 
+		if ( document.gpe_form2.event2.checked ){ 
+			gpe_setCookie2( "gpe_memo2", "no2" , 3 ); 
+		}
+		document.getElementById('gpe_divpop2').style.display='none';
+		}
+	</script>
+<!--@else-->
+	<script> 
+		var eventCookie=gpe_getCookie2("gpe_memo2");
+		if ( eventCookie != "no2" ){  
+			document.all['gpe_divpop2'].style.visibility = "visible";
+		} else if(eventCookie == "no2") {
+			document.getElementById('gpe_divpop2').style.display='none'; 
+		}
+		function gpe_closeWin2() { 
+		if ( document.gpe_form2.event2.checked ){ 
+			gpe_setCookie2( "gpe_memo2", "no2" , 1 ); 
+		}
+		document.getElementById('gpe_divpop2').style.display='none';
+		}
+	</script>
+<!--@end-->

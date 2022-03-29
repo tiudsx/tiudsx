@@ -1,0 +1,1673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.2">
+    <title xml:lang="ko">포탈NOVA</title>
+    <title xml:lang="en">portal_NOVA</title>
+    <description xml:lang="ko">
+        디자이너 : 심플아이(*그레이브 디자인)
+		퍼블리싱 : 심플아이(*그레이브 디자인)
+		레이아웃 제작 : 심플아이(*그레이브 디자인)
+		문의메일: simpleeye79@naver.com 
+		홈페이지: 
+
+		◆◆레이아웃설정 기본설명◆◆
+		-----------------------------------------------------------------------------------------------------------
+		◆기본적으로 메인레이아웃1개, 서브레이아웃1개를 만드셔야 정상적으로 사용가능.
+		◆통합메뉴얼 사이트주소: http://simpleeye.ivyro.net/xe1710/GPEnova_manual
+		◆고객센터 주소: http://simpleeye.ivyro.net/xe/gdesign_sub_qna
+		-----------------------------------------------------------------------------------------------------------
+    </description>
+    <description xml:lang="en">
+        DESIGNER : SIMPLEEYE
+    </description>
+    <version>1.1.7</version>
+    <date>0000-00-00</date>
+    <author email_address="simpleeye79@naver.com" link="http://simpleeye.ivyro.net/xe/gdesign_sub_qna">
+        <name xml:lang="ko">그레이브 디자인</name>
+        <name xml:lang="en">GreyveDesign</name>
+    </author>
+
+<extra_vars>
+	<group>
+		<title xml:lang="ko">유의사항</title>
+		<var name="display_descrip1" type="radio">
+			<title xml:lang="ko">1.</title>
+			<description xml:lang="ko">반응형으로 사용시, [모바일기기+태블랫pc]에서는 "따라다니는배너+추천,즐찾+익스6,7업데이트창+팝업+상단프로모션 기능"은 비활성화 됩니다.</description>
+			<options value="">
+				<title xml:lang="ko">★반응형 유의사항1</title>
+			</options>
+		</var>
+		<var name="display_descrip2" type="radio">
+			<title xml:lang="ko">2.</title>
+			<description xml:lang="ko">반응형으로 사용시, [모바일기기+태블랫pc]에서는 "레이아웃 넓이"기능은 적용되지 않습니다. / *사용 모바일기기에 맞게 자동 넓이적용됨.</description>
+			<options value="">
+				<title xml:lang="ko">★반응형 유의사항2</title>
+			</options>
+		</var>
+		<var name="display_descrip3" type="radio">
+			<title xml:lang="ko">3.</title>
+			<description xml:lang="ko">반드시 [레이아웃 메뉴얼]을 보시고 작업하세요. [레이아웃 메뉴얼]: "http://simpleeye.ivyro.net/xe1710/GPEnova_manual"</description>
+			<options value="">
+				<title xml:lang="ko">★레이아웃 메뉴얼</title>
+			</options>
+		</var>
+		<var name="display_descrip4" type="radio">
+			<title xml:lang="ko">4.</title>
+			<description xml:lang="ko">초보자에 경우, 기본 [XE 기초메뉴얼]을 읽고 레이아웃사용을 권장. [XE 기초메뉴얼]: "http://simpleeye.ivyro.net/xe1710/admin/help/"</description>
+			<options value="">
+				<title xml:lang="ko">★XE 기초메뉴얼</title>
+			</options>
+		</var>
+		<var name="display_descrip5" type="radio">
+			<title xml:lang="ko">5.</title>
+			<description xml:lang="ko">[메인레이아웃]과 [서브레이아웃]을 만드셔야 메인,서브가 구분. /*초보자 필독</description>
+			<options value="">
+				<title xml:lang="ko">★메인,서브 구분</title>
+			</options>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆기본 설정</title>
+		<var name="display_conten" type="radio">
+			<title xml:lang="ko">▼메인/서브레이아웃 선택</title>
+			<description xml:lang="ko">*[메인레이아웃]: 메인페이지 레이아웃 / [서브레이아웃]: 서브페이지및 사이드메뉴+서브타이틀+로케이션(빵조각) 활성화.</description>
+			<options value="m_st1">
+				<title xml:lang="ko">메인 레이아웃</title>
+			</options>
+			<options value="s_dan2">
+				<title xml:lang="ko">서브 레이아웃</title>
+			</options>
+		</var>
+		<var name="display_conten_respon_se" type="radio">
+			<title xml:lang="ko">▼디바이스 유형</title>
+			<description xml:lang="ko">*[반응형]: 데스크탑PC+태블랫+모바일기기에 자동으로 반응 적용됨 / [데스크탑]: 데스크탑PC만 사용가능합니다.</description>
+			<options value="">
+				<title xml:lang="ko">반응형[PC+모바일]</title>
+			</options>
+			<options value="basic">
+				<title xml:lang="ko">데스크탑 전용</title>
+			</options>
+		</var>
+		<var name="display_main_colorset_se" type="select">
+			<title xml:lang="ko">▼컬러셋 선택</title>
+			<description xml:lang="ko">*사용하실 컬러셋을 선택 / *레이아웃 전체에 컬러톤이 설정됩니다.</description>
+			<options value="r">
+				<title xml:lang="ko">레드(*기본)</title>
+			</options>			
+			<options value="rb">
+				<title xml:lang="ko">라이트블루</title>
+			</options>
+			<options value="gn">
+				<title xml:lang="ko">소프트그린</title>
+			</options>
+			<options value="gn_p">
+				<title xml:lang="ko">파스텔그린</title>
+			</options>
+			<options value="b">
+				<title xml:lang="ko">다크블루</title>
+			</options>
+			<options value="p">
+				<title xml:lang="ko">스위트퍼플</title>
+			</options>
+			<options value="p_d">
+				<title xml:lang="ko">다크퍼플</title>
+			</options>
+			<options value="y">
+				<title xml:lang="ko">옐로우</title>
+			</options>
+			<options value="op">
+				<title xml:lang="ko">오렌지핑크</title>
+			</options>
+			<options value="cp">
+				<title xml:lang="ko">클래시핑크</title>
+			</options>
+			<options value="gy">
+				<title xml:lang="ko">라이트그레이</title>
+			</options>
+			<options value="gy_d">
+				<title xml:lang="ko">다크그레이</title>
+			</options>
+		</var>
+        <var name="display_main_colorset_user" type="text">
+            <title xml:lang="ko">└컬러셋(*사용자컬러)</title>
+            <description xml:lang="ko">*사용자컬러 입력시, 원하는 컬러톤으로 설정됨.(*컬러코드는 #빼고 숫자+영문코드만 입력 / 사용자컬러가 컬러셋선택보다 우선적용됨)</description>
+       </var>
+		<var name="display_conten_sidebox_se" type="radio">
+			<title xml:lang="ko">▼SIDE영역 사용설정</title>
+			<description xml:lang="ko">*SIDE영역 사용설정.</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_conten_sidebox_RL" type="radio">
+			<title xml:lang="ko">└SIDE영역 우측형,좌측형,양쪽형</title>
+			<description xml:lang="ko">*SIDE영역 우측형,좌측형,양쪽형 선택 / *[우측형,좌측형]: 2단형구성 / *[양쪽형]: 3단형구성</description>
+			<options value="">
+				<title xml:lang="ko">우측형(*기본)</title>
+			</options>
+			<options value="L">
+				<title xml:lang="ko">좌측형</title>
+			</options>
+			<options value="LR">
+				<title xml:lang="ko">양쪽형</title>
+			</options>
+		</var>
+        <var name="logo_url" type="text">
+            <title xml:lang="ko">▼공통 홈페이지URL</title>
+            <description xml:lang="ko">*로고 클릭시+즐찾,시작페이지에 홈사이트URL을 통합으로 지정.(*예= http://xxx.com)</description>
+       </var>
+		<var name="display_conten_sidecon_subTitle" type="radio">
+			<title xml:lang="ko">▼서브타이틀</title>
+			<description xml:lang="ko">*서브타이틀 사용함/사용안함 설정.(*서브레이아웃 만 적용)</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_conten_sidecon_Location" type="radio">
+			<title xml:lang="ko">▼로케이션[빵조각]</title>
+			<description xml:lang="ko">*로케이션[빵조각] 사용함/사용안함 설정.(*서브레이아웃 만 적용)</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆레이아웃 넓이</title>
+		<var name="ex_Wsize" type="radio">
+			<title xml:lang="ko">※부가설명</title>
+			<description xml:lang="ko">★전체넓이설정 / *공통: [본문컨텐츠]영역은 [좌측,우측 SIDE넓이]에따라서 자동변환됩니다. / *모바일에경우, 사용 모바일기기에 맞게 자동 넓이적용</description>
+			<options value="">
+				<title xml:lang="ko">기본안내:</title>
+			</options>
+		</var>		
+		<var name="display_conten_Wsize" type="radio">
+			<title xml:lang="ko">▼레이아웃 넓이(*스마트)</title>
+			<description xml:lang="ko">*선택한 레이아웃 넓이에 맞게,[좌측SIDE, 본문컨텐츠, 우측SIDE]넓이 자동설정 / *[좌측기본값]:221px, [우측기본값]:221px</description>			
+			<options value="">
+				<title xml:lang="ko">1024px</title>
+			</options>
+			<options value="w1280">
+				<title xml:lang="ko">1280px</title>
+			</options>
+		</var>
+		<var name="display_conten_Wsize_custom" type="text">
+            <title xml:lang="ko">└레이아웃 넓이(*사용자)</title>
+            <description xml:lang="ko">*사용자넓이 지정시, 레이아웃넓이(*스마트)는 미적용 / 사용자넓이에 맞게 [좌측SIDE, 본문컨텐츠, 우측SIDE]에 넓이 자동설정됨. / *[좌측기본값]:221px, [우측기본값]:221px / *반응형이기에 1024px이상으로만 사용권장 / 숫자만입력</description>
+        </var>
+		<var name="display_conten_Wsize_Lcustom" type="text">
+            <title xml:lang="ko">▼좌측SIDE 넓이(*사용자)</title>
+            <description xml:lang="ko">*좌측 넓이 지정시, 기본값(*221px)은 미적용. / 숫자만입력</description>
+        </var>
+		<var name="display_conten_Wsize_Rcustom" type="text">
+            <title xml:lang="ko">▼우측SIDE 넓이(*사용자)</title>
+            <description xml:lang="ko">*우측 넓이 지정시, 기본값(*221px)은 미적용./ 숫자만입력</description>
+        </var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆즐찾,시작+공지뉴스+로그인+언어셋+로고+검색</title>
+		<var name="display_top_fs" type="radio">
+            <title xml:lang="ko">▼즐찾+시작</title>
+			<description xml:lang="ko">즐겨찾기+시작페이지 사용유무를 설정.</description>
+            <options value="">
+                <title xml:lang="ko">사용함(*기본)</title>
+            </options>
+            <options value="no">
+                <title xml:lang="ko">사용안함</title>
+            </options>
+       </var>
+		<var name="display_fov_text" type="text">
+            <title xml:lang="ko">└즐겨찾기_제목</title>
+            <description xml:lang="ko">즐겨찿기로 설정할 [홈페이지 제목]을 입력.(*예: 포탈EVER 바로가기)</description>
+        </var>
+		<var name="display_top_News" type="radio">
+			<title xml:lang="ko">▼상단 공지뉴스</title>
+			<description xml:lang="ko">*상단 롤링 공지뉴스 사용/사용안함 선택</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_top_News_Mnum" type="text">
+            <title xml:lang="ko">└모듈번호 입력</title>
+            <description xml:lang="ko">*게시판 모듈번호를 입력.(*모듈번호 보는법은 메뉴얼>기타메뉴얼에 설명되 있습니다.)</description>
+        </var>
+		<var name="display_top_News_padd" type="text">
+            <title xml:lang="ko">└위치값</title>
+            <description xml:lang="ko">*좌측 기준으로부터 위치값을 입력하세요.(*숫자만 입력 / 입력안할시 기본값지정)</description>
+        </var>
+		 <var name="display_top_login" type="radio">
+            <title xml:lang="ko">▼ 통합 로그인메뉴</title>
+			<description xml:lang="ko">*통합 로그인메뉴 사용유무를 설정. (*회원가입 미사용 사이트는 사용안함으로 설정하세요.)</description>
+            <options value="">
+                <title xml:lang="ko">사용함(*기본)</title>
+            </options>
+            <options value="tl_no">
+                <title xml:lang="ko">사용안함</title>
+            </options>
+        </var>
+		 <var name="display_top_login_sns" type="radio">
+            <title xml:lang="ko">└쇼셜로그인 사용 선택</title>
+			<description xml:lang="ko">쇼설로그인 사용유무를 설정하실 수 있습니다. (*통합 로그인메뉴 사용함으로 설정시에만 적용 / *메뉴얼 > 기타메뉴얼 참조)</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>
+            <options value="tl_yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+        </var>
+       <var name="display_top_lang" type="radio">
+            <title xml:lang="ko">▼ 언어선택폼</title>
+			<description xml:lang="ko">언어선택폼 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용함(*기본)</title>
+            </options>
+            <options value="L_no">
+                <title xml:lang="ko">사용안함</title>
+            </options>
+       </var>
+		<var name="logo_image" type="image">
+            <title xml:lang="ko">▼ 로고</title>
+            <description xml:lang="ko">*좌측 상단영역 로고이미지를 등록해주세요. (*로고이미지 등록.)</description>
+        </var>
+		<var name="logo_padding_top" type="text">
+            <title xml:lang="ko">└로고_TOP간격</title>
+            <description xml:lang="ko">*로고영역 상단공간 수치를 입력해주세요. (*숫자만 입력 / 입력안할시 0px)</description>
+        </var>
+		<var name="logo_padding_left" type="text">
+            <title xml:lang="ko">└로고_LEFT간격</title>
+            <description xml:lang="ko">*로고영역 좌측공간 수치를 입력해주세요. (*숫자만 입력/ 입력안할시 0px)</description>
+        </var>
+       <var name="display_top_search" type="radio">
+            <title xml:lang="ko">▼ 검색폼</title>
+			<description xml:lang="ko">검색폼 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용함(*기본)</title>
+            </options>
+            <options value="S_no">
+                <title xml:lang="ko">사용안함</title>
+            </options>
+       </var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆TOP영역+TOP메뉴+전체메뉴+펼침메뉴</title>
+		<var name="display_topmenu_type" type="radio">
+            <title xml:lang="ko">▼TOP영역 타입</title>
+			<description xml:lang="ko">TOP영역 타입을 설정하실 수 있습니다. / 미리보기사이트 "TOP메뉴> 스타일보기 > TOP영역스타일" 참조</description>
+            <options value="">
+                <title xml:lang="ko">1타입(*기본)</title>
+            </options>
+            <options value="2">
+                <title xml:lang="ko">2타입</title>
+            </options>
+            <options value="3">
+                <title xml:lang="ko">3타입</title>
+            </options>
+       </var>		
+		<var name="display_topmenu_mwidth" type="text">
+            <title xml:lang="ko">▼TOP메뉴 1,2차넓이</title>
+            <description xml:lang="ko">1,2차메뉴 넓이값 입력.(*기본:105px / [메뉴8개+ 105px] 최적화.) (*[숫자]만 입력 / 입력안할시 기본값 적용됨)</description>
+        </var>
+		<var name="display_topmenu_1depColor" type="text">
+            <title xml:lang="ko">└TOP메뉴/1차활성컬러</title>
+            <description xml:lang="ko">1차메뉴에 활성컬러를 입력 (*#빼고 [숫자코드]만 입력 / *입력안할시 기본값 적용됨)</description>
+        </var>
+		<var name="display_area_allmenu_se" type="radio">
+            <title xml:lang="ko">▼전체메뉴</title>
+			<description xml:lang="ko">전체메뉴 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용함(*기본)</title>
+            </options>
+            <options value="no">
+                <title xml:lang="ko">사용안함</title>
+            </options>
+       </var>
+       <var name="display_area_allmenu_bjong" type="radio">
+            <title xml:lang="ko">└종속/비종속</title>
+			<description xml:lang="ko">전체메뉴 종속,비종속를 설정. / [종속]: 탑메뉴를 종속받아 사용함  / [비종속]: 개별메뉴를 사용함,하단에서 메뉴선택</description>
+            <options value="">
+                <title xml:lang="ko">종속(*기본)</title>
+            </options>
+            <options value="b">
+                <title xml:lang="ko">비종속</title>
+            </options>
+       </var>
+		<var name="area_allmenu_pad" type="text">
+            <title xml:lang="ko">└사이간격</title>
+            <description xml:lang="ko">전체메뉴 사이간격을 설정. (*수치값을 입력후 변화를 보면서 작업. / [숫자]만입력 / 미입력시 기본값 적용)</description>
+        </var>
+       <var name="display_area_openmenu_se" type="radio">
+            <title xml:lang="ko">▼펼침메뉴</title>
+			<description xml:lang="ko">펼침메뉴 사용유무를 설정.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>
+            <options value="yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+       <var name="display_area_openmenu_area" type="radio">
+            <title xml:lang="ko">└위치설정</title>
+			<description xml:lang="ko">펼침메뉴 위치설정.</description>
+            <options value="">
+                <title xml:lang="ko">하단(*기본/ 풋터 위)</title>
+            </options>
+            <options value="top">
+                <title xml:lang="ko">상단(*탑영역 아래)</title>
+            </options>
+       </var>
+		<var name="display_area_openmenu_left" type="text">
+            <title xml:lang="ko">└사이간격</title>
+            <description xml:lang="ko">펼침메뉴 사이간격을 설정. (*수치값을 입력후 변화를 보면서 작업. / [숫자]만입력 / 미입력시 기본값 적용)</description>
+        </var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆컨텐츠배너</title>
+		<var name="ex_conban" type="radio">
+			<title xml:lang="ko">※부가설명</title>
+			<description xml:lang="ko">★ *컨텐츠배너는 [PC데스크탑]에서만 적용됨 / *모바일기기 에서는 미적용됨</description>
+			<options value="">
+				<title xml:lang="ko">기본안내:</title>
+			</options>
+		</var>	
+	  <var name="display_con_ban" type="radio">
+            <title xml:lang="ko">▼사용설정</title>
+			<description xml:lang="ko">*컨텐츠배너 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>
+			<options value="b_yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+	  <var name="display_con_ban_random" type="radio">
+            <title xml:lang="ko">└랜덤설정</title>
+			<description xml:lang="ko">*컨텐츠배너 일반,랜덤설정 [일반]:1,2,3 순차롤링 / [랜덤]:3,1,2 등등..랜덤순서로 롤링</description>
+			<options value="">
+                <title xml:lang="ko">일반(*기본)</title>
+            </options>
+			<options value="ran">
+                <title xml:lang="ko">랜덤</title>
+            </options>
+       </var>
+        <var name="display_con_ban_height" type="text">
+            <title xml:lang="ko">└배너높이</title>
+            <description xml:lang="ko">*배너높이 설정 (*[숫자]만 입력 / 입력안할시 기본값 적용됨 / [기본값]:124px)</description>
+        </var>
+       <var name="display_con_ban_num" type="radio">
+            <title xml:lang="ko">└배너타입[필수]</title>
+			<description xml:lang="ko">*배너타입 설정(★ 1개배너[단일], 2개이상배너[롤링배너], 사용갯수에 따라 정확한옵션을 선택해야 정상 작동됨.)</description>
+			<options value="">
+                <title xml:lang="ko">단일배너(1개)</title>
+            </options>
+			<options value="2">
+                <title xml:lang="ko">롤링배너(2개이상)</title>
+            </options>
+			<options value="3">
+                <title xml:lang="ko">HTML/위젯,배너코드</title>
+            </options>
+       </var>
+		<var name="con_ban_img0" type="image">
+            <title xml:lang="ko">●배너(단일배너용)</title>
+            <description xml:lang="ko">*배너이미지를 등록해주세요. (*758px × 124px 사이즈로 등록해 주세요. / ★ 해당공간은 [단일배너]를 선택했을시 사용해 주세요.</description>
+		</var>
+        <var name="con_ban_img0_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [단일배너]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+		</var>
+        <var name="con_ban_img0_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="con_ban_img0_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="con_ban_img1" type="image">
+            <title xml:lang="ko">●배너1(롤링배너용)</title>
+            <description xml:lang="ko">*첫번째 배너이미지를 등록해주세요. /*[기본값]: 758px × 124px</description>
+		</var>
+        <var name="con_ban_img1_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너1]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="con_ban_img1_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="con_ban_img1_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="con_ban_img2" type="image">
+            <title xml:lang="ko">●배너2(롤링배너용)</title>
+            <description xml:lang="ko">*두번째 배너이미지를 등록해주세요. /*[기본값]: 758px × 124px</description>
+		</var>
+        <var name="con_ban_img2_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너2]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="con_ban_img2_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="con_ban_img2_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="con_ban_img3" type="image">
+            <title xml:lang="ko">●배너3(롤링배너용)</title>
+            <description xml:lang="ko">*세번째 배너이미지를 등록해주세요. /*[기본값]: 758px × 124px</description>
+		</var>
+        <var name="con_ban_img3_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너3]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="con_ban_img3_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="con_ban_img3_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="con_ban_img4" type="image">
+            <title xml:lang="ko">●배너4(롤링배너용)</title>
+            <description xml:lang="ko">*네번째 배너이미지를 등록해주세요. /*[기본값]: 758px × 124px</description>
+		</var>
+        <var name="con_ban_img4_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너4]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="con_ban_img4_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="con_ban_img4_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="con_ban_img5" type="image">
+            <title xml:lang="ko">●배너5(롤링배너용)</title>
+            <description xml:lang="ko">*다섯번째 배너이미지를 등록해주세요. /*[기본값]: 758px × 124px</description>
+		</var>
+        <var name="con_ban_img5_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너5]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="con_ban_img5_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="con_ban_img5_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="con_ban_img_code" type="textarea">
+            <title xml:lang="ko">●사용자 HTML/위젯,배너코드</title>
+			<description xml:lang="ko">*사용자 html,위젯코드,각종배너코드[구글,기타]를 사용가능 / *배너타입을 [HTML/위젯,배너코드] 선택시 적용됨</description>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆SIDE영역</title>
+		<var name="ex_sideArea" type="radio">
+			<title xml:lang="ko">*설명</title>
+			<description xml:lang="ko">★[로그인폼,공지사항,사이드메뉴]는 [좌측,우측SIDE]중에 1곳만 선택 해 사용할 수 있습니다.</description>
+			<options value="">
+				<title xml:lang="ko">기본안내:</title>
+			</options>
+		</var>
+		<var name="display_conten_sideLogin" type="radio">
+			<title xml:lang="ko">▼로그인폼</title>
+			<description xml:lang="ko">*로그인폼은 SIDE영역 넓이값이 [221px]*기본값 이하는 사용할 수 없습니다.</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>	
+		<var name="display_conten_sideLogin_LR" type="radio">
+			<title xml:lang="ko">└로그인폼 위치</title>
+			<description xml:lang="ko">*[우측형]: 우측SIDE공간에 위치 / *[좌측형]: 좌측SIDE공간에 위치 / ★기본설정>SIDE영역>양쪽형 선택시 적용</description>
+			<options value="">
+				<title xml:lang="ko">우측형(*기본)</title>
+			</options>
+			<options value="L">
+				<title xml:lang="ko">좌측형</title>
+			</options>
+		</var>
+		<var name="display_conten_sidemenu" type="radio">
+			<title xml:lang="ko">▼SIDE메뉴</title>
+			<description xml:lang="ko">SIDE메뉴 사용/사용안함 선택(*서브레이아웃 만 적용됨)</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_conten_sidemenu_LR" type="radio">
+			<title xml:lang="ko">└SIDE메뉴 위치</title>
+			<description xml:lang="ko">*[우측형]: 우측SIDE공간에 위치 / *[좌측형]: 좌측SIDE공간에 위치 / ★기본설정>SIDE영역>양쪽형 선택시 적용</description>
+			<options value="">
+				<title xml:lang="ko">우측형(*기본)</title>
+			</options>
+			<options value="L">
+				<title xml:lang="ko">좌측형</title>
+			</options>
+		</var>	
+		<var name="display_conten_sidemenu_b" type="radio">
+			<title xml:lang="ko">└종속/비종속</title>
+			<description xml:lang="ko">SIDE메뉴 종속,비종속 설정 / [종속]: 탑메뉴를 종속받아 사용함 / [비종속]: 개별메뉴를 사용함,하단에서 메뉴선택</description>
+			<options value="">
+				<title xml:lang="ko">종속(*기본)</title>
+			</options>
+			<options value="b">
+				<title xml:lang="ko">비종속</title>
+			</options>
+		</var>
+        <var name="display_conten_sidemenu_2depC" type="text">
+            <title xml:lang="ko">└2차메뉴 배경컬러</title>
+            <description xml:lang="ko">2차메뉴 배경컬러 지정(* #빼고 [숫자코드]만 입력 / 입력안할시 기본값 적용됨)</description>
+        </var>
+		<var name="display_conten_sideNotice" type="radio">
+			<title xml:lang="ko">▼공지사항</title>
+			<description xml:lang="ko">*SIDE영역 공지사항 사용/사용안함 선택</description>
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_conten_sideNotice_Mnum" type="text">
+            <title xml:lang="ko">└모듈번호 입력</title>
+            <description xml:lang="ko">*게시판 모듈번호를 입력.(*모듈번호 보는법은 메뉴얼>기타메뉴얼에 설명되 있습니다.)</description>
+        </var>
+		<var name="display_conten_sideNotice_more" type="text">
+            <title xml:lang="ko">└더보기 URL</title>
+            <description xml:lang="ko">*공지사항 게시판으로 이동될 더보기 URL을 입력해주세요. (*예= http://xxx.com)</description>
+        </var>
+		<var name="display_conten_sideNotice_LR" type="radio">
+			<title xml:lang="ko">└공지사항 위치</title>
+			<description xml:lang="ko">*[우측형]: 우측SIDE공간에 위치 / *[좌측형]: 좌측SIDE공간에 위치 / ★기본설정>SIDE영역>양쪽형 선택시 적용</description>
+			<options value="">
+				<title xml:lang="ko">우측형(*기본)</title>
+			</options>
+			<options value="L">
+				<title xml:lang="ko">좌측형</title>
+			</options>
+		</var>
+		<var name="side_wgHtml_Lpoint" type="radio">
+			<title xml:lang="ko">▼SIDE위젯코드+HTML(*좌측)</title>
+			<description xml:lang="ko">*SIDE영역(좌측)에 [위젯코드+HTML]을 입력하실 수 있습니다. / ★영역위치 모르면 메뉴얼 참고</description>
+			<options value="">
+				<title xml:lang="ko">-</title>
+			</options>
+		</var>
+		<var name="side_01_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└1번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_02_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└2번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_03_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└3번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_04_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└4번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_05_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└5번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_06_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└6번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_07_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└7번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_08_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└8번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_09_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└9번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_10_wgHtml_L" type="textarea">
+            <title xml:lang="ko">└10번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>		
+		<var name="side_wgHtml_Rpoint" type="radio">
+			<title xml:lang="ko">▼SIDE위젯코드+HTML(*우측)</title>
+			<description xml:lang="ko">*SIDE영역(우측)에 [위젯코드+HTML]을 입력하실 수 있습니다. / ★영역위치 모르면 메뉴얼 참고</description>
+			<options value="">
+				<title xml:lang="ko">-</title>
+			</options>
+		</var>
+		<var name="side_01_wgHtml" type="textarea">
+            <title xml:lang="ko">└1번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_02_wgHtml" type="textarea">
+            <title xml:lang="ko">└2번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_03_wgHtml" type="textarea">
+            <title xml:lang="ko">└3번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_04_wgHtml" type="textarea">
+            <title xml:lang="ko">└4번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_05_wgHtml" type="textarea">
+            <title xml:lang="ko">└5번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_06_wgHtml" type="textarea">
+            <title xml:lang="ko">└6번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_07_wgHtml" type="textarea">
+            <title xml:lang="ko">└7번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_08_wgHtml" type="textarea">
+            <title xml:lang="ko">└8번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_09_wgHtml" type="textarea">
+            <title xml:lang="ko">└9번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+		<var name="side_10_wgHtml" type="textarea">
+            <title xml:lang="ko">└10번째 위젯코드+HTML</title>
+			<description xml:lang="ko">*위젯코드및 HTML로 꾸밀 수 있습니다.</description>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆SIDE배너</title>
+		<var name="ex_sidebanL" type="radio">
+			<title xml:lang="ko">※부가설명</title>
+			<description xml:lang="ko">*[좌측형]:SIDE좌측형에 적용 / [우측형]:SIDE우측형에 적용 / [좌,우측형]둘다 사용시는, [양쪽형]에 적용됨 / *SIDE배너는 [PC데스크탑]에서만 적용됨</description>
+			<options value="">
+				<title xml:lang="ko">기본안내:</title>
+			</options>
+		</var>
+		<var name="ex_sidebanL1" type="radio">
+			<title xml:lang="ko">※</title>
+			<description xml:lang="ko">*===========================================================================*</description>
+			<options value="">
+				<title xml:lang="ko">▼[좌측형] 시작</title>
+			</options>
+		</var>
+	  <var name="display_side_ban_L" type="radio">
+            <title xml:lang="ko">▼SIDE배너 설정(*좌측형)</title>
+			<description xml:lang="ko">사이드배너 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>
+			<options value="b_yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+	  <var name="display_side_ban_L_random" type="radio">
+            <title xml:lang="ko">└랜덤설정</title>
+			<description xml:lang="ko">*상단배너 일반,랜덤설정 [일반]:1,2,3 순차롤링 / [랜덤]:3,1,2 등등..랜덤순서로 롤링</description>
+            <options value="">
+                <title xml:lang="ko">일반(*기본)</title>
+            </options>
+			<options value="ran">
+                <title xml:lang="ko">랜덤</title>
+            </options>
+       </var>
+        <var name="display_side_ban_height_L" type="text">
+            <title xml:lang="ko">└배너높이</title>
+            <description xml:lang="ko">*배너높이 설정 (*[숫자]만 입력 / 입력안할시 기본값 적용됨 / [기본값]: 200px)</description>
+        </var>
+       <var name="display_side_ban_num_L" type="radio">
+            <title xml:lang="ko">└배너타입[필수]</title>
+			<description xml:lang="ko">*배너타입 설정(★ 1개배너[단일], 2개이상배너[롤링배너], 사용갯수에 따라 정확한옵션을 선택해야 정상 작동됨.)</description>
+			<options value="">
+                <title xml:lang="ko">단일배너(1개)</title>
+            </options>
+			<options value="2">
+                <title xml:lang="ko">롤링배너(2개이상)</title>
+            </options>
+			<options value="3">
+                <title xml:lang="ko">HTML/위젯,배너코드</title>
+            </options>
+       </var>
+		<var name="side_ban_img0_L" type="image">
+            <title xml:lang="ko">●배너(단일배너용)</title>
+            <description xml:lang="ko">*배너이미지를 등록해주세요. /*[기본값]: 221px × 200px  / ★ 해당공간은 [단일배너]를 선택시 사용.)</description>
+		</var>
+        <var name="side_ban_img0_T_L" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [단일배너]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img0_url_L" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img0_url_blank_L" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img1_L" type="image">
+            <title xml:lang="ko">●배너1(롤링배너용)</title>
+            <description xml:lang="ko">*첫번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img1_T_L" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너1]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img1_url_L" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img1_url_blank_L" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img2_L" type="image">
+            <title xml:lang="ko">●배너2(롤링배너용)</title>
+            <description xml:lang="ko">*두번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img2_T_L" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너2]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img2_url_L" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img2_url_blank_L" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img3_L" type="image">
+            <title xml:lang="ko">●배너3(롤링배너용)</title>
+            <description xml:lang="ko">*세번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img3_T_L" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너3]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img3_url_L" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img3_url_blank_L" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img4_L" type="image">
+            <title xml:lang="ko">●배너4(롤링배너용)</title>
+            <description xml:lang="ko">*네번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img4_T_L" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너4]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img4_url_L" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img4_url_blank_L" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img5_L" type="image">
+            <title xml:lang="ko">●배너5(롤링배너용)</title>
+            <description xml:lang="ko">*다섯번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img5_T_L" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너5]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+		</var>
+        <var name="side_ban_img5_url_L" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img5_url_blank_L" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img_code_L" type="textarea">
+            <title xml:lang="ko">●사용자 HTML/위젯,배너코드</title>
+			<description xml:lang="ko">*사용자 html,위젯코드,각종배너코드[구글,기타]를 사용하실 수 있습니다.</description>
+		</var>
+		<var name="ex_sidebanR" type="radio">
+			<title xml:lang="ko">※</title>
+			<description xml:lang="ko">*===========================================================================*</description>
+			<options value="">
+				<title xml:lang="ko">▼[우측형] 시작</title>
+			</options>
+		</var>
+	  <var name="display_side_ban" type="radio">
+            <title xml:lang="ko">▼SIDE배너 설정(*우측형)</title>
+			<description xml:lang="ko">*사이드배너 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>
+			<options value="b_yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+	  <var name="display_side_ban_random" type="radio">
+            <title xml:lang="ko">└랜덤설정</title>
+			<description xml:lang="ko">*상단배너 일반,랜덤설정 [일반]:1,2,3 순차롤링 / [랜덤]:3,1,2 등등..랜덤순서로 롤링</description>
+            <options value="">
+                <title xml:lang="ko">일반(*기본)</title>
+            </options>
+			<options value="ran">
+                <title xml:lang="ko">랜덤</title>
+            </options>
+       </var>
+        <var name="display_side_ban_height" type="text">
+            <title xml:lang="ko">└배너높이</title>
+            <description xml:lang="ko">배너높이 설정</description>
+        </var>
+       <var name="display_side_ban_num" type="radio">
+            <title xml:lang="ko">└배너타입[필수]</title>
+			<description xml:lang="ko">배너타입 설정(★ 1개배너[단일], 2개이상배너[롤링배너], 사용갯수에 따라 정확한옵션을 선택해야 정상 작동됨.)</description>
+			<options value="">
+                <title xml:lang="ko">단일배너(1개)</title>
+            </options>
+			<options value="2">
+                <title xml:lang="ko">롤링배너(2개이상)</title>
+            </options>
+			<options value="3">
+                <title xml:lang="ko">HTML/위젯,배너코드</title>
+            </options>
+       </var>
+		<var name="side_ban_img0" type="image">
+            <title xml:lang="ko">●배너(단일배너용)</title>
+            <description xml:lang="ko">*배너이미지를 등록해주세요. /*[기본값]: 221px × 200px  / ★ 해당공간은 [단일배너]를 선택시 사용.</description>
+		</var>
+        <var name="side_ban_img0_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [단일배너]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+		</var>
+        <var name="side_ban_img0_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img0_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img1" type="image">
+            <title xml:lang="ko">●배너1(롤링배너용)</title>
+            <description xml:lang="ko">*첫번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img1_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너1]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img1_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img1_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img2" type="image">
+            <title xml:lang="ko">●배너2(롤링배너용)</title>
+            <description xml:lang="ko">*두번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img2_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너2]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img2_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img2_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img3" type="image">
+            <title xml:lang="ko">●배너3(롤링배너용)</title>
+            <description xml:lang="ko">*세번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img3_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너3]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img3_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img3_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img4" type="image">
+            <title xml:lang="ko">●배너4(롤링배너용)</title>
+            <description xml:lang="ko">*네번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img4_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너4]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+		</var>
+        <var name="side_ban_img4_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img4_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창,현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img5" type="image">
+            <title xml:lang="ko">●배너5(롤링배너용)</title>
+            <description xml:lang="ko">*다섯번째 배너이미지를 등록해주세요. /*[기본값]: 221px × 200px</description>
+		</var>
+        <var name="side_ban_img5_T" type="text">
+            <title xml:lang="ko">└타계정 배너이미지url(트래픽 절약용)</title>
+            <description xml:lang="ko">*다른계정사이트에서 불러올 [롤링배너5]용 외부이미지 URL을 입력./ ★ 해당공간사용시 바로위 [이미지등록공간]은 사용하지 마세요.[위에이미지 있을시 삭제눌르세요.]/ (*예= http://xxx.com/abc.gif)</description>
+        </var>
+        <var name="side_ban_img5_url" type="text">
+            <title xml:lang="ko">└이동URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="side_ban_img5_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="side_ban_img_code" type="textarea">
+            <title xml:lang="ko">●사용자 HTML/위젯,배너코드</title>
+			<description xml:lang="ko">사용자 html,위젯코드,각종배너코드[구글,기타]를 사용하실 수 있습니다.</description>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆팝업</title>	
+       <var name="display_notice_01_s" type="radio">
+            <title xml:lang="ko">▼팝업1 설정</title>
+			<description xml:lang="ko">*[팝업1] 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>            
+			<options value="yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+       <var name="display_notice_01_day" type="radio">
+            <title xml:lang="ko">└기간설정</title>
+			<description xml:lang="ko">*팝업뛰우는 기간을 설정</description>
+            <options value="">
+                <title xml:lang="ko">1일(*기본)</title>
+            </options>            
+			<options value="day3">
+                <title xml:lang="ko">3일</title>
+            </options>
+			<options value="day7">
+                <title xml:lang="ko">7일</title>
+            </options>
+       </var>
+		<var name="display_notice_01_s2" type="radio">
+			<title xml:lang="ko">└팝업1_이미지,HTML 선택[필수]</title>
+			<description xml:lang="ko">*팝업1 이미지,HTML 사용을 선택하세요.</description>
+			<options value="">
+				<title xml:lang="ko">이미지(*기본)</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">HTML</title>
+			</options>
+		</var>
+        <var name="display_notice_01_left" type="text">
+            <title xml:lang="ko">└팝업1_위치값(LEFT) [필수]</title>
+            <description xml:lang="ko">*기준점으로부터 좌측위치를 정확히 입력해주세요. (*입력안할시 기본위치로 지정됩니다./ 메뉴얼참고)</description>
+        </var>
+        <var name="display_notice_01_top" type="text">
+            <title xml:lang="ko">└팝업1_위치값(TOP) [필수]</title>
+            <description xml:lang="ko">*기준점으로부터 상단위치를 정확히 입력해주세요. (*입력안할시 기본위치로 지정됩니다./ 메뉴얼참고)</description>
+        </var>
+		<var name="display_notice_01_img" type="image">
+            <title xml:lang="ko">└팝업1_이미지</title>
+            <description xml:lang="ko">*첫번째 팝업이미지를 등록해주세요. (*배너사이즈는 원하시는대로 삽입가능합니다./ 이미지로 선택시만 적용됨)</description>
+		</var>
+        <var name="display_notice_01_url" type="text">
+            <title xml:lang="ko">└팝업1_URL</title>
+            <description xml:lang="ko">*이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_notice_01_url_blank" type="radio">
+			<title xml:lang="ko">└팝업1_새창,현재창</title>
+			<description xml:lang="ko">*새창+현재창 선택 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_notice_01_html" type="textarea">
+            <title xml:lang="ko">└팝업1_사용자 HTML</title>
+			<description xml:lang="ko">*사용자HTML을 입력해서 꾸며주세요.(* HTML코드 삽입 가능합니다./ HTML로 선택시만 적용됨)</description>
+		</var>
+
+       <var name="display_notice_02_s" type="radio">
+            <title xml:lang="ko">▼팝업2 설정</title>
+			<description xml:lang="ko">*[팝업2] 사용유무를 설정하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>            
+			<options value="yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+       <var name="display_notice_02_day" type="radio">
+            <title xml:lang="ko">└기간설정</title>
+			<description xml:lang="ko">*팝업뛰우는 기간을 설정</description>
+            <options value="">
+                <title xml:lang="ko">1일(*기본)</title>
+            </options>            
+			<options value="day3">
+                <title xml:lang="ko">3일</title>
+            </options>
+			<options value="day7">
+                <title xml:lang="ko">7일</title>
+            </options>
+       </var>
+		<var name="display_notice_02_s2" type="radio">
+			<title xml:lang="ko">└팝업2_이미지,HTML 선택[필수]</title>
+			<description xml:lang="ko">*팝업1 이미지,HTML 사용을 선택하세요.</description>
+			<options value="">
+				<title xml:lang="ko">이미지(*기본)</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">HTML</title>
+			</options>
+		</var>
+        <var name="display_notice_02_left" type="text">
+            <title xml:lang="ko">└팝업2_위치값(LEFT) [필수]</title>
+            <description xml:lang="ko">*기준점으로부터 좌측위치를 정확히 입력해주세요. (*입력안할시 기본위치로 지정됩니다./ 메뉴얼참고)</description>
+        </var>
+        <var name="display_notice_02_top" type="text">
+            <title xml:lang="ko">└팝업2_위치값(TOP) [필수]</title>
+            <description xml:lang="ko">*기준점으로부터 상단위치를 정확히 입력해주세요. (*입력안할시 기본위치로 지정됩니다./ 메뉴얼참고)</description>
+        </var>
+		<var name="display_notice_02_img" type="image">
+            <title xml:lang="ko">└팝업2_이미지</title>
+            <description xml:lang="ko">*팝업이미지를 등록해주세요. (* 배너사이즈는 마음대로 삽입가능합니다./ 이미지로 선택시만 적용됨)</description>
+		</var>
+        <var name="display_notice_02_url" type="text">
+            <title xml:lang="ko">└팝업2_URL</title>
+            <description xml:lang="ko">이동 URL을 입력해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_notice_02_url_blank" type="radio">
+			<title xml:lang="ko">└팝업2_새창,현재창</title>
+			<description xml:lang="ko">새창+현재창 선택 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_notice_02_html" type="textarea">
+            <title xml:lang="ko">└팝업2_사용자 HTML</title>
+			<description xml:lang="ko">사용자HTML을 입력해서 꾸며주세요.(* HTML코드 삽입 가능합니다./ HTML로 선택시만 적용됨)</description>
+		</var>
+	</group>
+
+
+	<group>
+		<title xml:lang="ko">◆따라다니는 배너</title>	
+       <var name="display_scban_se" type="radio">
+            <title xml:lang="ko">▼사용설정</title>
+			<description xml:lang="ko">따라다니는배너 사용설정을 선택하실 수 있습니다.</description>
+            <options value="">
+                <title xml:lang="ko">사용안함(*기본)</title>
+            </options>
+            <options value="yes">
+                <title xml:lang="ko">사용함</title>
+            </options>
+       </var>
+       <var name="display_scban_se_stop" type="radio">
+            <title xml:lang="ko">▼유동형/고정형</title>
+			<description xml:lang="ko">유동,고정형중에 선택하세요.(*구글배너와 같이 고정형만 혀용될경우 사용하시면 유용합니다.)</description>
+            <options value="">
+                <title xml:lang="ko">유동형(*기본)</title>
+            </options>
+            <options value="2">
+                <title xml:lang="ko">고정형</title>
+            </options>
+       </var>
+		<var name="display_scban_L_01_img" type="image">
+            <title xml:lang="ko">▼좌측_1번배너/이미지</title>
+            <description xml:lang="ko">*좌측 1번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_L_01_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_L_01_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_L_01_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_L_02_img" type="image">
+            <title xml:lang="ko">▼좌측_2번배너/이미지</title>
+            <description xml:lang="ko">*좌측 2번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_L_02_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_L_02_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_L_02_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_L_03_img" type="image">
+            <title xml:lang="ko">▼좌측_3번배너/이미지</title>
+            <description xml:lang="ko">*좌측 3번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_L_03_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_L_03_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_L_03_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_L_04_img" type="image">
+            <title xml:lang="ko">▼좌측_4번배너/이미지</title>
+            <description xml:lang="ko">*좌측 4번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_L_04_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_L_04_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_L_04_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_R_01_img" type="image">
+            <title xml:lang="ko">▼우측_1번배너/이미지</title>
+            <description xml:lang="ko">*우측 1번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_R_01_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_R_01_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_R_01_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_R_02_img" type="image">
+            <title xml:lang="ko">▼우측_2번배너/이미지</title>
+            <description xml:lang="ko">*우측 2번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_R_02_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_R_02_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_R_02_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_R_03_img" type="image">
+            <title xml:lang="ko">▼우측_3번배너/이미지</title>
+            <description xml:lang="ko">*우측 3번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_R_03_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_R_03_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_R_03_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+		<var name="display_scban_R_04_img" type="image">
+            <title xml:lang="ko">▼우측_4번배너/이미지</title>
+            <description xml:lang="ko">*우측 4번 배너이미지를 등록해주세요.(* 배너사이즈 자유)</description>
+		</var>
+        <var name="display_scban_R_04_url" type="text">
+            <title xml:lang="ko">└URL</title>
+            <description xml:lang="ko">*클릭시 이동될 URL을 입력 해 주세요.(*예= http://xxx.com)</description>
+        </var>
+		<var name="display_scban_R_04_url_blank" type="radio">
+			<title xml:lang="ko">└새창,현재창</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_scban_R_04_html" type="textarea">
+            <title xml:lang="ko">└사용자 HTML/위젯코드</title>
+            <description xml:lang="ko">*사용하실,HTML코드를 등록해주세요. (*현재 필드사용시, 배너이미지+URL+현재/새창 필드는 적용이 안됩니다.)</description>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆배경컬러/이미지</title>	
+		<var name="display_backimg_se" type="radio">
+			<title xml:lang="ko">▼배경컬러/이미지 선택</title>
+			<description xml:lang="ko">사용하실 배경컬러, 배경이미지중에 선택하세요.</description>
+			<options value="">
+				<title xml:lang="ko">사용안함(*기본)</title>
+			</options>
+			<options value="color">
+				<title xml:lang="ko">배경컬러</title>
+			</options>
+			<options value="img">
+				<title xml:lang="ko">배경이미지</title>
+			</options>
+			<options value="colorimg">
+				<title xml:lang="ko">배경컬러+이미지</title>
+			</options>
+		</var>
+		<var name="display_backcolor" type="text">
+            <title xml:lang="ko">▼배경컬러</title>
+            <description xml:lang="ko">*배경컬러 입력(* #빼고 [숫자코드]만 입력 / 입력안할시 기본값 적용됨)</description>
+		</var>
+		<var name="display_backimg" type="image">
+            <title xml:lang="ko">▼배경이미지</title>
+            <description xml:lang="ko">배경이미지 등록</description>
+		</var>
+		<var name="display_backimg_xy" type="radio">
+			<title xml:lang="ko">└배경 반복옵션</title>
+			<description xml:lang="ko">배경이미지 반복옵션 선택 (*반복: 좌측끝 기준으로 x,y축으로 박복됨 / 반복안함: 센터를 기준으로 삽입된 1개에 이미지만 배경처리됨)</description>
+			<options value="">
+				<title xml:lang="ko">반복(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">반복안함</title>
+			</options>
+		</var>
+		<var name="display_backimg_fix" type="radio">
+			<title xml:lang="ko">└배경이미지/고정옵션</title>
+			<description xml:lang="ko">배경이미지 고정옵션 선택</description>
+			<options value="">
+				<title xml:lang="ko">고정 안함(*기본)</title>
+			</options>
+			<options value="yes">
+				<title xml:lang="ko">고정함</title>
+			</options>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆상단 프로모션배너</title>
+		<var name="display_top_proban" type="radio">
+			<title xml:lang="ko">사용선택</title>
+			<description xml:lang="ko">*TOP 프로모션배너 사용/사용안함 설정해주세요.</description>
+			<options value="">
+				<title xml:lang="ko">사용안함(*기본)</title>
+			</options>
+			<options value="yes">
+				<title xml:lang="ko">사용함</title>
+			</options>
+		</var>
+       <var name="display_top_proban_day" type="radio">
+            <title xml:lang="ko">└기간설정</title>
+			<description xml:lang="ko">*프로모션 배너 활성기간을 설정</description>
+            <options value="">
+                <title xml:lang="ko">1일</title>
+            </options>            
+			<options value="day3">
+                <title xml:lang="ko">3일</title>
+            </options>
+			<options value="day7">
+                <title xml:lang="ko">7일</title>
+            </options>
+       </var>
+		<var name="display_top_proban_img" type="image">
+            <title xml:lang="ko">└배너이미지</title>
+            <description xml:lang="ko">*[배너사이즈 기본]: 높이 72px, 넓이:자유 /*기본높이값을 사용안한다면 아래설정에서 배너높이를 설정하세요.</description>
+		</var>
+		<var name="display_top_proban_height" type="text">
+            <title xml:lang="ko">└배너높이</title>
+            <description xml:lang="ko">*배너높이값을 설정할수 있습니다./*숫자만 입력하세요. / *입력안할시 기본값:72px</description>
+        </var>
+		<var name="display_top_proban_link" type="text">
+            <title xml:lang="ko">└배너 링크주소</title>
+            <description xml:lang="ko">*이동 링크주소를 입력하세요./*예= http://xxx.com</description>
+        </var>
+		<var name="display_top_proban_link_blank" type="radio">
+			<title xml:lang="ko">└배너 링크주소/새창옵션</title>
+			<description xml:lang="ko">*배너 클릭시 새창+현재창 선택을 해 주세요.</description>
+			<options value="">
+				<title xml:lang="ko">현재창</title>
+			</options>
+			<options value="02">
+				<title xml:lang="ko">새창</title>
+			</options>
+		</var>
+		<var name="display_top_proban_line" type="radio">
+			<title xml:lang="ko">└하단 1px라인</title>
+			<description xml:lang="ko">*필요시 하단 1px라인을 사용할 수 있습니다.</description>
+			<options value="">
+				<title xml:lang="ko">사용안함(기본)</title>
+			</options>
+			<options value="yes">
+				<title xml:lang="ko">사용함</title>
+			</options>
+		</var>
+		<var name="display_top_proban_WG" type="textarea">
+            <title xml:lang="ko">사용자 위젯코드및 HTML</title>
+			<description xml:lang="ko">*사용자 위젯코드및 사용자HTML을 입력가능 /*주의: HTML필드를 사용할시 배너이미지 필드는 적용안됨.</description>
+		</var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆풋터</title>
+		<var name="footer_copy" type="textarea">
+            <title xml:lang="ko">▼카피라이터 텍스트</title>
+			<description xml:lang="ko">*사용줄 수에 관계없이 HTML입력이 가능. (*줄바꿈시는 BR태그를 이용하세요 / 미입력시 기본값 적용)</description>
+       </var>
+		<var name="copytxt_c_d01" type="text">
+            <title xml:lang="ko">└카피라이터 텍스트 컬러</title>
+            <description xml:lang="ko">*2d2d2d 등 컬러값을 입력하시면 사용자컬러를 사용가능. (*#빼고 숫자코드만 입력 / 미입력시 기본값 적용)</description>
+        </var>
+	</group>
+
+	<group>
+		<title xml:lang="ko">◆유틸기능</title>
+		<var name="display_siteLoding_se" type="radio">
+			<title xml:lang="ko">▼페이지 로딩바</title>
+			<description xml:lang="ko">*페이지 기다림중에 [로딩화면]을 표시합니다. / *배너가 많고 페이지가 무거울때 사용하면 유용함</description>		
+			<options value="">
+				<title xml:lang="ko">사용안함(*기본)</title>
+			</options>
+			<options value="yes">
+				<title xml:lang="ko">사용함</title>
+			</options>
+		</var>
+		<var name="display_browser6_se" type="radio">
+			<title xml:lang="ko">▼익스6,7 업데이트PAGE</title>
+			<description xml:lang="ko">*브라우져가 익스7이하일경우 [익스8 이상~,파폭,크롬,사파리] 업데이트PAGE 표시</description>		
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_myMenu_se" type="radio">
+			<title xml:lang="ko">▼마이메뉴(*핫링크)</title>
+			<description xml:lang="ko">*최우측에 바로가기메뉴[*핫링크]를 사용가능 / *메뉴얼참조</description>		
+			<options value="">
+				<title xml:lang="ko">사용안함(*기본)</title>
+			</options>
+			<options value="yes">
+				<title xml:lang="ko">사용함</title>
+			</options>
+		</var>
+		<var name="display_movetop_se" type="radio">
+			<title xml:lang="ko">▼상하위 이동버튼</title>
+			<description xml:lang="ko">*페이지 [상위,하위]이동 네비게이션 사용가능</description>		
+			<options value="">
+				<title xml:lang="ko">사용함(*기본)</title>
+			</options>
+			<options value="no">
+				<title xml:lang="ko">사용안함</title>
+			</options>
+		</var>
+		<var name="display_snsLink_se" type="radio">
+			<title xml:lang="ko">▼SNS 링크</title>
+			<description xml:lang="ko">*[페이스북,트위터,비메오]에 링크를 지원</description>		
+			<options value="">
+				<title xml:lang="ko">사용안함(*기본)</title>
+			</options>
+			<options value="yes">
+				<title xml:lang="ko">사용함</title>
+			</options>
+		</var>
+        <var name="display_snsLink_face" type="text">
+            <title xml:lang="ko">└페이스북 이동주소</title>
+			<description xml:lang="ko">*페북 이동주소기입 / *이동주소를 기입하지않으면 아이콘은 비활성됨</description>
+		</var>
+        <var name="display_snsLink_twitter" type="text">
+            <title xml:lang="ko">└트위터 이동주소</title>
+			<description xml:lang="ko">*트위터 이동주소기입 / *이동주소를 기입하지않으면 아이콘은 비활성됨</description>
+       </var>
+        <var name="display_snsLink_vimeo" type="text">
+            <title xml:lang="ko">└Vimeo 이동주소</title>
+			<description xml:lang="ko">*Vimeo 이동주소기입 / *이동주소를 기입하지않으면 아이콘은 비활성됨</description>
+       </var>
+	</group>
+</extra_vars>
+
+<!-- 메뉴설정 -->
+    <menus>
+        <menu name="top_menu">
+            <title xml:lang="ko">상단 메뉴</title>
+            <maxdepth>3</maxdepth>
+        </menu>
+        <menu name="open_menu">
+            <title xml:lang="ko">펼침 메뉴</title>
+            <maxdepth>2</maxdepth>
+        </menu>
+        <menu name="Util_menu">
+            <title xml:lang="ko">하단 유틸메뉴</title>
+            <maxdepth>1</maxdepth>
+        </menu>
+        <menu name="My_menu">
+            <title xml:lang="ko">마이 메뉴</title>
+            <maxdepth>1</maxdepth>
+        </menu>
+        <menu name="search_menu">
+            <title xml:lang="ko">검색 인기키워드</title>
+            <maxdepth>1</maxdepth>
+        </menu>
+        <menu name="all_menu">
+            <title xml:lang="ko">*비종속 전체메뉴</title>
+            <maxdepth>2</maxdepth>
+        </menu>
+        <menu name="side_menu">
+            <title xml:lang="ko">*비종속 SIDE메뉴</title>
+            <maxdepth>3</maxdepth>
+        </menu>
+    </menus>
+</layout>

@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * adminAdminController class
  * admin controller class of admin module
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/admin
  * @version 0.1
  */
@@ -363,7 +363,7 @@ class adminAdminController extends admin
 	function procAdminUpdateConfig()
 	{
 		$adminTitle = Context::get('adminTitle');
-		$file = Context::get('adminLogo');
+		$file = $_FILES['adminLogo'];
 
 		$oModuleModel = getModel('module');
 		$oAdminConfig = $oModuleModel->getModuleConfig('admin');

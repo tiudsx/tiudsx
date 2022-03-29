@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * @class PageHandler
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * handles page navigation
  * @version 0.1
  *
@@ -30,7 +30,7 @@ class PageHandler extends Handler
 	 * @return void
 	 */
 
-	function __construct($total_count, $total_page, $cur_page, $page_count = 10)
+	function PageHandler($total_count, $total_page, $cur_page, $page_count = 10)
 	{
 		$this->total_count = $total_count;
 		$this->total_page = $total_page;

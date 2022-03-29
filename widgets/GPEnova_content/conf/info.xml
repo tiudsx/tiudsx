@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget version="0.2">
+    <title xml:lang="ko">포탈NOVA_컨텐츠위젯</title>
+    <description xml:lang="ko">게시판, 코멘트, 첨부파일 등 Content를 출력하는 위젯입니다.</description>
+    <version>0.0</version>
+    <date>0000-00-00</date>
+    <author email_address="simpleeye79@naver.com" link="http://simpleeye.ivyro.net/xe/gdesign_sub_qna">
+        <name xml:lang="ko">그레이브디자인</name>
+    </author>
+
+    <extra_vars>
+        <group>
+            <title xml:lang="ko">◆내용형태(*필수)</title>
+            <var id="list_type" type="select">
+                <name xml:lang="ko">▼선택</name>
+				<description xml:lang="ko">*리스트형, 갤러리형, 웹진형 3가지중에 선택.(*메뉴얼을 꼭보세요.)</description>
+                <options>
+                    <value>default</value>
+                    <name xml:lang="ko">*선택하세요</name>
+                </options>
+				<options>
+                    <value>normal</value>
+                    <name xml:lang="ko">리스트형(제목)</name>
+                </options>
+                <options>
+                    <value>gallery</value>
+                    <name xml:lang="ko">갤러리형(이미지)</name>
+                </options>
+                <options>
+                    <value>image_title_content</value>
+                    <name xml:lang="ko">웹진형(이미지+제목+내용)</name>
+                </options>
+            </var>
+        </group>
+
+        <group>
+            <title xml:lang="ko">◆기본항목(*필수)</title>
+            <var id="list_con_se" type="select">
+                <name xml:lang="ko">▼사용위치 선택</name>
+				<description xml:lang="ko">*위젯스킨이 사용될 위치를 선택하세요.(*중앙컨텐츠/SIDE컨텐츠 중에 선택)</description>
+				<options>
+					<value>contents</value>
+					<name xml:lang="ko">중앙컨텐츠(*기본)</name>
+				</options>
+				<options>
+					<value>sideContents</value>
+					<name xml:lang="ko">SIDE컨텐츠</name>
+				</options>
+            </var>
+            <var id="content_type" type="select">
+                <name xml:lang="ko">▼추출대상</name>
+				<description xml:lang="ko">*추출대상을 선택하세요.</description>
+				<options>
+                    <value>document</value>
+                    <name xml:lang="ko">게시물(*기본)</name>
+                </options>
+                <options>
+                    <value>comment</value>
+                    <name xml:lang="ko">댓글</name>
+                </options>
+                <options>
+                    <value>image</value>
+                    <name xml:lang="ko">첨부이미지</name>
+                </options>
+                <options>
+                    <value>trackback</value>
+                    <name xml:lang="ko">트랙백</name>
+                </options>
+                <options>
+                    <value>rss</value>
+                    <name xml:lang="ko">피드 (RSS/ATOM)</name>
+                </options>
+            </var>
+            <var id="module_srls" type="module_srl_list">
+                <name xml:lang="ko">▼대상 페이지</name>
+            </var>
+            <var id="option_view" type="select-multi-order">
+                <name xml:lang="ko">▼내용 표시항목 및 순서</name>
+				<description xml:lang="ko">●리스트형= 제목,글쓴이,등록일 중선택 ●웹진형= 제목+내용+글쓴이+등록일 ●갤러리형= 섬네일/섬네일+제목/섬네일+제목+닉네임 중선택</description>
+                <options>
+                    <value>thumbnail</value>
+                    <name xml:lang="ko">섬네일</name>
+                </options>
+                <options>
+                    <value>content</value>
+                    <name xml:lang="ko">내용</name>
+                </options>
+                <options default="false" init="true">
+                    <value>title</value>
+                    <name xml:lang="ko">제목</name>
+                </options>
+                <options init="true">
+                    <value>nickname</value>
+                    <name xml:lang="ko">글쓴이</name>
+                </options>
+                <options init="true">
+                    <value>regdate</value>
+                    <name xml:lang="ko">등록일</name>
+                </options>
+            </var>
+        </group>
+
+        <group>
+            <title xml:lang="ko">◆탭 설정</title>
+            <var id="tab_type" type="select">
+                <name xml:lang="ko">▼탭형태</name>
+				<description xml:lang="ko">*탭없음,상단탭형 선택가능</description>             
+				<options>
+                    <value>none</value>
+                    <name xml:lang="ko">없음</name>
+                </options>
+                <options>
+                    <value>tab_top</value>
+                    <name xml:lang="ko">상단 탭형</name>
+                </options>
+            </var>
+            <var id="tab_color" type="select">
+                <name xml:lang="ko">▼탭 컬러셋</name>
+				<description xml:lang="ko">*탭컬러셋 설정가능/ *레이아웃 컬러셋을 선택하시면, 레이아웃설정 컬러셋값이 자동적용</description>
+				<options>
+                    <value>layout</value>
+                    <name xml:lang="ko">레이아웃 컬러셋(*기본)</name>
+                </options>   
+                <options>
+                    <value>rb</value>
+                    <name xml:lang="ko">라이트블루</name>
+                </options>
+				<options>
+                    <value>r</value>
+                    <name xml:lang="ko">레드</name>
+                </options>
+                <options>
+                    <value>gn</value>
+                    <name xml:lang="ko">소프트그린</name>
+                </options>
+                <options>
+                    <value>gn_p</value>
+                    <name xml:lang="ko">파스텔그린</name>
+                </options>
+                <options>
+                    <value>b</value>
+                    <name xml:lang="ko">다크블루</name>
+                </options>
+                <options>
+                    <value>p</value>
+                    <name xml:lang="ko">스위트퍼플</name>
+                </options>
+                <options>
+                    <value>p_d</value>
+                    <name xml:lang="ko">다크퍼플</name>
+                </options>
+                <options>
+                    <value>y</value>
+                    <name xml:lang="ko">옐로우</name>
+                </options>
+                <options>
+                    <value>op</value>
+                    <name xml:lang="ko">오렌지핑크</name>
+                </options>
+                <options>
+                    <value>cp</value>
+                    <name xml:lang="ko">클래시핑크</name>
+                </options>
+                <options>
+                    <value>gy</value>
+                    <name xml:lang="ko">라이트그레이</name>
+                </options>
+                <options>
+                    <value>gy_d</value>
+                    <name xml:lang="ko">다크그레이</name>
+                </options>
+				<options>
+					<value>bk</value>
+					<name xml:lang="ko">블랙</name>
+				</options>
+            </var>
+            <var id="tap_wg_width" type="text">
+                <name xml:lang="ko">▼탭 넓이</name>
+                <description xml:lang="ko">*숫자만 입력/ (기본:108px)</description>
+            </var>
+		</group>
+
+		<group>
+            <title xml:lang="ko">◆목록 기본설정</title>
+            <var id="list_count" type="text">
+                <name xml:lang="ko">▼전체 목록/이미지 수</name>
+                <description xml:lang="ko">*출력될 목록/이미지 수를 정할 수 있습니다. (기본 5개)</description>
+            </var>
+            <var id="cols_list_count" type="text">
+                <name xml:lang="ko">▼가로 목록/이미지 수</name>
+                <description xml:lang="ko">*출력될 가로 목록/이미지의 수를 정할 수 있습니다. (기본 5개)</description>
+            </var>
+            <var id="page_count" type="select">
+                <name xml:lang="ko">▼페이지 수</name>
+                <options>
+                    <value>1</value>
+                    <name xml:lang="ko">1</name>
+                </options>
+                <options>
+                    <value>2</value>
+                    <name xml:lang="ko">2</name>
+                </options>
+                <options>
+                    <value>3</value>
+                    <name xml:lang="ko">3</name>
+                </options>
+                <description xml:lang="ko">*페이지수 2이상일 경우 이전/다음 버튼이 나타납니다.</description>
+            </var>
+            <var id="subject_cut_size" type="text">
+                <name xml:lang="ko">▼제목 글자수</name>
+                <description xml:lang="ko">*제목 글자수를 지정할 수 있습니다. (0또는 미입력시 자르지 않습니다)</description>
+            </var>
+            <var id="content_cut_size" type="text">
+                <name xml:lang="ko">▼내용 글자수</name>
+                <description xml:lang="ko">*내용 글자수를 지정할 수 있습니다. (웹진형 만 적용됨) (미입력시 기본값적용, 기본:192)</description>
+            </var>
+            <var id="new_window" type="select">
+                <name xml:lang="ko">▼링크</name>			
+				<options>
+					<value></value>
+					<name xml:lang="ko">현재창에서 열기</name>
+				</options>
+				<options>
+					<value>Y</value>
+					<name xml:lang="ko">새창에서 열기</name>
+				</options>
+            </var>
+            <var id="thumbnail_type" type="select">
+                <name xml:lang="ko">▼썸네일 생성 방법</name>
+                <description xml:lang="ko">썸네일 생성 방법을 선택할 수 있습니다. (crop : 꽉 채우기, ratio : 비율 맞추기) (갤러리+웹진형 만 적용)</description>                
+				<options>
+                    <value>crop</value>
+                    <name xml:lang="ko">Crop (채우기)</name>
+                </options>
+                <options>
+                    <value>ratio</value>
+                    <name xml:lang="ko">Ratio (비율 맞추기)</name>
+                </options>
+            </var>
+            <var id="thumbnail_width" type="text">
+                <name xml:lang="ko">▼썸네일이미지 가로</name>
+                <description xml:lang="ko">이미지 가로크기 입력, 숫자만 입력, 미입력시 기본값적용(기본:175px) (갤러리+웹진형 만 적용)</description>
+            </var>
+            <var id="thumbnail_height" type="text">
+                <name xml:lang="ko">▼썸네일이미지 세로</name>
+                <description xml:lang="ko">이미지 세로크기 입력, 숫자만 입력, 미입력시 기본값적용(기본:175px) (갤러리+웹진형 만 적용)</description>
+            </var>
+            <var id="order_target" type="select">
+                <name xml:lang="ko">▼정렬 대상</name>
+                <description xml:lang="ko">등록된 순서 또는 변경된 순서로 정렬을 할 수 있습니다.</description>
+                <options>
+                    <value>regdate</value>
+                    <name xml:lang="ko">최신 등록순(*기본)</name>
+                </options>
+                <options>
+                    <value>update_order</value>
+                    <name xml:lang="ko">최근 변경순</name>
+                </options>
+            </var>
+            <var id="order_type" type="select">
+                <name xml:lang="ko">▼정렬 방법</name>
+                <description xml:lang="ko">정렬대상을 내림차순 또는 올림차순으로 정렬할 수 있습니다.</description>
+                <options>
+                    <value>desc</value>
+                    <name xml:lang="ko">내림차순(*기본)</name>
+                </options>
+                <options>
+                    <value>asc</value>
+                    <name xml:lang="ko">올림차순</name>
+                </options>
+            </var>
+        </group>
+
+        <group>
+            <title xml:lang="ko">◆목록 표시설정</title>
+            <var id="show_secret" type="select">
+                <name xml:lang="ko">▼비밀글 표시</name>
+				<description xml:lang="ko">*비밀글 출력설정.</description>
+                <options>
+                    <value></value>
+                    <name xml:lang="ko">출력하지 않음</name>
+                </options>
+                <options>
+                    <value>Y</value>
+                    <name xml:lang="ko">출력</name>
+                </options>
+            </var>
+            <var id="show_category" type="select">
+                <name xml:lang="ko">▼분류 표시</name>
+				<description xml:lang="ko">*분류[카테고리]를 표시합니다.</description>
+                <options>
+                    <value>N</value>
+                    <name xml:lang="ko">출력하지 않음</name>
+                </options>
+                <options>
+                    <value>Y</value>
+                    <name xml:lang="ko">출력</name>
+                </options>
+            </var>
+			<var id="show_comment_count" type="select">
+                <name xml:lang="ko">▼댓글수 표시</name>
+				<description xml:lang="ko">*댓글수를 표시합니다.</description>
+                <options>
+                    <value>Y</value>
+                    <name xml:lang="ko">출력</name>
+                </options>
+				<options>
+                    <value>N</value>
+                    <name xml:lang="ko">출력하지 않음</name>
+                </options>
+            </var>
+            <var id="show_icon" type="select">
+                <name xml:lang="ko">▼아이콘 표시</name>
+				<description xml:lang="ko">*new아이콘+file아이콘 등..을 표시합니다.</description>
+                <options>
+                    <value>N</value>
+                    <name xml:lang="ko">출력하지 않음</name>
+                </options>
+				<options>
+                    <value>Y</value>
+                    <name xml:lang="ko">출력</name>
+                </options>
+            </var>
+			<var id="show_browser_title" type="select">
+                <name xml:lang="ko">▼게시판 이름 표시</name>
+				<description xml:lang="ko">*게시판이름[브라우져타이틀]을 표시합니다</description>
+                <options>
+                    <value>N</value>
+                    <name xml:lang="ko">출력하지 않음</name>
+                </options>
+				<options>
+                    <value>Y</value>
+                    <name xml:lang="ko">출력</name>
+                </options>
+            </var>
+            <var id="duration_new" type="text">
+                <name xml:lang="ko">▼new 표시 시간 (hours)</name>
+                <description xml:lang="ko">새로 등록된 게시물의 new 표시시간을 정할 수 있습니다. (시간 단위)</description>
+            </var>
+        </group>
+
+        <group>
+            <title xml:lang="ko">◆목록 추가설정(*갤러리형)</title>
+            <var id="gall_wg_padding" type="text">
+                <name xml:lang="ko">▼이미지 사이간격</name>
+                <description xml:lang="ko">*이미지 사이간격을 입력, 미입력시 기본값적용 (기본:45px) (숫자만 입력) / 모르면 메뉴얼참조</description>
+            </var>
+            <var id="gall_wg_botpadding" type="text">
+                <name xml:lang="ko">▼이미지 하단간격</name>
+                <description xml:lang="ko">*이미지 하단간격을 입력, 미입력시 기본값적용(숫자만 입력)/ 모르면 메뉴얼참조</description>
+            </var>
+			<var id="gall_wg_comment" type="select">
+                <name xml:lang="ko">▼갤러리위젯_댓글표시</name>
+				<description xml:lang="ko">*댓글표시 위치선택 (2타입에경우 제목이 있을경우, 3타입에경우 닉네임이 있을경우만 선택및 활성화됨.)</description>
+                <options>
+                    <value>1</value>
+                    <name xml:lang="ko">1타입(말풍선형/기본)</name>
+                </options>
+				<options>
+                    <value>2</value>
+                    <name xml:lang="ko">2타입(아이콘형/제목옆)</name>
+                </options>
+				<options>
+                    <value>3</value>
+                    <name xml:lang="ko">3타입(아이콘형/닉네임옆)</name>
+                </options>
+            </var>
+		</group>
+
+        <group>
+			<title xml:lang="ko">RSS 설정(*공통)</title>
+            <var id="rss_url0" type="text">
+                <name xml:lang="ko">피드(RSS/ATOM) 주소</name>
+                <description xml:lang="ko">피드 주소는 타입이 지원하는 문서 형식일 경우에만 등록 됩니다.
+                (지원 문서 형식 : RSS 2.0, RSS 1.0, ATOM 1.0)</description>
+            </var>
+            <var id="rss_url1" type="text">
+                <name xml:lang="ko">피드(RSS/ATOM) 주소</name>
+            </var>
+            <var id="rss_url2" type="text">
+                <name xml:lang="ko">피드(RSS/ATOM) 주소</name>
+            </var>
+            <var id="rss_url3" type="text">
+                <name xml:lang="ko">피드(RSS/ATOM) 주소</name>
+            </var>
+            <var id="rss_url4" type="text">
+                <name xml:lang="ko">피드(RSS/ATOM) 주소</name>
+            </var>
+       </group>
+    </extra_vars>
+</widget>

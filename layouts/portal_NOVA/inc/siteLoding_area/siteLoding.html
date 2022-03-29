@@ -1,0 +1,6 @@
+<!--@if($layout_info->display_siteLoding_se == 'yes')-->
+	<div class="gpe_siteLoading_img">로딩중 잠시만 기다려주세요.</div>
+	<script>
+		jQuery(window).load(function(){jQuery('.gpe_siteLoading_img').animate({'opacity':0},600, function(){jQuery(this).css('display','none')});}); 
+	</script>
+<!--@end-->

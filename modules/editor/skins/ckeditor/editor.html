@@ -29,10 +29,6 @@
 	<include target="file_upload.html" />
 </block>
 
-{@
-	$editorContentCssFilemtime = filemtime(_XE_PATH_ . $content_style_path . '/editor.css');
-}
-
 <script>
 (function($){
 	"use strict";
@@ -43,7 +39,7 @@
 			ckeconfig: {
 				height: '{$editor_height}',
 				skin: '{$colorset}',
-				contentsCss: '{$content_style_path}/editor.css?{$editorContentCssFilemtime}',
+				contentsCss: '{$content_style_path}/editor.css',
 				xe_editor_sequence: {$editor_sequence},
 				toolbarCanCollapse: true,
 				language: "{str_replace('jp','ja',$lang_type)}"
@@ -63,7 +59,7 @@
 			<!--@endforeach-->
 			{@ $xe_component = implode(',', $xe_component); }
 
-			settings.ckeconfig.xe_component_arrays = {{$xe_component|noescape}};
+			settings.ckeconfig.xe_component_arrays = {{$xe_component}};
 		<!--@endif-->
 
 		<!--@if(!$enable_default_component)-->

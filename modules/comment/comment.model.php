@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * commentModel class
  * model class of the comment module
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /modules/comment
  * @version 0.1
  */
@@ -508,13 +508,6 @@ class commentModel extends comment
 			$args->status = 1;
 		}
 
-		// call trigger (before)
-		$trigger_output = ModuleHandler::triggerCall('comment.getCommentList', 'before', $args);
-		if($trigger_output instanceof BaseObject && !$trigger_output->toBool())
-		{
-			return $output;
-		}
-
 		$output = executeQueryArray('comment.getCommentPageList', $args);
 
 		// return if an error occurs in the query results
@@ -532,13 +525,6 @@ class commentModel extends comment
 			{
 				return;
 			}
-		}
-
-		// call trigger (after)
-		$trigger_output = ModuleHandler::triggerCall('comment.getCommentList', 'after', $output);
-		if($trigger_output instanceof BaseObject && !$trigger_output->toBool())
-		{
-			return $trigger_output;
 		}
 
 		return $output;

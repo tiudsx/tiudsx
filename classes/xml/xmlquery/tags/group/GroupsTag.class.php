@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * GroupsTag class
@@ -22,7 +22,7 @@ class GroupsTag
 	 * @param array|string $xml_groups
 	 * @return void
 	 */
-	function __construct($xml_groups)
+	function GroupsTag($xml_groups)
 	{
 		$this->groups = array();
 

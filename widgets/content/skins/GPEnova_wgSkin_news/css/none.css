@@ -1,0 +1,12 @@
+@charset "utf-8";
+/*±âº»css*/
+	.layG_newsCon{
+	position:absolute; left:180px; top:5px; display:block; margin-left:10px; width:300px; height:26px; padding-left:10px; overflow:hidden;
+	-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;
+	background:url(layouts/portal_NOVA/imgs/default/default_02.png) no-repeat -10px -151px;
+	}
+	.layG_newsCon ul{white-space:nowrap;}
+	.layG_newsCon li{}
+	.layG_newsCon ul li .subject{height:26px; line-height:26px; color:#fff; font-size:12px;}
+	.layG_newsCon ul li .subject:hover{text-decoration:underline;}
+	.layG_newsCon ul li .date{color:#dddddd; font-size:11px; white-space:nowrap;}

@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class content
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief widget to display content
  * @version 0.1
  */
@@ -779,7 +779,7 @@ class contentItem extends BaseObject
 	var $contents_link = null;
 	var $domain = null;
 
-	function __construct($browser_title='')
+	function contentItem($browser_title='')
 	{
 		$this->browser_title = $browser_title;
 	}

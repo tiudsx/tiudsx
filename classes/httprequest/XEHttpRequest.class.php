@@ -1,11 +1,11 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * - HttpRequest class
  * - a class that is designed to be used for sending out HTTP request to an external server and retrieving response
  * - Connection: keep-alive is not supported
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/httprequest
  * @version 0.1
  * @deprecated
@@ -41,7 +41,7 @@ class XEHttpRequest
 	 * constructor
 	 * @return void
 	 */
-	function __construct($host, $port, $scheme='')
+	function XEHttpRequest($host, $port, $scheme='')
 	{
 		$this->m_host = $host;
 		$this->m_port = $port;

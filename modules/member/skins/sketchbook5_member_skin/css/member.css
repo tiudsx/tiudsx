@@ -416,7 +416,7 @@
 	.xm .form-horizontal .controls{*display:inline-block;*padding-left:0;margin-left:0;*margin-left:0}
 	.xm .form-horizontal .controls:first-child{*padding-left:0}
 	.xm .signin{margin:0 5px}
-	.xm .nav {display:none}
+	/*.xm .nav {display:none}*/
 	.xm .pagination{font-size:9px}
 	.xm .pagination ul>li>a,
 	.xm .pagination ul>li>span{padding:4px 6px}

@@ -1,0 +1,15 @@
+<span cond="$layout_info->display_top_lang != 'L_no'" class="gpe_lang">	
+<dl>
+<dd>
+	<span class="gpe_lang_tit_icon"></span><span class="gpe_lang_tit" onclick="jQuery('.gpe_selectLang').fadeToggle();">{$lang_supported[$lang_type]}</span>
+	<ul class="gpe_selectLang">
+		<li style="border-bottom:0; width:100%; float:none;"><span class="triang_border" style="top:-9px; right:15px;"></span><span class="triang" style="top:-8px; right:15px;"></span></li><!--삼각형-->
+	<!--@foreach($lang_supported as $key => $val)-->
+		<!--@if($key!= $lang_type)-->
+		<li><a href="#" onclick="doChangeLangType('{$key}');return false;">{$val}</a></li>
+		<!--@end-->
+	<!--@end-->
+	</ul>
+</dd>
+</dl>
+</span>

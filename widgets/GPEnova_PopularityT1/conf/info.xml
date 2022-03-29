@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget version="0.2">
+	<title xml:lang="ko">포탈NOVA_인기/최신/댓글</title>
+	<description xml:lang="ko">포탈NOVA_인기/최신/댓글 위젯</description>
+	<version>0.0</version>
+	<date>0000-00-00</date>
+    <author email_address="simpleeye79@naver.com" link="http://simpleeye.ivyro.net/xe/gdesign_sub_qna">
+        <name xml:lang="ko">그레이브디자인</name>
+    </author>
+
+	<extra_vars>
+        <var id="list_count" type="text">
+            <name xml:lang="ko">▼목록수</name>
+            <description xml:lang="ko">*목록수를 기입해 주세요.</description>
+        </var>
+		<var id="subject_cut_size" type="text">
+			<name xml:lang="ko">▼제목 글자수</name>
+			<description xml:lang="ko">*제목 글자수를 기입해 주세요.(0또는 미입력시 자르지 않습니다)</description>
+		</var>
+		<var id="popu_height" type="text">
+			<name xml:lang="ko">▼위젯높이</name>
+			<description xml:lang="ko">*위젯 높이를 지정해주세요.(미입력시 기본값 입력됨 / 기본:242px)</description>
+		</var>
+		<var id="popu_tapwidth" type="text">
+			<name xml:lang="ko">▼탭 넓이</name>
+			<description xml:lang="ko">*탭 넓이를 지정할 수 있습니다.(미입력시 기본값 입력됨)</description>
+		</var>
+		<var id="popu_tapcolor" type="select">
+			<name xml:lang="ko">└탭 컬러셋</name>
+			<description xml:lang="ko">*탭 컬러셋을 지정할 수 있습니다.</description>
+			<options>
+				<value>layout</value>
+				<name xml:lang="ko">레이아웃 컬러셋(*기본)</name>
+			</options>
+			<options>
+				<value>rb</value>
+				<name xml:lang="ko">라이트블루</name>
+			</options>			
+			<options>
+				<value>r</value>
+				<name xml:lang="ko">레드</name>
+			</options>
+			<options>
+				<value>gn</value>
+				<name xml:lang="ko">소프트그린</name>
+			</options>
+			<options>
+				<value>gn_p</value>
+				<name xml:lang="ko">파스텔그린</name>
+			</options>
+			<options>
+				<value>b</value>
+				<name xml:lang="ko">다크블루</name>
+			</options>
+			<options>
+				<value>p</value>
+				<name xml:lang="ko">스위트퍼플</name>
+			</options>
+			<options>
+				<value>p_d</value>
+				<name xml:lang="ko">다크퍼플</name>
+			</options>
+			<options>
+				<value>y</value>
+				<name xml:lang="ko">옐로우</name>
+			</options>
+			<options>
+				<value>op</value>
+				<name xml:lang="ko">오렌지핑크</name>
+			</options>
+			<options>
+				<value>cp</value>
+				<name xml:lang="ko">클래시핑크</name>
+			</options>
+			<options>
+				<value>gy</value>
+				<name xml:lang="ko">라이트그레이</name>
+			</options>
+			<options>
+				<value>gy_d</value>
+				<name xml:lang="ko">다크그레이</name>
+			</options>
+			<options>
+				<value>bk</value>
+				<name xml:lang="ko">블랙</name>
+			</options>
+		</var>
+		<var id="popu_tapstep" type="select">
+			<name xml:lang="ko">└탭 정렬순서</name>
+			<description xml:lang="ko">*탭 정렬순서를 지정할 수 있습니다.</description>
+			<options>
+				<value>01</value>
+				<name xml:lang="ko">인기/최신/댓글(*기본)</name>
+			</options>
+			<options>
+				<value>02</value>
+				<name xml:lang="ko">최신/인기/댓글</name>
+			</options>
+			<options>
+				<value>03</value>
+				<name xml:lang="ko">댓글/최신/인기</name>
+			</options>
+			<options>
+				<value>04</value>
+				<name xml:lang="ko">인기</name>
+			</options>
+			<options>
+				<value>05</value>
+				<name xml:lang="ko">최신</name>
+			</options>
+			<options>
+				<value>06</value>
+				<name xml:lang="ko">댓글</name>
+			</options>
+		</var>
+		<var id="popu_dayset" type="select">
+			<name xml:lang="ko">▼날짜 사용선택</name>
+			<description xml:lang="ko">*날짜 사용/사용안함을 선택할 수 있습니다.</description>
+			<options>
+				<value>yes</value>
+				<name xml:lang="ko">사용</name>
+			</options>
+			<options>
+				<value>no</value>
+				<name xml:lang="ko">사용안함</name>
+			</options>
+		</var>
+		<var id="module_srls" type="module_srl_list">
+			<name xml:lang="ko">▼대상 모듈</name>
+			<description xml:lang="ko">*선택하신 모듈에 등록된 글을 대상으로 합니다.</description>
+		</var>
+		<var id="popu_term" type="text">
+			<name xml:lang="ko">▼기간설정(인기글)</name>
+			<description xml:lang="ko">*기간설정 / 숫자만 입력 /예) 30 입력시 한달기준으로 인기글추출</description>
+		</var>
+	</extra_vars>
+</widget>

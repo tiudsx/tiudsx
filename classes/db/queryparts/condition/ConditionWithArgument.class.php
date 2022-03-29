@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts/condition
  * @version 0.1
  */
@@ -17,14 +17,14 @@ class ConditionWithArgument extends Condition
 	 * @param string $pipe
 	 * @return void
 	 */
-	function __construct($column_name, $argument, $operation, $pipe = "")
+	function ConditionWithArgument($column_name, $argument, $operation, $pipe = "")
 	{
 		if($argument === null)
 		{
 			$this->_show = false;
 			return;
 		}
-		parent::__construct($column_name, $argument, $operation, $pipe);
+		parent::Condition($column_name, $argument, $operation, $pipe);
 		$this->_value = $argument->getValue();
 	}
 

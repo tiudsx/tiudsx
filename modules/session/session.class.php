@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  session
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief session module's high class
  * @version 0.1
  *
@@ -13,7 +13,7 @@ class session extends ModuleObject
 	var $lifetime = 18000;
 	var $session_started = false;
 
-	function __construct()
+	function session()
 	{
 		if(Context::isInstalled()) $this->session_started= true;
 	}

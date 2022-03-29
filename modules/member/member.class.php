@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 /**
  * @class  member
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * high class of the member module
  */
 class member extends ModuleObject {
@@ -18,7 +18,7 @@ class member extends ModuleObject {
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function member()
 	{
 		if(!Context::isInstalled()) return;
 

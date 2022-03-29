@@ -25,9 +25,6 @@ class seoAdminView extends seo
 
 		Context::set('config', $config);
 		Context::set('hostname', $hostname);
-
-		$security = new Security();
-		$security->encodeHTML('setting_section');
 	}
 }
 /* !End of file */

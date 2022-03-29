@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * TablesTag class
@@ -33,7 +33,7 @@ class TablesTag
 	 * @param object $xml_index_hints_tag
 	 * @return void
 	 */
-	function __construct($xml_tables_tag, $xml_index_hints_tag = NULL)
+	function TablesTag($xml_tables_tag, $xml_index_hints_tag = NULL)
 	{
 		$this->tables = array();
 

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Models the &lt;columns&gt; tag inside an XML Query file whose action is 'select'
@@ -25,7 +25,7 @@ class SelectColumnsTag
 	 * @internal param \Xml_Node_ $xml_columns
 	 * @return void
 	 */
-	function __construct($xml_columns_tag)
+	function SelectColumnsTag($xml_columns_tag)
 	{
 		if(!$xml_columns_tag)
 		{

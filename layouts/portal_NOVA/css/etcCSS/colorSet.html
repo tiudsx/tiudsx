@@ -1,0 +1,142 @@
+<style type="text/css">
+/*레이아웃설정 컬러css변수*/
+	/*배경컬러 변경변수*/
+		.gnb1_area_wrap00, .layG_fov_start li span:hover, li.gpe_myMenu_relative>a,
+		.gpe_myMenu .titleBox, .gpe_search .search_iconbg, .tmenu1_wrap00.fixed, .tmenu1_wrap0.fixed, .gpe_sideMenu li.sleft_d_02 a.on2_active,
+		.layG_mobileM_search, .layG_mobileM_search .form_layG_mobileM_search .inputText, .layG_mobileM_search .form_layG_mobileM_search .submit{
+		/*컬러셋선택*/
+		<!--@if($layout_info->display_main_colorset_se == 'rb')-->background-color:#0cabd0;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->background-color:#39b54a;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->background-color:#2baab1;
+		<!--@elseif($layout_info->display_main_colorset_se == 'b')-->background-color:#007bd3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p')-->background-color:#6976d3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->background-color:#734ba9;
+		<!--@elseif($layout_info->display_main_colorset_se == 'y')-->background-color:#ff9000;
+		<!--@elseif($layout_info->display_main_colorset_se == 'op')-->background-color:#e36159;
+		<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->background-color:#c71c77;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->background-color:#8491af;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->background-color:#4a5b7d;
+		<!--@end-->
+		/*사용자컬러*/
+		<!--@if($layout_info->display_main_colorset_user)-->background-color:#{$layout_info->display_main_colorset_user};<!--@end-->
+		}
+
+	/*color 변수*/
+		.layG_mobileM_login li i, .layG_mobileM_menu li.mbM_sleft_d_01 .on1_active{
+		/*컬러셋선택*/
+		<!--@if($layout_info->display_main_colorset_se == 'rb')-->color:#0cabd0;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->color:#04ba1e;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->color:#2baab1;
+		<!--@elseif($layout_info->display_main_colorset_se == 'b')-->color:#007bd3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p')-->color:#6976d3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->color:#734ba9;
+		<!--@elseif($layout_info->display_main_colorset_se == 'y')-->color:#ff9000;
+		<!--@elseif($layout_info->display_main_colorset_se == 'op')-->color:#e36159;
+		<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->color:#c71c77;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->color:#8491af;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->color:#4a5b7d;
+		<!--@end-->
+		/*사용자컬러*/
+		<!--@if($layout_info->display_main_colorset_user)-->color:#{$layout_info->display_main_colorset_user};<!--@end-->
+		}
+
+	/*border 1px 변수*/
+		.gpe_munu ul.subnav_d02_m, .gpe_munu ul.subnav_d03_m, li.gpe_myMenu_relative>ul, .layG_mobileM_login{
+		/*컬러셋선택*/
+		<!--@if($layout_info->display_main_colorset_se == 'rb')-->border:1px solid #0cabd0;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->border:1px solid #04ba1e;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->border:1px solid #2baab1;
+		<!--@elseif($layout_info->display_main_colorset_se == 'b')-->border:1px solid #007bd3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p')-->border:1px solid #6976d3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->border:1px solid #734ba9;
+		<!--@elseif($layout_info->display_main_colorset_se == 'y')-->border:1px solid #ff9000;
+		<!--@elseif($layout_info->display_main_colorset_se == 'op')-->border:1px solid #e36159;
+		<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->border:1px solid #c71c77;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->border:1px solid #8491af;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->border:1px solid #4a5b7d;
+		<!--@end-->
+		/*사용자컬러*/
+		<!--@if($layout_info->display_main_colorset_user)-->border:1px solid #{$layout_info->display_main_colorset_user};<!--@end-->
+		}
+
+	/*border-top 2px 변수*/
+		.gpe_munu ul.subnav_d02_m{
+		<!--@if($layout_info->display_topmenu_type == '2')-->
+			/*컬러셋선택*/
+			<!--@if($layout_info->display_main_colorset_se == 'r')-->border-top:2px solid #ff4948;
+			<!--@elseif($layout_info->display_main_colorset_se == 'rb')-->border-top:2px solid #0cabd0;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->border-top:2px solid #04ba1e;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->border-top:2px solid #2baab1;
+			<!--@elseif($layout_info->display_main_colorset_se == 'b')-->border-top:2px solid #007bd3;
+			<!--@elseif($layout_info->display_main_colorset_se == 'p')-->border-top:2px solid #6976d3;
+			<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->border-top:2px solid #734ba9;
+			<!--@elseif($layout_info->display_main_colorset_se == 'y')-->border-top:2px solid #ff9000;
+			<!--@elseif($layout_info->display_main_colorset_se == 'op')-->border-top:2px solid #e36159;
+			<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->border-top:2px solid #c71c77;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->border-top:2px solid #8491af;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->border-top:2px solid #4a5b7d;
+			<!--@end-->
+			/*사용자컬러*/
+			<!--@if($layout_info->display_main_colorset_user)-->border-top:2px solid #{$layout_info->display_main_colorset_user};<!--@end-->
+		<!--@end-->
+		}
+
+	/*border-color 변수*/
+	.gpe_munu ul.subnav_d03_m .subnav_triang_3dep_border{
+		/*컬러셋선택*/
+		<!--@if($layout_info->display_main_colorset_se == 'rb')-->border-color:transparent #0cabd0 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->border-color:transparent #04ba1e transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->border-color:transparent #2baab1 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'b')-->border-color:transparent #007bd3 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p')-->border-color:transparent #6976d3 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->border-color:transparent #734ba9 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'y')-->border-color:transparent #ff9000 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'op')-->border-color:transparent #e36159 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->border-color:transparent #c71c77 transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->border-color:transparent #8491af transparent transparent;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->border-color:transparent #4a5b7d transparent transparent;
+		<!--@end-->
+		/*사용자컬러*/
+		<!--@if($layout_info->display_main_colorset_user)-->border-color:transparent #{$layout_info->display_main_colorset_user} transparent transparent;<!--@end-->
+	}
+
+	/*border-color 변수*/
+	.triang{
+		/*컬러셋선택*/
+		<!--@if($layout_info->display_topmenu_type == '2')-->
+			<!--@if($layout_info->display_main_colorset_se == 'r')-->border-color:transparent transparent #ff4948 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'rb')-->border-color:transparent transparent #0cabd0 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->border-color:transparent transparent #04ba1e transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->border-color:transparent transparent #2baab1 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'b')-->border-color:transparent transparent #007bd3 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'p')-->border-color:transparent transparent #6976d3 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->border-color:transparent transparent #734ba9 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'y')-->border-color:transparent transparent #ff9000 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'op')-->border-color:transparent transparent #e36159 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->border-color:transparent transparent #c71c77 transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->border-color:transparent transparent #8491af transparent;
+			<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->border-color:transparent transparent #4a5b7d transparent;
+			<!--@end-->
+			/*사용자컬러*/
+			<!--@if($layout_info->display_main_colorset_user)-->border-color:transparent transparent #{$layout_info->display_main_colorset_user} transparent;<!--@end-->
+		<!--@end-->
+	}
+
+@media all and (max-width:1024px){
+	.gnb1_area_top3typeBG{
+		<!--@if($layout_info->display_main_colorset_se == 'r')-->background-color:#ff4948;
+		<!--@elseif($layout_info->display_main_colorset_se == 'rb')-->background-color:#0cabd0;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->background-color:#39b54a;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->background-color:#2baab1;
+		<!--@elseif($layout_info->display_main_colorset_se == 'b')-->background-color:#007bd3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p')-->background-color:#6976d3;
+		<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->background-color:#734ba9;
+		<!--@elseif($layout_info->display_main_colorset_se == 'y')-->background-color:#ff9000;
+		<!--@elseif($layout_info->display_main_colorset_se == 'op')-->background-color:#e36159;
+		<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->background-color:#c71c77;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->background-color:#8491af;
+		<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->background-color:#4a5b7d;
+		<!--@end-->
+		}
+	}
+</style>

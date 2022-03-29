@@ -1,0 +1,127 @@
+/*미디어쿼리 1차(전)*/
+@media (min-width: 861px) {
+	.fixedRight {	position: fixed;	top: 40px;}
+}
+@media (min-width: 769px) and (max-width: 860px) {
+	.fixedRight {	position: fixed;	top: 2px;}
+
+}
+@media all and (max-width:769px){
+	}
+
+@media (min-width: 769px) {
+	#sidebarTmp {	left: 1034px;	display: block;text-align:left;}
+	.menu {display:none;}
+	.well {
+	  min-height: 20px;
+	  padding: 10px 6px 6px 6px;
+	  margin-bottom: 10px;
+	  background-color: white;
+	  border: 1px solid #e3e3e3;
+	  border-radius: 4px;
+	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+			  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+	}
+	.resbottom {display:none;}
+}
+
+/*넓이 1024px이하[~아이패드+유사device]*/
+@media all and (max-width:1024px){
+	}
+
+/*넓이 979px이하*/
+@media all and (max-width:979px){
+	}
+
+/*넓이 860px이하*/
+@media all and (max-width:860px){
+	/*공통 box-sizing*/
+	.aaaaa{-webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box;}
+	.layG_fov_start, .scban_wrap, .scban_wrap2, .gpe_levelpoint, .gpe_login, .gpe_lang, .gpe_search_btn, .gpe_search, .tmenu1_wrap00,
+	.gnb1_area_top2typeBG, .con_left_line, .con_right_line, .gpe_side_contents_L, .gpe_side_contents_R, .gpe_pm_conban, .gpe_pm_conban_num1, .gpe_pm_conban_code,
+	.openmenu_wrap00, #top_proban_wrap00, .top_proban_wrap0, #gpe_divpop2{display:none;} /*#gpe_divpop1, */
+	.gnb1_area_wrap00{padding:0 20px;}
+	.gnb1_area_wrap0{height:39px; width:100% !important;}
+	.gpe_allcon_wrap0, .gpe_contents_box{width:100% !important; padding:0 !important;}
+	.gpe_allcon_wrap0{margin-top:0;}
+	.gpe_contents{padding:10px 5px 0 5px;}
+	.gpe_contents_xecon div.nova_img img{width:100% !important; height:auto !important;}
+	.layG_munu_MobileBtn{display:block;}
+	.footer_Util_wrap0{width:100% !important;}
+	.xe-widget-wrapper{width:100% !important;}
+	.gpe_movetop{top:50%;}
+	}
+
+/*넓이 768px이하[~아이패드+유사device]*/
+@media all and (max-width:768px){
+	/*.notice_MQarea{display:block;}*/
+	.menu {position:fixed;left:3px;bottom:0px;width: 95%;text-align: center;}
+	.wellBtn {
+	  min-height: 20px;
+	  padding: 10px 6px 6px 6px;
+	  margin-bottom: 2px;
+	  background-color: white;
+	  border: 1px solid #e3e3e3;
+	  border-radius: 4px;
+	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+			  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+	}
+	#sidebarTmp{display:none;}
+	.well {
+	  min-height: 20px;
+	  padding: 10px 6px 6px 6px;
+	  margin-bottom: 0px;
+	  background-color: white;
+	  border: 1px solid #e3e3e3;
+	  border-radius: 4px;
+	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+			  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+	}
+	.spanresinfo{display:none;}
+
+	.resbottom {background: #FFFFFF;border-radius: 3rem;box-shadow: 0 0.2rem 0.6rem 0 rgba(0,0,0,0.2);display: inline-block;margin: 0 auto 0.5rem auto;max-width: 70%;overflow: hidden;padding: 0 0.2rem;text-align: center;}
+
+	.resoff {display:none;}
+	.reson, .resoff {background: #FFFFFF;border: none;padding: 6px 10px 10px 10px;position: relative;}
+	.reson > span, .resoff > span {color: #247B9F;font-size: 1.0rem;font-weight: bold;vertical-align: middle;}
+	}
+
+/*넓이 707px이하[~갤탭기준+유사device]*/
+/*@media all and (max-width:707px){
+	.notice_MQarea{display:block;}
+	.gnb1_area_botline{display:none;}
+	.gpe_location_area{display:none;}
+	}
+*/
+@media all and (max-width:707px){
+	.gnb1_area_botline{display:none;}
+	.gpe_location_area{display:none;}
+	.gpe_contents_title{display:none;}
+	}
+
+/*넓이 480px이하[~아이폰3,4+유사device]*/
+@media all and (max-width:480px){
+	.gpe_utilMenu, .gpe_copytxt{text-align:center; padding-left:20px; padding-right:20px;}
+	.footer_Util_wrap0{padding-top:18px;}
+	.gpe_utilMenu>ul li:first-child{padding-left:0;}
+	.gpe_utilMenu>ul li{display:inline-block; padding:0 10px 0 10px;}
+	}
+/*
+하단 세로줄
+	.gpe_utilMenu>ul li{display:inline-block; padding:0 10px 3px 0; border-left:0;}
+*/
+
+/*넓이 479px이하[~아이폰3,4+유사device]*/
+@media all and (max-width:479px){
+	}
+
+@media (min-width: 769px) {
+	.gpe_googlead{display:none;}
+	.gpe_googleadtop{display:none;}
+}
+
+/*모바일메뉴 넓이 미디어쿼리*/
+@media all and (max-width:979px){.layG_mobileM_G{width:40%;}}
+@media all and (max-width:768px){.layG_mobileM_G{width:50%;}}
+@media all and (max-width:707px){.layG_mobileM_G{width:60%;}}
+@media all and (max-width:480px){.layG_mobileM_G{width:70%;}}

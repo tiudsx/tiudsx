@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * LimitTag class
@@ -46,7 +46,7 @@ class LimitTag
 	 * @param object $index
 	 * @return void
 	 */
-	function __construct($index)
+	function LimitTag($index)
 	{
 		if($index->page && $index->page->attrs && $index->page_count && $index->page_count->attrs)
 		{

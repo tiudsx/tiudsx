@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * ConditionArgument class
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml/xmlquery/argument
  * @version 0.1
  */
@@ -23,7 +23,7 @@ class ConditionArgument extends Argument
 	 * @param string $operation
 	 * @return void
 	 */
-	function __construct($name, $value, $operation)
+	function ConditionArgument($name, $value, $operation)
 	{
 		$operationList = array('in' => 1, 'notin' => 1, 'not_in' => 1, 'between' => 1);
 		if(isset($value) && isset($operationList[$operation]) && !is_array($value) && $value != '')
@@ -32,7 +32,7 @@ class ConditionArgument extends Argument
 			$value = str_replace('\'', '', $value);
 			$value = explode(',', $value);
 		}
-		parent::__construct($name, $value);
+		parent::Argument($name, $value);
 		$this->operation = $operation;
 	}
 

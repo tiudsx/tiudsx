@@ -1,0 +1,77 @@
+<!--포탈MAX_로그인위젯스킨-->
+<!--고객센터: http://simpleeye.ivyro.net/xe/gdesign_sub_qna-->
+<!--저작권: 개발코드(css+html)및 디자인도용, 소스재판매는 xe마켓 지적저작권법에 반드시 처벌받으니 이점유의하시기 바랍니다.-->
+<!--라이선스: 1도메인(1웹사이트) 1라이선스 입니다.-->
+
+<!--%import("css/LoginWidget.css")-->
+<!--%import("filter/logout.xml")-->
+{@
+	$oPointModel = &getModel('point');
+	$point = $oPointModel->getPoint($logged_info->member_srl);
+
+	$oModuleModel = &getModel('module');
+	$config = $oModuleModel->getModuleConfig('point');
+	$level = $oPointModel->getLevel($point, $config->level_step);
+
+	$logged_info = Context::get('logged_info');
+	$args->receiver_srl = $logged_info->member_srl;
+	$args->readed = 'N';
+	$args->message_type = 'R';
+	$args->list_count = 9999;
+	$output = executeQuery('communication.getNewMessage', $args); 
+}
+<div class="GPE_login_area" style="	
+<!--@if($layout_info->display_backimg_se == 'color' or $layout_info->display_backimg_se == 'img' or $layout_info->display_backimg_se == 'colorimg')-->border-right:1px solid #e6e6e6;
+<!--@if($layout_info->display_conten_sidebox_RL == 'L')-->border-right:0; border-left:1px solid #e6e6e6;<!--@end-->
+<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+	<!--@if($layout_info->display_conten_sideLogin_LR == 'L')-->
+	border-right:0; border-left:1px solid #e6e6e6;
+	<!--@else-->
+	border-right:1px solid #e6e6e6;
+	<!--@end-->
+<!--@end-->
+<!--@end-->
+">
+	<form action="" method="post" class="formGPE_login">
+		<fieldset>
+			<!--닉네임-->
+			<div class="userName">
+				<span>{$logged_info->nick_name}</span><span style="margin-left:-2px;"> 님 반갑습니다.</span>
+			</div>
+			<!--//닉네임-->
+			<!--레벨+포인트+관리그룹-->
+			<div class="userMenu">
+				<ul>
+					<li class="umL"><p class="umL_Tahoma" style="color:#f53144;">{$level}</p><p class="L">레벨</p></li>
+					<li class="umP"><p class="umL_Tahoma" style="color:#00a6d4;">{$point}</p><p class="P">포인트</p></li>
+					<li class="umA"><p class="umL_Tahoma"><a href="{getUrl('act',dispCommunicationMessages,'member_srl','')}" style="font-family:Tahoma,Sans-serif; color:#00a6d4; font-size:14px; font-weight:bold;">{$new_messages_count = count($output->data)}</a></p><p class="M">메시지</p></li>
+				</ul>
+			</div>
+			<!--//레벨+포인트+관리그룹-->
+			<!--회원정보+로그아웃-->
+			<div class="userInfo">
+				<ul>
+					<li><a href="{getUrl('act','dispMemberInfo','member_srl','')}" class="uiM">회원정보</a></li>
+					<li style="padding-left:6px; *padding-left:2px;"><a href="{getUrl('act','dispMemberLogout')}" class="uiO">로그아웃</a></li>
+					<ul>
+						<li><!--@if($logged_info->is_admin=='Y')--><a href="{getUrl('','module','admin')}" class="uiC" target="_blank"></a><!--@end--></li>
+					</ul>
+				</ul>
+				<!--회원정보 레이어-->
+				<div class="memProfileCon">
+					<div style="position:relative; display:none;"><div class="triang_border" style="border-color:#333 transparent transparent transparent; top:53px; left:37px;"></div><div class="triang" style="border-color:#fff transparent transparent transparent; top:52px; left:37px;"></div></div><!--삼각형-->		
+					<ul>
+						<!--@foreach($logged_info->menu_list as $key => $val)-->
+						<li>
+							<a href="<!--@if($layout_info->default_page)-->{getUrl('act',$key,'member_srl','','mid',$layout_info->default_page)}<!--@else-->{getUrl('act',$key,'member_srl','')}<!--@end-->">· {Context::getLang($val)}</a>
+						</li>
+						<!--@end-->
+					</ul>
+					<span class="close" onclick="jQuery('.memProfileCon').fadeToggle();" style="display:none;"></span>
+				</div>
+				<!--//회원정보 레이어-->
+			</div>
+			<!--//회원정보+로그아웃-->
+		</fieldset>
+	</form>
+</div>

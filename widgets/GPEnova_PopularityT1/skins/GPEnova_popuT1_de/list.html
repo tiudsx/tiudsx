@@ -1,0 +1,65 @@
+<!--%import("css/default.css")-->
+<!--사용자 컬러만 스타일뺏음-->
+<style type="text/css">
+.gpe_wgPopular.colorUser li.active .wgP_title{color:#{$layout_info->display_main_colorset_user};}
+</style>
+<!--//사용자 컬러만 스타일뺏음-->
+<div class="
+gpe_wgPopularT1 <!--@if($widget_info->popu_tapcolor == 'layout')-->
+/*레이아웃 컬러셋선택*/
+<!--@if($layout_info->display_main_colorset_se == 'rb')-->rb
+<!--@elseif($layout_info->display_main_colorset_se == 'r')-->r
+<!--@elseif($layout_info->display_main_colorset_se == 'gn')-->gn
+<!--@elseif($layout_info->display_main_colorset_se == 'gn_p')-->gn_p
+<!--@elseif($layout_info->display_main_colorset_se == 'b')-->b
+<!--@elseif($layout_info->display_main_colorset_se == 'p')-->p
+<!--@elseif($layout_info->display_main_colorset_se == 'p_d')-->p_d
+<!--@elseif($layout_info->display_main_colorset_se == 'y')-->y
+<!--@elseif($layout_info->display_main_colorset_se == 'op')-->op
+<!--@elseif($layout_info->display_main_colorset_se == 'cp')-->cp
+<!--@elseif($layout_info->display_main_colorset_se == 'gy')-->gy
+<!--@elseif($layout_info->display_main_colorset_se == 'gy_d')-->gy_d
+<!--@end-->
+/*레이아웃 사용자컬러*/
+<!--@if($layout_info->display_main_colorset_user)-->colorUser<!--@end-->
+<!--@else-->
+<!--@if($widget_info->popu_tapcolor == 'rb')-->rb
+<!--@elseif($widget_info->popu_tapcolor == 'r')-->r
+<!--@elseif($widget_info->popu_tapcolor == 'gn')-->gn
+<!--@elseif($widget_info->popu_tapcolor == 'gn_p')-->gn_p
+<!--@elseif($widget_info->popu_tapcolor == 'b')-->b
+<!--@elseif($widget_info->popu_tapcolor == 'p')-->p
+<!--@elseif($widget_info->popu_tapcolor == 'p_d')-->p_d
+<!--@elseif($widget_info->popu_tapcolor == 'y')-->y
+<!--@elseif($widget_info->popu_tapcolor == 'op')-->op
+<!--@elseif($widget_info->popu_tapcolor == 'cp')-->cp
+<!--@elseif($widget_info->popu_tapcolor == 'gy')-->gy
+<!--@elseif($widget_info->popu_tapcolor == 'gy_d')-->gy_d
+<!--@elseif($widget_info->popu_tapcolor == 'bk')-->bk
+<!--@end-->
+<!--@end-->">
+	<span class="gpe_wgPoTapbg2"></span>
+	<ul style="<!--@if($widget_info->popu_height)-->height:{$widget_info->popu_height}px;<!--@else-->height:242px;<!--@end-->">
+	<!--@if($widget_info->popu_tapstep == '01')-->
+		<include target="inc/popular_dom.html"/><!--popular-->
+		<include target="inc/newest_dom.html"/><!--newest-->
+		<include target="inc/newest_com.html"/><!--comments-->
+	<!--@elseif($widget_info->popu_tapstep == '02')-->
+		<include target="inc/newest_dom.html"/><!--newest-->
+		<include target="inc/popular_dom.html"/><!--popular-->
+		<include target="inc/newest_com.html"/><!--comments-->
+	<!--@elseif($widget_info->popu_tapstep == '03')-->
+		<include target="inc/newest_com.html"/><!--comments-->
+		<include target="inc/newest_dom.html"/><!--newest-->
+		<include target="inc/popular_dom.html"/><!--popular-->
+	<!--@elseif($widget_info->popu_tapstep == '04')-->
+		<include target="inc/popular_dom.html"/><!--popular-->
+	<!--@elseif($widget_info->popu_tapstep == '05')-->
+		<include target="inc/newest_dom.html"/><!--newest-->
+	<!--@elseif($widget_info->popu_tapstep == '06')-->
+		<include target="inc/newest_com.html"/><!--comments-->
+	<!--@end-->
+	</ul>
+	<span class="gpe_wgPoTapbg"></span>
+	<span class="gpe_wgPoTapbg3"></span>
+</div>

@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * A class to handle extra variables used in posts, member and others
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class ExtraVar
 {
@@ -38,7 +38,7 @@ class ExtraVar
 	 * @param int $module_srl Sequence of module
 	 * @return void
 	 */
-	function __construct($module_srl)
+	function ExtraVar($module_srl)
 	{
 		$this->module_srl = $module_srl;
 	}
@@ -78,7 +78,7 @@ class ExtraVar
 /**
  * Each value of the extra vars
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class ExtraItem
 {
@@ -157,7 +157,7 @@ class ExtraItem
 	 * @param string $eid Unique id of extra variable in module
 	 * @return void
 	 */
-	function __construct($module_srl, $idx, $name, $type = 'text', $default = null, $desc = '', $is_required = 'N', $search = 'N', $value = null, $eid = '')
+	function ExtraItem($module_srl, $idx, $name, $type = 'text', $default = null, $desc = '', $is_required = 'N', $search = 'N', $value = null, $eid = '')
 	{
 		if(!$idx)
 		{
@@ -209,7 +209,7 @@ class ExtraItem
 				{
 					$value = 'http://' . $value;
 				}
-				return escape($value, false);
+				return htmlspecialchars($value, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 
 			case 'tel' :
 				if(is_array($value))
@@ -228,7 +228,7 @@ class ExtraItem
 				$values = array_values($values);
 				for($i = 0, $c = count($values); $i < $c; $i++)
 				{
-					$values[$i] = trim(escape($values[$i], false));
+					$values[$i] = trim(htmlspecialchars($values[$i], ENT_COMPAT | ENT_HTML401, 'UTF-8', false));
 				}
 				return $values;
 
@@ -255,7 +255,7 @@ class ExtraItem
 				$values = array_values($values);
 				for($i = 0, $c = count($values); $i < $c; $i++)
 				{
-					$values[$i] = trim(escape($values[$i], false));
+					$values[$i] = trim(htmlspecialchars($values[$i], ENT_COMPAT | ENT_HTML401, 'UTF-8', false));
 				}
 				return $values;
 
@@ -276,7 +276,7 @@ class ExtraItem
 				$values = array_values($values);
 				for($i = 0, $c = count($values); $i < $c; $i++)
 				{
-					$values[$i] = trim(escape($values[$i], false));
+					$values[$i] = trim(htmlspecialchars($values[$i], ENT_COMPAT | ENT_HTML401, 'UTF-8', false));
 				}
 				return $values;
 
@@ -285,7 +285,7 @@ class ExtraItem
 			//case 'text' :
 			//case 'textarea' :
 			default :
-				return escape($value, false);
+				return htmlspecialchars($value, ENT_COMPAT | ENT_HTML401, 'UTF-8', false);
 		}
 	}
 
@@ -311,10 +311,10 @@ class ExtraItem
 		switch($this->type)
 		{
 			case 'homepage' :
-				return ($value) ? (sprintf('<a href="%s" target="_blank">%s</a>', escape($value, false), strlen($value) > 60 ? substr($value, 0, 40) . '...' . substr($value, -10) : $value)) : "";
+				return ($value) ? (sprintf('<a href="%s" target="_blank">%s</a>', $value, strlen($value) > 60 ? substr($value, 0, 40) . '...' . substr($value, -10) : $value)) : "";
 
 			case 'email_address' :
-				return ($value) ? sprintf('<a href="mailto:%s">%s</a>', escape($value, false), $value) : "";
+				return ($value) ? sprintf('<a href="mailto:%s">%s</a>', $value, $value) : "";
 
 			case 'tel' :
 				return sprintf('%s-%s-%s', $value[0], $value[1], $value[2]);
@@ -451,7 +451,6 @@ class ExtraItem
 				$buff[] =	'  };';
 				$buff[] =	'  $.extend(option,$.datepicker.regional[\'' . Context::getLangType() . '\']);';
 				$buff[] =	'  $("#date_' . $column_name . '").datepicker(option);';
-				$buff[] =	'  $("#date_' . $column_name . '").datepicker("option", "dateFormat", "yy-mm-dd");';
 				$buff[] =	'  $("#dateRemover_' . $column_name . '").click(function(){';
 				$buff[] =	'    $(this).siblings("input").val("");';
 				$buff[] =	'    return false;';

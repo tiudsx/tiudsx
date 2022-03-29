@@ -1,10 +1,10 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * XmlLangParser class
  * Change to lang php file from xml.
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/xml
  * @version 0.1
  */
@@ -53,7 +53,7 @@ class XmlLangParser extends XmlParser
 	 * @param string $lang_type
 	 * @return void
 	 */
-	function __construct($xml_file, $lang_type)
+	function XmlLangParser($xml_file, $lang_type)
 	{
 		$this->lang_type = $lang_type;
 		$this->xml_file = $xml_file;

@@ -1,0 +1,25 @@
+@charset "utf-8";
+/*공통*/
+.gpe_wgPointDIV{position:relative; margin-top:-6px; zoom:1;}
+.gpe_wgPoint{width:100%; font-size:13px; zoom:1;}/*리스트 패딩값*/
+.gpe_wgPoint tr.wgP_listGroup:hover{background-color:#f3f3f3;}
+.gpe_wgPoint tr.wgP_listGroup:first-child{font-weight:700;}
+.gpe_wgPoint tr.wgP_listGroup:first-child td.TextBold, .gpe_wgPoint tr.wgP_listGroup:first-child td.Pcolor{color:#333;}
+.gpe_wgPoint td,th{border:0; line-height:24px; color:#5c5c5c; white-space:nowrap; vertical-align:top;}
+.gpe_wgPoint th{text-align:left;}
+.gpe_wgPoint p{margin:0; padding:0;}
+.gpe_wgPoint a{text-decoration:none; font-size:12px; line-height:21px;}
+.gpe_wgPoint a:hover{text-decoration:underline;}
+/*리스트*/
+.gpe_wgPoint th.title{width:36px;}
+.gpe_wgPoint th.nick{}
+.gpe_wgPoint th.point{}
+.gpe_wgPoint th.red{color:#f53144; font-weight:700;}/*타이틀 컬러*/
+.gpe_wgPoint th.TextRight, td.TextRight{text-align:right;}
+.gpe_wgPoint td.Ncolor{}
+.gpe_wgPoint td.Pcolor{}
+.gpe_wgPoint td.TextBold:hover{color:#333; font-weight:700;}
+/*1,2,3등 컬러*/
+.gpe_wgPoint td.wgp_num01{color:#f53144; font-weight:700;}
+.gpe_wgPoint td.wgp_num02{color:#00a6d4; font-weight:700;}
+.gpe_wgPoint td.wgp_num03{color:#333; font-weight:700;}

@@ -7,10 +7,23 @@
 <!DOCTYPE html>
 <html lang="{str_replace('jp','ja',$lang_type)}" class="xe-mobilelayout">
 <head>
+<meta name="naver-site-verification" content="28d65eb0b6e22ed8595b256f8510cd30d3fa8317"/>
+
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+
+<meta name="title" content="액트립 엑트립 서핑 서핑강습 서퍼 동해 양양셔틀버스 죽도캠핑장 남해 서해 제주도 양양 부산 송정 죽도 기사문 서프엔조이 서핑버스 죽도야영장">
+<meta name="keywords" content="액트립,엑트립,양양 서핑,양양서핑,서핑,서퍼,캠핑,캠핑장,죽도캠핑장,동해,남해,서해,제주도,양양,죽도,부산,송정,기사문,남애,서핑대회,서퍼스,파도,바다,서프엔조이,서핑강습,서핑배우기,서핑초보,서핑버스">
+<meta name="description" content="대한민국 액티비티는 액트립!! 양양서핑,서핑버스,서핑배우기,서핑초보,서핑강습,서핑예약,캠핑장,죽도캠핑장,서핑동호회">
+
+<meta property="og:image" content="https://surfenjoy.cdn3.cafe24.com/logo/logo500.jpg">
+<meta property="og:description" content="액트립 - 대한민국 액티비티 No.1" />
+
 <!--// TITLE -->
-<title>{Context::getBrowserTitle()}</title>
+<title>액티비티는 액트립</title>
+<!--title>{$lang->msg_titlesite}</title-->
+<!--title>{Context::getBrowserTitle()}</title-->
 <!-- CSS -->
 <block loop="$css_files=>$key,$css_file">
 <block cond="$css_file['targetie']"><!--[if {$css_file['targetie']}]><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--></block></block>
@@ -18,18 +31,6 @@
 <block cond="$css_file['targetie']"><block cond="stripos($css_file['targetie'], 'gt') === 0"><!--</block><![endif]--></block>
 </block>
 <!-- JS -->
-<script>
-var current_url = "{$current_url|noescape}";
-var request_uri = "{$request_uri|noescape}";
-<block cond="$vid">var xeVid = "{$vid}";</block>
-var current_mid = "{$mid}";
-var waiting_message = "{$lang->msg_call_server}";
-var ssl_actions = new Array(<block cond="count($ssl_actions)">"{implode('","',array_keys($ssl_actions))}"</block>);
-var default_url = "{Context::getDefaultUrl()|noescape}";
-<block cond="Context::get('_http_port')">var http_port = {Context::get("_http_port")};</block>
-<block cond="Context::get('_https_port')">var https_port = {Context::get("_https_port")};</block>
-<block cond="Context::get('_use_ssl') && Context::get('_use_ssl') == 'always'">var enforce_ssl = true;</block>
-</script>
 <block loop="$js_files=>$key,$js_file">
 <block cond="$js_file['targetie']"><!--[if {$js_file['targetie']}]><block cond="stripos($js_file['targetie'], 'gt') === 0"><!--></block></block>
 <script src="{$js_file['file']}"></script>
@@ -47,15 +48,45 @@ var default_url = "{Context::getDefaultUrl()|noescape}";
 <!--@end-->
 
 <!--// ICON-->
-<link cond="$favicon_url" rel="shortcut icon" href="{$favicon_url}" />
-<link cond="$mobicon_url" rel="apple-touch-icon" href="{$mobicon_url}" />
-{Context::getHtmlHeader()|noescape}
-</head>
+<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+<link rel="manifest" href="/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
 
+{Context::getHtmlHeader()}
+<script>
+var $j = jQuery.noConflict();
+//<![CDATA[
+var current_url = "{$current_url}";
+var request_uri = "{$request_uri}";
+<block cond="$vid">var xeVid = "{$vid}";</block>
+var current_mid = "{$mid}";
+var waiting_message = "{$lang->msg_call_server}";
+var ssl_actions = new Array(<!--@if(count($ssl_actions))-->"{implode('","',array_keys($ssl_actions))}"<!--@end-->);
+var default_url = "{Context::getDefaultUrl()}";
+<block cond="Context::get('_http_port')">var http_port = {Context::get("_http_port")};</block>
+<block cond="Context::get('_https_port')">var https_port = {Context::get("_https_port")};</block>
+<block cond="Context::get('_use_ssl') && Context::get('_use_ssl') == 'always'">var enforce_ssl = true;</block>
+//]]>
+</script>
+</head>
 <body{Context::getBodyClass()}>
-{Context::getBodyHeader()|noescape}
-{$content|noescape}
-{Context::getHtmlFooter()|noescape}
+{Context::getBodyHeader()}
+{$content}
+{Context::getHtmlFooter()}
 
 <!--// ETC -->
 {@ $js_body_files = Context::getJsFile('body') }
@@ -64,5 +95,13 @@ var default_url = "{Context::getDefaultUrl()|noescape}";
 	<script src="{$js_file['file']}"></script>
 	<!--@if($js_file['targetie'])--><![endif]--><!--@end-->
 <!--@end-->
+
+ 
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script> 
+<script type="text/javascript"> 
+	if(!wcs_add) var wcs_add = {}; 
+	wcs_add["wa"] = "9353be5d457330"; 
+	wcs_do(); 
+</script>
 </body>
 </html>

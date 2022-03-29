@@ -1,0 +1,20 @@
+<style type="text/css">
+	.gpe_allcon_wrap0{
+	<!--@if($layout_info->display_backimg_se == 'color' or $layout_info->display_backimg_se == 'img' or $layout_info->display_backimg_se == 'colorimg')-->
+	margin-top:0; padding:10px 10px 0 10px; -moz-box-shadow:4px 4px 6px rgba(0,0,0,0.1); -webkit-box-shadow:4px 4px 6px rgba(0,0,0,0.1); box-shadow:0 0 6px rgba(0,0,0,0.1);
+	<!--@end-->
+	}
+</style>
+<!--@if($layout_info->display_backimg_se == 'color')--><!--배경컬러-->
+	<script>
+	document.body.style.background="#{$layout_info->display_backcolor}";
+	</script>
+<!--@elseif($layout_info->display_backimg_se == 'img')--><!--배경이미지-->
+	<script>
+	document.body.style.background="url('{$layout_info->display_backimg}') <!--@if($layout_info->display_backimg_xy != 'no')-->repeat left top<!--@else-->no-repeat center top<!--@end--><!--@if($layout_info->display_backimg_fix == 'yes')--> fixed<!--@end-->";
+	</script>
+<!--@elseif($layout_info->display_backimg_se == 'colorimg')--><!--배경이미지+컬러-->
+	<script>
+	document.body.style.background="#{$layout_info->display_backcolor} url('{$layout_info->display_backimg}') <!--@if($layout_info->display_backimg_xy != 'no')-->repeat left top<!--@else-->no-repeat center top<!--@end--><!--@if($layout_info->display_backimg_fix == 'yes')--> fixed<!--@end-->";
+	</script>
+<!--@end-->

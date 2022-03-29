@@ -1,0 +1,86 @@
+<!--@if($layout_info->display_top_login != 'tl_no')-->
+<style type="text/css">
+	.gpe_login{
+		<!--@if($layout_info->display_top_lang == 'L_no')-->right:5px;<!--@end-->
+	}
+	<!--@if($layout_info->display_topmenu_type == '2')-->
+	.triang.top2t{
+		border-color:transparent transparent #fff transparent;
+	}
+	<!--@end-->
+</style>	
+<div class="gpe_login">
+	<ul>
+<!--쇼셜로그인-->	
+		<li cond="$layout_info->display_top_login_sns == 'tl_yes'">
+			<!--@if($is_logged)-->
+			<span class="sns_space"></span>
+			<!--@else-->
+			<a href="{getUrl('act','dispMemberLoginForm')}" class="gpe_sns"><!--@if($lang_type=='ko')-->쇼셜로그인<!--@elseif($lang_type=='en')--><span style="letter-spacing:-0.05em;">SNS</span><!--@end--></a>
+			<span class="m_space_login"></span>
+			<!--@end-->
+		</li>
+<!--//쇼셜로그인-->	
+<!--로그인-->	
+		<li>
+			<!--@if($is_logged)-->
+			<a href="{getUrl('act','dispMemberLogout')}"><!--@if($lang_type=='ko')-->로그아웃<!--@elseif($lang_type=='en')--><span style="letter-spacing:-0.08em;">LOGOUT</span><!--@end--></a>
+			<span class="m_space_login"></span>
+			<!--@else-->
+				<!--@if($layout_info->display_main_login_se == '01')-->							
+				<a href="#" onclick="jQuery('#go_login_skin').fadeToggle();"><!--@if($lang_type=='ko')-->로그인<!--@elseif($lang_type=='en')--><span style="letter-spacing:-0.05em;">LOGIN</span><!--@end--></a>
+				<!--@else-->
+				<a href="{getUrl('act','dispMemberLoginForm')}" accesskey="L"><!--@if($lang_type=='ko')-->로그인<!--@elseif($lang_type=='en')--><span style="letter-spacing:-0.08em;">LOGIN</span><!--@end--></a>
+				<!--@end-->	
+			<span class="m_space_login"></span>
+			<!--@end-->					
+		</li>
+<!--//로그인-->	
+<!--회원가입-->	
+		<!--@if(!$is_logged)-->
+		<li style="display:none;">
+			<a href="{getUrl('act','dispMemberSignUpForm')}"><span><!--@if($lang_type=='ko')--><b>회원가입</b><!--@elseif($lang_type=='en')--><span style="letter-spacing:-0.05em;"><b>JOIN</b></span><!--@end--></span></a>
+		</li>
+		<!--@else-->
+		<li class="profile">
+			<!--@if($logged_info->is_admin == 'Y')-->
+			<a onclick="jQuery('.memProfile').fadeToggle();" style="cursor:pointer;"><b>회원정보</b></a>
+			<!--@else-->
+			<a href="{getUrl('act','dispMemberInfo')}" style="cursor:pointer;"><b>회원정보</b></a>
+			<!--@end-->
+			
+			
+			<!--회원정보 레이어-->
+			<div class="memProfile">
+				<div style="position:relative;"><span class="triang_border" style="top:-16px; right:13px;"></span><span class="triang 	<!--@if($layout_info->display_topmenu_type == '2')-->top2t<!--@end-->" style="top:-15px; right:13px;"></span></div><!--삼각형-->
+				<div>
+					<span class="authorName">{$logged_info->nick_name}</span>
+				</div>			
+				<ul>
+					<!--@foreach($logged_info->menu_list as $key => $val)-->
+					 <li>
+						<a href="<!--@if($layout_info->default_page)-->{getUrl('act',$key,'member_srl','','mid',$layout_info->default_page)}<!--@else-->{getUrl('act',$key,'member_srl','')}<!--@end-->">{Context::getLang($val)}</a>
+					 </li>
+					<!--@end-->
+					<!--@if($logged_info->is_admin == 'Y')-->
+					<li><a href="{getUrl('','module','admin')}" target="_blank">{$lang->cmd_management}</a></li>
+					<!--@end-->
+				</ul>
+				<span class="close" onclick="jQuery('.memProfile').fadeToggle();"></span>
+			</div>
+			<!--//회원정보 레이어-->
+		</li>
+		<!--@end-->
+		<li style="padding-left:12px;margin-top:-5px;">
+			<a href="https://www.instagram.com/surfenjoy.sc" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/icon/top_sns01.png?v=1"></a>
+		</li>
+		<li style="padding-left:4px;margin-top:-5px;">
+			<a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/icon/kakako.png?v=1" style="width: 32px; height: 29px;"></a>
+		</li>
+		<li style="padding-left:4px;margin-top:-5px;">
+			<a href="https://blog.naver.com/surfenjoy" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/icon/top_sns03.png?v=1"></a>
+		</li>
+<!--//회원가입-->	
+	</ul>
+</div>
+<!--@end-->

@@ -1,8 +1,8 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db/queryparts
  * @version 0.1
  */
@@ -94,7 +94,7 @@ class Query extends BaseObject
 	 * @param string $priority
 	 * @return void
 	 */
-	function __construct($queryID = NULL
+	function Query($queryID = NULL
 	, $action = NULL
 	, $columns = NULL
 	, $tables = NULL

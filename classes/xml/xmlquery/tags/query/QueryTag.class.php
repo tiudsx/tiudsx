@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * QueryTag class
@@ -119,7 +119,7 @@ class QueryTag
 	 * @param bool $isSubQuery
 	 * @return void
 	 */
-	function __construct($query, $isSubQuery = FALSE)
+	function QueryTag($query, $isSubQuery = FALSE)
 	{
 		$this->action = $query->attrs->action;
 		$this->query_id = $query->attrs->id;

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 require_once('DBMysql.class.php');
 
@@ -9,7 +9,7 @@ require_once('DBMysql.class.php');
  *
  * Does not use prepared statements, since mysql driver does not support them
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @package /classes/db
  * @version 0.1
  */
@@ -20,7 +20,7 @@ class DBMysqli extends DBMysql
 	 * Constructor
 	 * @return void
 	 */
-	function __construct($auto_connect = TRUE)
+	function DBMysqli($auto_connect = TRUE)
 	{
 		$this->_setDBInfo();
 		if($auto_connect) $this->_connect();

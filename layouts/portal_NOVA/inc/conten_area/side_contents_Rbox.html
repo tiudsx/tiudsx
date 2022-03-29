@@ -1,0 +1,55 @@
+<style type="text/css">
+.gpe_side_contents_R{
+	width:{$layout_info->display_conten_Wsize_Rcustom}px;
+	}
+.gpe_side_contents_R .paddSide{
+	<!--@if($layout_info->display_backimg_se == 'color' or $layout_info->display_backimg_se == 'img' or $layout_info->display_backimg_se == 'colorimg')-->
+	padding-right:0;
+	<!--@end-->
+	}
+</style>
+<!--SIDE 컨텐츠(우측)-->
+<!--@if($layout_info->display_conten_sidebox_RL != 'L' or $layout_info->display_conten_sidebox_RL == 'LR')-->
+<div class="gpe_side_contents_R">
+	<!--로그인-->
+	<!--@if($layout_info->display_conten_sideLogin != 'no')-->
+		<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+			<!--@if($layout_info->display_conten_sideLogin_LR != 'L')--><div><img class="zbxe_widget_output" widget="login_info" skin="gpeNOVA_login_de"/></div><!--@end-->
+		<!--@elseif($layout_info->display_conten_sidebox_RL != 'LR' or $layout_info->display_conten_sidebox_RL != 'L')-->
+			<div><img class="zbxe_widget_output" widget="login_info" skin="gpeNOVA_login_de"/></div>
+		<!--@end-->
+	<!--@end-->
+	<!--사이드메뉴-->
+	<!--@if($layout_info->display_conten_sidemenu != 'no')-->
+		<!--@if($layout_info->display_conten == 's_dan2')-->
+			<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+				<!--@if($layout_info->display_conten_sidemenu_LR != 'L')--><div><include target="./side_menu.html"/></div><!--@end-->
+			<!--@elseif($layout_info->display_conten_sidebox_RL != 'LR' or $layout_info->display_conten_sidebox_RL != 'L')-->
+				<div><include target="./side_menu.html"/></div>
+			<!--@end-->
+		<!--@end-->
+	<!--@end-->
+	<!--공지사항-->	
+	<!--@if($layout_info->display_conten_sideNotice != 'no')-->
+		<!--@if($layout_info->display_conten_sidebox_RL == 'LR')-->
+			<!--@if($layout_info->display_conten_sideNotice_LR != 'L')--><div class="paddSide"><include target="./side_notice.html"/></div><!--@end-->
+		<!--@elseif($layout_info->display_conten_sidebox_RL != 'LR' or $layout_info->display_conten_sidebox_RL != 'L')-->
+			<div class="paddSide"><include target="./side_notice.html"/></div>
+		<!--@end-->
+	<!--@end-->
+	<!--사이드배너-->	
+	<div><include target="../banner_area/ban_sideR.html"/></div>
+	<!--위젯코드1-10번-->	
+	<div class="paddSide <!--@if($layout_info->side_01_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_01_wgHtml">{$layout_info->side_01_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_02_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_02_wgHtml">{$layout_info->side_02_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_03_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_03_wgHtml">{$layout_info->side_03_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_04_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_04_wgHtml">{$layout_info->side_04_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_05_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_05_wgHtml">{$layout_info->side_05_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_06_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_06_wgHtml">{$layout_info->side_06_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_07_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_07_wgHtml">{$layout_info->side_07_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_08_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_08_wgHtml">{$layout_info->side_08_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_09_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_09_wgHtml">{$layout_info->side_09_wgHtml}</div>
+	<div class="paddSide <!--@if($layout_info->side_10_wgHtml)-->boderB1px<!--@end-->" cond="$layout_info->side_10_wgHtml">{$layout_info->side_10_wgHtml}</div>
+</div>
+<!--@end-->
+<!--//SIDE 컨텐츠(우측)-->

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Cache class for Wincache
@@ -32,7 +32,7 @@ class CacheWincache extends CacheBase
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function CacheWincache()
 	{
 	}
 

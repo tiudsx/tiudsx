@@ -1,12 +1,12 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * Cache class for file
  *
  * Filedisk Cache Handler
  *
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  */
 class CacheFile extends CacheBase
 {
@@ -35,7 +35,7 @@ class CacheFile extends CacheBase
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function CacheFile()
 	{
 		$this->cache_dir = _XE_PATH_ . $this->cache_dir;
 		FileHandler::makeDir($this->cache_dir);
@@ -49,8 +49,7 @@ class CacheFile extends CacheBase
 	 */
 	function getCacheFileName($key)
 	{
-		$path_string = preg_replace("/[^a-z0-9-_:\.]+/i", '_', $key);
-		return $this->cache_dir . str_replace(':', DIRECTORY_SEPARATOR, $path_string) . '.php';
+		return $this->cache_dir . str_replace(':', DIRECTORY_SEPARATOR, $key) . '.php';
 	}
 
 	/**
@@ -74,13 +73,10 @@ class CacheFile extends CacheBase
 	function put($key, $obj, $valid_time = 0)
 	{
 		$cache_file = $this->getCacheFileName($key);
-		$data = serialize($obj);
-		$data = str_replace('\\', '\\\\', $data);
-		$data = str_replace('\'', '\\\'', $data);
 		$content = array();
 		$content[] = '<?php';
 		$content[] = 'if(!defined(\'__XE__\')) { exit(); }';
-		$content[] = 'return \'' . $data . '\';';
+		$content[] = 'return \'' . addslashes(serialize($obj)) . '\';';
 		FileHandler::writeFile($cache_file, implode(PHP_EOL, $content));
 		if(function_exists('opcache_invalidate'))
 		{
@@ -135,7 +131,7 @@ class CacheFile extends CacheBase
 
 		$content = include($cache_file);
 
-		return unserialize($content);
+		return unserialize(stripslashes($content));
 	}
 
 	/**

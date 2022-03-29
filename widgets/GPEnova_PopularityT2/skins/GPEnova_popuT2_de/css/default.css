@@ -1,0 +1,106 @@
+@charset "utf-8";
+/*공통*/
+.gpe_wgPopularT2{position:relative; overflow:hidden; *zoom:1;}
+.gpe_wgPopularT2 ul{list-style:none; margin:0; padding:0;}
+.gpe_wgPopularT2 p{margin:0; padding:0;}
+.gpe_wgPopularT2 a{color:#5c5c5c; text-decoration:none; font-size:13px; line-height:30px;}
+.gpe_wgPopularT2 a:hover{text-decoration:underline;}
+
+/*타이틀+더보기*/
+.gpe_wgPopularT2 h3.wgP_title{position:relative; height:32px; line-height:22px; font-size:22px; font-weight:700; border-bottom:2px solid #676767; color:#f92f24;}
+.gpe_wgPopularT2 h3.wgP_title .popu_more{display:inline-block; float:right; width:22px; height:21px; background:url(../imgs/default/default_01.png) no-repeat -13px -105px; margin-top:1px;}
+/*└타이틀컬러셋*/
+.gpe_wgPopularT2.rb h3.wgP_title{color:#0cabd0;}
+.gpe_wgPopularT2.r h3.wgP_title{color:#f92f24;}
+.gpe_wgPopularT2.gn h3.wgP_title{color:#39b54a;}
+.gpe_wgPopularT2.gn_p h3.wgP_title{color:#2baab1;}
+.gpe_wgPopularT2.b h3.wgP_title{color:#007bd3;}
+.gpe_wgPopularT2.p h3.wgP_title{color:#6976d3;}
+.gpe_wgPopularT2.p_d h3.wgP_title{color:#734ba9;}
+.gpe_wgPopularT2.y h3.wgP_title{color:#ff9000;}
+.gpe_wgPopularT2.op h3.wgP_title{color:#e36159;}
+.gpe_wgPopularT2.cp h3.wgP_title{color:#c71c77;}
+.gpe_wgPopularT2.gy h3.wgP_title{color:#8491af;}
+.gpe_wgPopularT2.gy_d h3.wgP_title{color:#4a5b7d;}
+.gpe_wgPopularT2.bk h3.wgP_title{color:#333;}
+
+/*내용*/
+.gpe_wgPopularT2 ul.wgP_contents{}
+.gpe_wgPopularT2 ul.wgP_contents li{position:relative; border-top:1px solid #f1f1f1;}
+.gpe_wgPopularT2 ul.wgP_contents li:first-child{border-top:0;}
+.gpe_wgPopularT2 ul.wgP_contents li:first-child a{color:#333; font-weight:700;}
+.gpe_wgPopularT2 ul.wgP_contents li:first-child .reNum{color:#ff4948;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPicon{position:absolute; left:65px; top:24px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPiconTxt{position:absolute; left:84px; top:25px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPicon.jo{width:16px; height:12px; background:url(../imgs/default/default_01.png) no-repeat -45px -109px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{width:68px; height:10px; background:url(../imgs/default/default_01.png) no-repeat -64px -110px; background-color:#f92f24;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPicon.chu{width:15px; height:12px; background:url(../imgs/default/default_01.png) no-repeat -142px -110px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{width:59px; height:10px; background:url(../imgs/default/default_01.png) no-repeat -160px -110px; background-color:#f92f24;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child{height:92px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child a{margin-left:10px; font-size:15px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .reNum{color:#ff4948; margin-left:2px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgPdate{position:absolute; left:65px; top:53px; font-size:12px;}
+.gpe_wgPopularT2 ul.wgP_contents li.popu_li:first-child .wgp_numR{margin-left:-2px; font-size:12px;}
+/*└베스트 컬러셋(조회수)*/
+.gpe_wgPopularT2.rb ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#0cabd0;}
+.gpe_wgPopularT2.r ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#f92f24;}
+.gpe_wgPopularT2.gn ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#39b54a;}
+.gpe_wgPopularT2.gn_p ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#2baab1;}
+.gpe_wgPopularT2.b ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#007bd3;}
+.gpe_wgPopularT2.p ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#6976d3;}
+.gpe_wgPopularT2.p_d ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#734ba9;}
+.gpe_wgPopularT2.y ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#ff9000;}
+.gpe_wgPopularT2.op ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#e36159;}
+.gpe_wgPopularT2.cp ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#c71c77;}
+.gpe_wgPopularT2.gy ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#8491af;}
+.gpe_wgPopularT2.gy_d ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#4a5b7d;}
+.gpe_wgPopularT2.bk ul.wgP_contents li.popu_li:first-child .wgPiconTxt.jo{background-color:#333;}
+/*└베스트 컬러셋(추천수)*/
+.gpe_wgPopularT2.rb ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#0cabd0;}
+.gpe_wgPopularT2.r ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#f92f24;}
+.gpe_wgPopularT2.gn ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#39b54a;}
+.gpe_wgPopularT2.gn_p ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#2baab1;}
+.gpe_wgPopularT2.b ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#007bd3;}
+.gpe_wgPopularT2.p ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#6976d3;}
+.gpe_wgPopularT2.p_d ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#734ba9;}
+.gpe_wgPopularT2.y ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#ff9000;}
+.gpe_wgPopularT2.op ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#e36159;}
+.gpe_wgPopularT2.cp ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#c71c77;}
+.gpe_wgPopularT2.gy ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#8491af;}
+.gpe_wgPopularT2.gy_d ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#4a5b7d;}
+.gpe_wgPopularT2.bk ul.wgP_contents li.popu_li:first-child .wgPiconTxt.chu{background-color:#333;}
+
+/*1,2,3위*/
+.gpe_wgPopularT2 ul.wgP_contents .Ncolor{font-size:13px; color:#9a9a9a; font-weight:900;}
+.gpe_wgPopularT2 ul.wgP_contents .wgp_num01{display:inline-block; margin-top:17px; font-size:24px; color:#fff; width:52px; height:59px; line-height:59px; text-align:center; background:url(../imgs/default/default_01.png) no-repeat -13px -11px; background-color:#f92f24;}
+.gpe_wgPopularT2 ul.wgP_contents .wgp_num02{color:;}
+.gpe_wgPopularT2 ul.wgP_contents .wgp_num03{color:#333;}
+.gpe_wgPopularT2 ul.wgP_contents .reNum{font-size:12px; color:#ff4948;}
+.gpe_wgPopularT2 ul.wgP_contents .wgPdate{display:inline-block; float:right; line-height:28px; font-size:13px; color:#6d6d6d;}
+/*└1위 컬러셋*/
+.gpe_wgPopularT2.rb ul.wgP_contents .wgp_num01{background-color:#0cabd0;}
+.gpe_wgPopularT2.r ul.wgP_contents .wgp_num01{background-color:#f92f24;}
+.gpe_wgPopularT2.gn ul.wgP_contents .wgp_num01{background-color:#39b54a;}
+.gpe_wgPopularT2.gn_p ul.wgP_contents .wgp_num01{background-color:#2baab1;}
+.gpe_wgPopularT2.b ul.wgP_contents .wgp_num01{background-color:#007bd3;}
+.gpe_wgPopularT2.p ul.wgP_contents .wgp_num01{background-color:#6976d3;}
+.gpe_wgPopularT2.p_d ul.wgP_contents .wgp_num01{background-color:#734ba9;}
+.gpe_wgPopularT2.y ul.wgP_contents .wgp_num01{background-color:#ff9000;}
+.gpe_wgPopularT2.op ul.wgP_contents .wgp_num01{background-color:#e36159;}
+.gpe_wgPopularT2.cp ul.wgP_contents .wgp_num01{background-color:#c71c77;}
+.gpe_wgPopularT2.gy ul.wgP_contents .wgp_num01{background-color:#8491af;}
+.gpe_wgPopularT2.gy_d ul.wgP_contents .wgp_num01{background-color:#4a5b7d;}
+.gpe_wgPopularT2.bk ul.wgP_contents .wgp_num01{background-color:#333;}
+.gpe_wgPopularT2.rb ul.wgP_contents .wgp_num02{color:#0cabd0;}
+.gpe_wgPopularT2.r ul.wgP_contents .wgp_num02{color:#f92f24;}
+.gpe_wgPopularT2.gn ul.wgP_contents .wgp_num02{color:#39b54a;}
+.gpe_wgPopularT2.gn_p ul.wgP_contents .wgp_num02{color:#2baab1;}
+.gpe_wgPopularT2.b ul.wgP_contents .wgp_num02{color:#007bd3;}
+.gpe_wgPopularT2.p ul.wgP_contents .wgp_num02{color:#6976d3;}
+.gpe_wgPopularT2.p_d ul.wgP_contents .wgp_num02{color:#734ba9;}
+.gpe_wgPopularT2.y ul.wgP_contents .wgp_num02{color:#ff9000;}
+.gpe_wgPopularT2.op ul.wgP_contents .wgp_num02{color:#e36159;}
+.gpe_wgPopularT2.cp ul.wgP_contents .wgp_num02{color:#c71c77;}
+.gpe_wgPopularT2.gy ul.wgP_contents .wgp_num02{color:#8491af;}
+.gpe_wgPopularT2.gy_d ul.wgP_contents .wgp_num02{color:#4a5b7d;}
+.gpe_wgPopularT2.bk ul.wgP_contents .wgp_num02{color:#333;}

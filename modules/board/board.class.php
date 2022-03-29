@@ -1,9 +1,9 @@
 <?php
-/* Copyright (C) XEHub <https://www.xehub.io> */
+/* Copyright (C) NAVER <http://www.navercorp.com> */
 
 /**
  * @class  board
- * @author XEHub (developers@xpressengine.com)
+ * @author NAVER (developers@xpressengine.com)
  * @brief  board module high class
  **/
 
@@ -23,7 +23,7 @@ class board extends ModuleObject
 	 *
 	 * @return void
 	 */
-	function __construct()
+	function board()
 	{
 		if(!Context::isInstalled()) return;
 
