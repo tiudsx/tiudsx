@@ -1,3 +1,3 @@
 <?php
-$conn = mysqli_connect('localhost', 'surfenjoy', 'dltmdcjf2@', 'surfenjoy');
+include '/actrip/www/files/config/db.act.php';
 ?>
