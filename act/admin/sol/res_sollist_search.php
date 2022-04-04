@@ -293,13 +293,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $eDay = $row['eDay'];
 
     $memoYN = "";
-    $memo2YN = "";
-    if($memo != ""){
+    if($memo != "" || $memo2 != ""){
         $memoYN = "있음";
-    }
-
-    if($memo2 != ""){
-        $memo2YN = "있음";
     }
 
     $stayText = "";
