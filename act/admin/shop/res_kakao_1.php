@@ -277,7 +277,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 </div>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
-                        <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act/images/kakaochat.jpg" class="placeholder"></a>
+                        <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://actrip.cdn1.cafe24.com/common/kakaochat.jpg" class="placeholder"></a>
                     </div>
                 </div>
             </div>

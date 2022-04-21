@@ -385,6 +385,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         }
     }
 
+    $rtnText = "";
     $rtnTextCode = "0회";
     if($res_kakao == "0"){
 
@@ -423,7 +424,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }
 ?>
     <tr>
-        <td style="<?=$fontcolor?>"><label><input type="checkbox" id="chkresseq" name="chkresseq[]" value="<?=$resseq?>"> <?=$resseq?></label></td>
+        <td style="<?=$fontcolor?>">
+        <?if($res_confirm == "확정"){?>
+            <label><input type="checkbox" id="chkresseq" name="chkresseq[]" value="<?=$resseq?>"> <?=$resseq?></label>
+        <?}else{?>
+            <label><input type="checkbox" id="chkresseq" name="chkresseq[]" disabled> <?=$resseq?></label>
+        <?}?>
+        </td>
         <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_name?><br><?=$user_tel?></b></td>
         <!-- <td style="<?=$fontcolor?>"><?=$resText?></td> -->
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>

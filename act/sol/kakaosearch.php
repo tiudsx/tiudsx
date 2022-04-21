@@ -166,9 +166,8 @@ $j(document).ready(function(){
                     <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/sol_01.jpg?v=1" class="placeholder"> -->
 
                     <?if($tablist1 != ""){?>
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/02.jpg" class="placeholder">
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/sol_04.jpg" class="placeholder">
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/search.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_01.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_02.jpg" class="placeholder">
 
                 <?if($surfbbq_chk == 1 && $stay_chk == 1){?>
                     <!-- <center>
@@ -249,8 +248,7 @@ $j(document).ready(function(){
                     </div>
                     </center>
                     
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/07.jpg" class="placeholder">
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/stay_sol/03.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_03.jpg" class="placeholder">
                     <?}?>
                     
                     <?if($tablist2 != ""){?>
@@ -278,7 +276,8 @@ $j(document).ready(function(){
                         ?>
                     </table>
                     </center>
-                    <img src="https://actrip.co.kr/act/images/sol_kakao/bbq/03.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/bbq_01.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/bbq_02.jpg" class="placeholder">
                     <?}?>
 
                     <?if($tablist3 != ""){ //서핑강습 이용안내?> 
@@ -376,21 +375,20 @@ $j(document).ready(function(){
                     }
                 }
                 ?>
-                # 서핑샵은 편의를 위해 대진해변 앞에 위치한 제휴된 서핑샵으로 안내해드립니다.
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_00.jpg" class="placeholder">
                 <?
                 if($arrVlu[0] == "서프팩토리"){
                 ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surffactory_02.jpg" class="placeholder">
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_2_01.jpg" class="placeholder">
                 <?
                 }else if($arrVlu[0] == "서퍼랑"){
                 ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_02.jpg" class="placeholder">
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_01.jpg" class="placeholder">
                 <?
                 }
                 ?>
                 <br>
                 <center>
-                서핑 예약안내
                 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:80%;">
                     <tr>
                         <th>서핑샵</th>
@@ -427,6 +425,7 @@ $j(document).ready(function(){
                 </table>
                 </center>
                 <br>
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_02.jpg" class="placeholder">
                 <?
                 if($arrVlu[0] == "서프팩토리"){
                 ?>
@@ -441,7 +440,6 @@ $j(document).ready(function(){
                 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/03.jpg" class="placeholder">                
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
             </div>
 
             <!-- 장비렌탈 안내 -->
@@ -488,8 +486,8 @@ $j(document).ready(function(){
             </div>
 
             <div style="padding:10px 0 5px 0;font-size:12px;">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/sol_02.jpg" class="placeholder">
-                <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="../images/kakaochat.jpg" class="placeholder"></a>
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/sol_02.jpg" class="placeholder">
+                <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://actrip.cdn1.cafe24.com/common/kakaochat.jpg" class="placeholder"></a>
             </div>
         </section>
     </div>

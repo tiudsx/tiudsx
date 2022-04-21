@@ -784,5 +784,5 @@ function mergeTable(target, index) {
 }
 
 function fnAllChk(obj) {
-    $j("input[id=chkresseq]").prop("checked", $j(obj).is(':checked'));
+    $j("input[id=chkresseq]:not(:disabled)").prop("checked", $j(obj).is(':checked'));
 }
