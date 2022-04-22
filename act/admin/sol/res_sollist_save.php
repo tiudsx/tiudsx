@@ -179,7 +179,7 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 		$resInfo = "하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요.\n";
 		
 		$msgTitle = '액트립 솔.동해서핑점 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 예약하신 시간보다 늦게 도착하실 경우 꼭 연락주세요.\n      - \n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 예약하신 시간보다 늦게 도착하실 경우 꼭 연락주세요.\n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
 
 		$arrKakao = array(
 			"gubun"=> $code

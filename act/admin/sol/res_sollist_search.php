@@ -247,6 +247,14 @@ $TotalstayW = 0;
 $TotalbbqM = 0;
 $TotalbbqW = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
+    $prod_name = str_replace("솔게스트하우스", "솔게하", $row['prod_name']);
+    $sdate = $row['sdate'];
+    $edate = $row['edate'];
+    
+    if($prod_name == "N" && $sdate == ""){
+        continue;
+    }
+
     $MainSeq = $row['resseq'];
     if($MainSeq == $PreSeq){
 		$b++;
@@ -275,9 +283,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $memo2 = $row['memo2'];
     $ressubseq = $row['ressubseq'];
     $res_type = $row['res_type'];
-    $prod_name = str_replace("솔게스트하우스", "솔게하", $row['prod_name']);
-    $sdate = $row['sdate'];
-    $edate = $row['edate'];
     $resdate = $row['resdate'];
     $staysex = $row['staysex'];
     $stayMem = $row['stayM'];

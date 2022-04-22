@@ -300,6 +300,7 @@ $j(document).ready(function(){
                         <?}
                         if($tablist3 != ""){ //서핑강습 이용안내?> 
                         <p class="restitle" style="font-size:22px;">서핑강습 이용안내</p>
+                        <p class="info">✔ 강습예약시간 최소 10분 전 강습장소로 모여주세요.</p>
                         <p class="info">✔ [강습] 탭에 있는 안내사항을 확인하세요.</p>
                         <?}?>
 
