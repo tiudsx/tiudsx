@@ -459,14 +459,24 @@ if($param == "solkakao1"){ //상태 정보 업데이트
 			, "smsOnly"=>"N"
 		);
 	
-		sendKakao($arrKakao); //알림톡 발송
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		//------- 쿠폰코드 입력 -----
+		$data = json_decode($arrRtn[0], true);
+		$kakao_code = $data[0]["code"];
+		$kakao_type = $data[0]["data"]["type"];
+		$kakao_msgid = $data[0]["data"]["msgid"];
+		$kakao_message = $data[0]["message"];
+		$kakao_originMessage = $data[0]["originMessage"];
+
+		$userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
 
 		// 카카오 알림톡 DB 저장 START
 		$select_query = kakaoDebug($arrKakao, $arrRtn);            
 		$result_set = mysqli_query($conn, $select_query);
 		// 카카오 알림톡 DB 저장 END
-	
-		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1 WHERE resseq = $seq";
+		
+		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$userinfo."' WHERE resseq = $seq";
 		$result_set = mysqli_query($conn, $select_query);
 		if(!$result_set) goto errGo;
 	}
