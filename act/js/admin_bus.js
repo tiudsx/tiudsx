@@ -139,17 +139,17 @@ function fnBusPointSel2(obj, objVlu, sname, ename, num) {
     var arrObjs = eval("busPoint.sPoint" + objVlu);
     var arrObje = eval("busPoint.ePoint" + objVlu.substring(0, 1));
     arrObjs.forEach(function(el) {
-        if (sname == "") {
-            sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
-        } else {
+        if (sname == el.code) {
             sPoint += "<option value='" + el.code + "' selected>" + el.codename + "</option>";
+        } else {
+            sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
         }
     });
     arrObje.forEach(function(el) {
-        if (sname == "") {
-            ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
-        } else {
+        if (ename == el.code) {
             ePoint += "<option value='" + el.code + "' selected>" + el.codename + "</option>";
+        } else {
+            ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
         }
     });
 
@@ -209,6 +209,7 @@ function fnBusDataAdd() {
     var formData = $j("#frmModify").serializeArray();
     $j.post("/act/admin/bus/res_bus_save.php", formData,
         function(data, textStatus, jqXHR) {
+            $j("#memo").val(data);
             if (data == 0) {
                 alert("정상적으로 처리되었습니다.");
 

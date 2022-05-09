@@ -232,7 +232,192 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     if(!$result_set) goto errGo;
 
 	mysqli_query($conn, "COMMIT");
+}else if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
+	//단일 컬럼
+	$resnum = $_REQUEST["resnum"];
+	$user_name = $_REQUEST["user_name"];
+	$user_tel = $_REQUEST["user_tel"];
+	$user_email = $_REQUEST["user_email"];
+	$memo = $_REQUEST["memo"]; //직원메모
+	//$etc = $_REQUEST["etc"]; //요청사항
+	$res_price_coupon = $rowSub['res_price_coupon'];
+	$coupon = $rowSub['res_coupon'];
+	$res_price = $_REQUEST["res_price"];
+	$res_disprice = $_REQUEST["res_disprice"];
+	$insdate = $_REQUEST["insdate"];
+	$confirmdate = $_REQUEST["confirmdate"];
+	$res_cooperate = $_REQUEST["res_cooperate"];
+	$InsUserID = "admin";
 
+	//배열 컬럼
+    $chkCancel = $_REQUEST["ressubseq"];
+    $res_seat = $_REQUEST["res_seat"];
+    $res_spointname = $_REQUEST["res_spointname"];
+    $res_epointname = $_REQUEST["res_epointname"];
+    $res_confirm = $_REQUEST["res_confirm"];
+    $rtn_charge_yn = $_REQUEST["rtn_charge_yn"];
+    $res_kakao = $_REQUEST["res_kakao"];
+
+	//================= 예약상태 및 메모 저장 =================
+    $select_query = "UPDATE `AT_RES_MAIN` 
+                    SET user_name = '".$user_name."'
+                        ,memo = '".$memo."'
+                        ,user_tel = '".$user_tel."'
+                        ,user_email = '".$user_email."'
+                WHERE resnum = '".$resnum."';";
+    $result_set = mysqli_query($conn, $select_query);
+    if(!$result_set) goto errGo;
+
+	for($i = 0; $i < count($chkCancel); $i++){
+		if($chkCancel[$i] == ""){
+			continue;
+		}
+
+		$insdate1 = "";
+		if($res_confirm[$i] == 3){
+			$insdate1 = ",confirmdate = now()";
+
+			if($res_kakao[$i] == "Y"){
+				$intseq3 .= $chkCancel[$i].",";
+			}
+		}
+
+		$select_query = "UPDATE AT_RES_SUB 
+				SET res_seat = ".$res_seat[$i]."
+					,res_spoint = '".$res_spointname[$i]."'
+					,res_spointname = '".$res_spointname[$i]."'
+					,res_epoint = '".$res_epointname[$i]."'
+					,res_epointname = '".$res_epointname[$i]."'
+					,res_confirm = ".$res_confirm[$i]."
+					,rtn_charge_yn = '".$rtn_charge_yn[$i]."'
+					".$insdate1."
+					,upddate = now()
+					,upduserid = 'admin'
+			WHERE ressubseq = ".$chkCancel[$i].";";
+		$result_set = mysqli_query($conn, $select_query);
+		if(!$result_set) goto errGo;
+	}
+
+    $intseq3 .= '0';
+
+    $arrSeatInfo = array();
+    $arrStopInfo = array();
+
+    $ResNumber = $resnum;
+	$userName = $user_name;
+	$etc = $_REQUEST["etc"];
+	$userPhone = $user_tel;
+	$usermail = $user_email;
+
+    //==========================카카오 메시지 발송 ==========================
+    if($intseq3 != "0"){ //예약 확정처리 : 고객발송
+        $select_query_sub = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
+        $resultSite = mysqli_query($conn, $select_query_sub);
+
+        while ($rowSub = mysqli_fetch_assoc($resultSite)){
+            $shopSeq = $rowSub['seq'];
+			$shopname = $rowSub['shopname'];
+			$coupon = $rowSub['res_coupon'];
+
+            if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfo)){
+                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n\n';
+            }else{
+                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n\n';
+            }
+
+            $arrData = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_busnum'], 0));
+            $arrStopInfo[$rowSub['res_spointname']] = '    ['.$rowSub['res_spointname'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
+        }
+        
+        foreach($arrSeatInfo as $x) {
+            $busSeatInfo .= $x;
+        }
+
+        foreach($arrStopInfo as $x) {
+            $busStopInfo .= $x;
+        }
+
+        $busSeatInfo = $busSeatInfo;
+        //$pointMsg = '  ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+
+        if($etc != ''){
+            $etcMsg = '  ▶ 요청사항\n      '.$etc.'\n';
+        }
+
+		$infomsg = "\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~";
+		if($coupon == "NABUSA" || $coupon == "NABUSB"){
+			$infomsg .= "\n      - 취소 및 환불신청은 네이버에서 해주세요~";
+		}else if($coupon == "NABUSC"){
+			$infomsg .= "\n      - 취소 및 환불신청은 프립에서 해주세요~";
+		}
+
+        $msgTitle = '액트립 '.$shopname.' 예약안내';
+		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+
+		if($shopSeq == 7){
+			$resparam = "surfbus_yy";
+		}else{
+			$resparam = "surfbus_dh";			
+        }
+        $arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_res_bus1"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
+			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
+			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
+			, "link4"=>"eatlist" //제휴업체 목록
+			, "link5"=>"event" //공지사항
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=>"서핑버스"
+			, "PROD_URL"=>$shopSeq
+			, "PROD_TYPE"=>"bus"
+			, "RES_CONFIRM"=>"3"
+		);
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+
+        if(strrpos($usermail, "@") > 0){
+            // $to .= ','.$usermail;
+			$to = $usermail;
+
+			$info1_title = "좌석안내";
+			$info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
+			$info2_title = "탑승시간/위치 안내";			
+			$info2 = "&nbsp;&nbsp;&nbsp;<a href=\"https://actrip.co.kr/pointlist\" target=\"_blank\" style=\"text-decoration:underline;color:#009e25\" rel=\"noreferrer noopener\">[안내사항 보기]</a>";
+			//str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+
+			$arrMail = array(
+				"gubun"=> "bus"
+				, "gubun_step" => 3
+				, "gubun_title" => $shopname
+				, "mailto"=> $to
+				, "mailfrom"=> "surfbus_res@actrip.co.kr"
+				, "mailname"=> "actrip"
+				, "userName"=> $userName
+				, "ResNumber"=> $ResNumber
+				, "userPhone" => $userPhone
+				, "etc" => $etc
+				, "totalPrice1" => ""
+				, "totalPrice2" => ""
+				, "banknum" => ""
+				, "info1_title"=> $info1_title
+				, "info1"=> $info1
+				, "info2_title"=> $info2_title
+				, "info2"=> $info2
+			);
+			sendMail($arrMail); //메일 발송
+		}
+    }
+
+	mysqli_query($conn, "COMMIT");
 }else if($param == "reskakaodel"){
     $codeseq = $_REQUEST["codeseq"];
 

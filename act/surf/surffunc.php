@@ -18,6 +18,12 @@ function fnBusNum($vlu){
 	}else{
         $busTime = substr($vlu, 1, 1);
         $busNumber = substr($vlu, 2, 1);
+		if($busTime == 2){
+			$busTime = "15";
+		}else{
+			$busTime = "18";
+		}
+
 		return '서울행 '.$busTime.'시 '.$busNumber.'호차';
 	}
 }

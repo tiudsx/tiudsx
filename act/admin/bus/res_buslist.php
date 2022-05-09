@@ -77,7 +77,7 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y5" style="vertical-align:-3px;" />5호차</label>
                             </td>
                             <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />양양-서울행</label></th>
-                            <th>오후 2시</th>
+                            <th>15시</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S21" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S22" style="vertical-align:-3px;" />2호차</label>
@@ -91,7 +91,7 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y4" style="vertical-align:-3px;" />4호차</label>
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y6" style="vertical-align:-3px;" />6호차</label>
                             </td>
-                            <th>오후 5시</th>
+                            <th>18시</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S51" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S52" style="vertical-align:-3px;" />2호차</label>
@@ -112,7 +112,7 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label>
                             </td>
                             <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />동해-서울행</label></th>
-                            <th>오후 2시</th>
+                            <th>15시</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
@@ -125,7 +125,7 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
                                 <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
                             </td>
-                            <th>오후 5시</th>
+                            <th>18시</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
@@ -344,24 +344,24 @@ $shopseq = 0;
                                         <option value="Y4">양양행 4호차</option>
                                         <option value="Y5">양양행 5호차</option>
                                         <option value="Y6">양양행 6호차</option>
-                                        <option value="S21">(양양)서울행 2시 1호차</option>
-                                        <option value="S23">(양양)서울행 2시 2호차</option>
-                                        <option value="S23">(양양)서울행 2시 3호차</option>
-                                        <option value="S51">(양양)서울행 5시 1호차</option>
-                                        <option value="S52">(양양)서울행 5시 2호차</option>
-                                        <option value="S53">(양양)서울행 5시 3호차</option>
+                                        <option value="S21">(양양)서울행 15시 1호차</option>
+                                        <option value="S23">(양양)서울행 15시 2호차</option>
+                                        <option value="S23">(양양)서울행 15시 3호차</option>
+                                        <option value="S51">(양양)서울행 18시 1호차</option>
+                                        <option value="S52">(양양)서울행 18시 2호차</option>
+                                        <option value="S53">(양양)서울행 18시 3호차</option>
                                         <option value="E1">동해행 1호차</option>
                                         <option value="E2">동해행 2호차</option>
                                         <option value="E3">동해행 3호차</option>
                                         <option value="E4">동해행 4호차</option>
                                         <option value="E5">동해행 5호차</option>
                                         <option value="E6">동해행 6호차</option>
-                                        <option value="A21">(동해)서울행 2시 1호차</option>
-                                        <option value="A22">(동해)서울행 2시 2호차</option>
-                                        <option value="A22">(동해)서울행 2시 3호차</option>
-                                        <option value="A51">(동해)서울행 5시 1호차</option>
-                                        <option value="A52">(동해)서울행 5시 2호차</option>
-                                        <option value="A53">(동해)서울행 5시 3호차</option>
+                                        <option value="A21">(동해)서울행 15시 1호차</option>
+                                        <option value="A22">(동해)서울행 15시 2호차</option>
+                                        <option value="A22">(동해)서울행 15시 3호차</option>
+                                        <option value="A51">(동해)서울행 18시 1호차</option>
+                                        <option value="A52">(동해)서울행 18시 2호차</option>
+                                        <option value="A53">(동해)서울행 18시 3호차</option>
                                     </select>
 								</td>
 								<td style="line-height:2.3em">
@@ -419,10 +419,10 @@ $shopseq = 0;
 			</tr>
             <tr>
 				<td class="col-02" style="text-align:center;" colspan="10">
-                    <input type="hidden" id="resparam" name="resparam" size="10" value="busmodify" class="itx">
+                    <input type="hidden" id="resparam" name="resparam" size="10" value="changeConfirmNew" class="itx">
                     <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd();" id="SolModify" />&nbsp;
-					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();fnBuspopupReset();" />
+					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();fnBusPopupReset();" />
                 </td>
             </tr>
         </tbody>
