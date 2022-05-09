@@ -52,24 +52,24 @@ if($param == "mappoint"){ //상세정보
                         "'봉천역': [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.4821436', '126.9426997', '봉천역 1번출구 앞', '탑승시간 : <font color=red>06시 40분</font>', 2, 's3', '', ''],".
                         "'사당역': [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.4764763', '126.977734', '사당역 6번출구 방향 신한성약국 앞', '탑승시간 : <font color=red>06시 50분</font>', 3, 's4', '', ''],".
                         "'강남역': [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.4982078', '127.0290928', '강남역 1번출구 버스정류장', '탑승시간 : <font color=red>07시 05분</font>', 4, 's5', '', ''],".
-                        "'종합운동장역': [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장', '탑승시간 : <font color=red>07시 20분</font>', 5, 's6', '', '']";
+                        "'종합운동장역': [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장 뒤쪽', '탑승시간 : <font color=red>07시 20분</font>', 5, 's6', '', '']";
         }else if($busNum == "Y2" || $busNum == "Y4" || $busNum == "Y6" || $busNum == "E2" || $busNum == "E4" || $busNum == "E6"){
-            $mappoint = "'당산역': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5344135', '126.9012162', '당산역 13출구 IBK기업은행 앞', '탑승시간 : <font color=red>06시 05분</font>', 0, 's1', '', ''],".
+            $mappoint = "'당산역': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5344135', '126.9012162', '당산역 13출구 방향 버거킹 앞', '탑승시간 : <font color=red>06시 05분</font>', 0, 's1', '', ''],".
                         "'합정역': [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.5507926', '126.9159159', '합정역 3번출구 앞', '탑승시간 : <font color=red>06시 10분</font>', 1, 's2', '', ''],".
                         "'종로3가역': [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.5703347', '126.99317687', '종로3가역 12번출구 방향 새마을금고 앞', '탑승시간 : <font color=red>06시 35분</font>', 2, 's3', '', ''],".
                         "'왕십리역': [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.5615557', '127.0348018', '왕십리역 11번출구 방향 우리은행 앞', '탑승시간 : <font color=red>06시 50분</font>', 3, 's4', '', ''],".
                         "'건대입구': [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.5393413', '127.0716672', '건대입구역 롯데백화점 스타시티점 입구', '탑승시간 : <font color=red>07시 05분</font>', 4, 's5', '', ''],".
-                        "'종합운동장역': [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장', '탑승시간 : <font color=red>07시 20분</font>', 5, 's6', '', '']";
+                        "'종합운동장역': [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장 뒤쪽', '탑승시간 : <font color=red>07시 20분</font>', 5, 's6', '', '']";
         }
         
         if($busgubun == "S"){
-            $mappoint = "'청시행비치': [0, 0, '37.910099', '128.8168456', '청시행비치 주차장 입구', '탑승시간 : <font color=red>13시 15분 / 17시 15분</font>', 0, 's1', '', ''],".
+            $mappoint = "'청시행비치': [0, 0, '37.910099', '128.8168456', '청시행비치 주차장 입구', '탑승시간 : <font color=red>14시 15분 / 17시 15분</font>', 0, 's1', '', ''],".
                         "'남애해변': [MARKER_SPRITE_X_OFFSET*1, 0, '37.9452543', '128.7814356', '남애3리 입구', '탑승시간 : <font color=red>14시 30분 / 17시 30분</font>', 1, 's2', '', ''],".
-                        "'인구해변': [MARKER_SPRITE_X_OFFSET*2, 0, '37.9689758', '128.7599915', '현남면사무소 맞은편', '탑승시간 : <font color=red>13시 35분 / 17시 35분</font>', 2, 's3', '', ''],".
-                        "'죽도해변': [MARKER_SPRITE_X_OFFSET*3, 0, '37.9720003', '128.7595433', 'GS25 죽도비치점 맞은편', '탑승시간 : <font color=red>13시 40분 / 17시 40분</font>', 3, 's4', '', ''],".
-                        "'동산항해변': [MARKER_SPRITE_X_OFFSET*4, 0, '37.9763045', '128.7586692', '동산항해변 입구', '탑승시간 : <font color=red>13시 45분 / 17시 45분</font>', 4, 's5', '', ''],".
-                        "'기사문해변': [MARKER_SPRITE_X_OFFSET*5, 0, '38.0053627', '128.7306342', '기사문 해변주차장 입구', '탑승시간 : <font color=red>13시 50분 / 17시 50분</font>', 5, 's6', '', ''],".
-                        "'서피비치': [MARKER_SPRITE_X_OFFSET*6, 0, '38.0268271', '128.7169575', '서피비치 회전교차로 횡단보도 앞', '탑승시간 : <font color=red>14시 00분 / 18시 00분</font>', 6, 's7', '', '']";
+                        "'인구해변': [MARKER_SPRITE_X_OFFSET*2, 0, '37.9689758', '128.7599915', '현남면사무소 맞은편', '탑승시간 : <font color=red>14시 35분 / 17시 35분</font>', 2, 's3', '', ''],".
+                        "'죽도해변': [MARKER_SPRITE_X_OFFSET*3, 0, '37.9720003', '128.7595433', 'GS25 죽도비치점 맞은편', '탑승시간 : <font color=red>14시 40분 / 17시 40분</font>', 3, 's4', '', ''],".
+                        "'동산항해변': [MARKER_SPRITE_X_OFFSET*4, 0, '37.9763045', '128.7586692', '동산카센타 맞은편', '탑승시간 : <font color=red>14시 45분 / 17시 45분</font>', 4, 's5', '', ''],".
+                        "'기사문해변': [MARKER_SPRITE_X_OFFSET*5, 0, '38.0053627', '128.7306342', '기사문 해변주차장 입구', '탑승시간 : <font color=red>14시 50분 / 17시 50분</font>', 5, 's6', '', ''],".
+                        "'서피비치': [MARKER_SPRITE_X_OFFSET*6, 0, '38.0268271', '128.7169575', '서피비치 회전교차로 횡단보도 앞', '탑승시간 : <font color=red>15시 00분 / 18시 00분</font>', 6, 's7', '', '']";
         }else if($busgubun == "A"){
             $mappoint = "'솔.동해점': [0, 0, '37.5782382', '129.1156248', '솔.동해점 입구', '탑승시간 : <font color=red>14시 00분 / 17시 00분</font>', 0, 's1', '', ''],".
                         "'대진항': [MARKER_SPRITE_X_OFFSET*1, 0, '37.5807657', '129.111344', '대진항 공영주차장 입구', '탑승시간 : <font color=red>14시 05분 / 17시 05분</font>', 1, 's2', '', ''],".

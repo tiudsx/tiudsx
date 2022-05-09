@@ -51,7 +51,7 @@ $nowTime = date("Hi", strtotime($now));
 $count = 1;
 if($nowTime > 0500 && $nowTime < 1300){
     $busList = "'Y','E'";
-}else if($nowTime > 1400 && $nowTime < 2300){
+}else if($nowTime >= 1300 && $nowTime < 2300){
     $busList = "'S','A'";
 }else{
     $count = 0;
