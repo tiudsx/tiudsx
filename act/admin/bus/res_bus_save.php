@@ -320,9 +320,9 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			$coupon = $rowSub['res_coupon'];
 
             if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfo)){
-                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n\n';
+                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
             }else{
-                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n\n';
+                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
             }
 
             $arrData = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_busnum'], 0));
@@ -330,7 +330,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
         }
         
         foreach($arrSeatInfo as $x) {
-            $busSeatInfo .= $x;
+            $busSeatInfo .= $x.'\n';
         }
 
         foreach($arrStopInfo as $x) {

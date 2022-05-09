@@ -209,7 +209,6 @@ function fnBusDataAdd() {
     var formData = $j("#frmModify").serializeArray();
     $j.post("/act/admin/bus/res_bus_save.php", formData,
         function(data, textStatus, jqXHR) {
-            $j("#memo").val(data);
             if (data == 0) {
                 alert("정상적으로 처리되었습니다.");
 
