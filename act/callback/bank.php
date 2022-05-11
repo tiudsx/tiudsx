@@ -106,14 +106,14 @@ if($count == 1){
 		$ressubseq .= '0';
 
 		foreach($arrSeatInfo as $x) {
-			$busSeatInfo .= $x;
+			$busSeatInfo .= $x.'\n';
 		}
 
 		foreach($arrStopInfo as $x) {
 			$busStopInfo .= $x;
 		}
 
-		$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
+		//$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
 		if($etc != ''){
 			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
 		}
@@ -160,8 +160,8 @@ if($count == 1){
 
 		$info1_title = "좌석안내";
         $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-        $info2_title = "탑승시간/위치 안내";
-        $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
+        $info2_title = "탑승시간/위치 안내";			
+		$info2 = "&nbsp;&nbsp;&nbsp;<a href=\"https://actrip.co.kr/pointlist\" target=\"_blank\" style=\"text-decoration:underline;color:#009e25\" rel=\"noreferrer noopener\">[안내사항 보기]</a>";
 
 		$arrMail = array(
 			"gubun"=> "bus"
