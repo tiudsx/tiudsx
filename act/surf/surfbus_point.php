@@ -1,5 +1,5 @@
 <?php
-include 'surffunc.php';
+include __DIR__.'/../common/func.php';
 
 $res_spointname = $_REQUEST["res_spointname"];
 $res_bus = $_REQUEST["res_bus"];

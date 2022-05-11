@@ -9,7 +9,7 @@ if($reqDate != ""){
 	</script>
 <?
 }
-include __DIR__.'/../../common/funcalendar.php';
+include __DIR__.'/../../common/func.php';
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
 $selDay = $_REQUEST["selDay"];

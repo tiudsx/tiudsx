@@ -4,7 +4,7 @@ if($reqDate != ""){
 	include __DIR__.'/../../db.php';
 }
 
-include __DIR__.'/../../common/funcalendar.php';
+include __DIR__.'/../../common/func.php';
 $holidays = fnholidays();
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;

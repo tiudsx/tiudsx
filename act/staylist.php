@@ -47,7 +47,7 @@ $shopcount = mysqli_num_rows($result_shoplist);
 
 ?>
             <section id="taste">
-                <h2><img src="https://surfenjoy.cdn3.cafe24.com/act_title/accommodation.png" alt="액트립 숙소"></h2>
+                <h2><img src="https://actrip.cdn1.cafe24.com/act_title/accommodation.png" alt="액트립 숙소"></h2>
                 <span class="coupon"><a href="https://cafe.naver.com/actrip/2097" target="_blank"><img src="images/icon/coupon.svg" alt="">액트립 제휴쿠폰 모음<i class="fas fa-angle-right"></i></a></span>
             </section>
             <section id="popAcm">
@@ -278,7 +278,7 @@ if($shopcount > 0){
 </div>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <img src="https://surfenjoy.cdn3.cafe24.com/button/btnMap.png" id="slide1">
+        <img src="https://actrip.cdn1.cafe24.com/button/btnMap.png" id="slide1">
         <div id="sildeing" style="display:block;height:100%;padding-top:5px;">
             <iframe scrolling="no" frameborder="0" class="ifrmMap" id="ifrmMap" name="ifrmMap" style="width:100%;height:100%;" src="/act/surf/surfmap_etc.html"></iframe>
         </div>

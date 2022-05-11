@@ -32,11 +32,11 @@ $img_ver = 0;
 $sub_title = "";
 $sub_tag = "";
 $sub_info = "";
-$imgurl = "https://surfenjoy.cdn3.cafe24.com/surfshop/";
+$imgurl = "https://actrip.cdn1.cafe24.com/surfshop/";
 $shop_img = "";
 //상세설명 구분 : file / html
 $content_type = "html";
-$content = "<img src=\'https://surfenjoy.cdn3.cafe24.com/bus/res_bus01.jpg\' class=\'placeholder\' />";
+$content = "<img src=\'https://actrip.cdn1.cafe24.com/bus/res_bus01.jpg\' class=\'placeholder\' />";
 $lesson_yn = "N";
 $rent_yn = "N";
 $bbq_yn = "N";

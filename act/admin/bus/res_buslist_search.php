@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../../surf/surffunc.php';
+include __DIR__.'/../../common/func.php';
 
 $hidsearch = $_REQUEST["hidsearch"];
 

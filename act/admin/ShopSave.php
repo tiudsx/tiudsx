@@ -33,11 +33,11 @@ $sub_title = "★ 즐거운 서핑. 저녁엔 신나는 바베큐파티!!@
 ★ 서핑 올인원 패키지로 한방에~!!";
 $sub_tag = "5월 초특가 할인";
 $sub_info = "서핑패키지|0|90000@숙박|숙박패키지|0|110000";
-$imgurl = "https://surfenjoy.cdn3.cafe24.com/content/bbqmain.jpg";
-$shop_img = "https://surfenjoy.cdn3.cafe24.com/content/bbqmain.jpg|https://surfenjoy.cdn3.cafe24.com/act_content/mango/slide_1.jpg|https://surfenjoy.cdn3.cafe24.com/act_content/mango/slide_2.jpg|https://surfenjoy.cdn3.cafe24.com/act_content/mango/slide_3.jpg|";
+$imgurl = "https://actrip.cdn1.cafe24.com/content/bbqmain.jpg";
+$shop_img = "https://actrip.cdn1.cafe24.com/content/bbqmain.jpg|https://actrip.cdn1.cafe24.com/act_content/mango/slide_1.jpg|https://actrip.cdn1.cafe24.com/act_content/mango/slide_2.jpg|https://actrip.cdn1.cafe24.com/act_content/mango/slide_3.jpg|";
 //상세설명 구분 : file / html
 $content_type = "html";
-$content = "<img src=\'https://surfenjoy.cdn3.cafe24.com/act_content/act_bbq/bbq_yy.jpg\' class=\'placeholder\' />";
+$content = "<img src=\'https://actrip.cdn1.cafe24.com/act_content/act_bbq/bbq_yy.jpg\' class=\'placeholder\' />";
 $lesson_yn = "Y";
 $rent_yn = "Y";
 $bbq_yn = "Y";

@@ -1,8 +1,7 @@
 <?php
 include __DIR__.'/../db.php';
-include __DIR__.'/../surf/surfkakao.php';
-include __DIR__.'/../surf/surfmail.php';
-include __DIR__.'/../surf/surffunc.php';
+include __DIR__.'/../common/kakaoalim.php';
+include __DIR__.'/../common/func.php';
 
 
 $success = true;

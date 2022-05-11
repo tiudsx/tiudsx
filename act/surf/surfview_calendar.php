@@ -9,7 +9,7 @@ if($seqCal == 0){
 	$selDate = "20200901";
 }
 
-include __DIR__.'/../common/funcalendar.php';
+include __DIR__.'/../common/func.php';
 $holidays = fnholidays();
 
 $iDay;

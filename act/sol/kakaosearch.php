@@ -4,7 +4,7 @@
     .tbcenter td{text-align:center;}
 </style>
 <?php 
-include __DIR__.'/../surf/surffunc.php';
+include __DIR__.'/../common/func.php';
 
 $resseq = $_REQUEST["seq"];
 $chk = $_REQUEST["chk"];

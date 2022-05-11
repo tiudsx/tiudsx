@@ -1,6 +1,6 @@
 <?php
 include __DIR__.'/../../db.php';
-include __DIR__.'/../../surf/surffunc.php';
+include __DIR__.'/../../common/func.php';
 
 $param = $_REQUEST["resparam"];
 $resseq = $_REQUEST["resseq"];

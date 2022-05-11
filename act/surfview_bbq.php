@@ -632,7 +632,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> 
+        <img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png" id="slide1"> 
     </div>
     <div id="sildeing" style="position:absolute;bottom:80px;display: none;">
     </div>

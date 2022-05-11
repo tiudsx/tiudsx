@@ -1,6 +1,6 @@
 <?php
 include __DIR__.'/../db.php';
-include __DIR__.'/../surf/surffunc.php';
+include __DIR__.'/../common/func.php';
 
 //$NextDate = date("Y-m-d", strtotime(date("Y-m-d")." +7 day"));
 $NextDate = date("Y-m-d", strtotime(date("Y-m-d")." +5 month"));

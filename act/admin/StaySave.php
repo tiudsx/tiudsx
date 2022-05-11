@@ -32,7 +32,7 @@ $img_ver = 0;
 $sub_title = "민박";
 $sub_tag = "비수기|5만원 대@성수기|10만원 대";
 $sub_info = "";
-$imgurl = "https://surfenjoy.cdn3.cafe24.com/eat/";
+$imgurl = "https://actrip.cdn1.cafe24.com/eat/";
 $shop_img = "";//$imgurl."thumfood.jpg";
 //상세설명 구분 : file / html
 $content_type = "html";

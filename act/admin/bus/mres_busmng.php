@@ -1,6 +1,6 @@
 <?php
 include __DIR__.'/../../db.php';
-include __DIR__.'/../../surf/surffunc.php';
+include __DIR__.'/../../common/func.php';
 
 $selDate = $_REQUEST["selDate"];
 

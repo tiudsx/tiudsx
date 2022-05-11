@@ -60,7 +60,7 @@ foreach($data as $key => $row) {
             if(!$result_set) goto errGo;
 
             $select_query = "INSERT INTO `AT_PROD_MAIN` (`code`, `bankseq`, `shopcharge`, `account_yn`, `category`, `categoryname`, `shopname`, `tel_kakao`, `tel_admin`, `shopaddr`, `shoplat`, `shoplng`, `img_ver`, `sub_title`, `sub_tag`, `shop_option`, `sub_info`, `shop_resinfo`, `shop_img`, `content_type`, `content`, `lesson_yn`, `rent_yn`, `bbq_yn`, `use_yn`, `view_yn`, `link_url`, `link_yn`, `sell_cnt`, `insuserid`, `insdate`, `upduserid`, `upddate`) VALUES
-            ('$row[1]', 0, 0, 'N', '$row[5]', '$row[4]', '$row[2]', '', '$row[6]', '$row[7]', '$row[8]', '$row[9]', 0, '$row[10]', '$row[3]', '', '', '', 'https://surfenjoy.cdn3.cafe24.com/eat/thumfood.jpg', 'html', '', 'N', 'N', 'N', 'Y', 'Y', '', 'N', 0, 'admin', now(), 'admin', now());";
+            ('$row[1]', 0, 0, 'N', '$row[5]', '$row[4]', '$row[2]', '', '$row[6]', '$row[7]', '$row[8]', '$row[9]', 0, '$row[10]', '$row[3]', '', '', '', 'https://actrip.cdn1.cafe24.com/eat/thumfood.jpg', 'html', '', 'N', 'N', 'N', 'Y', 'Y', '', 'N', 0, 'admin', now(), 'admin', now());";
             //echo $select_query;
             $result_set = mysqli_query($conn, $select_query);
             if(!$result_set) goto errGo;
@@ -188,7 +188,7 @@ foreach($data as $key => $row) {
             $sub_title = $row[13]."@".$row[14];
             $sub_tag = "";
             $sub_info = "서핑강습|0|".$row[16]."@숙박|게하|0|".$row[18];
-            $imgurl = "https://surfenjoy.cdn3.cafe24.com/act_content/".$row[53]."/";
+            $imgurl = "https://actrip.cdn1.cafe24.com/act_content/".$row[53]."/";
             $shop_img = $imgurl.$row[19]."|".$imgurl.$row[20]."|".$imgurl.$row[21]."|".$imgurl.$row[22]."|";
             //상세설명 구분 : file / html
             $content_type = $row[24];

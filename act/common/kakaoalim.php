@@ -190,7 +190,7 @@ function mailMsg($arrMail){
 										<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
 											<tbody>
 												<tr>
-													<td style=\"\" width=\"61\"> <a href=\"https://actrip.co.kr\" target=\"_blank\"><img src=\"https://surfenjoy.cdn3.cafe24.com/logo/weblogo01.png\"></a> </td>
+													<td style=\"\" width=\"61\"> <a href=\"https://actrip.co.kr\" target=\"_blank\"><img src=\"https://actrip.cdn1.cafe24.com/logo/weblogo01.png\"></a> </td>
 												</tr>
 											</tbody>
 										</table>

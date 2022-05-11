@@ -32,7 +32,7 @@ $img_ver = 0;
 $sub_title = "막국수";
 $sub_tag = "한식@배달가능";
 $sub_info = "쿠폰제공시 1인 1음료 제공";
-$imgurl = "https://surfenjoy.cdn3.cafe24.com/eat/";
+$imgurl = "https://actrip.cdn1.cafe24.com/eat/";
 $shop_img = $imgurl."thumfood.jpg";
 //상세설명 구분 : file / html
 $content_type = "html";

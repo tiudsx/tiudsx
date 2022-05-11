@@ -1,8 +1,7 @@
 <?php
 include __DIR__.'/../db.php';
-include __DIR__.'/../surf/surfkakao.php';
-include __DIR__.'/../surf/surfmail.php';
-include __DIR__.'/../surf/surffunc.php';
+include __DIR__.'/../common/func.php';
+include __DIR__.'/../common/kakaoalim.php';
 
 $param = $_REQUEST["resparam"];
 $InsUserID = ($_REQUEST["userId"] == "") ? $_REQUEST["userName"] : $_REQUEST["userId"];
@@ -144,7 +143,6 @@ if($param == "BusI"){
         $msgType = 2; //일반예약
     }
 
-    $week = array("일","월","화","수","목","금","토");
     //양양행 좌석예약
     for($i = 0; $i < count($SurfDateBusY); $i++){
         $TotalPrice += $res_totalprice;
@@ -156,7 +154,7 @@ if($param == "BusI"){
         if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
             $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }else{
-            $weekday = $week[date('w', strtotime($SurfDateBusY[$i]))];
+            $weekday = fnWeek($SurfDateBusS[$i]);
 
             $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '['.$SurfDateBusY[$i].'('.$weekday.')] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }
@@ -176,7 +174,7 @@ if($param == "BusI"){
         if(array_key_exists($SurfDateBusS[$i].$busNumS[$i], $arrSeatInfoE)){
             $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
         }else{
-            $weekday = $week[date('w', strtotime($SurfDateBusS[$i]))];
+            $weekday = fnWeek($SurfDateBusS[$i]);
 
             $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '['.$SurfDateBusS[$i].'('.$weekday.')] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
         }

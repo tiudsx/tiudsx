@@ -651,9 +651,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <div class="fixedwidth resbottom">
         <?if($reqSeq == 5){
         ?>
-            <a href="https://booking.naver.com/booking/5/bizes/501593" target="_blank"><img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png"></a>
+            <a href="https://booking.naver.com/booking/5/bizes/501593" target="_blank"><img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png"></a>
         <?}else{?>
-            <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> 
+            <img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png" id="slide1"> 
         <?}?>
     </div>
     <div id="sildeing" style="position:absolute;bottom:80px;display: none;">

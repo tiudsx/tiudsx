@@ -1,9 +1,9 @@
 <?php
 if($_REQUEST["selDate"]  == ""){
-	include __DIR__.'/../common/funcalendar.php';
+	include __DIR__.'/../common/func.php';
     $selDate = str_replace("-", "", date("Y-m-d"));
 }else{
-	include __DIR__.'/../../common/funcalendar.php';
+	include __DIR__.'/../../common/func.php';
 	include __DIR__.'/../../db.php';
     $selDate = $_REQUEST["selDate"];
 }

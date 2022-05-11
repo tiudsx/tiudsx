@@ -1,7 +1,7 @@
 <? include 'db.php'; ?>
 
 <?
-include __DIR__.'/surf/surffunc.php';
+include __DIR__.'/common/func.php';
 
 $param_mid = $_REQUEST["mid"];
 
@@ -132,13 +132,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                <!-- <img src="https://surfenjoy.cdn3.cafe24.com/act_notice/bus_notice.jpg" class="placeholder"> -->
+                <!-- <img src="https://actrip.cdn1.cafe24.com/act_notice/bus_notice.jpg" class="placeholder"> -->
                     <?include 'surfview_content.php';?>
                     
-                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step1.jpg" class="placeholder">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step2.jpg" class="placeholder">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step3.jpg" class="placeholder">
-                    <img src="https://surfenjoy.cdn3.cafe24.com/act_content/<?=$param?>_step4.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/act_content/<?=$param?>_step1.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/act_content/<?=$param?>_step2.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/act_content/<?=$param?>_step3.jpg" class="placeholder">
+                    <img src="https://actrip.cdn1.cafe24.com/act_content/<?=$param?>_step4.jpg" class="placeholder">
                 </div>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
@@ -392,7 +392,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
-        <!-- <img src="https://surfenjoy.cdn3.cafe24.com/button/btnReserve.png" id="slide1"> -->
+        <!-- <img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png" id="slide1"> -->
     </div>
     <div id="sildeing" style="position:absolute;bottom:80px;display: none;">
     </div>

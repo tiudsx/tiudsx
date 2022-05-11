@@ -9,7 +9,7 @@
 	<div class="pop_area_out">
 		<div class="pop_area_in">
 			<div class="pop_middle">
-				<a href="http://surfenjoy.com/surfres?seq=64"><img src="http://surfenjoy.cdn3.cafe24.com/shop/surfenjoy_new_4.jpg?v=4" alt="당찬패키지" class="placeholder"></a>
+				<a href="http://surfenjoy.com/surfres?seq=64"><img src="http://actrip.cdn1.cafe24.com/shop/surfenjoy_new_4.jpg?v=4" alt="당찬패키지" class="placeholder"></a>
 			</div>
 			<div class="pop_bott">
 				<div class="pop_bott_1day"><input name="event1" type="checkbox" value="checkbox2"></div>

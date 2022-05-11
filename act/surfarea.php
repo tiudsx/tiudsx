@@ -93,7 +93,7 @@ $result_shopadbeach = mysqli_query($conn, $select_query);
                 ?>
                     <!-- <div class="swiper-slide">
                         <a href="/surfview?seq=5">
-                            <img src="https://surfenjoy.cdn3.cafe24.com/act_content/soleast/sol.east_thumbnail_200x200.jpg" alt="">
+                            <img src="https://actrip.cdn1.cafe24.com/act_content/soleast/sol.east_thumbnail_200x200.jpg" alt="">
                             <p>대진</p>
                             <p>솔.동해서핑점</p>
                             <p>50,000원</p>

@@ -95,7 +95,7 @@ if($Shopcnt > 1){
 <div id="containerTab" class="areaRight">
 
 <?
-include __DIR__.'/../../surf/surffunc.php';
+include __DIR__.'/../../common/func.php';
 // echo "surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|5'));
 ?>
 

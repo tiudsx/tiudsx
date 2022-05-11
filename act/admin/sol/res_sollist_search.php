@@ -1,6 +1,6 @@
 <?
 include __DIR__.'/../../db.php';
-include __DIR__.'/../../surf/surfkakao.php';
+include __DIR__.'/../../common/kakaoalim.php';
 
 $reqDate = $_REQUEST["selDate"];
 if($reqDate == ""){
