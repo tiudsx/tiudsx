@@ -3,7 +3,7 @@
 </div>
 
 <!--div class="layG_kakao">
-    <div class="fixedwidth kakaobtn" style="padding-right:15px;"><a href="https://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://surfenjoy.cdn3.cafe24.com/icon/kakako.png?v=1" style="width: 38px;height: 38px;"></a>
+    <div class="fixedwidth kakaobtn" style="padding-right:15px;"><a href="https://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://actrip.cdn1.cafe24.com/icon/kakako.png?v=1" style="width: 38px;height: 38px;"></a>
     </div>
 </div-->
 
