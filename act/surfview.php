@@ -143,7 +143,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <!-- <li onclick="fnResView(false, '#view_tab3', 69, this);"><a>예약하기</a></li> -->
                             <?if($reqSeq == 5){
                             ?>
-                            <li><a href="https://booking.naver.com/booking/5/bizes/376104" target="_blank">예약하기</a></li>
+                            <li><a href="http://naver.me/xlWBeWzU" target="_blank">예약하기</a></li>
                             <?
                             }else{?>
                             <li onclick="fnResView(false, '#view_tab3', 69, this);"><a>예약하기</a></li>
@@ -651,7 +651,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <div class="fixedwidth resbottom">
         <?if($reqSeq == 5){
         ?>
-            <a href="https://booking.naver.com/booking/5/bizes/376104" target="_blank"><img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png"></a>
+            <a href="http://naver.me/xlWBeWzU" target="_blank"><img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png"></a>
         <?}else{?>
             <img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png" id="slide1"> 
         <?}?>
