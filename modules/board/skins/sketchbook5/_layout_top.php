@@ -30,9 +30,9 @@
 							<li><a href="/surfbus"><img src="/act/images/icon/ibus.png" alt=""></a></li>
 							<li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
 							<!-- <li><a href="javascript:alert('서비스 준비중입니다.');"><img src="/act/images/icon/ibbq.png" alt=""></a></li> -->
-							<li><a href="https://m.cafe.naver.com/ca-fe/web/cafes/29998302/menus/7" target="_blank"><img src="/act/images/icon/ievent.png" alt=""></a></li>
+							<!-- <li><a href="https://m.cafe.naver.com/ca-fe/web/cafes/29998302/menus/7" target="_blank"><img src="/act/images/icon/ievent.png" alt=""></a></li>
 							<li><a href="/staylist"><img src="/act/images/icon/ibed.png" alt=""></a></li>
-							<li><a href="/eatlist"><img src="/act/images/icon/ifood.png" alt=""></a></li>
+							<li><a href="/eatlist"><img src="/act/images/icon/ifood.png" alt=""></a></li> -->
 						</ul>
 						<ul class="menu03">
 							<li><a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="/act/images/icon/cscenter.svg" alt="">고객센터</a></li>
@@ -40,10 +40,15 @@
 							<li>평일 09:00-18:00
 							<br>주말 06:00-20:00</li>
 						</ul>                          
-						<ul class="menu04">
+						<!-- <ul class="menu04">
 							<li><a href="https://cafe.naver.com/actrip" target="_blank">네이버카페</a></li>
 							<li><a href="/notice">공지사항</a></li>
 							<li><a href="/surfFAQ">자주묻는질문</a></li>
+						</ul> -->
+						<ul class="menu04">
+							<li><a href="https://cafe.naver.com/actrip" target="_blank">네이버카페</a></li>
+							<li><a href="https://blog.naver.com/surfenjoy" target="_blank">액트립 블로그</a></li>
+							<li><a href="https://www.instagram.com/actrip_surf" target="_blank">액트립 인스타그램</a></li>
 						</ul>
 						<ul class="menu05">
 							<li><a href="https://cafe.naver.com/actrip" target="_blank"><img src="/act/images/icon/cafe.svg" alt=""></a>

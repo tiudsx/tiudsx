@@ -78,20 +78,20 @@
 						</a></li>
 					<li><a href="/bbq"><img src="/act/images/icon/ibbq.png" alt=""></a></li>
 					<!-- <li><a href="javascript:alert('서비스 준비중입니다.');"><img src="/act/images/icon/ibbq.png" alt=""></a></li> -->
-					<li><a href="https://m.cafe.naver.com/ca-fe/web/cafes/29998302/menus/7" target="_blank"><img src="images/icon/ievent.png" alt="">
+					<!-- <li><a href="https://m.cafe.naver.com/ca-fe/web/cafes/29998302/menus/7" target="_blank"><img src="images/icon/ievent.png" alt="">
 						</a></li>
 					<li><a href="/staylist"><img src="images/icon/ibed.png" alt="">
 						</a></li>
 					<li><a href="/eatlist"><img src="images/icon/ifood.png" alt="">
-						</a></li>
+						</a></li> -->
 				</ul>
 			</nav>
 			<div class="sldBnr">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide"><a href="https://smartstore.naver.com/actrip/products/5135333709" target="_blank"><img src="images/banner/main_banner1.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/377" target="_blank"><img src="images/banner/levelup.jpg?v=1" alt=""></a></div>
-						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/2097" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div>
+						<!-- <div class="swiper-slide"><a href="https://smartstore.naver.com/actrip/products/5135333709" target="_blank"><img src="images/banner/main_banner1.jpg" alt=""></a></div> -->
+						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/2096" target="_blank"><img src="images/banner/levelup.jpg?v=1" alt=""></a></div>
+						<!-- <div class="swiper-slide"><a href="https://cafe.naver.com/actrip/2097" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div> -->
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewBus.jpg" alt=""></a></div>
 					</div>
