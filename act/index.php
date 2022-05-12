@@ -92,8 +92,8 @@
 						<!-- <div class="swiper-slide"><a href="https://smartstore.naver.com/actrip/products/5135333709" target="_blank"><img src="images/banner/main_banner1.jpg" alt=""></a></div> -->
 						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/2096" target="_blank"><img src="images/banner/levelup.jpg?v=1" alt=""></a></div>
 						<!-- <div class="swiper-slide"><a href="https://cafe.naver.com/actrip/2097" target="_blank"><img src="images/banner/banefit.jpg" alt=""></a></div> -->
-						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div>
-						<div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewBus.jpg" alt=""></a></div>
+						<!-- <div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewSurf.jpg" alt=""></a></div> -->
+						<!-- <div class="swiper-slide"><a href="https://cafe.naver.com/actrip/376" target="_blank"><img src="images/banner/reviewBus.jpg" alt=""></a></div> -->
 					</div>
 					<div class="swiper-pagination"></div>
 				</div>
@@ -282,25 +282,25 @@
 
 <!-- Initialize Swiper -->
 <script>
-	var swiper = new Swiper('.swiper-container', {
-		loop: true,
-		autoplay: {
-            delay: 2000,
-            disableOnInteraction: false,
-        },
-		pagination: {
-			el: '.swiper-pagination',
-			dynamicBullets: true,
-		},
-	});
+	// var swiper = new Swiper('.swiper-container', {
+	// 	loop: true,
+	// 	autoplay: {
+    //         delay: 2000,
+    //         disableOnInteraction: false,
+    //     },
+	// 	pagination: {
+	// 		el: '.swiper-pagination',
+	// 		dynamicBullets: true,
+	// 	},
+	// });
 
-	$j(".swiper-container").hover(
-		function() {
-			swiper.autoplay.stop();
-		}, 
-		function() {
-			swiper.autoplay.start();
-	});
+	// $j(".swiper-container").hover(
+	// 	function() {
+	// 		swiper.autoplay.stop();
+	// 	}, 
+	// 	function() {
+	// 		swiper.autoplay.start();
+	// });
 </script>
 <!-- tab -->
 <script>

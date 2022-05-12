@@ -425,7 +425,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $rtnTextCode = $res_kakao.'회';
 
         $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b><br>(".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";  
-        $rtnText = '<span class="btn_view" seq="40'.$c.'">'.$rtnText.'</span><span style="display:none;"><b>'.$arrChk[2].'</b><br><br>'.$rtnMessage.'</span>';
+        $rtnText = '<span class="btn_view" seq="40'.$c.'">'.$rtnText.'</span><span style="display:none;"><b>'.$arrChk[2].' <a href="/sol_kakao?chk=1&seq='.$resseq.'" target="_blank">[알림톡 보기]<a></b><br><br>'.$rtnMessage.'</span>';
     }
 ?>
     <tr>

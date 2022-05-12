@@ -17,10 +17,10 @@ mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
 if($chk == 1){
-    
+    $resseq = trim($resseq);
 }else{
     $resseq = trim(decrypt($resseq));
-
+    
     $select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao_chk = 'Y' WHERE resseq = $resseq";
     $result_set = mysqli_query($conn, $select_query);
     mysqli_query($conn, "COMMIT");
@@ -179,7 +179,6 @@ $j(document).ready(function(){
 
                     <?if($tablist1 != ""){?>
                     <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_01.jpg" class="placeholder">
-                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_02.jpg" class="placeholder">
 
                 <?if($surfbbq_chk == 1 && $stay_chk == 1){?>
                     <!-- <center>
@@ -259,6 +258,7 @@ $j(document).ready(function(){
                         </div>
                     </div>
                     </center>
+                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_02.jpg" class="placeholder">
                     
                     <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_03.jpg" class="placeholder">
                     <?}?>
