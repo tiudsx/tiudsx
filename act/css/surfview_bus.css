@@ -6,8 +6,8 @@
 
 .bd_btn{height:28px;margin:0;background:linear-gradient(to bottom,#FFF 0%,#F3F3F3 100%);border:1px solid;border-color:#CCC #C6C6C6 #C3C3C3 #CCC;border-radius:3px;white-space:nowrap;cursor:pointer;text-decoration:none !important;text-align:center;text-shadow:0 0px 0 #FFF;box-shadow:inset 0 0 1px 1px #FFF,0 1px 1px rgba(0,0,0,.1);}
 
-.busSeatTable{background:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_0.jpg);background-repeat:no-repeat;background-position:center;width:325px;height:1000px;border:0px solid #DDD;text-align:center;margin:auto;}
+.busSeatTable{background:url(https://actrip.cdn1.cafe24.com/bus/bus_0.jpg);background-repeat:no-repeat;background-position:center;width:325px;height:1000px;border:0px solid #DDD;text-align:center;margin:auto;}
 .busSeatList{background-repeat:no-repeat;background-position:center;padding:2px;}
-.busSeatListY{background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.png); color: black; cursor: pointer;}
-.busSeatListC{background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_2.jpg); color: black; cursor: pointer;}
-.busSeatListN{background-image:url(https://surfenjoy.cdn3.cafe24.com/bus/bus_1.jpg); color: #959595;}
+.busSeatListY{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_1.png); color: black; cursor: pointer;}
+.busSeatListC{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_2.jpg); color: black; cursor: pointer;}
+.busSeatListN{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_1.jpg); color: #959595;}
