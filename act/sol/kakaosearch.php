@@ -377,8 +377,7 @@ $j(document).ready(function(){
             </div>
 
             <!-- 서핑강습 안내 -->
-            <div tabid="viewtab" id="view_tab4" style="min-height: 800px;display:<?=$Displaytab4?>;">   
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
+            <div tabid="viewtab" id="view_tab4" style="min-height: 800px;display:<?=$Displaytab4?>;">
                 <?
                 foreach ($arrSurf as $key => $value) {
                     $arrVlu = explode("|", $value);
@@ -451,16 +450,19 @@ $j(document).ready(function(){
                 if($arrVlu[0] == "서프팩토리"){
                 ?>
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
+                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surffactory_04.jpg" class="placeholder">
                 <?
                 }else if($arrVlu[0] == "서퍼랑"){
                 ?>
                 <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_02.jpg" class="placeholder">
+                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
                 <?
                 }else if($arrVlu[0] == "라라서프"){
                 ?>
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
+                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
                 <?
                 }

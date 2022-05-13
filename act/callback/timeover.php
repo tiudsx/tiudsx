@@ -184,22 +184,6 @@ if($count > 0){
 	$k++;
 //============================ 실행 단계 ============================
 
-//==== 솔게하 예약건 알림톡 발송 시작 ====
-if(date("H") >= 9){
-    $select_querySol = "SELECT a.resseq FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-                            ON a.resseq = b.resseq 
-                            WHERE ((b.sdate <= DATE_FORMAT(NOW(), '%Y-%m-%d') AND b.edate >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d')) 
-                                OR b.resdate IN (DATE_FORMAT(NOW(), '%Y-%m-%d'), DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 1 DAY), '%Y-%m-%d'))) 
-                                AND a.res_confirm = '확정'
-                                AND (res_kakao < 2 AND res_kakao_chk = 'N')
-                            GROUP BY a.resseq";
-    $query_log .= '솔 카톡발송 AT_SOL_RES_MAIN : '.str_replace("'", '"',$select_querySol);
-
-    $result_setlist = mysqli_query($conn, $select_querySol);
-    $count = mysqli_num_rows($result_setlist);
-}
-//==== 솔게하 예약건 알림톡 발송 종료 ====
-
 	$success = true;
 	$select_query = "UPDATE `AT_RES_SUB` 
                         SET res_confirm = 7
@@ -217,6 +201,130 @@ if(date("H") >= 9){
     
     $countChk .= "@".$code."|".$k;   
 }
+
+//==== 솔게하 예약건 알림톡 발송 시작 ====
+$select_querySol = "SELECT * FROM `AT_CALL_TIMEOVER` WHERE user_name = '솔알림톡' AND sqlquery = DATE_FORMAT(NOW(), '%Y-%m-%d')";
+$result_setlist = mysqli_query($conn, $select_querySol);
+$count = mysqli_num_rows($result_setlist);
+
+if(date("H") >= 9 && $count == 0){
+    $select_query = "INSERT INTO AT_CALL_TIMEOVER(`user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`, `sqlquery`) VALUES ('솔알림톡', $weeknum, $timenum, now(), 'OK', $timestart, $timeend, DATE_FORMAT(NOW(), '%Y-%m-%d'))";
+    $result_set = mysqli_query($conn, $select_query);
+
+    $select_querySol = "SELECT a.resseq FROM AT_SOL_RES_MAIN a INNER JOIN AT_SOL_RES_SUB b 
+                                ON a.resseq = b.resseq
+                            WHERE a.res_kakao = 0 AND a.res_kakao_chk = 'N' 
+                                AND (DATE_ADD(b.sdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d') OR DATE_ADD(b.resdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d'))
+                                AND a.res_confirm = '확정'
+                                GROUP BY a.resseq";
+    $query_log .= '
+                    솔 카톡발송 AT_SOL_RES_MAIN : '.str_replace("'", '"',$select_querySol);
+
+    $result_setlist = mysqli_query($conn, $select_querySol);
+    $count = mysqli_num_rows($result_setlist);
+
+    if($count > 0){
+        while ($rowSol = mysqli_fetch_assoc($result_setlist)){
+            $resseq = $rowSol['resseq'];
+
+            $select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $resseq";
+            $result = mysqli_query($conn, $select_query);
+            $rowMain = mysqli_fetch_array($result);
+        
+            $userName = $rowMain["user_name"];
+            $userPhone = $rowMain["user_tel"];
+        
+            //==========================카카오 메시지 발송 ==========================
+            $select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $resseq ORDER BY ressubseq";
+            $resultSite = mysqli_query($conn, $select_query_sub);
+    
+            $resList = "";
+            $resInfo = "";
+            while ($rowSub = mysqli_fetch_assoc($resultSite)){
+    
+                $res_type = $rowSub['res_type'];
+                if($res_type == "stay"){ //숙박,바베큐,펍파티
+                    if($rowSub['prod_name'] != "N"){ //숙박미신청
+                        $resList1 = "게스트하우스,";
+                        $resInfo1 = "   * 게스트하우스\n     - 입실:16시, 퇴실:익일 11시\n     - 방/침대 배정은 이용일 14시 이후로 하단에 있는 [필독]예약 상세안내 버튼에서 확인가능합니다\n\n";
+                    }
+    
+                    if($rowSub['bbq'] != "N"){ 
+                        if(!(strpos($rowSub['bbq'], "바베큐") === false))
+                        {
+                            $resList2 = "바베큐파티,";
+                            $resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 10분전에 1층으로 와주세요~\n\n";
+                        }
+    
+                        if(!(strpos($rowSub['bbq'], "펍파티") === false))
+                        {
+                            $resList3 = "펍파티,";
+                            $resInfo3 = "   * 펍파티\n     - 파티시간 : 22시 ~ 24시\n\n";
+                        }
+                    }
+                }else{ //강습,렌탈
+                    if($rowSub['prod_name'] != "N"){ //숙박미신청
+                        $resList4 = "서핑강습,";
+                        $resInfo4 = "   * 서핑강습\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
+                    }
+    
+                    if($rowSub['surfrent'] != "N"){ //숙박미신청
+                        $resList5 = "장비렌탈,";
+                        $resInfo5 = "   * 장비렌탈\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
+                    }
+                }
+            }
+    
+            $resList = $resList1.$resList2.$resList3.$resList4.$resList5;
+            $resList = substr($resList, 0, strlen($resList) - 1);
+            
+            $resInfo = $resInfo1.$resInfo2.$resInfo3.$resInfo4.$resInfo5;
+            $resInfo = substr($resInfo, 0, strlen($resInfo) - 1);
+            $resInfo = "하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요.\n";
+            
+            $msgTitle = '액트립 솔.동해서핑점 예약안내';
+            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 예약하신 시간보다 늦게 도착하실 경우 꼭 연락주세요.\n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
+    
+            $arrKakao = array(
+                "gubun"=> $code
+                , "admin"=> "N"
+                , "smsTitle"=> $msgTitle
+                , "userName"=> $userName
+                , "tempName"=> "at_surf_step3"
+                , "kakaoMsg"=>$kakaoMsg
+                , "userPhone"=> $userPhone
+                , "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
+                , "link2"=>"surflocation?seq=5" //지도로 위치보기
+                , "link3"=>"event" //공지사항
+                , "link4"=>""
+                , "link5"=>""
+                , "smsOnly"=>"N"
+            );
+    
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+    
+            //------- 쿠폰코드 입력 -----
+            $data = json_decode($arrRtn[0], true);
+            $kakao_code = $data[0]["code"];
+            $kakao_type = $data[0]["data"]["type"];
+            $kakao_msgid = $data[0]["data"]["msgid"];
+            $kakao_message = $data[0]["message"];
+            $kakao_originMessage = $data[0]["originMessage"];
+    
+            $userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
+    
+            // 카카오 알림톡 DB 저장 START
+            $select_query = kakaoDebug($arrKakao, $arrRtn);            
+            $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 END
+    
+            $select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$userinfo."' WHERE resseq = $resseq";
+            $result_set = mysqli_query($conn, $select_query);
+            if(!$result_set) $success = false;
+        }
+    }
+}
+//==== 솔게하 예약건 알림톡 발송 종료 ====
 
 $select_query = "UPDATE AT_CALL_TIMEOVER SET success = '".$success."', stats = '".$errChk."', gubuncount = '".$countChk."', sqlquery = '".$query_log."' WHERE seq = ".$seq;
 // echo $success.'<br><br>'.$query_log.'<br><br>'.$select_query;
