@@ -138,7 +138,7 @@ if(count($arrChk) == 3){ //현재 예약건만 보기
 <iframe id="ifrmResize" name="ifrmResize" style="width:800px;height:400px;display:none;"></iframe>
 
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/surfview_bus.js"></script>
+<script type="text/javascript" src="/act/js/surfview_bus.js?v=1"></script>
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 
 <? include __DIR__.'/../../_layout_bottom.php'; ?>

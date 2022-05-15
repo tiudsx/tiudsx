@@ -913,7 +913,7 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
     }
 
     $j("#mapimg").css("display", "block");
-    $j("#mapimg").attr("src", "https://actrip.cdn1.cafe24.com/act_bus/" + gubun + busnum + "_" + num + ".JPG");
+    $j("#mapimg").attr("src", "https://actrip.cdn1.cafe24.com/act_bus/2022/" + gubun + busnum + "_" + num + ".jpg");
 
     $j(".mapviewid").css("background", "").css("color", "");
     $j(obj).css("background", "#1973e1").css("color", "#fff");

@@ -82,7 +82,7 @@ if($Shopcnt > 1){
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/surfview_bus.js"></script>
+<script type="text/javascript" src="/act/js/surfview_bus.js?v=1"></script>
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 
 <div class="container" id="contenttop">
