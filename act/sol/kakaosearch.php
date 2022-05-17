@@ -404,7 +404,7 @@ $j(document).ready(function(){
                 <?
                 }else if($arrVlu[0] == "라라서프"){
                 ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_01.jpg" class="placeholder">
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_3_01.jpg" class="placeholder">
                 <?
                 }
                 ?>
@@ -463,7 +463,7 @@ $j(document).ready(function(){
                 ?>
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
                 <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/lalasurf_04.jpg" class="placeholder">
                 <?
                 }
                 ?>
