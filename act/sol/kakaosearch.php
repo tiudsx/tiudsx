@@ -169,6 +169,7 @@ $j(document).ready(function(){
                                 <?=$tablist3?>
                                 <?=$tablist4?>
                             <?}?>
+                            <li tabid="viewli" id="view_li6" onclick="fnResViewSol(false, '#view_tab6', 80, this);"><a>리뷰이벤트</a></li>
                         </ul>
                     </div>
                 </div>
@@ -300,12 +301,12 @@ $j(document).ready(function(){
             <div class="SolNoticeLayer">
                 <div class="box">
                     <div class="in">
-                        <?if($tablist1 != ""){ //서핑강습 이용안내?> 
+                        <?if($tablist1 != ""){ //숙소 이용안내?> 
                         <p class="restitle" style="font-size:22px;">숙소 이용안내</p>
                         <p class="info">✔ 입실은 셀프체크인이며, 안내사항 확인 후 입실하세요.</p>
                         <p class="info">✔ 배정된 객실은 [객실 조회] 후 확인 가능합니다.</p>
                         <?}
-                        if($tablist2 != ""){ //서핑강습 이용안내?> 
+                        if($tablist2 != ""){ //바베큐 이용안내?> 
                         <p class="restitle" style="font-size:22px;">바베큐 이용안내</p>
                         <p class="info">✔ 이용시간 : 19:00 ~ 21:30</p>
                         <p class="info">✔ 18:50까지 1층 데크에서 대기해주세요.</p>
@@ -319,6 +320,9 @@ $j(document).ready(function(){
                         <p class="restitle" style="font-size:22px;">서핑렌탈 이용안내</p>
                         <p class="info">✔ [렌탈] 탭에 있는 안내사항을 확인하세요.</p>
                         <?}?>
+
+                        <p class="restitle" style="font-size:22px;">네이버예약 리뷰 이벤트</p>
+                        <p class="info">✔ 리뷰 남겨주시면 즉석라면 또는 커피(택 1) 드려요~</p>
 
                         <a class="SolLayer_btn" onclick="$j('.SolNoticeLayer').css('display', 'none');">확인</a>
                         
@@ -557,6 +561,11 @@ $j(document).ready(function(){
                 <?
                 }
                 ?>
+            </div>
+
+            <!-- 리뷰이벤트 안내 -->
+            <div tabid="viewtab" id="view_tab6" style="min-height: 800px;display:none;">
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/event_review.jpg" class="placeholder">
             </div>
 
             <div style="padding:10px 0 5px 0;font-size:12px;">
