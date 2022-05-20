@@ -193,7 +193,28 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon == "MYTRIP"){ echo "[마이리얼]"; }else if($couponseq == 14){ echo "[망고]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?
+                    if($res_coupon == "JOABUS"){ 
+                        echo "[조아]"; 
+                    }else if($res_coupon == "NAVER"){ 
+                        echo "[NAVER]"; 
+                    }else if($res_coupon == "KLOOK"){ 
+                        echo "[KLOOK]";
+                    }else if($res_coupon == "NABUSA" || $couponseq == 7){
+                        echo "[쇼핑]"; 
+                    }else if($res_coupon == "NABUSB" || $couponseq == 10){
+                        echo "[예약]"; 
+                    }else if($res_coupon == "FRIP" || $couponseq == 11){ 
+                        echo "[프립]";
+                    }else if($res_coupon == "MYTRIP"){ 
+                        echo "[마이리얼]"; 
+                    }else if($couponseq == 14){
+                        echo "[망고]"; 
+                    }else if($couponseq == 15){
+                        echo "[서프존]"; 
+                    }else if($res_coupon != ""){
+                        echo "[할인]"; 
+                    }?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -458,7 +479,28 @@ if(($i % 2) == 0 && $i > 0){
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?if($res_coupon == "JOABUS"){ echo "[조아]"; }else if($res_coupon == "NAVER"){ echo "[NAVER]"; }else if($res_coupon == "KLOOK"){ echo "[KLOOK]"; }else if($res_coupon == "NABUSA"){ echo "[쇼핑]"; }else if($res_coupon == "NABUSB"){ echo "[예약]"; }else if($res_coupon == "FRIP"){ echo "[프립]"; }else if($res_coupon == "MYTRIP"){ echo "[마이리얼]"; }else if($couponseq == 14){ echo "[망고]"; }else if($res_coupon != ""){ echo "[할인]"; }?>
+                    <?
+                    if($res_coupon == "JOABUS"){ 
+                        echo "[조아]"; 
+                    }else if($res_coupon == "NAVER"){ 
+                        echo "[NAVER]"; 
+                    }else if($res_coupon == "KLOOK"){ 
+                        echo "[KLOOK]";
+                    }else if($res_coupon == "NABUSA" || $couponseq == 7){
+                        echo "[쇼핑]"; 
+                    }else if($res_coupon == "NABUSB" || $couponseq == 10){
+                        echo "[예약]"; 
+                    }else if($res_coupon == "FRIP" || $couponseq == 11){ 
+                        echo "[프립]";
+                    }else if($res_coupon == "MYTRIP"){ 
+                        echo "[마이리얼]"; 
+                    }else if($couponseq == 14){
+                        echo "[망고]"; 
+                    }else if($couponseq == 15){
+                        echo "[서프존]"; 
+                    }else if($res_coupon != ""){
+                        echo "[할인]"; 
+                    }?>
                 </td>
             </tr>
             <?=$reslist1?>

@@ -113,37 +113,44 @@ if($count == 1){
 		}
 
 		//$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
-		if($etc != ''){
-			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
-		}
+		// if($etc != ''){
+		// 	$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
+		// }
+
+        $busSeatInfoTotal .= ' ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n';
 
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
 
-		if($shopSeq == 7){
-			$resparam = "surfbus_yy";
-		}else{
-			$resparam = "surfbus_dh";			
-		}
-		$arrKakao = array(
-			"gubun"=> $code
-			, "admin"=> "N"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "tempName"=> "at_res_bus1"
-			, "kakaoMsg"=>$kakaoMsg
-			, "userPhone"=> $userPhone
-			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
-			, "link4"=>"eatlist" //제휴업체 목록
-			, "link5"=>"event" //공지사항
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=>"서핑버스"
-			, "PROD_URL"=>$shopSeq
-			, "PROD_TYPE"=>"bus"
-			, "RES_CONFIRM"=>"3"
-		);
+		$tempName = "at_bus_12";
+        $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
+        $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
+        $btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+        $btn_ResCustomer = "kakaocustomer"; //문의하기
+        $btn_Notice = "";
+        $btn_ResContent = ""; //예약 상세안내
+
+        // 고객 카카오톡 발송
+        $arrKakao = array(
+            "gubun"=> "bus"
+            , "admin"=> "N"
+            , "smsTitle"=> $msgTitle
+            , "userName"=> $userName
+            , "tempName"=> $tempName
+            , "kakaoMsg"=>$kakaoMsg
+            , "userPhone"=> $userPhone
+            , "btn_ResContent"=> $btn_ResContent
+            , "btn_ResSearch"=> $btn_ResSearch
+            , "btn_ResChange"=> $btn_ResChange
+            , "btn_ResGPS"=> $btn_ResGPS
+            , "btn_ResCustomer"=> $btn_ResCustomer
+            , "btn_Notice"=> $btn_Notice
+            , "smsOnly"=>"N"
+            , "PROD_NAME"=>"서핑버스 정류장변경"
+            , "PROD_URL"=>$shopSeq
+            , "PROD_TYPE"=>"bus"
+            , "RES_CONFIRM"=>"3"
+        );
 		
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 

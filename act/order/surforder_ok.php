@@ -11,7 +11,7 @@ $cancelChk = "none";
 
 if($gubun == 1){
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.optcode, c.stay_day 
-						FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
+						FROM `AT_RES_MAIN` a INNER JOIN `AT_RES_SUB` as b 
 							ON a.resnum = b.resnum
 								AND b.code = 'surf'
 						INNER JOIN `AT_PROD_OPT` c
@@ -20,9 +20,10 @@ if($gubun == 1){
 							ORDER BY a.resnum, b.ressubseq";
 
 }else{
-	$select_query = "SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, TIMESTAMPDIFF(MINUTE, b.confirmdate, now()) as timeM2 
-						FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
+	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, TIMESTAMPDIFF(MINUTE, b.confirmdate, now()) as timeM2, d.couponseq
+						FROM `AT_RES_MAIN` a INNER JOIN `AT_RES_SUB` as b 
 							ON a.resnum = b.resnum 
+						LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
 						WHERE a.resnum = $resNumber
 							ORDER BY a.resnum, b.ressubseq";
 }
@@ -60,16 +61,40 @@ if($count == 0){
 					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:none;">
 					※ 이용 1일전에는 취소가 불가능합니다.
 					</div>';
-				}else if($cancelChk == "NAVERA"){
-					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
-					※ 취소/환불은 네이버를 통해서 해주세요~
-					</div>';
 				}
+
+				$sitename = "";
+				if($res_coupon == "JOABUS"){ 
+					echo "[조아서프 서핑샵]"; 
+				}else if($res_coupon == "NABUSA" || $couponseq == 7){
+					$sitename = "[네이버쇼핑]"; 
+				}else if($res_coupon == "NABUSB" || $couponseq == 10){
+					$sitename = "[네이버예약]"; 
+				}else if($res_coupon == "FRIP" || $couponseq == 11){ 
+					$sitename = "[프립]";
+				}else if($res_coupon == "KLOOK"){ 
+					$sitename = "[KLOOK]";
+				}else if($res_coupon == "MYTRIP"){ 
+					$sitename = "[마이리얼트립]"; 
+				}else if($couponseq == 14){
+					$sitename = "[망고]"; 
+				}else if($couponseq == 15){
+					$sitename = "[서프존]"; 
+				}
+				
+				if($cancelChk == "coupon"){
+					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
+					※ 취소/환불은 예약하신 '.$sitename.'으로 문의해주세요~
+					</div>';
+				}else{
 				?>
 				<div class="write_table" style="padding-top:2px;padding-bottom:15px;">
 				※ 이용 1일전에는 취소/환불이 안됩니다.<br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 예약확정 후 2시간 이내에는 취소/환불이 가능합니다.
 				</div>
+				<?
+				}
+				?>
 
 				<span id="returnBank" style="display:none;">
 					<div class="gg_first">취소/환불 수수료 예정금액</div>
@@ -126,7 +151,7 @@ if($count == 0){
 							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />';
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="location.href=\'/ordersearch\';" />';
 						}?>
-						<?if($cancelChk == "none" || $cancelChk == "NAVERA"){?>
+						<?if($cancelChk == "none" || $cancelChk == "coupon"){?>
 						<?}else{?>
 							&nbsp;<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;display:'.$cancelChk.';" value="취소/환불 신청" onclick="fnRefund(<?=$num?>);" />
 						<?}?>

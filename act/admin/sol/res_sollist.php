@@ -349,6 +349,7 @@ include __DIR__.'/../../common/logininfo.php';
 									<select id="res_surftime" name="res_surftime[]" class="select" onchange="fnSolSurfSel(this);">
 										<option value=''>강습미신청</option>
 										<option value='9시'>9시</option>
+										<option value='10시'>10시</option>
 										<option value='11시'>11시</option>
 										<option value='13시'>13시</option>
 										<option value='15시'>15시</option>

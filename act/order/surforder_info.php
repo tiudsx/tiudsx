@@ -13,6 +13,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$bankUserName = $row['user_name'];
 	$res_confirm = $row['res_confirm'];
 	$res_coupon = $row['res_coupon'];
+	$couponseq = $row['couponseq'];
 
 	$chkView = 0;
 	$datDate = $row['res_date'];
@@ -31,9 +32,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$cancelChk = "";
 	}
 
-	if($res_coupon == "NAVERA" || $res_coupon == "NABUSA" || $res_coupon == "NABUSB" || $res_coupon == "NABUSC"){
+	if($res_coupon == "NAVERA" || $res_coupon == "NABUSA" || $res_coupon == "NABUSB" || $res_coupon == "NABUSC" || $couponseq == 7 || $couponseq == 10 || $couponseq == 11 || $couponseq == 15){
 		$chkView = 0;
-		$cancelChk = "NAVERA";
+		$cancelChk = "coupon";
 	}
 /*
 예약상태

@@ -237,26 +237,20 @@ if($param == "BusI"){
         
         //신규 로직 : 2022-01-04
         $gubun_title = $busTitleName.'서핑버스';
-        $msgChannelName = "";
-        $msgChannelName2 = '\n      - 예약취소는 예약하셨던 업체에서 접수가능합니다.';
+        //$msgChannelName2 = '\n      - 예약취소는 예약하셨던 사이트에서 확인해주세요.';
         
         if($coupon == "JOABUS"){
-            $gubun_title = "조아서프 패키지 서핑버스";
-            $msgChannelName = "&조아서프";
-            $msgChannelName2 = "";
-        }else if($coupon == "FRIP"){
-            $gubun_title = "프립 서핑버스";
-            $msgChannelName = '&프립';
+            //$gubun_title = "조아서프 패키지 서핑버스";
+            //$msgChannelName2 = '\n      - 예약취소는 예약하셨던 조아서프에 문의해주세요.';
+        }else if($coupon == "FRIP" || $couponseq == 11){
+            //$gubun_title = "프립 서핑버스";
         }else if($coupon == "MYTRIP"){
-            $gubun_title = "마이리얼트립 서핑버스";
-            $msgChannelName = '&마이리얼트립';
+            //$gubun_title = "마이리얼트립 서핑버스";
         }else if($coupon == "KLOOK"){
-            $gubun_title = "클룩 서핑버스";
-            $msgChannelName = '&클룩';
-        }else if($coupon == "SURFX"){
-            $gubun_title = "SURFX 서핑버스";
-            $msgChannelName = '&SURFX';
-        }else if($coupon == "NAVER"){
+            //$gubun_title = "클룩 서핑버스";
+        }else if($coupon == "SURFX" || $couponseq == 15){
+            //$gubun_title = "SURFX 서핑버스";
+        }else if($coupon == "NAVER" || $couponseq == 9 || $couponseq == 10){
             
         }else{
 
@@ -276,7 +270,7 @@ if($param == "BusI"){
             $btn_Notice = "";
             $btn_ResContent = ""; //예약 상세안내
         }else{
-            $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.'.$msgChannelName2.'\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n';
+            $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.'.$msgChannelName2.'\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
 
             $tempName = "at_bus_12";
             $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소

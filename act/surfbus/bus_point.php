@@ -6,10 +6,10 @@ $param = $_REQUEST["resparam"];
 $param = "surfbus_yy"; //임시 고정
 if($param == "surfbus_yy"){ //양양 셔틀버스
     $shopseq = 7;
-    $pointurl = __DIR__."/../surf/surfview_bus_tab3.html";
+    $pointurl = __DIR__."/../surfbus/surfview_bus_tab3.html";
 }else{ //동해 셔틀버스
     $shopseq = 14;
-    $pointurl = __DIR__."/../surf/surfview_bus_tab3_2.html";
+    $pointurl = __DIR__."/../surfbus/surfview_bus_tab3_2.html";
 }
 
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";

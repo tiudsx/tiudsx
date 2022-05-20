@@ -455,7 +455,7 @@ if($param == "RtnPrice"){
             
         // 예약좌석 정보
         foreach($arrSeatInfo as $bus) {
-            $busSeatInfo .= $bus;
+            $busSeatInfo .= $bus.'\n';
         }
         
         // 정류장 정보
@@ -492,25 +492,36 @@ if($param == "RtnPrice"){
             $info2_title = "탑승시간/위치 안내";
             $info2 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfo));
         }
+
+        $busSeatInfoTotal .= ' ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n';
     
         // 카카오톡 알림톡 발송
-        // $msgTitle = '액트립 '.$shopname.' 변경 안내';
         $msgTitle = '액트립 서핑버스 정보변경 안내';
-        $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n액트립 예약정보 변경\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.$pointMsg.'---------------------------------\n ▶ 안내사항\n      - 변경된 좌석/정류장 정보를 확인해주세요~\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-    
+        $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n변경신청하신 예약정보를 보내드립니다.\n\n액트립 예약정보\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.$busSeatInfoTotal.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 변경된 좌석/정류장 정보를 확인해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
+
+        $tempName = "at_bus_12";
+        $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
+        $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
+        $btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+        $btn_ResCustomer = "kakaocustomer"; //문의하기
+        $btn_Notice = "";
+        $btn_ResContent = ""; //예약 상세안내
+
+        // 고객 카카오톡 발송
         $arrKakao = array(
             "gubun"=> "bus"
             , "admin"=> "N"
             , "smsTitle"=> $msgTitle
             , "userName"=> $userName
-            , "tempName"=> "at_bus_step1"
+            , "tempName"=> $tempName
             , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
-            , "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-            , "link2"=>"pointchange?num=1&resNumber=".$ResNumber //예약조회/취소
-            , "link3"=>"surfbusgps" //셔틀버스 실시간위치 조회
-            , "link4"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
-            , "link5"=>"event" //공지사항
+            , "btn_ResContent"=> $btn_ResContent
+            , "btn_ResSearch"=> $btn_ResSearch
+            , "btn_ResChange"=> $btn_ResChange
+            , "btn_ResGPS"=> $btn_ResGPS
+            , "btn_ResCustomer"=> $btn_ResCustomer
+            , "btn_Notice"=> $btn_Notice
             , "smsOnly"=>"N"
             , "PROD_NAME"=>"서핑버스 정류장변경"
             , "PROD_URL"=>$shopseq

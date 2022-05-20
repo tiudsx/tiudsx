@@ -493,7 +493,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		, "tempName"=> "at_bus_kakao"
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
-		, "link1"=>"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
+		, "link1"=>"surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
 		, "link2"=>""
 		, "link3"=>""
 		, "link4"=>""
