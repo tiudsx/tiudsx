@@ -245,6 +245,53 @@ jQuery(function() {
         // },
         onSelect: function(selectedDate) {
             fnBusSearchDate(selectedDate, $j(this).attr("gubun"), $j(this).attr("id"));
+
+            
+            //달력컨트롤 : 출발노선 체크
+            if($j("#nextchk").val() == "Y"){
+                var arrDataS = 0;
+                var arrDataE = 0;
+                //편도
+                if($j("#daytype").val() == "0"){
+                    //양양행
+                    if($j("#busgubun").val() == "Y"){
+
+                    }else{ //서울행
+
+                    }
+                    var arrDataS = busData[$j("#busgubun").val() + $j("#SurfBus").val().substring(5).replace('-', '')];
+                    if(arrDataS.length == 1){
+                        $j("li[busnum=" + arrDataS[0].busnum + "]").click();
+                    }
+
+                    if(arrDataS.length == 1){
+                        //fnBusNext();
+                    }
+                }else{ //왕복
+
+                    if($j("#SurfBusS").val() != ""){
+                        //양양행 1대일경우
+                        var gubun = fnBusDateGubun($j("#SurfBusS").attr("gubun"), "SurfBusS");
+                        arrDataS = busData[gubun + $j("#SurfBusS").val().substring(5).replace('-', '')];
+                        if(arrDataS.length == 1){
+                            $j("li[busnum=" + arrDataS[0].busnum + "]").click();
+                        }
+                    }
+
+                    if($j("#SurfBusE").val() != ""){
+                        //서울행 1대일경우
+                        var gubun = fnBusDateGubun($j("#SurfBusE").attr("gubun"), "SurfBusE");
+                        arrDataE = busData[gubun + $j("#SurfBusE").val().substring(5).replace('-', '')];
+                        if(arrDataE.length == 1){
+                            $j("li[busnum=" + arrDataE[0].busnum + "]").click();
+                        }
+                    }
+
+                    if(arrDataS.length == 1 && arrDataE.length == 1){
+                        //fnBusNext();
+                    }
+                }
+            }
         },
         beforeShowDay: function(date) {
             var gubun = fnBusDateGubun($j(this).attr("gubun"), $j(this).attr("id"));

@@ -133,6 +133,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
                     <br>편도/왕복<input type="text" id="daytype" name="daytype" value="0">
                     <br>행성지<input type="text" id="busgubun" name="busgubun" value="<?=$busgubun?>">
+                    <br>달력컨트롤<input type="text" id="nextchk" name="nextchk" value="N">
                 </span>
                 
                 <div id="resStep1">

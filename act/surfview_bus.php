@@ -176,6 +176,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
                     <br>편도/왕복<input type="text" id="daytype" name="daytype" value="0">
                     <br>행성지<input type="text" id="busgubun" name="busgubun" value="<?=$busgubun?>">
+                    <br>달력컨트롤<input type="text" id="nextchk" name="nextchk" value="Y">
                 </span>
                 
                 <div id="resStep1">
@@ -201,7 +202,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
                         <ul class="busDate" id="busdate">
                             <li><img src="images/viewicon/calendar.svg" alt="">이용일</li>
-                            <li class="calendar"><input type="text" id="SurfBus" name="SurfBus" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>" ></li>
+                            <li class="calendar"><input type="text" id="SurfBus" name="SurfBus" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: ;">
                             <li><img src="images/viewicon/bus.svg" alt="">노선</li>
@@ -331,12 +332,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <tr>
                                 <th><em>*</em> 연락처</th>
                                 <td>
-                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="" size="3" maxlength="3" class="tel itx" style="width:50px;"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="010" size="3" maxlength="3" class="tel itx" style="width:50px;"> - 
                                     <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="" size="4" maxlength="4" class="tel itx" style="width:60px;"> - 
                                     <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="" size="4" maxlength="4" class="tel itx" style="width:60px;">
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="display:none;">
                                 <th scope="row"> 이메일</th>
                                 <td><input type="text" id="usermail" name="usermail" value="" class="itx"></td>
                             </tr>

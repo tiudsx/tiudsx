@@ -228,7 +228,7 @@ if($param == "BusI"){
             }
             $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
         }
-        $busSeatInfoTotal .= '\n ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n\n';
+        $busSeatInfoTotal .= '\n ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n';
 
 		if($etc != ''){
 			//$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
