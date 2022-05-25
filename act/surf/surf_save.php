@@ -154,7 +154,7 @@ if($param == "BusI"){
         if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
             $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }else{
-            $weekday = fnWeek($SurfDateBusS[$i]);
+            $weekday = fnWeek($SurfDateBusY[$i]);
 
             $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '['.$SurfDateBusY[$i].'('.$weekday.')] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }
