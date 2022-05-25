@@ -72,14 +72,14 @@
 .divBtnRes {display:block;}
 .shopListArea{display:block;}
 
-.tab1 { height:24px; padding:0 6px 0 0; background:url(https://actrip.cdn1.cafe24.com/camp/tab1_r.png) 100% 0 no-repeat; display:inline-block; }
-.tab1 span { height:22px; padding:6px 3px 1px 8px; background:url(https://actrip.cdn1.cafe24.com/camp/tab1_l.png) 0 0 no-repeat; display:inline-block; cursor:pointer; color:#fff; font-weight:bold; font-size:11px; width:28px;text-align:center;}
+.tab1 { height:24px; padding:0 6px 0 0; background:url(https://actrip.cdn1.cafe24.com/bus/tab1_r.png) 100% 0 no-repeat; display:inline-block; }
+.tab1 span { height:22px; padding:6px 3px 1px 8px; background:url(https://actrip.cdn1.cafe24.com/bus/tab1_l.png) 0 0 no-repeat; display:inline-block; cursor:pointer; color:#fff; font-weight:bold; font-size:11px; width:28px;text-align:center;}
 .tab1 span input
 {
     vertical-align:-3px;
 }
-.tab2 { height:24px; padding:0 6px 0 0; background:url(https://actrip.cdn1.cafe24.com/camp/tab2_r.png) 100% 0 no-repeat; display:inline-block; }
-.tab2 span { height:22px; padding:6px 3px 1px 8px; background:url(https://actrip.cdn1.cafe24.com/camp/tab2_l.png) 0 0 no-repeat; display:inline-block; cursor:pointer; color:#fff; font-weight:bold; font-size:11px; width:28px;text-align:center;}
+.tab2 { height:24px; padding:0 6px 0 0; background:url(https://actrip.cdn1.cafe24.com/bus/tab2_r.png) 100% 0 no-repeat; display:inline-block; }
+.tab2 span { height:22px; padding:6px 3px 1px 8px; background:url(https://actrip.cdn1.cafe24.com/bus/tab2_l.png) 0 0 no-repeat; display:inline-block; cursor:pointer; color:#fff; font-weight:bold; font-size:11px; width:28px;text-align:center;}
 
 @media (max-width: 320px) {
 	.left_article, .left_article2, .left_article3, .left_article4, .left_article5 {
