@@ -32,6 +32,7 @@ if($param == "mappoint"){ //상세정보
         $lat = $row['lat'];
         $lng = $row['lng'];
         $insdate = $row['insdate'];
+        $gpsname = $row['gpsname'];
 
         $todayTime = date("h시 i분", strtotime($insdate));
 
@@ -50,7 +51,7 @@ if($param == "mappoint"){ //상세정보
             $mappoint = "'신도림': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5095592', '126.8885712', '홈플러스 신도림점 앞', '탑승시간 : <font color=red>06시 20분</font>', 0, 's1', '', ''],".
                         "'대림역' : [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.4928008', '126.8947074', '대림역 2번출구 앞', '탑승시간 : <font color=red>06시 30분</font>', 1, 's2', '', ''],".
                         "'봉천역': [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.4821436', '126.9426997', '봉천역 1번출구 앞', '탑승시간 : <font color=red>06시 40분</font>', 2, 's3', '', ''],".
-                        "'사당역': [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.4764763', '126.977734', '사당역 6번출구 방향 참약사장수약국 앞', '탑승시간 : <font color=red>06시 50분</font>', 3, 's4', '', ''],".
+                        "'사당역': [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.4764763', '126.977734', '사당역 6번출구 방향 참약사 장수약국 앞', '탑승시간 : <font color=red>06시 50분</font>', 3, 's4', '', ''],".
                         "'강남역': [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.4982078', '127.0290928', '강남역 1번출구 버스정류장', '탑승시간 : <font color=red>07시 05분</font>', 4, 's5', '', ''],".
                         "'종합운동장역': [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장 뒤쪽', '탑승시간 : <font color=red>07시 20분</font>', 5, 's6', '', '']";
         }else if($busNum == "Y2" || $busNum == "Y4" || $busNum == "Y6" || $busNum == "E2" || $busNum == "E4" || $busNum == "E6"){
@@ -86,7 +87,16 @@ if($param == "mappoint"){ //상세정보
             $locationname = "동해 → 서울행";
         }
 
-        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNum.".jpg?v=0|";
+        $busNumImg = "Y1";
+        if($gpsname == "양양 1호차"){
+            $busNumImg = "Y1";
+        }else if($gpsname == "양양 2호차"){
+            $busNumImg = "Y2";
+        }else if($gpsname == "양양 3호차"){
+            $busNumImg = "Y3";
+        }
+
+        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=2|";
         $busGPS .= "busGPSList.bus = {".$mappoint.",'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
         $mapNum++;
     }
