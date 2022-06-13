@@ -129,9 +129,9 @@ if($param == "BusI"){
     }
 
     //예약채널 사이트 쿠폰 코드가 있으면 예약확정
-     //7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
+     //7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
     $coupon_array = array("JOABUS", "KLOOK", "NAVER", "FRIP", "MYTRIP", "SURFX");
-    if(in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15)))
+    if(in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 17, 12, 14, 15)))
     {
         $res_confirm = 3; //확정
         $InsUserID = $coupon;
@@ -242,7 +242,7 @@ if($param == "BusI"){
         if($coupon == "JOABUS"){
             //$gubun_title = "조아서프 패키지 서핑버스";
             //$msgChannelName2 = '\n      - 예약취소는 예약하셨던 조아서프에 문의해주세요.';
-        }else if($coupon == "FRIP" || $couponseq == 11){
+        }else if($coupon == "FRIP" || $couponseq == 11 || $couponseq == 17){
             //$gubun_title = "프립 서핑버스";
         }else if($coupon == "MYTRIP"){
             //$gubun_title = "마이리얼트립 서핑버스";
@@ -335,7 +335,7 @@ if($param == "BusI"){
             , "RES_CONFIRM"=>$res_confirm
         );
         
-        //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 마이리얼트립 : 12 알림톡 제외
+        //서핑버스 네이버예약 : 7, 네이버쇼핑 : 10, 프립 : 11, 프립 패키지 : 17, 마이리얼트립 : 12 알림톡 제외
         if($msgType > 0){
             $arrRtn = sendKakao($arrKakao); //알림톡 발송
         

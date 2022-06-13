@@ -206,6 +206,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         echo "[예약]"; 
                     }else if($res_coupon == "FRIP" || $couponseq == 11){ 
                         echo "[프립]";
+                    }else if($couponseq == 17){
+                        echo "[프림패키지]"; 
                     }else if($res_coupon == "MYTRIP"){ 
                         echo "[마이리얼]"; 
                     }else if($couponseq == 14){
@@ -492,6 +494,8 @@ if(($i % 2) == 0 && $i > 0){
                         echo "[예약]"; 
                     }else if($res_coupon == "FRIP" || $couponseq == 11){ 
                         echo "[프립]";
+                    }else if($couponseq == 17){
+                        echo "[프림패키지]"; 
                     }else if($res_coupon == "MYTRIP"){ 
                         echo "[마이리얼]"; 
                     }else if($couponseq == 14){

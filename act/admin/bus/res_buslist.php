@@ -188,6 +188,7 @@ $shopseq = 0;
                                     <option value="7">네이버쇼핑</option>
                                     <option value="10">네이버예약</option>
                                     <option value="11">프립</option>
+                                    <option value="17">프립 패키지</option>
                                     <option value="12">마이리얼트립</option>
                                     <option value="14">망고패키지</option>
                                     <option value="15">서프엑스</option>
