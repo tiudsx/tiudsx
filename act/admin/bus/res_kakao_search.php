@@ -112,8 +112,20 @@ if($count == 0){
             <td><?=$row['name']?></td>
             <td><?=$arrChk[0]?></td>
             <td><?=$arrChk[1]?></td>
-            <td><?=$arrChk[2]?> (<?=$arrChk[3]?>명)</td>
-            <td><?=$arrChk[4]?> (<?=$arrChk[5]?>명)</td>
+            <td>
+                <?
+                if($arrChk[3] > 0){
+                    echo $arrChk[2]." (".$arrChk[3]."명)";
+                }
+                ?>    
+            </td>
+            <td>
+                <?
+                if($arrChk[5] > 0){
+                    echo $arrChk[4]." (".$arrChk[5]."명)";
+                }
+                ?>
+            </td>
             <td>X &nbsp;<input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusCouponDel(<?=$row['codeseq']?>);" /></td>
             <td><?=$rtnText?></td>
             <td>

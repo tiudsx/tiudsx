@@ -29,7 +29,9 @@ $select_query = "
         DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo 
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                 ON a.resseq = b.resseq 
-                WHERE (b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
+                WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
+                        OR b.resdate = '$selDate')
+                    AND res_type = 'stay'
                     AND a.res_confirm IN ('대기', '확정')
         UNION ALL
         SELECT 
@@ -40,11 +42,12 @@ $select_query = "
             DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo 
                 FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
-                    WHERE b.resdate = '$selDate'
+                    WHERE b.resdate = '$selDate'                    
                         AND a.res_confirm IN ('대기', '확정')
+                        AND res_type = 'surf'
         ORDER BY resseq, ressubseq";
                         //DATE_ADD(b.edate, INTERVAL -1 DAY) >= '2021-01-02'
-// echo $select_query;
+//  echo $select_query;
 
 // $chkResConfirm = $_REQUEST["chkResConfirm"];
 // $sDate = $_REQUEST["sDate"];
@@ -166,6 +169,9 @@ if($count == 0){
 <?
 	return;
 }
+
+$css_table = "background-color:#336600; color:#efefef;";
+$css_table_right = " border-right:2px solid #c0c0c0";
 ?>
 
 <div class="contentimg bd">
@@ -203,34 +209,34 @@ if($count == 0){
         </colgroup>
         <tbody>
             <tr>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2"><label><input type="checkbox" onclick="fnAllChk(this);"> 전체</label></th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약자</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="3">숙박정보</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="2">바베큐</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">서핑샵</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="3">서핑강습</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="3">렌탈</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">메모</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">입실</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">상태</th>
-                <th style="background-color:#336600; color:#efefef;" colspan="3">알림톡</th>
-                <th style="background-color:#336600; color:#efefef;" rowspan="2">예약업체</th>
+                <th style="<?=$css_table?>" rowspan="2"><label><input type="checkbox" onclick="fnAllChk(this);"> 전체</label></th>
+                <th style="<?=$css_table?>" rowspan="2">예약자</th>
+                <th style="<?=$css_table.$css_table_right?>" colspan="3">숙박정보</th>
+                <th style="<?=$css_table.$css_table_right?>" colspan="2">바베큐</th>
+                <th style="<?=$css_table?>" rowspan="2">서핑샵</th>
+                <th style="<?=$css_table.$css_table_right?>" colspan="3">서핑강습</th>
+                <th style="<?=$css_table?>" colspan="3">렌탈</th>
+                <th style="<?=$css_table?>" rowspan="2">메모</th>
+                <th style="<?=$css_table?>" rowspan="2">입실</th>
+                <th style="<?=$css_table?>" rowspan="2">상태</th>
+                <th style="<?=$css_table?>" colspan="3">알림톡</th>
+                <th style="<?=$css_table?>" rowspan="2">예약업체</th>
             </tr>
             <tr>
-                <th style="background-color:#336600; color:#efefef;">숙박일</th>
-                <th style="background-color:#336600; color:#efefef;">남</th>
-                <th style="background-color:#336600; color:#efefef;">여</th>
-                <th style="background-color:#336600; color:#efefef;">남</th>
-                <th style="background-color:#336600; color:#efefef;">여</th>
-                <th style="background-color:#336600; color:#efefef;">시간</th>
-                <th style="background-color:#336600; color:#efefef;">남</th>
-                <th style="background-color:#336600; color:#efefef;">여</th>
-                <th style="background-color:#336600; color:#efefef;">종류</th>
-                <th style="background-color:#336600; color:#efefef;">남</th>
-                <th style="background-color:#336600; color:#efefef;">여</th>
-                <th style="background-color:#336600; color:#efefef;">읽음</th>
-                <th style="background-color:#336600; color:#efefef;">결과</th>
-                <th style="background-color:#336600; color:#efefef;">발송수</th>
+                <th style="<?=$css_table?>">숙박일</th>
+                <th style="<?=$css_table?>">남</th>
+                <th style="<?=$css_table.$css_table_right?>">여</th>
+                <th style="<?=$css_table?>">남</th>
+                <th style="<?=$css_table.$css_table_right?>">여</th>
+                <th style="<?=$css_table?>">시간</th>
+                <th style="<?=$css_table?>">남</th>
+                <th style="<?=$css_table.$css_table_right?>">여</th>
+                <th style="<?=$css_table?>">종류</th>
+                <th style="<?=$css_table?>">남</th>
+                <th style="<?=$css_table?>">여</th>
+                <th style="<?=$css_table?>">읽음</th>
+                <th style="<?=$css_table?>">결과</th>
+                <th style="<?=$css_table?>">발송수</th>
             </tr>
 
 <?
@@ -252,7 +258,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $edate = $row['edate'];
     
     if($prod_name == "N" && $sdate == ""){
-        continue;
+        //continue;
     }
 
     $MainSeq = $row['resseq'];
@@ -337,7 +343,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             }
         }
 
-        if($bbq != "N" && $Day == $row['resDay']){
+        if($Day == $row['resDay']){
             $resText .= (($resText == "") ? "" : "/")."파티";
             // $stayText .= (($stayText == "") ? "$bbq" : " / $bbq");
             $bbqText = $bbq;
@@ -440,14 +446,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <!-- <td style="<?=$fontcolor?>"><?=$resText?></td> -->
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
         <td style="<?=$fontcolor?>"><?=$stayMText?></td>
-        <td style="<?=$fontcolor?>"><?=$stayWText?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$stayWText?></td>
         <!-- <td style="<?=$fontcolor?>"><?=$bbqText?></td> -->
         <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
-        <td style="<?=$fontcolor?>"><?=$bbqWText?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
         <td style="<?=$fontcolor?>"><?=$surfText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
-        <td style="<?=$fontcolor?>"><?=($surfW == 0) ? "" : $surfW."명"?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=($surfW == 0) ? "" : $surfW."명"?></td>
         <td style="<?=$fontcolor?>"><?=$surfrentText?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentM == 0) ? "" : $surfrentM."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentW == 0) ? "" : $surfrentW."명"?></td>
