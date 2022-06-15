@@ -414,7 +414,7 @@ $j(document).ready(function(){
                 <?
                 }else if($arrVlu[0] == "솔서프"){
                 ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_3_01.jpg" class="placeholder">
+                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_4_01.jpg" class="placeholder">
                 <?
                 }
                 ?>
