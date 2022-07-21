@@ -9,7 +9,7 @@ include __DIR__.'/../../common/logininfo.php';
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/admin_sol.js?v=5"></script>
+<script type="text/javascript" src="/act/js/admin_sol.js?v=6"></script>
 <script type="text/javascript" src="/act/js/common.js"></script>
 
 <div class="bd_tl" style="width:100%;">
@@ -147,7 +147,7 @@ include __DIR__.'/../../common/logininfo.php';
 	</div>
 </div> 
 
-<div id="res_modify" style="display:none;padding:5px;height: 600px;overflow-y: auto;"> 
+<div id="res_modify" style="display:none;padding:5px;height: 500px;overflow-y: scroll;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
     <div class="gg_first" style="margin-top:0px;">솔게스트하우스 예약등록 (<?=date("Y-m-d A h:i:s")?>)</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
@@ -231,12 +231,35 @@ include __DIR__.'/../../common/logininfo.php';
                                 <th rowspan="2"><input type="button" class="btnsurfadd" style="width:40px;" value="추가" onclick="fnSolAdd(this, 'trstay');" ></th>
                             </tr>
                             <tr>
-                                <th>숙소명</th>
-                                <th>이용일</th>
+                                <th>
+									숙소명
+									<!-- <br>
+									<select id="All_stayshop" name="All_stayshop" class="select" onchange="fnSolSelAll(this);">
+										<option value='N'>숙박미신청</option>
+										<option value='솔게스트하우스'>솔게하</option>
+									</select> -->
+								</th>
+                                <th>
+									이용일
+									<!-- <br>
+									<input type="text" calid="res_staysdate" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> ~ 
+									<input type="text" calid="res_stayedate" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> -->
+								</th>
                                 <th>성별</th>
                                 <th>고객정보</th>
-								<th>참여여부</th>
-                                <th>이용일</th>
+								<th>
+									참여여부
+									<!-- <br>									
+									<select id="All_res_bbq" name="All_res_bbq" class="select" onchange="fnSolSelAll(this);">
+										<option value="N">미참여</option>
+										<option value="바베큐">바베큐</option>
+									</select> -->
+								</th>
+                                <th>
+									이용일
+									<!-- <br>									
+									<input type="text" calid="res_bbqdate" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> -->
+								</th>
 							</tr>
 							<tr id="trstay" style="display:none;">
 								<td>
@@ -336,8 +359,8 @@ include __DIR__.'/../../common/logininfo.php';
 									<input type="hidden" id="surfseq" name="surfseq[]" >
 									<input type="hidden" id="surftype" name="surftype[]" value="I">
 									<select id="res_surfshop" name="res_surfshop[]" class="select">
-										<option value='서퍼랑'>서퍼랑</option>
 										<option value='라라서프'>라라서프</option>
+										<option value='서퍼랑'>서퍼랑</option>
 										<option value='솔서프'>솔서프</option>
 										<option value='서프팩토리'>서프팩토리</option>
 									</select>
@@ -397,7 +420,7 @@ include __DIR__.'/../../common/logininfo.php';
 					</table>
                 </td>
             </tr>
-            <tr>
+            <tr style="display:none;">
                 <th>요청사항</th>
                 <td colspan="5"><textarea id="memo" name="memo" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
