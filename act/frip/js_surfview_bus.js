@@ -114,9 +114,10 @@ function fnBusSeatInit(busnum, busseat, obj, busname) {
     busNumName = busname;
     var seatjson = [];
     var objParam = {
-        "code": "busseat",
+        "code": "frip_busseat",
         "busDate": selDate,
-        "busNum": busnum
+        "busNum": busnum,
+        "seq": $j("#shopseq").val()
     }
     $j.getJSON("/act/surf/surfbus_day.php", objParam,
         function(data, textStatus, jqXHR) {
@@ -200,9 +201,10 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
     var arrData = busData[gubun + selectedDate.substring(5).replace('-', '')];
     arrData.forEach(function(el) {
         var objParam = {
-            "code": "busseatcnt",
+            "code": "frip_seatcnt",
             "busDate": selectedDate,
-            "busNum": el.busnum
+            "busNum": el.busnum,
+            "seq": $j("#shopseq").val()
         }
         $j.getJSON("/act/surf/surfbus_day.php", objParam,
             function(data, textStatus, jqXHR) {
@@ -238,11 +240,6 @@ jQuery(function() {
     jQuery('input[cal=busdate]').datepicker({
         minDate: new Date((new Date()).getFullYear() + '-01-01'),
         maxDate: new Date((new Date()).getFullYear() + '-12-31'),
-        // onClose: function (selectedDate) {
-        // 	if(selectedDate != ""){
-        // 		fnBusSearchDate(selectedDate, $j(this).attr("gubun"));
-        // 	}
-        // },
         onSelect: function(selectedDate) {
             fnBusSearchDate(selectedDate, $j(this).attr("gubun"), $j(this).attr("id"));
 
@@ -253,10 +250,10 @@ jQuery(function() {
                 var arrDataE = 0;
                 //편도
                 if($j("#daytype").val() == "0"){
-                    //양양행
+                    //서울출발 
                     if($j("#busgubun").val() == "Y"){
 
-                    }else{ //서울행
+                    }else{ //서울 복귀
 
                     }
                     var arrDataS = busData[$j("#busgubun").val() + $j("#SurfBus").val().substring(5).replace('-', '')];
@@ -494,6 +491,8 @@ function fnBusNext() {
             $j(".selectStop li").eq(2).css("display", "");
             $j(".selectStop li").eq(3).css("display", "");
         }
+        
+        btntext = "";
         var busname = $j("ul[class=busLine]:eq(0) li[class=on]").text();
         $j(".busLineTab").append('<li class="on" caldate="' + $j("#SurfBus").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext + busname + '</li>');
     } else {
@@ -532,6 +531,8 @@ function fnBusNext() {
             btntext1 = "[서울행] ";
         }
 
+        btntext0 = "",
+        btntext1 = "";
         var btnonclick = $j("ul[class=busLine]:eq(1) li[class=on]").attr("onclick");
         var busname = $j("ul[class=busLine]:eq(1) li[class=on]").text();
         $j(".busLineTab").append('<li class="on" caldate="' + $j("#SurfBusS").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext0 + $j("ul[class=busLine]:eq(1) li[class=on]").text() + '</li>');
@@ -720,12 +721,12 @@ function fnSeatSelected(obj) {
 
             if (busType == "E" || busType == "Y") {
                 if (resbusseat1 < selCntS) {
-                    alert("양양행은 " + resbusseat1 + "좌석 예약 가능합니다.");
+                    alert("서울출발은 " + resbusseat1 + "좌석 예약 가능합니다.");
                     return;
                 }
             } else {
                 if (resbusseat2 < selCntE) {
-                    alert("서울행은 " + resbusseat2 + "좌석 예약 가능합니다.");
+                    alert("서울복귀는 " + resbusseat2 + "좌석 예약 가능합니다.");
                     return;
                 }
             }
@@ -1015,15 +1016,15 @@ function fnBusSave() {
             var defaultCntS = 0,
                 defaultCntE = 0;
 
-            //기본 양양행 왕복
-            var btntextS = "양양행",
-                btntextE = "서울행";
+            //니즈모리 왕복
+            var btntextS = "출발행",
+                btntextE = "복귀행";
             var selCntS = $j("#selBusY tr[trseat]").length;
             var selCntE = $j("#selBusS tr[trseat]").length;
 
-            if ($j("#busgubun").val() == "E") { //동해행 왕복
-                btntextS = "동해행";
-                btntextE = "서울행";
+            if ($j("#busgubun").val() == "E") { //제천 왕복
+                btntextS = "출발행";
+                btntextE = "복귀행";
                 selCntS = $j("#selBusE tr[trseat]").length;
                 selCntE = $j("#selBusA tr[trseat]").length;
             }
@@ -1059,12 +1060,12 @@ function fnBusSave() {
             var selCntE = $j("#selBusS tr[trseat]").length;
 
             if (resbusseat1 > 0 && resbusseat1 != selCntS) {
-                alert("양양행은 " + resbusseat1 + "좌석 예약해주세요~");
+                alert("서울출발은 " + resbusseat1 + "좌석 예약해주세요~");
                 return;
             }
 
             if (resbusseat2 > 0 && resbusseat2 != selCntE) {
-                alert("서울행은 " + resbusseat2 + "좌석 예약해주세요");
+                alert("서울복귀는 " + resbusseat2 + "좌석 예약해주세요");
                 return;
             }
         }
@@ -1089,7 +1090,7 @@ function fnBusSave() {
             return;
         }
 
-        if (!confirm("액트립 셔틀버스를 예약하시겠습니까?")) {
+        if (!confirm("셔틀버스를 예약하시겠습니까?")) {
             return;
         }
     }

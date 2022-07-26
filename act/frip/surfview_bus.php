@@ -18,10 +18,10 @@ if($param_mid == ""){
 
 if($param == "frip_bus1"){ //니지모리
     $shopseq = 210;
-    $pointurl = "surfbus/surfview_bus_tab3.html";
+    $pointurl = "/../frip/surfview_bus_tab3.html";
 }else if($param == "frip_bus2"){ //제천 셔틀
     $shopseq = 211;
-    $pointurl = "surfbus/surfview_bus_tab3_2.html";
+    $pointurl = "/../frip/surfview_bus_tab3.html";
 }
 
 //"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
@@ -57,14 +57,22 @@ $busData = explode("|", $rowMain["sub_tag"]);
 $busgubun = $busData[0];
 $sbusDate = $busData[1];
 
+if($coupon_code == ""){ //정류장
+    $step1_display = "";
+    $step2_display = "display:none;";
+}else{ //셔틀예약
+    $step1_display = "display:none;";
+    $step2_display = "";
+}
+
 //연락처 모바일 여부
 if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
 ?>
 <div id="wrap">
     <? include __DIR__.'/../_layout_top.php'; ?>
 
-    <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
-    <link rel="stylesheet" type="text/css" href="/act/css/surfview_bus.css">
+    <link rel="stylesheet" type="text/css" href="/act/frip/css_surfview.css?v=2">
+    <link rel="stylesheet" type="text/css" href="/act/frip/css_surfview_bus.css?v=1">
     <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
 
     <div class="top_area_zone">
@@ -83,13 +91,17 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
+                        <?if($coupon_code == ""){?>
                             <li class="on" onclick="fnResViewBus(true, '#content_tab1', 70, this);fnMapClick();"><a>정류장안내</a></li>
-                            <li onclick="fnResViewBus(false, '#view_tab2', 70, this);"><a>셔틀예약</a></li>
+                        <?}else{?>
+                            <li class="on" onclick="fnResViewBus(false, '#view_tab2', 70, this);"><a>셔틀예약</a></li>
+                            <li onclick="fnResViewBus(true, '#content_tab1', 70, this);fnMapClick();"><a>정류장안내</a></li>
+                        <?}?>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div id="view_tab1">
+            <div id="view_tab1" style="<?=$step1_display?>">
                 <div class="noticeline" id="content_tab1">
                     <!-- <p class="noticetxt">예약안내</p> -->
                     
@@ -110,7 +122,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </article>
                 </div>
                 <div class="contentimg">
-                    <? include __DIR__."/../frip/surfview_bus_tab3.html" ?>
+                    <? include __DIR__.$pointurl ?>
                 </div>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
@@ -118,10 +130,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </div>
                 </div>
             </div>
-            <div id="view_tab2" class="view_tab2" style="min-height: 800px;display:none;">
+            <div id="view_tab2" class="view_tab2" style="min-height: 800px;<?=$step2_display?>">
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
-                    <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
+                    <br>resparam<input type="text" id="resparam" name="resparam" value="BusI_Frip" />
                     <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
                     <br>편도/왕복<input type="text" id="daytype" name="daytype" value="0">
@@ -129,7 +141,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <br>달력컨트롤<input type="text" id="nextchk" name="nextchk" value="N">
                 </span>
                 
-                <div id="resStep1">
+                <div id="resStep1" style="display:none;">
                     <div class="busOption01" style="padding-bottom: 0px;">
                         <ul class="destination" id="ulDaytype" style="margin-bottom: 0px;">
                             <li><img src="/act/images/viewicon/sign.svg" alt="">일정</li>
@@ -140,8 +152,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div class="busOption01" style="padding-bottom: 0px;" id="route">
                         <ul class="destination" id="ulroute" style="margin-bottom: 0px;">
                             <li><img src="/act/images/viewicon/route.svg" alt="">행선지</li>
-                            <li class="toYang on" onclick="fnBusGubun('Y', this);">양양행<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('S', this);">서울행<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang on" onclick="fnBusGubun('Y', this);">서울 출발<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang" onclick="fnBusGubun('S', this);">서울 복귀<i class="fas fa-chevron-right"></i></li>
                         </ul>
                     </div>
                     <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
@@ -160,7 +172,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="calendar"><input type="text" id="SurfBusS" name="SurfBusS" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: none;">
-                            <li><img src="/act/images/viewicon/bus.svg" alt="">출발노선</li>
+                            <li><img src="/act/images/viewicon/bus.svg" alt="">출발</li>
                         </ul>
                         <ul class="busStop" id="buspointlist" style="display: none;">
                             <li id="buspointtext"></li>
@@ -170,7 +182,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <li class="calendar"><input type="text" id="SurfBusE" name="SurfBusE" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: none;">
-                            <li><img src="/act/images/viewicon/bus.svg" alt="">복귀노선</li>
+                            <li><img src="/act/images/viewicon/bus.svg" alt="">복귀</li>
                         </ul>
                         <ul class="busStop" id="buspointlist" style="display: none;">
                             <li id="buspointtext"></li>
@@ -183,6 +195,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
 
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;display:none;">
+                    <div style="text-align:center;padding-bottom:10px;">※ 셔틀버스 차량에 따라 좌석 번호가 반대방향일 수 있습니다.</div>
                     <ul class="busLineTab" style="display: block;">
                     </ul>
                 </div>
@@ -289,7 +302,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                     <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="display:none;">
                                 <th>총 결제금액</th>
                                 <td><span id="lastPrice" style="font-weight:700;color:red;">0원</span><span id="lastcouponprice"></span></td>
                             </tr>
@@ -298,9 +311,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <p class="restitle">약관 동의</p>
                     <table class="et_vars exForm bd_tb exForm" width="100%">
                         <tbody>
-                            <tr>
+                            <tr style="display:none;">
                                 <td>
-                                    <input type="checkbox" id="chk8" name="chk8"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
+                                    <input type="checkbox" id="chk8" name="chk8" checked="checked"> <strong>예약할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.</strong> (필수동의)
                                 </td>
                             </tr>
                             <tr>
@@ -334,19 +347,19 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <? include __DIR__.'/../_layout_bottom.php'; ?>
 
 <script>    
-	var busTypeY = "E";
+	var busTypeY = "E"; //제천
     var busTypeS = "A";	
-    if($j("#shopseq").val() == 210){
+    if($j("#shopseq").val() == 210){ //니지모리
 		busTypeY = "Y";
 		busTypeS = "S";
     }
 </script>
 
 <script src="/act/js/jquery-ui.js"></script>
-<script src="/act/frip/js_surfview_bus.js?v=1"></script>
+<script src="/act/frip/js_surfview_bus.js?v=2"></script>
 <script src="/act/frip/js_surfview.js"></script>
 <script src="/act/frip/js_surfview_busday.js?v=1"></script>
-<script>    
+<script>
     var businit = 0;
     var busrestype = "none";
     var busDateinit = "<?=$sbusDate?>";
@@ -372,10 +385,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     var resbusseat2 = 0;
     jQuery(function() {
         <?if($coupon_code != ""){?>
-            
+        $j("#resStep1").css("display", "");
         var cp = fnCoupon("BUS", "load", $j("#coupon").val());
         if(cp == 0){
-            location.href = "/";
+            location.href = "/frip_bus1";
             return;
         }else{
             busrestype = "channel";
@@ -398,7 +411,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 $j("#SurfBusS").val("<?=$resDate1?>");
                 $j("#SurfBusE").val("<?=$resDate2?>");
 
-                $j("#resseatnum").html("양양행 : " + resbusseat1 + "자리 예약가능 / 서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
+                $j("#resseatnum").html("서울출발 : " + resbusseat1 + "자리 예약가능 / 서울복귀 : " + resbusseat2 + "자리 예약가능<br><br>");
                 
                 fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
                 fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));
@@ -437,7 +450,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     $j("#ulroute li:eq(1)").click();
                     $j("#ulroute li:eq(1)").removeAttr("onclick");
                     $j("#ulroute li:eq(2)").css("display", "none");
-                    $j("#resseatnum").html("양양행 : " + resbusseat1 + "자리 예약가능<br><br>");
+                    $j("#resseatnum").html("서울출발 : " + resbusseat1 + "자리 예약가능<br><br>");
 
                     $j("#SurfBus").val("<?=$resDate1?>");
                 <?}?>
@@ -446,7 +459,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     $j("#ulroute li:eq(2)").click();
                     $j("#ulroute li:eq(2)").removeAttr("onclick");
                     $j("#ulroute li:eq(1)").css("display", "none");
-                    $j("#resseatnum").html("서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
+                    $j("#resseatnum").html("서울복귀 : " + resbusseat2 + "자리 예약가능<br><br>");
 
                     $j("#SurfBus").val("<?=$resDate2?>");
                 <?}?>

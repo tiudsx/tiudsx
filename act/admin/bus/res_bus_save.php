@@ -437,6 +437,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
     $resbusseat2 = $_REQUEST["resbusseat2"];
 
 	//7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
+	//18:프립-니지모리  19:프립-제천
 	function RandString($len){
 		$return_str = "";
 	
@@ -474,40 +475,89 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 
 	}else if($reschannel == 16){ //클룩
 
+	}else if($reschannel == 18){ //프립-니지모리
+
+	}else if($reschannel == 19){ //프립-제천
+
 	}
 
 	$resseatMsg = "";
-	if($resbusseat1 > 0){ //양양행 좌석예약
-		$resseatMsg = "\n    [양양행] ".$resDate1." / ".$resbusseat1."자리";
-	}
 
-	if($resbusseat2 > 0){ //양양행 좌석예약
-		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
-	}
+	if($reschannel == 18 || $reschannel == 19){ //프립-니지모리  //프립-제천
+		if($resbusseat1 > 0){ //출발 좌석예약
+			$resseatMsg = "\n    [서울 출발행] ".$resDate1." / ".$resbusseat1."자리";
+		}
 
-	$msgTitle = '액트립 서핑버스 예약안내';
-	//$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 서핑버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립 셔틀버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+		if($resbusseat2 > 0){ //복귀 좌석예약
+			$resseatMsg .= "\n    [서울 복귀행] ".$resDate2." / ".$resbusseat2."자리";
+		}
+
+		$msgTitle = '액트립x프립버스 예약안내';
+		$channelMsg = "\n하단에 있는 [예약하기] 버튼 클릭 후 원하시는 노선과 좌석/정류장을 선택할 수 있습니다.";
+		$infomsg = "\n      - 예약하신 인원수와 동일한 좌석수로 예약해주세요.";
+		$infomsg .= "\n      - 예약문의는 프립 고객센터로 연락해주세요~";
+
+		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립x프립버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
 		
-	$arrKakao = array(
-		"gubun"=> "bus"
-		, "admin"=> "N"
-		, "smsTitle"=> $msgTitle
-		, "userName"=> $userName
-		, "tempName"=> "at_bus_kakao"
-		, "kakaoMsg"=>$kakaoMsg
-		, "userPhone"=> $userPhone
-		, "link1"=>"surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
-		, "link2"=>""
-		, "link3"=>""
-		, "link4"=>""
-		, "link5"=>""
-		, "smsOnly"=>"N"
-		, "PROD_NAME"=>"타채널 알림톡발송"
-		, "PROD_URL"=>$reschannel
-		, "PROD_TYPE"=>"bus_kakao"
-		, "RES_CONFIRM"=>"-1"
-	);
+		if($reschannel == 18){ //프립-니지모리
+			$resLink = "frip_bus1";
+			$PROD_NAME = "프립-니지모리";
+		}else if($reschannel == 19){ //프립-제천
+			$resLink = "frip_bus2";	
+			$PROD_NAME = "프립-제천";
+		}
+		$arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_bus_kakao"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>$resLink."?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
+			, "link2"=>""
+			, "link3"=>""
+			, "link4"=>""
+			, "link5"=>""
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=>$PROD_NAME
+			, "PROD_URL"=>$reschannel
+			, "PROD_TYPE"=>"bus_kakao"
+			, "RES_CONFIRM"=>"-1"
+		);
+	}else{
+		if($resbusseat1 > 0){ //양양행 좌석예약
+			$resseatMsg = "\n    [양양행] ".$resDate1." / ".$resbusseat1."자리";
+		}
+
+		if($resbusseat2 > 0){ //양양행 좌석예약
+			$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
+		}
+
+		$msgTitle = '액트립 서핑버스 예약안내';
+		//$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 서핑버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립 셔틀버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
+			
+		$arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "tempName"=> "at_bus_kakao"
+			, "kakaoMsg"=>$kakaoMsg
+			, "userPhone"=> $userPhone
+			, "link1"=>"surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'))
+			, "link2"=>""
+			, "link3"=>""
+			, "link4"=>""
+			, "link5"=>""
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=>"타채널 알림톡발송"
+			, "PROD_URL"=>$reschannel
+			, "PROD_TYPE"=>"bus_kakao"
+			, "RES_CONFIRM"=>"-1"
+		);
+	}
 
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 

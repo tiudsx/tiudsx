@@ -115,21 +115,9 @@ function fnResViewBus(bool, objid, topCnt, obj) {
     if (bool) {
         $j("#view_tab1").css("display", "block");
         $j("#view_tab2").css("display", "none");
-        $j("#view_tab3").css("display", "none");
     } else {
         $j("#view_tab1").css("display", "none");
-
-        if (objid == "#view_tab2") {
-            $j("#view_tab2").css("display", "block");
-            $j("#view_tab3").css("display", "none");
-        } else {
-            $j("#view_tab2").css("display", "none");
-            $j("#view_tab3").css("display", "block");
-
-            if (objid == "#view_tab3") {
-                $j(".con_footer").css("display", "none");
-            }
-        }
+        $j("#view_tab2").css("display", "block");
     }
 
     fnMapView(objid, topCnt);

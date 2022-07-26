@@ -62,6 +62,38 @@ if($reqCode == "busday"){
     while ($row = mysqli_fetch_assoc($result_setlist)){
         $groupData[] = array("seatcnt" => $row['cnt']);
     }
+}else if($reqCode == "frip_seatcnt"){
+    $seq = $_REQUEST["seq"];
+    $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'" AND seq = '.$seq;
+    $result_setlist = mysqli_query($conn, $select_query);
+    while ($row = mysqli_fetch_assoc($result_setlist)){
+        $groupData[] = array("seatcnt" => $row['cnt']);
+    }
+}else if($reqCode == "frip_busseat"){
+    $seq = $_REQUEST["seq"];
+
+    /*
+    예약상태
+        0 : 미입금
+        1 : 예약대기
+        2 : 임시확정
+        3 : 확정
+        4 : 환불요청
+        5 : 환불완료
+        6 : 임시취소
+        7 : 취소
+        8 : 입금완료
+    */
+
+    for ($i=0; $i <= 45; $i++) { 
+        $groupData[] = array("seatnum" => "$i", "seatYN" => "Y");
+    }
+
+    $select_query = 'SELECT * FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'" AND seq = '.$seq;
+    $result_setlist = mysqli_query($conn, $select_query);
+    while ($row = mysqli_fetch_assoc($result_setlist)){
+        $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
+    }
 }
 
 $output = json_encode($groupData, JSON_UNESCAPED_UNICODE);

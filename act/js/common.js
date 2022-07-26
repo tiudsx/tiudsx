@@ -8,18 +8,26 @@ jQuery(function() {
     jQuery('input[cal=sdate]').datepicker({
         minDate: new Date("2020-04-01"),
         beforeShow: function(date) {
-            var date = jQuery(this).next().datepicker('getDate');
+            if(jQuery(this).next().val() == ""){
 
-            date.setDate(date.getDate()); // Add 7 days
-            jQuery(this).datepicker("option", "maxDate", date);
+            }else{
+                var date = jQuery(this).next().datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).datepicker("option", "maxDate", date);
+            }
         },
         onClose: function(selectedDate) {
             // 시작일(fromDate) datepicker가 닫힐때
             // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-            var date = jQuery(this).datepicker('getDate');
+            if(jQuery(this).val() == ""){
 
-            date.setDate(date.getDate()); // Add 7 days
-            jQuery(this).next().datepicker("option", "minDate", date);
+            }else{
+                var date = jQuery(this).datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).next().datepicker("option", "minDate", date);
+            }
         }
     });
 
@@ -27,19 +35,27 @@ jQuery(function() {
     jQuery('input[cal=edate]').datepicker({
         minDate: new Date("2020-05-01"),
         beforeShow: function(date) {
-            var date = jQuery(this).prev().datepicker('getDate');
+            if(jQuery(this).prev().val() == ""){
 
-            date.setDate(date.getDate()); // Add 7 days
-            jQuery(this).datepicker("option", "minDate", date);
+            }else{
+                var date = jQuery(this).prev().datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).datepicker("option", "minDate", date);
+            }
         },
         onClose: function(selectedDate) {
 
             // 시작일(fromDate) datepicker가 닫힐때
             // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-            var date = jQuery(this).datepicker('getDate');
+            if(jQuery(this).val() == ""){
 
-            date.setDate(date.getDate()); // Add 7 days
-            jQuery(this).prev().datepicker("option", "maxDate", date);
+            }else{
+                var date = jQuery(this).datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).prev().datepicker("option", "maxDate", date);
+            }
         }
     });
 });

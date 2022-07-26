@@ -1,12 +1,22 @@
 <?php 
-include __DIR__.'/../db.php';
-include __DIR__.'/../common/func.php';
-
-
 $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
 $num = $_REQUEST["num"];
-
 $gubun = substr($resNumber, 0, 1);
+
+$title = "액트립";
+$infoUrl = "surforder_info.php";
+$funUrl = "/../common/func.php";
+if($gubun == 3){
+	$title = "액트립x프립셔틀";
+	$infoUrl = "surforder_info_frip.php";
+	$funUrl = "/../frip/inc_func.php";
+}
+
+include __DIR__.'/../db.php';
+include __DIR__.$funUrl;
+
+
+
 $cancelChk = "none";
 
 if($gubun == 1){
@@ -27,6 +37,8 @@ if($gubun == 1){
 						WHERE a.resnum = $resNumber
 							ORDER BY a.resnum, b.ressubseq";
 }
+
+
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -48,14 +60,14 @@ if($count == 0){
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>액트립 예약조회</h1>
+                <h1><?=$title?> 예약조회</h1>
             </div>
         </section>
         <section class="notice">
             <div class="bd" style="padding:0 4px;min-height:300px;">
 			<form name="frmCancel" id="frmCancel" target="ifrmResize" autocomplete="off">
 				<?
-				include_once("surforder_info.php");
+				include_once($infoUrl);
 				
 				if($cancelChk == "none"){
 					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:none;">
@@ -82,6 +94,7 @@ if($count == 0){
 					$sitename = "[서프존]"; 
 				}
 				
+			if($gubun != 3){
 				if($cancelChk == "coupon"){
 					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
 					※ 취소/환불은 예약하신 '.$sitename.'으로 문의해주세요~
@@ -94,6 +107,7 @@ if($count == 0){
 				</div>
 				<?
 				}
+			}
 				?>
 
 				<span id="returnBank" style="display:none;">
@@ -140,6 +154,7 @@ if($count == 0){
 					</table>
 				</span>
 
+				<?if($gubun != 3){?>
 					<div class="write_table" style="padding-top:15px;padding-bottom:15px;text-align:center;">
 						<?
 						if($num == 1){
@@ -156,6 +171,7 @@ if($count == 0){
 							&nbsp;<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;display:'.$cancelChk.';" value="취소/환불 신청" onclick="fnRefund(<?=$num?>);" />
 						<?}?>
 					</div>
+				<?}?>
 			</form>
 			</div>
 

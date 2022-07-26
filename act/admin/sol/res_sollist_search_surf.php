@@ -138,7 +138,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 $surfWCnt_sp_15 += $surfW;
             }
         }else if($prod_name == "라라서프"){
-            if($restime == "9시"){
+            if($restime == "10시"){
                 $surflist_lala_9 .= $surflist_text;
                 $surfMCnt_lala_9 += $surfM;
                 $surfWCnt_lala_9 += $surfW;
@@ -655,7 +655,7 @@ if(!($surflist_rang_9 == "" && $surflist_rang_11 == "" && $surflist_rang_13 == "
                 <th colspan="4">라라서프</th>
             </tr>
             <tr>
-                <th>9시 서핑강습</th>
+                <th>10시 서핑강습</th>
                 <th>11시 서핑강습</th>
                 <th>13시 서핑강습</th>
                 <th>15시 서핑강습</th>
