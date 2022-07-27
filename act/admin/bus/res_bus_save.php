@@ -499,6 +499,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$infomsg = "\n      - 예약하신 인원수와 동일한 좌석수로 예약해주세요.";
 		$infomsg .= "\n      - 예약문의는 프립 고객센터로 연락해주세요~";
 
+		$msgTitle = '니지모리 셔틀버스 예약안내';
 		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립x프립버스 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
 		
 		if($reschannel == 18){ //프립-니지모리

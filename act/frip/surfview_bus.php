@@ -241,12 +241,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
-                        <li style="display:none;"><img src="/act/images/button/btn061.png" alt="양양행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act/images/button/btnFrip01.png" alt="출발버스"></li>
                         <li>
                             <div id="selBusY" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="/act/images/button/btn062.png" alt="서울행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act/images/button/btnFrip02.png" alt="복귀버스"></li>
                         <li>
                             <div id="selBusS" class="bd" style="padding-top:2px;">
                             </div>

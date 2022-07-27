@@ -947,7 +947,16 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
     }
 
     $j("#mapimg").css("display", "block");
-    $j("#mapimg").attr("src", "https://actrip.cdn1.cafe24.com/act_bus/2022/" + gubun + busnum + "_" + num + ".jpg");
+
+    var mapImage = "";
+    if(gubun == "Y" && num == 1 && busnum == 1){ //공덕역
+        mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/FRIP_01_v9mcxl.jpg";
+    }else if(gubun == "Y" && num == 2 && busnum == 1){ //건대입구
+        mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/Y2_5_zgeyzc.jpg";
+    }else if(gubun == "S" && num == 1 && busnum == 1){ //니지모리
+        mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/FRIP_11_inodzn.jpg";
+    }
+    $j("#mapimg").attr("src", mapImage);
 
     $j(".mapviewid").css("background", "").css("color", "");
     $j(obj).css("background", "#1973e1").css("color", "#fff");
