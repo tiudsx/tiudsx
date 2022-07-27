@@ -11,34 +11,8 @@
             </tbody>
         </table>
     </div>
-    <div class="bd">
-        <table class="et_vars">
-            <colgroup>
-                <col style="width:50%;">
-                <col style="width:50%;">
-            </colgroup>
-            <tbody>
-                <tr>
-                    <th style="text-align: center;">
-                        <strong style="line-height:2;">
-                            ★ 서울 출발
-                        </strong>
-                    </th>
-                    <th style="text-align: center;">
-                        <strong style="line-height:2;">
-                            ★ 서울 복귀
-                        </strong>
-                    </th>
-                </tr>
-                <tr>
-                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;background:#1973e1;color:#fff;" value="출발 1, 2호차" onclick="fnBusPoint(this);"></td>
-                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="복귀 1, 2호차" onclick="fnBusPoint(this);"></td>
-
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="bd" style="padding:10px 0 0px 0;">
+    
+    <div class="bd" style="padding:0px 0 0px 0;">
         <table view="tbBus1" class="et_vars">
             <colgroup>
                 <col style="width:90px;">
@@ -47,7 +21,7 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [서울 출발] 1호차 셔틀버스</b></td>
+                    <td colspan="3" height="28"><b>★ [서울 출발] 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
@@ -56,13 +30,20 @@
                 </tr>
                 <tr>
                     <th>공덕역</th>
-                    <td>공덕역 3번출구  > 니지모리스튜디오<br>
+                    <td>공덕역 3번출구 앞<br>
                         <font color="red">10시 30분</font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 1, '공덕역', this);"></td>
                 </tr>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [서울 출발] 2호차 셔틀버스</b></td>
+                    <th>건대입구역</th>
+                    <td>건대입구역 롯데백화점 스타시티점 입구<br>
+                        <font color="red">11시 30분</font>
+                    </td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 2, 1, '건대입구', this);"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" height="28"><b>★ [서울 복귀] 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
@@ -70,11 +51,11 @@
                     <th style="text-align:center;">위치</th>
                 </tr>
                 <tr>
-                    <th>건대입구역</th>
-                    <td>건대입구역 5번출구 > 니지모리스튜디오<br>
-                        <font color="red">06시 05분</font>
+                    <th>니지모리<br>스튜디오</th>
+                    <td>니지모리 스튜디오<br>
+                        <font color="red">21시 00분</font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 2, '건대입구역', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 2, '니지모리', this);"></td>
                 </tr>
             </tbody>
         </table>

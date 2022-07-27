@@ -917,13 +917,13 @@ function fnBusPoint(obj) {
         tbBus = 2,
         mapviewid = 12,
         pointname = "니지모리";
-    if ($j(obj).val() == "출발 1, 2호차") {
+    if ($j(obj).val() == "서울출발") {
         gubun = "Y";
         busnum = 1;
         tbBus = 1;
         mapviewid = 0;
         pointname = "공덕역";
-    } else if ($j(obj).val() == "복귀 1, 2호차") {
+    } else if ($j(obj).val() == "서울복귀") {
         gubun = "S";
         busnum = 1;
         tbBus = 2;

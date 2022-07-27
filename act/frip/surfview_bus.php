@@ -103,15 +103,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             </div>
             <div id="view_tab1" style="<?=$step1_display?>">
                 <div class="noticeline" id="content_tab1">
-                    <!-- <p class="noticetxt">예약안내</p> -->
-                    
-                    <!--article>
-                        <p class="noticesub">셔틀버스 운행 중지 안내</p>
-                        <ul>
-                            <li class="litxt">코로나 확산으로 인하여, 액트립 셔틀버스 운행은 조기 중단합니다.</li>
-                            <li class="litxt">다음시즌에 더욱 좋은모습으로 찾아뵙겠습니다.</li>
-                        </ul>
-                    </article-->
                     <article>
                         <p class="noticesub">탑승 및 이용안내</p>
                         <ul>
@@ -126,7 +117,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
-                        <!-- <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act/images/kakaochat.jpg" class="placeholder"></a> -->
                     </div>
                 </div>
             </div>
