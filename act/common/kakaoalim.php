@@ -59,6 +59,9 @@ function kakaoMsg($arrKakao){
 	$btn_ResCustomer = '{"type":"WL","name":"문의하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResCustomer"].'"}';
 	$btn_Notice = '{"type":"WL","name":"문의하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_Notice"].'"}';
 
+	$btn_ResSearchFrip = '{"type":"WL","name":"예약조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearchFrip"].'"}';
+	$btn_ResPoint = '{"type":"WL","name":"탑승시간/위치 안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResPoint"].'"}';
+
 	if($arrKakao["tempName"] == "at_bus_02"){ //셔틀버스 입금대기
         $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResCustomer.',';
 	}else if($arrKakao["tempName"] == "at_bus_12"){ //셔틀버스 예약확정
@@ -66,6 +69,10 @@ function kakaoMsg($arrKakao){
 	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //셔틀버스 좌석예약 알림톡 발송
 		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
 		$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 예약하기 : https://actrip.co.kr/'.$arrKakao["link1"];
+	}else if($arrKakao["tempName"] == "frip_bus02"){ //프립 셔틀버스 예약확정
+        $btnList = '"button1":'.$btn_ResSearchFrip.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',"button4":'.$btn_ResGPS.',';
+	}else if($arrKakao["tempName"] == "frip_bus03"){ //프립 셔틀버스 예약확정 - 니지모리
+        $btnList = '"button1":'.$btn_ResSearchFrip.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',';
 	}
 
 	$arryKakao = '';

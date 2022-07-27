@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'/../../common/func.php';
+include __DIR__.'/../../frip/inc_func.php';
 include __DIR__.'/../../common/kakaoalim.php';
 
 $hidsearch = $_REQUEST["hidsearch"];

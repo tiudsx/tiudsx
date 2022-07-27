@@ -184,11 +184,11 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
     var eqnum = 0;
     if (objid == "SurfBusS") {
         $j("ul[class=busLine]:eq(1) li").remove();
-        $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">출발노선</li>');
+        $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">출발</li>');
         eqnum = 1;
     } else if (objid == "SurfBusE") {
         $j("ul[class=busLine]:eq(2) li").remove();
-        $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">복귀노선</li>');
+        $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">복귀</li>');
         eqnum = 2;
     } else {
         $j("ul[class=busLine]:eq(0) li").remove();
@@ -208,6 +208,7 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
         }
         $j.getJSON("/act/surf/surfbus_day.php", objParam,
             function(data, textStatus, jqXHR) {
+                el.busname = el.busname.replace("서울출발 ", "").replace("서울복귀 ", "");
                 if (data[0].seatcnt == el.busseat) {
                     if (busrestype == "change") {
                         $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
@@ -479,7 +480,7 @@ function fnBusNext() {
         var btnonclick = $j("ul[class=busLine]:eq(0) li[class=on]").attr("onclick");
         var btntext = "";
         if ($j("#busgubun").val() == "Y") {
-            btntext = "[양양행] ";
+            btntext = "[출발] ";
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else if ($j("#busgubun").val() == "E") {
@@ -487,12 +488,11 @@ function fnBusNext() {
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else {
-            btntext = "[서울행] ";
+            btntext = "[복귀] ";
             $j(".selectStop li").eq(2).css("display", "");
             $j(".selectStop li").eq(3).css("display", "");
         }
         
-        btntext = "";
         var busname = $j("ul[class=busLine]:eq(0) li[class=on]").text();
         $j(".busLineTab").append('<li class="on" caldate="' + $j("#SurfBus").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext + busname + '</li>');
     } else {
@@ -527,12 +527,12 @@ function fnBusNext() {
             btntext0 = "[동해행] ";
             btntext1 = "[서울행] ";
         } else {
-            btntext0 = "[양양행] ";
-            btntext1 = "[서울행] ";
+            btntext0 = "출발 ";
+            btntext1 = "복귀 ";
         }
 
-        btntext0 = "",
-        btntext1 = "";
+        btntext0 = "출발 ",
+        btntext1 = "복귀 ";
         var btnonclick = $j("ul[class=busLine]:eq(1) li[class=on]").attr("onclick");
         var busname = $j("ul[class=busLine]:eq(1) li[class=on]").text();
         $j(".busLineTab").append('<li class="on" caldate="' + $j("#SurfBusS").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext0 + $j("ul[class=busLine]:eq(1) li[class=on]").text() + '</li>');
@@ -569,7 +569,7 @@ function fnBusChangeNext() {
         var btnonclick = $j("ul[class=busLine]:eq(0) li[class=on]").attr("onclick");
         var btntext = "";
         if ($j("#busgubun").val() == "Y") {
-            btntext = "[양양행] ";
+            btntext = "출발 ";
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else if ($j("#busgubun").val() == "E") {
@@ -577,7 +577,7 @@ function fnBusChangeNext() {
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else {
-            btntext = "[서울행] ";
+            btntext = "복귀 ";
             $j(".selectStop li").eq(2).css("display", "");
             $j(".selectStop li").eq(3).css("display", "");
         }
@@ -615,8 +615,8 @@ function fnBusChangeNext() {
             btntext0 = "[동해행] ";
             btntext1 = "[서울행] ";
         } else {
-            btntext0 = "[양양행] ";
-            btntext1 = "[서울행] ";
+            btntext0 = "출발 ";
+            btntext1 = "복귀 ";
         }
 
         var btnonclick = $j("ul[class=busLine]:eq(1) li[class=on]").attr("onclick");
@@ -1049,7 +1049,7 @@ function fnBusSave() {
             }
         }
 
-        submiturl = "/act/surf/surf_return.php";
+        submiturl = "/act/frip/surf_return.php";
 
         if (!confirm("액트립 셔틀버스 예약건을 수정하시겠습니까?")) {
             return;

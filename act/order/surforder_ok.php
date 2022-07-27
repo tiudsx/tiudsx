@@ -6,10 +6,14 @@ $gubun = substr($resNumber, 0, 1);
 $title = "액트립";
 $infoUrl = "surforder_info.php";
 $funUrl = "/../common/func.php";
+$dbTableMain = "`AT_RES_MAIN`";
+$dbTableSub = "`AT_RES_SUB`";
 if($gubun == 3){
 	$title = "액트립x프립셔틀";
 	$infoUrl = "surforder_info_frip.php";
 	$funUrl = "/../frip/inc_func.php";
+	$dbTableMain = "`AT_RES_FRIP_MAIN`";
+	$dbTableSub = "`AT_RES_FRIP_SUB`";
 }
 
 include __DIR__.'/../db.php';
@@ -21,7 +25,7 @@ $cancelChk = "none";
 
 if($gubun == 1){
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.optcode, c.stay_day 
-						FROM `AT_RES_MAIN` a INNER JOIN `AT_RES_SUB` as b 
+						FROM ".$dbTableMain." a INNER JOIN ".$dbTableSub." as b 
 							ON a.resnum = b.resnum
 								AND b.code = 'surf'
 						INNER JOIN `AT_PROD_OPT` c
@@ -31,7 +35,7 @@ if($gubun == 1){
 
 }else{
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, TIMESTAMPDIFF(MINUTE, b.confirmdate, now()) as timeM2, d.couponseq
-						FROM `AT_RES_MAIN` a INNER JOIN `AT_RES_SUB` as b 
+						FROM ".$dbTableMain." a INNER JOIN ".$dbTableSub." as b 
 							ON a.resnum = b.resnum 
 						LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
 						WHERE a.resnum = $resNumber

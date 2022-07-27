@@ -189,6 +189,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                     </div>                
                     <div id="nextbtn" class="busOption01" style="text-align:center;">
+                        <span style="text-align:center;padding-bottom:10px;">※ 노선을 선택하세요.<br></span>
                         <span id="resseatnum"></span>
                         <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusNext();">
                     </div>

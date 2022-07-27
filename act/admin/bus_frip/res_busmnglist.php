@@ -1,12 +1,12 @@
 <?php
 include __DIR__.'/../../db.php';
-include __DIR__.'/../../common/func.php';
+include __DIR__.'/../../frip/inc_func.php';
 
 $selDate = $_REQUEST["selDate"];
 $busNum = $_REQUEST["busNum"];
 
 $select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, b.* FROM 
-						`AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+						`AT_RES_FRIP_MAIN` as a INNER JOIN `AT_RES_FRIP_SUB` as b 
 							ON a.resnum = b.resnum 
                                 AND b.code = 'bus'
 						where b.res_date = '$selDate' AND b.res_busnum = '$busNum' AND b.res_confirm  = 3";
@@ -51,12 +51,9 @@ if($busGubun == "Y"){
 }
 
 //양양, 동해행 코드
-if($busNum == "Y1" || $busNum == "Y3" || $busNum == "Y5"){
-	$busType = "yy1";
-	$busEType = "yy9";
-}else if($busNum == "Y2" || $busNum == "Y4" || $busNum == "Y6"){
-	$busType = "yy2";
-	$busEType = "yy9";
+if($busNum == "Y1" || $busNum == "Y2"){
+	$busType = "fripS_01";
+	$busEType = "fripE_01";
 }else if($busNum == "E1" || $busNum == "E2" || $busNum == "E3"){
 	$busType = "ea1";
 	$busEType = "ea9";
@@ -64,14 +61,14 @@ if($busNum == "Y1" || $busNum == "Y3" || $busNum == "Y5"){
 
 //양양, 동해 서울행 코드
 if($busGubun == "S"){
-	$busType = "yyS";
-	$busEType = "yyE";
+	$busType = "fripE_01";
+	$busEType = "fripE_02";
 }else if($busGubun == "A"){
 	$busType = "eaS";
 	$busEType = "eaE";
 }
 
-$select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_spoint, c.ordernum FROM `AT_RES_SUB` as b INNER JOIN AT_CODE as c 
+$select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_spoint, c.ordernum FROM `AT_RES_FRIP_SUB` as b INNER JOIN AT_CODE as c 
 						ON b.code = 'bus' 
 							AND b.res_spoint = c.codename
 							AND c.code = '$busType'
@@ -88,7 +85,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 	}
 	$i += $row['Cnt'];
 }
-$select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_epoint, c.ordernum FROM `AT_RES_SUB` as b INNER JOIN AT_CODE as c 
+$select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_epoint, c.ordernum FROM `AT_RES_FRIP_SUB` as b INNER JOIN AT_CODE as c 
 						ON b.code = 'bus' 
 							AND b.res_epoint = c.codename
 							AND c.code = '$busEType'
@@ -173,7 +170,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 
 <?
 //echo $busGubun.'/'.$busNumber;
-$select_query = "SELECT * FROM `AT_PROD_BUS` WHERE use_yn = 'Y' AND busgubun = '$busGubun' AND busnum = '$busNumber' AND busdate = '$selDate' AND seq IN (7,14)";
+$select_query = "SELECT * FROM `AT_PROD_BUS` WHERE use_yn = 'Y' AND busgubun = '$busGubun' AND busnum = '$busNumber' AND busdate = '$selDate' AND seq IN (210,211)";
 $result = mysqli_query($conn, $select_query);
 $rowMain = mysqli_fetch_array($result);
 ?>

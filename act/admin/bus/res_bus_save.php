@@ -457,6 +457,7 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	// $infomsg .= "\n      - 예약화면에서 안내된 쿠폰코드를 입력해주세요.";
 	$infomsg .= "\n      - 예약하신 인원수와 동일한 좌석수로 예약해주세요.";
 	
+	$msgTitle = '액트립 서핑버스 예약안내';
 	$channelMsg = "액트립 서핑버스 좌석예약 안내입니다";
 
 	if($reschannel == 7){ //네이버쇼핑
@@ -464,9 +465,11 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	}else if($reschannel == 10){ //네이버예약
 
 	}else if($reschannel == 11){ //프립
-
+		$msgTitle = '액트립x프립버스 예약안내';
+		$channelMsg = "\n하단에 있는 [예약하기] 버튼 클릭 후 원하시는 노선과 좌석/정류장을 선택할 수 있습니다.";
 	}else if($reschannel == 17){ //프립 패키지
-		$channelMsg = "프립 서핑패키지 좌석/정류장 예약안내입니다.";
+		$msgTitle = '액트립x프립버스 예약안내';
+		$channelMsg = "프립 서핑패키지 좌석/정류장 예약안내입니다.\n\n승/하차 정류장 선택 방법\n  - 마린서프 : 기사문\n  - 인구서프 : 인구";
 	}else if($reschannel == 12){ //마이리얼트립
 
 	}else if($reschannel == 14){ //망고서프 패키지
@@ -492,12 +495,11 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			$resseatMsg .= "\n    [서울 복귀행] ".$resDate2." / ".$resbusseat2."자리";
 		}
 
-		$msgTitle = '액트립x프립버스 예약안내';
 		$channelMsg = "\n하단에 있는 [예약하기] 버튼 클릭 후 원하시는 노선과 좌석/정류장을 선택할 수 있습니다.";
 		$infomsg = "\n      - 예약하신 인원수와 동일한 좌석수로 예약해주세요.";
 		$infomsg .= "\n      - 예약문의는 프립 고객센터로 연락해주세요~";
 
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립x프립버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
+		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립x프립버스 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
 		
 		if($reschannel == 18){ //프립-니지모리
 			$resLink = "frip_bus1";
@@ -534,7 +536,6 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 			$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
 		}
 
-		$msgTitle = '액트립 서핑버스 예약안내';
 		//$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 서핑버스 좌석예약 안내입니다\n\n액트립 셔틀버스 예약코드\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 쿠폰코드 : '.$coupon_code.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립 셔틀버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg.'\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
 			

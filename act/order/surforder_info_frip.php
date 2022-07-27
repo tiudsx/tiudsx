@@ -134,7 +134,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	</table>
 
 					<div class="write_table" style="text-align:center;">
-					<input type="button" class="gg_btn gg_btn_grid large" style="width:150px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경 신청" onclick="location.href='/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
+					<input type="button" class="gg_btn gg_btn_grid large" style="width:150px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경 신청" onclick="location.href='/pointchangeFrip?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
 					</div>
 				</td>
 			</tr>

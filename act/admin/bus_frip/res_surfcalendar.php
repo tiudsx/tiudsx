@@ -5,7 +5,7 @@ if($reqDate != ""){
 	$shopseq = $_REQUEST["seq"];
 }
 
-include __DIR__.'/../../common/func.php';
+include __DIR__.'/../../frip/inc_func.php';
 $holidays = fnholidays();
 
 $selDate = ($reqDate == "") ? str_replace("-", "", date("Y-m-d")) : $reqDate;
@@ -75,7 +75,7 @@ echo ("
 		<tbody>
 	");
 	
-$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm FROM `AT_RES_SUB`
+$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm FROM `AT_RES_FRIP_SUB`
 			WHERE code = "bus"			
 				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 				AND seq IN (210, 211)

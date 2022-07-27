@@ -87,9 +87,9 @@ function fnBusPoint($vlu, $busNumber){
 		, "A2_금진해변"=> "17:20|금진해변 공영주차장 입구"
 	);
 
-	if($busNumber == "Y1" || $busNumber == "Y2"){
+	if($busNumber == "Y1" || $busNumber == "Y2" || $busNumber == "Y3" || $busNumber == "Y4" || $busNumber == "Y5" || $busNumber == "Y6"){
 		$busType = "Y1";
-	}else if($busNumber == "S21" || $busNumber == "S22" || $busNumber == "S23"){
+	}else if($busNumber == "S21" || $busNumber == "S22" || $busNumber == "S23" || $busNumber == "S24" || $busNumber == "S25" || $busNumber == "S26"){
 		$busType = "S1";
 	}else if($busNumber == "E1" || $busNumber == "E3" || $busNumber == "E5"){
 		$busType = "E1";

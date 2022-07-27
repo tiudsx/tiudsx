@@ -437,7 +437,7 @@ if($param == "BusI"){
 	$etc = $_REQUEST["etc"];
     
 	for($i = 0; $i < count($SurfDateBusY); $i++){
-        $select_query = 'SELECT res_spoint FROM AT_RES_SUB where res_date = "'.$SurfDateBusY[$i].'" AND res_bus = "'.$busNumY[$i].'" AND res_seat = "'.$arrSeatY[$i].'" AND res_confirm IN (0, 1, 2, 3) AND seq = '.$shopseq;
+        $select_query = 'SELECT res_spoint FROM AT_RES_FRIP_SUB where res_date = "'.$SurfDateBusY[$i].'" AND res_bus = "'.$busNumY[$i].'" AND res_seat = "'.$arrSeatY[$i].'" AND res_confirm IN (0, 1, 2, 3) AND seq = '.$shopseq;
         //echo $select_query;
         $result_setlist = mysqli_query($conn, $select_query);
 		$count = mysqli_num_rows($result_setlist);
@@ -449,7 +449,7 @@ if($param == "BusI"){
 	}
 
 	for($i = 0; $i < count($SurfDateBusS); $i++){
-		$select_query = 'SELECT res_spoint FROM AT_RES_SUB where res_date = "'.$SurfDateBusS[$i].'" AND res_bus = "'.$busNumS[$i].'" AND res_seat = "'.$arrSeatS[$i].'" AND res_confirm IN (0, 1, 2, 3) AND seq = '.$shopseq;
+		$select_query = 'SELECT res_spoint FROM AT_RES_FRIP_SUB where res_date = "'.$SurfDateBusS[$i].'" AND res_bus = "'.$busNumS[$i].'" AND res_seat = "'.$arrSeatS[$i].'" AND res_confirm IN (0, 1, 2, 3) AND seq = '.$shopseq;
 		$result_setlist = mysqli_query($conn, $select_query);
 		$count = mysqli_num_rows($result_setlist);
 
@@ -513,7 +513,7 @@ if($param == "BusI"){
     //서울출발 좌석예약
     for($i = 0; $i < count($SurfDateBusY); $i++){
         $TotalPrice += $res_totalprice;
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 셔틀버스', null, null, null, '$SurfDateBusY[$i]', null, '$busNumY[$i]', '$busNumY[$i]', '$arrSeatY[$i]', '$startLocationY[$i]', '$startLocationY[$i]', '$endLocationY[$i]', '$endLocationY[$i]', $res_confirm, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_FRIP_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 셔틀버스', null, null, null, '$SurfDateBusY[$i]', null, '$busNumY[$i]', '$busNumY[$i]', '$arrSeatY[$i]', '$startLocationY[$i]', '$startLocationY[$i]', '$endLocationY[$i]', '$endLocationY[$i]', $res_confirm, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         //echo $select_query.'<br>';
         if(!$result_set) goto errGoFrip;
@@ -533,7 +533,7 @@ if($param == "BusI"){
     //서울행 좌석예약
     for($i = 0; $i < count($SurfDateBusS); $i++){
         $TotalPrice += $res_totalprice;
-        $select_query = "INSERT INTO `AT_RES_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 셔틀버스', null, null, null, '$SurfDateBusS[$i]', null, '$busNumS[$i]', '$busNumS[$i]', '$arrSeatS[$i]', '$startLocationS[$i]', '$startLocationS[$i]', '$endLocationS[$i]', '$endLocationS[$i]', $res_confirm, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
+        $select_query = "INSERT INTO `AT_RES_FRIP_SUB` (`resnum`, `code`, `seq`, `optseq`, `shopname`, `sub_title`, `optname`, `optsubname`, `res_date`, `res_time`, `res_bus`, `res_busnum`, `res_seat`, `res_spoint`, `res_spointname`, `res_epoint`, `res_epointname`, `res_confirm`, `res_price`, `res_price_coupon`, `res_coupon`, `res_totalprice`, `res_ea`, `res_m`, `res_w`, `rtn_charge_yn`, `rtn_chargeprice`, `rtn_totalprice`, `rtn_bankinfo`, `cashreceipt_yn`, `insuserid`, `insdate`, `upduserid`, `upddate`)  VALUES ('$ResNumber', 'bus', $shopseq, null, '".$busTitleName." 셔틀버스', null, null, null, '$SurfDateBusS[$i]', null, '$busNumS[$i]', '$busNumS[$i]', '$arrSeatS[$i]', '$startLocationS[$i]', '$startLocationS[$i]', '$endLocationS[$i]', '$endLocationS[$i]', $res_confirm, $res_Price, $res_price_coupon, '$coupon', $res_totalprice, 1, 0, 0, 'Y', 0, 0, null, 'N', '$InsUserID', '$datetime', '$InsUserID', '$datetime');";
         $result_set = mysqli_query($conn, $select_query);
         //echo $select_query.'<br>';
         if(!$result_set) goto errGoFrip;
@@ -550,7 +550,7 @@ if($param == "BusI"){
         $arrStopInfoE[$startLocationS[$i]] = '    ['.$startLocationS[$i].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
     }
 
-    $select_query = "INSERT INTO `AT_RES_MAIN` (`resnum`, `pay_type`, `pay_info`, `user_id`, `user_name`, `user_tel`, `user_email`, `etc`, `insuserid`, `insdate`) VALUES ('$ResNumber', 'B', '무통장입금', '$InsUserID', '$userName', '$userPhone', '$usermail', '$etc', '$InsUserID', '$datetime');";
+    $select_query = "INSERT INTO `AT_RES_FRIP_MAIN` (`resnum`, `pay_type`, `pay_info`, `user_id`, `user_name`, `user_tel`, `user_email`, `etc`, `insuserid`, `insdate`) VALUES ('$ResNumber', 'B', '무통장입금', '$InsUserID', '$userName', '$userPhone', '$usermail', '$etc', '$InsUserID', '$datetime');";
     //echo $select_query.'<br>';
     $result_set = mysqli_query($conn, $select_query);
     if(!$result_set) goto errGoFrip;
@@ -593,18 +593,18 @@ if($param == "BusI"){
             }
             $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
         }
-        $busSeatInfoTotal .= '\n ▶ 탑승시간/위치 안내\n      - http://actrip.co.kr/frip_bus1\n';
         $msgTitle = '액트립x프립버스 예약안내';
 
-        $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립x프립버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n      - 예약문의는 프립 고객센터로 연락해주세요~';
+        $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립x프립버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n      - 문의는 프립 고객센터로 연락해주세요~';
 
-        $tempName = "at_bus_12";
+        $tempName = "frip_bus03";
         $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
-        $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약변경
+        $btn_ResChange = "pointchangeFrip?num=1&resNumber=".$ResNumber; //예약변경
         $btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
-        $btn_ResCustomer = "kakaocustomer"; //문의하기
+        $btn_ResCustomer = ""; //문의하기
         $btn_Notice = "";
         $btn_ResContent = ""; //예약 상세안내
+        $btn_ResPoint = "frip_bus1"; //예약 상세안내
         
         // 고객 카카오톡 발송
         $arrKakao = array(
@@ -615,6 +615,8 @@ if($param == "BusI"){
             , "tempName"=> $tempName
             , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
+            , "btn_ResSearchFrip"=> $btn_ResSearch
+            , "btn_ResPoint"=> $btn_ResPoint
             , "btn_ResContent"=> $btn_ResContent
             , "btn_ResSearch"=> $btn_ResSearch
             , "btn_ResChange"=> $btn_ResChange
