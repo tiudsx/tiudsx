@@ -15,15 +15,15 @@ mysqli_query($conn, "COMMIT");
 <div id="wrap">
     <? include __DIR__.'/../_layout_top.php'; ?>
 
-    <link rel="stylesheet" type="text/css" href="../css/surfview.css">
-    <link rel="stylesheet" type="text/css" href="../css/surfview_bus.css">
-    <link rel="stylesheet" type="text/css" href="../css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/act/frip/css_surfview.css?v=2">
+    <link rel="stylesheet" type="text/css" href="/act/frip/css_surfview_bus.css?v=1">
+    <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
 
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1> 서핑버스 실시간 위치조회</h1>
-                <div class="reviewcnt">※ 서핑버스 현재위치를 1분마다 수집하여 표시됩니다.</div>
+                <h1> 액트립x프립버스 실시간 위치조회</h1>
+                <div class="reviewcnt">※ 셔틀버스 현재위치를 1분마다 수집하여 표시됩니다.</div>
                 <div class="shopsubtitle">※ 실제위치와 오차가 있을 수 있으니 참고부탁드립니다.</div>
             </div>
         </section>
@@ -33,7 +33,7 @@ mysqli_query($conn, "COMMIT");
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on"><a>현재위치 조회</a></li>
+                            <li class="on"><a>셔틀버스 위치 조회</a></li>
                             <li><a id="counttimer" style="font-size:0.9em;font-weight:200;"></a></li>
                         </ul>
                     </div>
@@ -49,10 +49,8 @@ $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
 $count = 1;
-if($nowTime > 0500 && $nowTime < 1300){
+if($nowTime > 0600 && $nowTime < 2300){
     $busList = "'Y','E'";
-}else if($nowTime >= 1300 && $nowTime < 2300){
-    $busList = "'S','A'";
 }else{
     $count = 0;
 }
@@ -64,7 +62,7 @@ if($count == 1){
                             AND a.gpsdate = b.busdate
                         WHERE b.busgubun IN ('.$busList.')
                             AND b.use_yn = "Y"
-                            AND b.seq IN (7,14)
+                            AND b.seq IN (210,211)
                         ORDER BY b.busgubun DESC, b.busnum';
     $result_setlist = mysqli_query($conn, $select_query);
     $count = mysqli_num_rows($result_setlist);
@@ -72,7 +70,7 @@ if($count == 1){
     while ($row = mysqli_fetch_assoc($result_setlist)){
         $busNum = $row['busgubun'].$row['busnum'];
         $busgubun = $row["busgubun"];
-        $busName = $row['busname'];
+        $busName = str_replace("서울출발", "니지모리", str_replace("서울복귀", "니지모리", $row["busname"]));
         $user_name = $row['user_name'];
         $lat = $row['lat'];
         $lng = $row['lng'];
@@ -94,7 +92,7 @@ function fnBusGPSPoint(obj) {
     var params = "resparam=mappoint&busgubun=" + busnum;
     $j.ajax({
         type: "POST",
-        url: "/act/surfbus/json_gps.php?",
+        url: "/act/frip/bus_gps_json.php?",
         data: params,
         success: function (data) {
             $j("input[btnpoint='point']").css("background", "").css("color", "");
@@ -116,7 +114,7 @@ function fnBusGPSPoint(obj) {
                 
                 MARKER_SPRITE_POSITION2 = eval(data);
                 
-                $j("#ifrmBusMap").css("display", "block").attr("src", "/act/surfbus/surfgpsmap.html");
+                $j("#ifrmBusMap").css("display", "block").attr("src", "/act/frip/surfgpsmap.html");
             }
         }
     });
@@ -134,7 +132,7 @@ function fnBusGPSPoint(obj) {
                 <tr>
                     <th style="text-align: center;" colspan="2">
                         <strong style="line-height:2;">
-                            ★ 액트립 셔틀버스 운행 차량
+                            ★ 액트립x프립버스 운행 차량
                         </strong>
                     </th>
                 </tr>
@@ -142,13 +140,13 @@ function fnBusGPSPoint(obj) {
             <?if($count == 0){?>
                 <tr>
                     <td style="text-align:center;line-height:3;" colspan="2">
-                        <h1 style='font-size:12px;height:50px;padding-top:20px;'>현재 서핑버스는 운행중이지 않습니다.</h1>
+                        <h1 style='font-size:12px;height:50px;padding-top:20px;'>현재 셔틀버스는 운행중이지 않습니다.</h1>
                     </td>
                 </tr>
             <?}else{?>
                 <?if($arrMapList["Y"]){?>
                 <tr>
-                    <th>서울 → 양양행</th>
+                    <th>서울-니지모리</th>
                     <td style="line-height:3;">
                         <?=$arrMapList["Y"]?>
                     </td>
@@ -211,7 +209,7 @@ function fnBusGPSPoint(obj) {
     });
 </script>
 
-<script src="../js/surfview_bus.js?v=1"></script>
-<script src="../js/surfview.js"></script>
-<script src="../js/jquery-ui.js"></script>
-<script src="../js/surfview_busday.js?v=1"></script>
+<script src="/act/js/jquery-ui.js"></script>
+<script src="/act/frip/js_surfview_bus.js?v=2"></script>
+<script src="/act/frip/js_surfview.js"></script>
+<script src="/act/frip/js_surfview_busday.js?v=1"></script>
