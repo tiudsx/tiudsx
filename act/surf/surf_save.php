@@ -597,10 +597,10 @@ if($param == "BusI"){
 
         $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립x프립버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n      - 문의는 프립 고객센터로 연락해주세요~';
 
-        $tempName = "frip_bus03";
+        $tempName = "frip_bus02";
         $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
         $btn_ResChange = "pointchangeFrip?num=1&resNumber=".$ResNumber; //예약변경
-        $btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+        $btn_ResGPS = "frip_gps"; //서핑버스 실시간위치 조회
         $btn_ResCustomer = ""; //문의하기
         $btn_Notice = "";
         $btn_ResContent = ""; //예약 상세안내

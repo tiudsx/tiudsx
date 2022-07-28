@@ -954,7 +954,7 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
     }else if(gubun == "Y" && num == 2 && busnum == 1){ //건대입구
         mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/Y2_5_zgeyzc.jpg";
     }else if(gubun == "S" && num == 1 && busnum == 1){ //니지모리
-        mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/FRIP_11_inodzn.jpg";
+        mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/KakaoTalk_20220728_100050406_pjatjl.png";
     }
     $j("#mapimg").attr("src", mapImage);
 
