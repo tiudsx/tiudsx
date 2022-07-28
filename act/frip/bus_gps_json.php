@@ -80,16 +80,18 @@ if($param == "mappoint"){ //상세정보
         }
 
         $busNumImg = "Y1";
-        if($gpsname == "양양 1호차"){
+        if($gpsname == "니지모리1호차"){
             $busNumImg = "Y1";
-        }else if($gpsname == "양양 2호차"){
+        }else if($gpsname == "니지모리2호차"){
             $busNumImg = "Y2";
-        }else if($gpsname == "양양 3호차"){
+        }else if($gpsname == "니지모리3호차"){
             $busNumImg = "Y3";
+        }else if($gpsname == "니지모리4호차"){
+            $busNumImg = "Y4";
         }
 
-        //$busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=1|";
-        $busImg = "https://actrip.cdn1.cafe24.com/logo/surfbus.jpg?v=1|";
+        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/frip/surfbus_".$busNumImg.".jpg?v=1|";
+        //$busImg = "https://actrip.cdn1.cafe24.com/logo/surfbus.jpg?v=1|";
         $busGPS .= "busGPSList.bus = {".$mappoint.",'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
         $mapNum++;
     }
