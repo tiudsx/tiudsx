@@ -88,7 +88,8 @@ if($param == "mappoint"){ //상세정보
             $busNumImg = "Y3";
         }
 
-        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=1|";
+        //$busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=1|";
+        $busImg = "https://actrip.cdn1.cafe24.com/logo/surfbus.jpg?v=1|";
         $busGPS .= "busGPSList.bus = {".$mappoint.",'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
         $mapNum++;
     }
