@@ -1,6 +1,6 @@
 <?
 include __DIR__.'/../db.php';
-include __DIR__.'/../common/func.php';
+include __DIR__.'/../frip/inc_func.php';
 
 $param_mid = $_REQUEST["mid"];
 
@@ -347,7 +347,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 </script>
 
 <script src="/act/js/jquery-ui.js"></script>
-<script src="/act/frip/js_surfview_bus.js?v=2"></script>
+<script src="/act/frip/js_surfview_bus.js?v=3"></script>
 <script src="/act/frip/js_surfview.js"></script>
 <script src="/act/frip/js_surfview_busday.js?v=1"></script>
 <script>

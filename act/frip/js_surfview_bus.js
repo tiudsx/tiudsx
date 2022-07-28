@@ -1012,7 +1012,7 @@ function fnBusSave() {
         return;
     }
 
-    var submiturl = "/act/surf/surf_save.php";
+    var submiturl = "/act/frip/surf_save.php";
     if (busrestype == "change") {
         if ($j("#daytype").val() == 0) { //편도
             var defaultCnt = Object.keys(busResData).length;
