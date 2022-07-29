@@ -160,6 +160,11 @@ function getPointMove(){
 
                 // var position = new naver.maps.LatLng((parseFloat(arrdata[2]) - tmppoint).toFixed(7), (parseFloat(arrdata[3]) - tmppoint).toFixed(7));
                 // map.panTo(position);
+                if(arrdata[8] == "사당선 1호차"){
+                    arrdata[8] = "사당선 1, 3호차";
+                }else if(arrdata[8] == "종로선 2호차"){
+                    arrdata[8] = "종로선 2, 4호차";
+                }
 
                 var busbox = '<div class="overlaybox">' +
                     '    <div class="boxtitle">[' + arrdata[7] + '] '+ arrdata[8] +'</div>' +
