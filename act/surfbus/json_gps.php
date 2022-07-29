@@ -29,6 +29,11 @@ if($param == "mappoint"){ //상세정보
         $busNum = $row['busgubun'].$row['busnum'];
         $busgubun = $row["busgubun"];
         $busName = $row['busname'];
+        if($busName == "사당선 1호차"){
+            $busName = "사당선 1, 3호차";
+        }else if($busName == "종로선 2호차"){
+            $busName = "종로선 2, 4호차";
+        }
         $user_name = $row['user_name'];
         $lat = $row['lat'];
         $lng = $row['lng'];
