@@ -76,7 +76,7 @@ if($count == 1){
         if($busNum == "Y1"){
             $busName = "사당선 1, 3호차";
         }else if($busNum == "Y2"){
-            $busName = "종로선 1, 4호차";
+            $busName = "종로선 2, 4호차";
         }
 
         $user_name = $row['user_name'];
