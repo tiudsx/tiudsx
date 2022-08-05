@@ -144,6 +144,14 @@ function fnBusGPSPoint(obj) {
                         </strong>
                     </th>
                 </tr>
+                <tr>
+                    <td style="text-align:center;line-height:3;" colspan="2">
+                        <h1 style='font-size:12px;height:80px;padding-top:5px;'>
+                            ※사당선 1,3호차와 종로선 2,4호차는 같은 위치로 조회됩니다.<br>
+                            ※서울행 1,2호차는 같은 위치로 조회됩니다.
+                        </h1>
+                    </td>
+                </tr>
 
             <?if($count == 0){?>
                 <tr>
