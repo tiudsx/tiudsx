@@ -50,7 +50,7 @@ if($param == "mappoint"){ //상세정보
     
         if($busNum == "Y1" || $busNum == "Y2" || $busNum == "Y3" || $busNum == "Y4" || $busNum == "Y5" || $busNum == "Y6"){
             $mappoint = "'공덕역': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5453585', '126.9514437', '공덕역 3번출구 앞', '탑승시간 : <font color=red>10시 30분</font>', 0, 's1', '', ''],".
-                        "'건대입구' : [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.5393413', '127.0716672', '건대입구역 롯데백화점 스타시티점 입구', '탑승시간 : <font color=red>11시 30분</font>', 1, 's2', '', ''],".
+                        "'건대입구' : [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.5393413', '127.0716672', '건대입구역 롯데백화점 스타시티점 입구', '탑승시간 : <font color=red>11시 10분</font>', 1, 's2', '', ''],".
                         "'니지모리': [0, 0, '37.8792025', '127.0920022', '니지모리 스튜디오 주차장', '탑승시간 : <font color=red>21시 00분</font>', 0, 's1', '', '']";
         }else if($busNum == "E2" || $busNum == "E4" || $busNum == "E6"){
             $mappoint = "'당산역': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5348183', '126.900387', '당산역 13출구 방향 버거킹 앞', '탑승시간 : <font color=red>06시 05분</font>', 0, 's1', '', ''],".
