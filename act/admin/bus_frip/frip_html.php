@@ -14,6 +14,10 @@ $count = mysqli_num_rows($resultSite);
 if($count == 0){
    return;
 }
+
+echo "총 : ".$count;
+echo "<br><br>쿼리 : ".$select_query_sub;
+
 if($param == 2 || $param == 3){
    $msgTitle = '액트립 셔틀버스 성수기 유의사항 안내';
    $btnList = '';//'"button1":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/surfbus_yy"},';

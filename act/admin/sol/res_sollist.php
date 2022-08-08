@@ -164,8 +164,8 @@ include __DIR__.'/../../common/logininfo.php';
 				<th>등록관리자</th>
 				<td>
 					<select id="res_adminname" name="res_adminname" class="select">
-                        <option value='이승철'>이승철</option>
                         <option value='정태원'>정태원</option>
+                        <option value='이승철'>이승철</option>
                         <option value='정태일'>정태일</option>
                     </select>
 				</td>
@@ -359,10 +359,10 @@ include __DIR__.'/../../common/logininfo.php';
 									<input type="hidden" id="surfseq" name="surfseq[]" >
 									<input type="hidden" id="surftype" name="surftype[]" value="I">
 									<select id="res_surfshop" name="res_surfshop[]" class="select">
-										<option value='라라서프'>라라서프</option>
 										<option value='서퍼랑'>서퍼랑</option>
-										<option value='솔서프'>솔서프</option>
 										<option value='서프팩토리'>서프팩토리</option>
+										<option value='솔서프'>솔서프</option>
+										<option value='라라서프'>라라서프</option>
 									</select>
 								</td>
 								<td>

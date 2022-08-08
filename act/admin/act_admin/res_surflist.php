@@ -187,8 +187,8 @@ include __DIR__.'/../../common/logininfo.php';
 				<th>등록관리자</th>
 				<td>
 					<select id="res_adminname" name="res_adminname" class="select">
-                        <option value='이승철'>이승철</option>
                         <option value='정태원'>정태원</option>
+                        <option value='이승철'>이승철</option>
                         <!-- <option value='김민진'>김민진</option> -->
                         <option value='정태일'>정태일</option>
                     </select>
