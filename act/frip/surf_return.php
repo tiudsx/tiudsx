@@ -28,8 +28,20 @@ if($param == "PointChange"){ //정류장 변경
     $ressubseqe = $_REQUEST["ressubseqe"]; //셔틀버스 예약 시퀀스
     $daytype = $_REQUEST["daytype"]; //편도 : 0, 왕복 : 1
     
-    $busTypeY = "Y";
-    $busTypeS = "S";
+    if($shopseq == 210){
+        $busTypeY = "Y";
+        $busTypeS = "S";
+        $btn_ResPoint = "frip_bus1"; //예약 상세안내
+        $busTitleName = "니지모리";
+        $msgTitle = '니지모리 셔틀버스 예약안내';
+    }else{
+        $busTypeY = "E";
+        $busTypeS = "A";
+        $busTitleName = "제천";
+        $msgTitle = '제천국제음악영화제 셔틀버스 예약안내';
+        $btn_ResPoint = "frip_bus2"; //예약 상세안내
+    }
+
 
 	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행 날짜
     $SurfDateBusS = $_REQUEST["hidbusDate".$busTypeS]; //서울행 날짜
@@ -175,8 +187,6 @@ if($param == "PointChange"){ //정류장 변경
         }
 
         // 카카오톡 알림톡 발송
-        $msgTitle = '액트립x프립버스 예약 변경안내';
-
         $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n좌석/정류장 변경신청하신 예약정보를 보내드립니다.\n\n예약정보 [예약확정]\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n      - 문의는 프립 고객센터로 연락해주세요~';
 
         $tempName = "frip_bus02";
@@ -186,7 +196,6 @@ if($param == "PointChange"){ //정류장 변경
         $btn_ResCustomer = ""; //문의하기
         $btn_Notice = "";
         $btn_ResContent = ""; //예약 상세안내
-        $btn_ResPoint = "frip_bus1"; //예약 상세안내
         
         // 고객 카카오톡 발송
         $arrKakao = array(

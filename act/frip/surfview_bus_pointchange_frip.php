@@ -61,11 +61,22 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
     $i++;    
 }
+   
 
-$bustype0 = "Y";
-$bustype1 = "S";
+if($shopseq == 210){ //니지모리 셔틀버스
+    $bustype0 = "Y";
+    $bustype1 = "S";
+    $bustypeText0 = "양양행";
+    $bustypeText1 = "서울행";    
+}else{ //동해 셔틀버스
+    $bustype0 = "E";
+    $bustype1 = "A";
+    $bustypeText0 = "동해행";
+    $bustypeText1 = "서울행";
+}
+
 $bustypeText0 = "출발";
-$bustypeText1 = "도착";    
+$bustypeText1 = "도착"; 
 
 $daytype = 0;
 if($busgubun0 == 1 && $busgubun1 == 1){
@@ -259,12 +270,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </div>
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
-                        <li style="display:none;"><img src="/act/images/button/<?if($bustype0 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
+                        <li style="display:none;"><img src="/act/images/button/<?if($bustype0 == "Y"){ echo "btnFrip01.png"; }else{ echo "btnFrip01.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
                         <li>
                             <div id="selBus<?=$bustype0?>" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="/act/images/button/<?if($bustype1 == "S"){ echo "btn062.png"; }else{ echo "btn063.png"; }?>" alt="<?=$bustypeText1?> 서핑버스"></li>
+                        <li style="display:none;"><img src="/act/images/button/<?if($bustype1 == "S"){ echo "btnFrip02.png"; }else{ echo "btnFrip02.png"; }?>" alt="<?=$bustypeText1?> 서핑버스"></li>
                         <li>
                             <div id="selBus<?=$bustype1?>" class="bd" style="padding-top:2px;">
                             </div>
@@ -288,8 +299,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <? include __DIR__.'/../_layout_bottom.php'; ?>
 
 <script>
-    busTypeY = "Y";
-    busTypeS = "S";
+    var busTypeY = "E";
+    var busTypeS = "A";	
+    if($j("#shopseq").val() == 210){
+		busTypeY = "Y";
+		busTypeS = "S";
+    }
 </script>
 
 <script src="/act/js/jquery-ui.js"></script>

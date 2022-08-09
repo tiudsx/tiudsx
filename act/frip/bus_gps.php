@@ -52,8 +52,9 @@ $count = 1;
 if($nowTime > 0600 && $nowTime < 2300){
     $busList = "'Y','E'";
 }else{
-    $count = 0;
+    //$count = 0;
 }
+$busList = "'Y','E'";
 
 if($count == 1){
     $arrMapList = array();
@@ -70,7 +71,7 @@ if($count == 1){
     while ($row = mysqli_fetch_assoc($result_setlist)){
         $busNum = $row['busgubun'].$row['busnum'];
         $busgubun = $row["busgubun"];
-        $busName = str_replace("서울출발", "니지모리", str_replace("서울복귀", "니지모리", $row["busname"]));
+        $busName = str_replace("서울출발", "제천 ", str_replace("서울복귀", "제천 ", $row["busname"]));
         $user_name = $row['user_name'];
         $lat = $row['lat'];
         $lng = $row['lng'];
@@ -168,7 +169,7 @@ function fnBusGPSPoint(obj) {
                 if($arrMapList["E"]){
                 ?>
                 <tr>
-                    <th>서울 → 동해행</th>
+                    <th>서울 - 제천국제음악영화제</th>
                     <td style="line-height:3;">
                         <?=$arrMapList["E"]?>
                     </td>

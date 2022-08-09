@@ -77,7 +77,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$ResCss = "resper";
 	}
 	
-	$RtnBank = str_replace("|", " / ", fnBusPoint($row['res_spointname'], $row['res_bus']));
+	$RtnBank = str_replace("|", " / ", fnBusPoint($row['res_spointname'], $row['res_bus'], $datDate));
 
 	if($i == 1){
 ?>

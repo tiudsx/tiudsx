@@ -52,13 +52,12 @@ if($param == "mappoint"){ //상세정보
             $mappoint = "'공덕역': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5453585', '126.9514437', '공덕역 3번출구 앞', '탑승시간 : <font color=red>10시 30분</font>', 0, 's1', '', ''],".
                         "'건대입구' : [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.5393413', '127.0716672', '건대입구역 롯데백화점 스타시티점 입구', '탑승시간 : <font color=red>11시 10분</font>', 1, 's2', '', ''],".
                         "'니지모리': [0, 0, '37.8792025', '127.0920022', '니지모리 스튜디오 주차장', '탑승시간 : <font color=red>21시 00분</font>', 0, 's1', '', '']";
-        }else if($busNum == "E2" || $busNum == "E4" || $busNum == "E6"){
-            $mappoint = "'당산역': [0, MARKER_SPRITE_Y_OFFSET*3, '37.5348183', '126.900387', '당산역 13출구 방향 버거킹 앞', '탑승시간 : <font color=red>06시 05분</font>', 0, 's1', '', ''],".
-                        "'합정역': [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.5507926', '126.9159159', '합정역 3번출구 앞', '탑승시간 : <font color=red>06시 10분</font>', 1, 's2', '', ''],".
-                        "'종로3가역': [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.5703347', '126.99317687', '종로3가역 12번출구 방향 새마을금고 앞', '탑승시간 : <font color=red>06시 35분</font>', 2, 's3', '', ''],".
-                        "'왕십리역': [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.5615557', '127.0348018', '왕십리역 11번출구 방향 우리은행 앞', '탑승시간 : <font color=red>06시 50분</font>', 3, 's4', '', ''],".
-                        "'건대입구': [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.5393413', '127.0716672', '건대입구역 롯데백화점 스타시티점 입구', '탑승시간 : <font color=red>07시 05분</font>', 4, 's5', '', ''],".
-                        "'종합운동장역': [MARKER_SPRITE_X_OFFSET*5, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장 뒤쪽', '탑승시간 : <font color=red>07시 20분</font>', 5, 's6', '', '']";
+        }else if($busNum == "E1" || $busNum == "E2"){
+            $mappoint = "'사당역': [MARKER_SPRITE_X_OFFSET*0, MARKER_SPRITE_Y_OFFSET*3, '37.4764763', '126.977734', '사당역 6번출구 방향 참약사 장수약국 앞', '탑승시간 : <font color=red>12시 00분</font>', 0, 's1', '', ''],".
+                        "'강남역': [MARKER_SPRITE_X_OFFSET*1, MARKER_SPRITE_Y_OFFSET*3, '37.4982078', '127.0290928', '강남역 1번출구 버스정류장', '탑승시간 : <font color=red>12시 20분</font>', 1, 's2', '', ''],".
+                        "'종합운동장역': [MARKER_SPRITE_X_OFFSET*2, MARKER_SPRITE_Y_OFFSET*3, '37.5104765', '127.0722925', '종합운동장역 4번출구 방향 버스정류장 뒤쪽', '탑승시간 : <font color=red>12시 40분</font>', 2, 's3', '', ''],".
+                        "'비행장 무대': [MARKER_SPRITE_X_OFFSET*3, MARKER_SPRITE_Y_OFFSET*3, '37.160496', '128.2139093', '제천제일감리교회 주차장 입구', '탑승시간<br><font color=red><span style=padding-left:20px;>8월 12일 : 25시 00분</span><br><span style=padding-left:20px;>8월 13일, 14일 : 23시 00분</span><br><span style=padding-left:20px;>8월 15일 : 25시 30분</span></font>', 3, 's4', '', ''],".
+                        "'메가박스 제천': [MARKER_SPRITE_X_OFFSET*4, MARKER_SPRITE_Y_OFFSET*3, '37.1357647', '128.2110021', '제천 황금당 앞 노상주차장', '탑승시간<br><font color=red style=padding-left:20px;>8월 12일 : 25시 10분<br><span style=padding-left:20px;>8월 13일, 14일 : 23시 10분</span><br><span style=padding-left:20px;>8월 15일 : 25시 40분</font>', 4, 's5', '', '']";
         }
         
         if($busgubun == "S"){
@@ -68,13 +67,13 @@ if($param == "mappoint"){ //상세정보
                         "'대진항': [MARKER_SPRITE_X_OFFSET*1, 0, '37.5807657', '129.111344', '대진항 공영주차장 입구', '탑승시간 : <font color=red>14시 05분 / 17시 05분</font>', 1, 's2', '', ''],".
                         "'금진해변': [MARKER_SPRITE_X_OFFSET*2, 0, '37.6347202', '129.0450586', '금진해변 공영주차장 입구', '탑승시간 : <font color=red>14시 20분 / 17시 20분</font>', 2, 's3', '', '']";
         }
-
+        
         if($busgubun == "Y"){
             $locationname = "니지모리";
         }else if($busgubun == "S"){
             $locationname = "양양 → 서울행";
         }else if($busgubun == "E"){
-            $locationname = "서울 → 동해행";
+            $locationname = "제천국제음악영화제";
         }else if($busgubun == "A"){
             $locationname = "동해 → 서울행";
         }
@@ -90,8 +89,8 @@ if($param == "mappoint"){ //상세정보
             $busNumImg = "Y4";
         }
 
-        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/frip/surfbus_".$busNumImg.".jpg?v=1|";
-        //$busImg = "https://actrip.cdn1.cafe24.com/logo/surfbus.jpg?v=1|";
+        //$busImg = "https://actrip.cdn1.cafe24.com/act_bus/frip/surfbus_".$busNumImg.".jpg?v=1|";
+        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/frip/surfbus_frip.jpg?v=1|";
         $busGPS .= "busGPSList.bus = {".$mappoint.",'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
         $mapNum++;
     }

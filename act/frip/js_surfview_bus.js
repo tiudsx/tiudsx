@@ -484,7 +484,7 @@ function fnBusNext() {
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else if ($j("#busgubun").val() == "E") {
-            btntext = "[동해행] ";
+            btntext = "[출발] ";
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else {
@@ -524,8 +524,8 @@ function fnBusNext() {
         var btntext0 = "",
             btntext1 = "";
         if ($j("#busgubun").val() == "E") {
-            btntext0 = "[동해행] ";
-            btntext1 = "[서울행] ";
+            btntext0 = "출발 ";
+            btntext1 = "복귀 ";
         } else {
             btntext0 = "출발 ";
             btntext1 = "복귀 ";
@@ -573,7 +573,7 @@ function fnBusChangeNext() {
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else if ($j("#busgubun").val() == "E") {
-            btntext = "[동해행] ";
+            btntext = "출발 ";
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
         } else {
@@ -612,8 +612,8 @@ function fnBusChangeNext() {
         var btntext0 = "",
             btntext1 = "";
         if ($j("#busgubun").val() == "E") {
-            btntext0 = "[동해행] ";
-            btntext1 = "[서울행] ";
+            btntext0 = "출발 ";
+            btntext1 = "복귀 ";
         } else {
             btntext0 = "출발 ";
             btntext1 = "복귀 ";
@@ -705,12 +705,12 @@ function fnSeatSelected(obj) {
 
                 if (busType == "E" || busType == "Y") {
                     if (defaultCntS < selCntS) {
-                        alert(btntextS + "으로 선택된 좌석을 취소 후 해당 좌석을 선택해주세요~");
+                        alert("선택된 좌석을 취소 후 해당 좌석을 선택해주세요~");
                         return;
                     }
                 } else {
                     if (defaultCntE < selCntE) {
-                        alert(btntextE + "으로 선택된 좌석을 취소 후 해당 좌석을 선택해주세요~");
+                        alert("선택된 좌석을 취소 후 해당 좌석을 선택해주세요~");
                         return;
                     }
                 }
@@ -718,7 +718,10 @@ function fnSeatSelected(obj) {
         } else if (busrestype == "channel") { //타채널 예약건
             var selCntS = $j("#selBusY tr[trseat]").length + 1;
             var selCntE = $j("#selBusS tr[trseat]").length + 1;
-
+            if ($j("#busgubun").val() == "E" || $j("#busgubun").val() == "A") { //동해행 왕복
+                selCntS = $j("#selBusE tr[trseat]").length + 1;
+                selCntE = $j("#selBusA tr[trseat]").length + 1;
+            }
             if (busType == "E" || busType == "Y") {
                 if (resbusseat1 < selCntS) {
                     alert("서울출발은 " + resbusseat1 + "좌석 예약 가능합니다.");
@@ -955,7 +958,23 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
         mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/Y2_5_zgeyzc.jpg";
     }else if(gubun == "S" && num == 1 && busnum == 1){ //니지모리
         mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/KakaoTalk_20220728_100050406_pjatjl.png";
+    }else if(gubun == "E"){ //제천 - 출발
+        if(num == 1){
+            mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/Y1_4_cjqrla.jpg";
+        }else if(num == 2){
+            mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/Y1_5_ltfrg3.jpg";
+        }else if(num == 3){
+            mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/Y1_6_kvncv7.jpg";
+            
+        }
+    }else if(gubun == "A"){ //제천 - 복귀
+        if(num == 1){
+            mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/FRIP_13_qer7gg.jpg";
+        }else if(num == 2){
+            mapImage = "https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/FRIP_12_wnznea.jpg";
+        }
     }
+
     $j("#mapimg").attr("src", mapImage);
 
     $j(".mapviewid").css("background", "").css("color", "");
@@ -1067,6 +1086,10 @@ function fnBusSave() {
         if (busrestype == "channel") {
             var selCntS = $j("#selBusY tr[trseat]").length;
             var selCntE = $j("#selBusS tr[trseat]").length;
+            if ($j("#busgubun").val() == "E" || $j("#busgubun").val() == "A") { //동해행 왕복
+                selCntS = $j("#selBusE tr[trseat]").length;
+                selCntE = $j("#selBusA tr[trseat]").length;
+            }
 
             if (resbusseat1 > 0 && resbusseat1 != selCntS) {
                 alert("서울출발은 " + resbusseat1 + "좌석 예약해주세요~");

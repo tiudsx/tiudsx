@@ -88,9 +88,9 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 			<?}?>
 		</td>
 	</tr>
-	<!-- <tr>
-		<th rowspan="2">동해행</th>
-		<th>서울-동해행</th>
+	<tr>
+		<th rowspan="2">제천국제음악영화제</th>
+		<th>서울출발행</th>
 		<td>
 			<?foreach($arrBusE as $key=>$value){?>
 				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
@@ -98,13 +98,13 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 		</td>
 	</tr>
 	<tr>
-		<th>동해-서울행</th>
+		<th>서울복귀행</th>
 		<td>
 			<?foreach($arrBusA as $key=>$value){?>
 				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
 			<?}?>
 		</td>
-	</tr> -->
+	</tr>
 </table>
 </form>
 

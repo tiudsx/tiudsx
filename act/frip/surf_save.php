@@ -410,10 +410,14 @@ if($param == "BusI"){
         $busTypeY = "Y";
         $busTypeS = "S";
         $busTitleName = "니지모리";
+        $msgTitle = '니지모리 셔틀버스 예약안내';
+        $btn_ResPoint = "frip_bus1"; //예약 상세안내
     }else{
         $busTypeY = "E";
         $busTypeS = "A";    
-        $busTitleName = "제천";    
+        $busTitleName = "제천";
+        $msgTitle = '제천국제음악영화제 셔틀버스 예약안내';
+        $btn_ResPoint = "frip_bus2"; //예약 상세안내
     }
 
 	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //서울출발 날짜
@@ -593,7 +597,6 @@ if($param == "BusI"){
             }
             $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
         }
-        $msgTitle = '액트립x프립버스 예약안내';
 
         $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립x프립버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n      - 문의는 프립 고객센터로 연락해주세요~';
 
@@ -604,7 +607,6 @@ if($param == "BusI"){
         $btn_ResCustomer = ""; //문의하기
         $btn_Notice = "";
         $btn_ResContent = ""; //예약 상세안내
-        $btn_ResPoint = "frip_bus1"; //예약 상세안내
         
         // 고객 카카오톡 발송
         $arrKakao = array(

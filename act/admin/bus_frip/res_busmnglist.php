@@ -54,9 +54,9 @@ if($busGubun == "Y"){
 if($busNum == "Y1" || $busNum == "Y2"){
 	$busType = "fripS_01";
 	$busEType = "fripE_01";
-}else if($busNum == "E1" || $busNum == "E2" || $busNum == "E3"){
-	$busType = "ea1";
-	$busEType = "ea9";
+}else if($busNum == "E1" || $busNum == "E2"){
+	$busType = "fripS_03";
+	$busEType = "fripE_03";
 }
 
 //양양, 동해 서울행 코드
@@ -64,8 +64,8 @@ if($busGubun == "S"){
 	$busType = "fripE_01";
 	$busEType = "fripE_02";
 }else if($busGubun == "A"){
-	$busType = "eaS";
-	$busEType = "eaE";
+	$busType = "fripS_04";
+	$busEType = "fripE_04";
 }
 
 $select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_spoint, c.ordernum FROM `AT_RES_FRIP_SUB` as b INNER JOIN AT_CODE as c 
@@ -74,7 +74,7 @@ $select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_spoint, c.ordernum FROM `AT_
 							AND c.code = '$busType'
 						WHERE b.res_Date = '$selDate' AND b.res_bus = '$busNum' AND b.res_confirm = 3
 						GROUP BY b.res_spoint ORDER BY c.ordernum";
-//  echo $select_query_sub3;
+//  echo $select_query_sub3.'<br><br>';
 $resultSite3 = mysqli_query($conn, $select_query_sub3);
 $i = 0;
 while ($row = mysqli_fetch_assoc($resultSite3)){
@@ -151,7 +151,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						<?foreach($arrSeatInfo2 as $key=>$value) {
 							$arrData = explode(".",$key);
 							// $pointname = explode("|",fnBusReturnPoint($arrData[1]));
-							$pointname = explode("|", fnBusPoint($arrData[1], "S21"));
+							$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
 						?>
 						<tr>
 						<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>

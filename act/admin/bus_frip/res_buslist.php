@@ -75,46 +75,29 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="S24" style="vertical-align:-3px;" />4호차</label>
                             </td>
                         </tr>
-                        <!-- <tr>
+                        <tr>
                             <td colspan="6">
-                               동해행
+                               제천국제음악영화제
                             </td>
                         </tr>
                         <tr>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusD1" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D1')" />서울-동해행</label></th>
-                            <th rowspan="2">사당선</th>
+                            <th><label><input type="checkbox" id="chkBusD1" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D1')" />서울-제천행</label></th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E1" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label>
                             </td>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />동해-서울행</label></th>
-                            <th>15시</th>
+                            <th><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />제천-서울행</label></th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A23" style="vertical-align:-3px;" />3호차</label>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E4" style="vertical-align:-3px;" />4호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
-                            </td>
-                            <th>18시</th>
-                            <td>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A53" style="vertical-align:-3px;" />3호차</label>
-                            </td>
-                        </tr> -->
                         <tr>
                             <th>검색기간</th>
                             <td colspan="3">
                                 <input type="hidden" id="hidsearch" name="hidsearch" value="init">
-                                <input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="2022-07-29" class="itx2" maxlength="7" >&nbsp;~
-                                <input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="2022-07-29" class="itx2" maxlength="7" >
+                                <input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="2022-08-11" class="itx2" maxlength="7" >&nbsp;~
+                                <input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="2022-08-11" class="itx2" maxlength="7" >
                                 <input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
                             </td>
                             
@@ -158,14 +141,14 @@ $shopseq = 0;
                             <th>채널</th>
                             <th>이름</th>
                             <th>연락처</th>
-                            <th>이용일 (출발-복귀)</th>
-                            <th></th>
+                            <th>서울 > 제천행</th>
+                            <th>제천 > 서울행</th>
                         </tr>
                         <tr>
                             <td>
                                 <select id="reschannel">
-                                    <option value="18">니지모리</option>
-                                    <!-- <option value="19">제천</option> -->
+                                    <option value="19">제천</option>
+                                    <option value="18">니지모리</option>                                    
                                 </select>
                             </td>
                             <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
@@ -179,14 +162,12 @@ $shopseq = 0;
                                 </select>
                             </td>
                             <td>
-                                <span style="display:none;">
                                 <input type="text" id="resDate2" name="resDate2" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
                                 <select id="resbusseat2">
                                 <?for ($i=0; $i < 10; $i++) { 
                                     echo '<option value="'.$i.'">'.$i.'명</option>';
                                 }?>
                                 </select>
-                                </span>
                             </td>
                         </tr>
                         <tr>
@@ -310,6 +291,10 @@ $shopseq = 0;
                                         <option value="S24">복귀행 4호차</option>
                                         <option value="S25">복귀행 5호차</option>
                                         <option value="S26">복귀행 6호차</option>
+                                        <option value="E1">서울출발 1호차</option>
+                                        <option value="E2">서울출발 2호차</option>
+                                        <option value="A21">복귀행 1호차</option>
+                                        <option value="A22">복귀행 2호차</option>
                                     </select>
 								</td>
 								<td style="line-height:2.3em">

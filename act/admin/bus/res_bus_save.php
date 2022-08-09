@@ -498,17 +498,19 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		$channelMsg = "\n하단에 있는 [예약하기] 버튼 클릭 후 원하시는 노선과 좌석/정류장을 선택할 수 있습니다.";
 		$infomsg = "\n      - 예약하신 인원수와 동일한 좌석수로 예약해주세요.";
 		$infomsg .= "\n      - 예약문의는 프립 고객센터로 연락해주세요~";
-
-		$msgTitle = '니지모리 셔틀버스 예약안내';
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립x프립버스 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
 		
 		if($reschannel == 18){ //프립-니지모리
 			$resLink = "frip_bus1";
 			$PROD_NAME = "프립-니지모리";
+			$msgTitle = '니지모리 셔틀버스 예약안내';
 		}else if($reschannel == 19){ //프립-제천
 			$resLink = "frip_bus2";	
 			$PROD_NAME = "프립-제천";
+			$msgTitle = '제천국제음악영화제 셔틀버스 예약안내';
 		}
+
+		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립x프립버스 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
+
 		$arrKakao = array(
 			"gubun"=> "bus"
 			, "admin"=> "N"

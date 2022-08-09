@@ -48,7 +48,7 @@ function fnBusNum($vlu){
 	if($busGubun == 'Y'){
 		return '서울출발 '.$busNumber.'호차';
 	}else if($busGubun == 'E'){
-		return '동해행 '.$busNumber.'호차';
+		return '서울출발 '.$busNumber.'호차';
 	}else{
         $busTime = substr($vlu, 1, 1);
         $busNumber = substr($vlu, 2, 1);
@@ -62,7 +62,7 @@ function fnBusNum($vlu){
 	}
 }
 
-function fnBusPoint($vlu, $busNumber){	
+function fnBusPoint($vlu, $busNumber, $selDate){	
 	$busData = array(
 		"Y1_공덕역"=> "10:30|공덕역 3번출구 앞"
 		, "Y1_건대입구역"=> "11:10|건대입구역 5번출구 앞"
@@ -70,35 +70,31 @@ function fnBusPoint($vlu, $busNumber){
 		, "E1_신도림"=> "06:20|홈플러스 신도림점 앞"
 		, "E1_대림역"=> "06:30|대림역 2번출구 앞"
 		, "E1_봉천역"=> "06:40|봉천역 1번출구 앞"
-		, "E1_사당역"=> "06:50|사당역 6번출구 방향 참약사 장수약국 앞"
-		, "E1_강남역"=> "07:05|강남역 1번출구 버스정류장"
-		, "E1_종합운동장역"=> "07:20|종합운동장역 4번출구 방향 버스정류장 뒤쪽"
-		, "E2_당산역"=> "06:05|당산역 13출구 방향 버거킹 앞"
-		, "E2_합정역"=> "06:10|합정역 3번출구 앞"
-		, "E2_종로3가역"=> "06:35|종로3가역 12번출구 새마을금고 앞"
-		, "E2_왕십리역"=> "06:50|왕십리역 11번출구 우리은행 앞"
-		, "E2_건대입구"=> "07:05|건대입구역 롯데백화점 스타시티점 입구"
-		, "E2_종합운동장역"=> "07:20|종합운동장역 4번출구 방향 버스정류장 뒤쪽"
-		, "A1_솔.동해점"=> "14:00|솔.동해점 입구"
-		, "A1_대진항"=> "14:05|대진항 입구"
-		, "A1_금진해변"=> "14:20|금진해변 공영주차장 입구"
-		, "A2_솔.동해점"=> "17:00|솔.동해점 입구"
-		, "A2_대진항"=> "17:05|대진항 입구"
-		, "A2_금진해변"=> "17:20|금진해변 공영주차장 입구"
+		, "E1_사당역"=> "12:00|사당역 6번출구 방향 참약사 장수약국 앞"
+		, "E1_강남역"=> "12:10|강남역 1번출구 버스정류장"
+		, "E1_종합운동장역"=> "12:40|종합운동장역 4번출구 방향 버스정류장 뒤쪽"
+		, "A1_비행장 무대"=> "25:00|제천제일감리교회 주차장 입구"
+		, "A1_메가박스 제천"=> "25:10|제천 황금당 앞 노상주차장"
+		, "A2_비행장 무대"=> "23:00|제천제일감리교회 주차장 입구"
+		, "A2_메가박스 제천"=> "23:10|제천 황금당 앞 노상주차장"
+		, "A3_비행장 무대"=> "25:30|제천제일감리교회 주차장 입구"
+		, "A3_메가박스 제천"=> "25:40|제천 황금당 앞 노상주차장"
 	);
 
 	if($busNumber == "Y1" || $busNumber == "Y2" || $busNumber == "Y3" || $busNumber == "Y4" || $busNumber == "Y5" || $busNumber == "Y6"){
 		$busType = "Y1";
 	}else if($busNumber == "S21" || $busNumber == "S22" || $busNumber == "S23" || $busNumber == "S24" || $busNumber == "S25" || $busNumber == "S26"){
 		$busType = "S1";
-	}else if($busNumber == "E1" || $busNumber == "E3" || $busNumber == "E5"){
-		$busType = "E1";
-	}else if($busNumber == "E2" || $busNumber == "E4" || $busNumber == "E6"){
+	}else if($busNumber == "E1" || $busNumber == "E2"){
 		$busType = "E1";
 	}else if($busNumber == "A21" || $busNumber == "A22"){
-		$busType = "A1";
-	}else if($busNumber == "A51" || $busNumber == "A52"){
-		$busType = "A2";
+		if($selDate == "2022-08-12"){
+			$busType = "A1";
+		}else if($selDate == "2022-08-15"){
+			$busType = "A3";
+		}else{
+			$busType = "A2";
+		}
 	}
 
 	if($busData[$busType.'_'.$vlu] == null){

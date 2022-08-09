@@ -71,10 +71,18 @@ function fnResKakaoAdmin(){
         return;
     }
 
-    //니지모리 왕복으로만..
-    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate1").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat1").val();
+    if($j("#resDate1").val() == ""){
+        $j("#resbusseat1").val(0);
+    }
 
-    //var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate2").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat2").val();
+    if($j("#resDate2").val() == ""){
+        $j("#resbusseat2").val(0);
+    }
+
+    //니지모리 왕복으로만..
+    //var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate1").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat1").val();
+
+    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate2").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat2").val();
     $j.ajax({
         type: "POST",
         url: "/act/admin/bus/res_bus_save.php",
@@ -85,11 +93,22 @@ function fnResKakaoAdmin(){
             }else{
                 $j("#userphone").val("");
                 $j("#username").val("");
+                $j("#resbusseat1").val(0);
+                $j("#resbusseat2").val(0);
 
                 fnKakaoSearchAdmin('bus_frip/res_kakao_search.php');
             }
         }
     });
+}
+
+function fnDateReset() {
+    $j("#sDate").val('');
+    $j("#eDate").val('');
+}
+
+function fnChkBusAll(obj, gubun) {
+    $j('input[id=chkbusNum' + gubun + ']').prop('checked', $j(obj).is(":checked"));
 }
 
 function fnBusCouponDel(seq){

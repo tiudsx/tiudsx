@@ -19,9 +19,13 @@ if($param_mid == ""){
 if($param == "frip_bus1"){ //니지모리
     $shopseq = 210;
     $pointurl = "/../frip/surfview_bus_tab3.html";
+    $busGubunS = "Y";
+    $busGubunE = "S";
 }else if($param == "frip_bus2"){ //제천 셔틀
     $shopseq = 211;
-    $pointurl = "/../frip/surfview_bus_tab3.html";
+    $pointurl = "/../frip/surfview_bus_tab4.html";
+    $busGubunS = "E";
+    $busGubunE = "A";
 }
 
 //"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
@@ -33,8 +37,14 @@ if($arrChannel != ""){
     $codeChk = $arrChk[2];  //예약코드 구분
     $resDate1 = $arrChk[3];  //서울 출발
     $resbusseat1 = $arrChk[5];  //인원
+    if($resDate1 == ""){
+        $resbusseat1 = 0;
+    }
     $resDate2 = $arrChk[4];  //서울 복귀
     $resbusseat2 = trim($arrChk[6]);  //인원
+    if($resDate2 == ""){
+        $resbusseat2 = 0;
+    }
     $resusername = trim($arrChk[7]);  //이름
     $resusertel = str_replace("-", "", trim($arrChk[8]));  //연락처
     $resusertel1 = substr($resusertel, 0, 3);
@@ -142,8 +152,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div class="busOption01" style="padding-bottom: 0px;" id="route">
                         <ul class="destination" id="ulroute" style="margin-bottom: 0px;">
                             <li><img src="/act/images/viewicon/route.svg" alt="">행선지</li>
-                            <li class="toYang on" onclick="fnBusGubun('Y', this);">서울 출발<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('S', this);">서울 복귀<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang on" onclick="fnBusGubun('<?=$busGubunS?>', this);">서울 출발<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang" onclick="fnBusGubun('<?=$busGubunE?>', this);">서울 복귀<i class="fas fa-chevron-right"></i></li>
                         </ul>
                     </div>
                     <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
@@ -243,12 +253,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <ul class="selectStop" style="padding:0 4px;">
                         <li style="display:none;"><img src="/act/images/button/btnFrip01.png" alt="출발버스"></li>
                         <li>
-                            <div id="selBusY" class="bd" style="padding-top:2px;">
+                            <div id="selBus<?=$busGubunS?>" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                         <li style="display:none;"><img src="/act/images/button/btnFrip02.png" alt="복귀버스"></li>
                         <li>
-                            <div id="selBusS" class="bd" style="padding-top:2px;">
+                            <div id="selBus<?=$busGubunE?>" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                     </ul>
