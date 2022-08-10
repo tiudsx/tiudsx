@@ -129,7 +129,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						$arrData = explode(".",$key);
 						// $pointname = explode("|",fnBusReturnPoint($arrData[1]));
 						// $pointtime = explode("|",fnBusPoint($arrData[1], $busNum, ""));
-						$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
+						$pointname = explode("|", fnBusPoint($arrData[1], $busNum, $selDate));
 					?>
 						<tr>
 							<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>
@@ -151,7 +151,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						<?foreach($arrSeatInfo2 as $key=>$value) {
 							$arrData = explode(".",$key);
 							// $pointname = explode("|",fnBusReturnPoint($arrData[1]));
-							$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
+							$pointname = explode("|", fnBusPoint($arrData[1], $busNum, $selDate));
 						?>
 						<tr>
 						<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>

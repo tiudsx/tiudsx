@@ -126,7 +126,9 @@ if($count == 0){
                 }
                 ?>
             </td>
-            <td>X &nbsp;<input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusCouponDel(<?=$row['codeseq']?>);" /></td>
+            <td>
+                <input type="button" class="gg_btn res_btn_color1" style="width:40px; height:25px;" value="독촉" onclick="fnBusRe('<?=$arrChk[0]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
+                <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusCouponDel(<?=$row['codeseq']?>);" /></td>
             <td><?=$rtnText?></td>
             <td>
                 <?=$rtnTextCode?>                

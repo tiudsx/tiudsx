@@ -112,22 +112,33 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}else{
 			$resparam = "surfbus_dh";			
         }
-        $arrKakao = array(
+
+		$tempName = "at_bus_12";
+		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
+		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
+		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+		$btn_ResCustomer = "kakaocustomer"; //문의하기
+		$btn_Notice = "";
+		$btn_ResContent = ""; //예약 상세안내
+
+		// 고객 카카오톡 발송
+		$arrKakao = array(
 			"gubun"=> "bus"
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_res_bus1"
+			, "tempName"=> $tempName
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
-			, "link4"=>"eatlist" //제휴업체 목록
-			, "link5"=>"event" //공지사항
+			, "btn_ResContent"=> $btn_ResContent
+			, "btn_ResSearch"=> $btn_ResSearch
+			, "btn_ResChange"=> $btn_ResChange
+			, "btn_ResGPS"=> $btn_ResGPS
+			, "btn_ResCustomer"=> $btn_ResCustomer
+			, "btn_Notice"=> $btn_Notice
 			, "smsOnly"=>"N"
 			, "PROD_NAME"=>"서핑버스"
-			, "PROD_URL"=>$shopSeq
+			, "PROD_URL"=>$shopseq
 			, "PROD_TYPE"=>"bus"
 			, "RES_CONFIRM"=>"3"
 		);
@@ -358,22 +369,33 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 		}else{
 			$resparam = "surfbus_dh";			
         }
-        $arrKakao = array(
+
+		$tempName = "at_bus_12";
+		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
+		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
+		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+		$btn_ResCustomer = "kakaocustomer"; //문의하기
+		$btn_Notice = "";
+		$btn_ResContent = ""; //예약 상세안내
+
+		// 고객 카카오톡 발송
+		$arrKakao = array(
 			"gubun"=> "bus"
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_res_bus1"
+			, "tempName"=> $tempName
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"surfbusgps" //셔틀버스 실시간위치 조회
-			, "link3"=>"pointlist?resparam=".$resparam //셔틀버스 탑승 위치확인
-			, "link4"=>"eatlist" //제휴업체 목록
-			, "link5"=>"event" //공지사항
+			, "btn_ResContent"=> $btn_ResContent
+			, "btn_ResSearch"=> $btn_ResSearch
+			, "btn_ResChange"=> $btn_ResChange
+			, "btn_ResGPS"=> $btn_ResGPS
+			, "btn_ResCustomer"=> $btn_ResCustomer
+			, "btn_Notice"=> $btn_Notice
 			, "smsOnly"=>"N"
 			, "PROD_NAME"=>"서핑버스"
-			, "PROD_URL"=>$shopSeq
+			, "PROD_URL"=>$shopseq
 			, "PROD_TYPE"=>"bus"
 			, "RES_CONFIRM"=>"3"
 		);
@@ -424,6 +446,41 @@ if($param == "changeConfirm"){ //상태 정보 업데이트
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 	
+	mysqli_query($conn, "COMMIT");
+	
+}else if($param == "reskakaode2"){
+	$user_tel = $_REQUEST['user_tel'];
+	$user_name = $_REQUEST['user_name'];
+
+	$msgTitle = '액트립 셔틀버스 예약안내';
+	$btnList = '';
+	$tempName = "at_res_step4";
+	$arryKakao = '';
+ 
+	$kakaoMsg = $msgTitle.'\n\n안녕하세요.\n액트립x프립 셔틀버스를 이용해주셔서 감사드립니다.\n카카오톡으로 예약링크를 안내드렸으나 예약이 안되고 있기에 다시 한번 안내드립니다.\n\n예약자 정보 안내\n ▶ 예약자 : '.$user_name.'\n---------------------------------\n ▶ 안내사항\n액트립x프립 셔틀버스는 실시간 예약으로 이루어지고 있습니다.\n예약을 늦게 하셔서 잔여석이 없을 경우 취소 처리 될 수 있으니 이점 참고하셔서 빠른 예약부탁드립니다.\n\n고객님들 모두 불편함 없는 즐거운 주말 여행이 되시길 바랍니다.\n\n감사합니다~';
+
+	$arryKakao .= '{"message_type":"at","phn":"'.$user_tel.'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'",'.$btnList.'"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"010-3308-6080","smsLmsTit":"'.$msgTitle.'","smsOnly":"N"}';
+	$rtnMsg = '['.$arryKakao.']';
+
+	$curl = curl_init();
+
+	curl_setopt_array($curl, array(
+	   CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
+	   CURLOPT_RETURNTRANSFER => true,
+	   CURLOPT_ENCODING => "",
+	   CURLOPT_MAXREDIRS => 10,
+	   CURLOPT_TIMEOUT => 30,
+	   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	   CURLOPT_CUSTOMREQUEST => "POST",
+	   CURLOPT_POSTFIELDS => $rtnMsg,
+	   CURLOPT_HTTPHEADER => array(
+	   "content-type: application/json", "userId: surfenjoy"
+	   ),
+	));
+
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+
 	mysqli_query($conn, "COMMIT");
 	
 }else if($param == "reskakao"){ //버스 예약안내 카톡 : 타채널예약건

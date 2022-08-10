@@ -486,6 +486,26 @@ function fnResKakaoAdmin(){
     });
 }
 
+function fnBusRe(username, usertel){
+    if(!confirm("독촉 발송 하시겠습니까?")){
+        return;
+    }
+
+    var params = "resparam=reskakaode2&user_name=" + username + "&user_tel=" + usertel;
+    $j.ajax({
+        type: "POST",
+        url: "/act/admin/bus/res_bus_save.php",
+        data: params,
+        success: function (data) {
+            if(data == "err"){
+                alert("오류가 발생하였습니다.");
+            }else{
+                fnKakaoSearchAdmin('bus/res_kakao_search.php');
+            }
+        }
+    });
+}
+
 function fnBusCouponDel(seq){
     if(!confirm("삭제 하시겠습니까?")){
         return;
