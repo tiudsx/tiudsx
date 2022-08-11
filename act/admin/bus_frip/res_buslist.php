@@ -176,7 +176,7 @@ $shopseq = 0;
                     </table>
                     </form>
 
-                    <div class="gg_first">알림톡 발송 정보 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnKakaoSearchAdmin('bus_firp/res_kakao_search.php');" /></div>
+                    <div class="gg_first">알림톡 발송 정보 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnKakaoSearchAdmin('bus_frip/res_kakao_search.php');" /></div>
                     <div id="mngKakaoSearch"> (https://alimtalk-api.bizmsg.kr/codeList.html)</div>
 
                 </div>
