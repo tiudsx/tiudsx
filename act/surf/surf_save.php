@@ -57,6 +57,11 @@ if($param == "BusI"){
 	$userPhone = $_REQUEST["userPhone1"]."-".$_REQUEST["userPhone2"]."-".$_REQUEST["userPhone3"];
 	$usermail = $_REQUEST["usermail"];
 	$etc = $_REQUEST["etc"];
+
+    if($userPhone == "010-4411-9390"){
+        //echo '<script>alert("지속적인 미입금 예약으로 인해 예약진행이 불가능합니다.");parent.fnUnblock("#divConfirm");</script>';
+        //return;
+    }
     
 	for($i = 0; $i < count($SurfDateBusY); $i++){
         $select_query = 'SELECT res_spoint FROM AT_RES_SUB where res_date = "'.$SurfDateBusY[$i].'" AND res_bus = "'.$busNumY[$i].'" AND res_seat = "'.$arrSeatY[$i].'" AND res_confirm IN (0, 1, 2, 3)';
