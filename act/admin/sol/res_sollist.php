@@ -76,7 +76,7 @@ include __DIR__.'/../../common/logininfo.php';
 								</tr>	
 								<?}?>
 								<tr>
-									<th colspan="4">301호(12명)</th>
+									<th colspan="4">301호(6명)</th>
 									<th colspan="2">302호(8명)</td>
 									<th colspan="2">303호(10명)</td>
 								</tr>
@@ -89,7 +89,8 @@ include __DIR__.'/../../common/logininfo.php';
 											<td room="301" id="301<?=$i?>"></td>
 										<?}?>
 										<?if($i > 6){ echo "<td></td><td></td>"; }else{?>
-											<td><?=$i + 6?>번(<?=(($i % 2) == 1) ? "1" : "2"?>층)</td>
+											<!-- <td><?=$i + 6?>번(<?=(($i % 2) == 1) ? "1" : "2"?>층)</td> -->
+											<td></td>
 											<td room="301" id="301<?=$i + 6?>"></td>
 											<?}?>
 										<?if($i > 8){ echo "<td></td><td></td>"; }else{?>
@@ -149,7 +150,7 @@ include __DIR__.'/../../common/logininfo.php';
 
 <div id="res_modify" style="display:none;padding:5px;height: 500px;overflow-y: scroll;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
-    <div class="gg_first" style="margin-top:0px;">솔게스트하우스 예약등록 (<?=date("Y-m-d A h:i:s")?>)</div>
+    <div class="gg_first" style="margin-top:0px;">솔게스트하우스 예약등록 (<span id="insdate"></span>)</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
             <col width="10%" />

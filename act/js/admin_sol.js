@@ -164,6 +164,7 @@ function fnSolModify(resseq) {
 
             for (let i = 0; i < data.length; i++) {
                 if (i == 0) {
+                    $j("#insdate").text(data[i].insdate);
                     $j("#resseq").val(data[i].resseq);
                     $j("#res_adminname").val(data[i].admin_user);
                     $j("#user_name").val(data[i].user_name);
@@ -374,7 +375,8 @@ function fnRoomNum(obj, val) {
             roomnum = 8;
             break;
         case "301":
-            roomnum = 12;
+            roomnum = 6;
+            //roomnum = 12;
             break;
         case "302":
             roomnum = 8;
