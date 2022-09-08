@@ -1,6 +1,10 @@
 <? include 'db.php'; ?>
-
+<script>
+    alert("2022년 액트립 셔틀버스를 이용해주셔서 대단히 감사합니다.\n\n이번시즌에는 운행이 종료되었으며, 2023년 4월에 오픈예정입니다.");
+    history.back();
+</script>
 <?
+return;
 include __DIR__.'/common/func.php';
 
 $param_mid = $_REQUEST["mid"];
