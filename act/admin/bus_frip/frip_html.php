@@ -3,6 +3,9 @@ include __DIR__.'/../../db.php';
 include __DIR__.'/../../common/kakaoalim.php';
 include __DIR__.'/../../frip/inc_func.php';
 
+echo "종료";
+return;
+
 $success = true;
 $res_date = $_REQUEST["res_date"];
 $param = $_REQUEST["resparam"];
@@ -115,8 +118,8 @@ if($param == 2 || $param == 3){
          ),
       ));
 
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
+      // $response = curl_exec($curl);
+      // $err = curl_error($curl);
 
       echo "<br><br>페이지.".$z;
       echo "<br>결과.".$response;
@@ -167,8 +170,8 @@ if($param == 2 || $param == 3){
             ),
             ));
 
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
+            // $response = curl_exec($curl);
+            // $err = curl_error($curl);
 
             echo "<br><br>페이지.".$z;
             echo "<br>결과.".$response;
@@ -234,8 +237,8 @@ if($param == 2 || $param == 3){
       ),
       ));
 
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
+      // $response = curl_exec($curl);
+      // $err = curl_error($curl);
 
       echo "<br><br>페이지.".$z;
       echo "<br>결과.".$response;
