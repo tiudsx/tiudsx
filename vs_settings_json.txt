@@ -1,0 +1,13 @@
+{
+    "editor.wordWrap": "on",
+    "workbench.iconTheme": "vscode-icons",
+    "php.validate.executablePath": "C:/php7/php.exe",
+    "php.validate.run": "onType",
+    "php.validate.enable": true,
+    "editor.minimap.enabled": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "editor.formatOnSave": false,
+    "files.associations": { "*.html" : "php" },
+    "php.executablePath": "C:/php7/php.exe",
+    "intelephense.diagnostics.undefinedTypes": false
+}
