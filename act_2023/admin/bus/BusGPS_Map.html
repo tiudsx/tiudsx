@@ -1,0 +1,35 @@
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zhh3svia3i&submodules=geocoder"></script>
+<style>
+    .itxGPS{display:inline-block;margin:0;padding:4px 6px;background:#FAFAFA;border-radius:3px;border:1px solid;border-color:#BBB #DDD #DDD #BBB;*display:inline;*zoom:1;}
+    .bd_btnGPS{
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+        outline: none;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: center;
+        text-decoration: none !important;
+        margin: 0 0 0 0px;
+        border: 0;
+        color: #fff !important;
+        background: rgba(229, 39, 39, 0.80);
+        width:80px; 
+        height:27px;
+    }
+</style>
+<div class="bd">
+    주소 : <input type="text" id="schText" size="30" class="itxGPS"> <input type="button" value="검색" class="bd_btnGPS" onclick="fnSch();">
+</div>
+
+<iframe scrolling="no" frameborder="0" id="ifrmBusMap" name="ifrmBusMap" style="width:100%;height:450px;display:none;"></iframe>
+
+<script>
+function fnSch() {
+    if($j("#schText").val() == ""){
+        alert("주소를 입력하세요.");
+        return;
+    }
+    $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/admin/bus/BusGPS_Map2.html");
+}
+</script>
