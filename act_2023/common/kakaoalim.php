@@ -28,51 +28,15 @@ function sendKakao($arrKakao){
 	curl_close($curl);
 
 	return array($response, $err);
-    // echo '<br>res : '.$response;
-    // echo '<br>err : '.$err;
 }
 
 function kakaoMsg($arrKakao){
-    if($arrKakao["tempName"] == "at_res_step1"){ //입금대기 기본정보
-        $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},';
-	}else if($arrKakao["tempName"] == "at_res_step5"){ //서핑 예약확정 정보
-		$btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"지도로 위치보기","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link4"].'"},';
-	}else if($arrKakao["tempName"] == "at_res_step3"){ //입금대기 기본정보
-		$btnList = '"button1":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},';
-	}else if($arrKakao["tempName"] == "at_shop_step1"){ //입점샵 예약안내
-		$btnList = '"button1":{"type":"WL","name":"전체 예약목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"현재 예약건 보기","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},';
-	}else if($arrKakao["tempName"] == "at_res_bus1"){ //셔틀버스 예약확정 정보
-        $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"http://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"http://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"셔틀버스 탑승 위치확인","url_mobile":"http://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"제휴업체 목록","url_mobile":"http://actrip.co.kr/'.$arrKakao["link4"].'"},"button5":{"type":"WL","name":"공지사항","url_mobile":"http://actrip.co.kr/'.$arrKakao["link5"].'"},';
-	}else if($arrKakao["tempName"] == "at_bus_step1"){ //셔틀버스 입금대기/예약확정
-        $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"셔틀버스 정류장 확인","url_mobile":"https://actrip.co.kr/'.$arrKakao["link4"].'"},"button5":{"type":"WL","name":"이벤트&공지사항","url_mobile":"https://actrip.co.kr/event_cafe"},';
-	}else if($arrKakao["tempName"] == "at_surf_step1"){ //서핑샵 입금대기
-        $btnList = '"button1":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/event_cafe"},';
-	}else if($arrKakao["tempName"] == "at_surf_step2"){ //서핑샵 확정
-        $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link3"].'"},"button4":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/event_cafe"},';
-	}else if($arrKakao["tempName"] == "at_surf_step3"){ //솔 확정
-        $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},"button2":{"type":"WL","name":"위치안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["link2"].'"},"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"https://actrip.co.kr/event_cafe"},';
-	}
+	$Url = "https://actrip.co.kr/";
 
-	$btn_ResSearch = '{"type":"WL","name":"예약조회/취소","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearch"].'"}';
-	$btn_ResChange= '{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResChange"].'"}';
-	$btn_ResGPS= '{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResGPS"].'"}';
-	$btn_ResCustomer = '{"type":"WL","name":"문의하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResCustomer"].'"}';
-	$btn_Notice = '{"type":"WL","name":"문의하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_Notice"].'"}';
-
-	$btn_ResSearchFrip = '{"type":"WL","name":"예약조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearchFrip"].'"}';
-	$btn_ResPoint = '{"type":"WL","name":"탑승시간/위치 안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResPoint"].'"}';
-
-	if($arrKakao["tempName"] == "at_bus_02"){ //셔틀버스 입금대기
-        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResCustomer.',';
-	}else if($arrKakao["tempName"] == "at_bus_12"){ //셔틀버스 예약확정
-        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResGPS.',"button4":'.$btn_ResCustomer.',';
-	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //셔틀버스 좌석예약 알림톡 발송
-		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
-		$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 예약하기 : https://actrip.co.kr/'.$arrKakao["link1"];
-	}else if($arrKakao["tempName"] == "frip_bus02"){ //프립 셔틀버스 예약확정
-        $btnList = '"button1":'.$btn_ResSearchFrip.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',"button4":'.$btn_ResGPS.',';
-	}else if($arrKakao["tempName"] == "frip_bus03"){ //프립 셔틀버스 예약확정 - 니지모리
-        $btnList = '"button1":'.$btn_ResSearchFrip.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',';
+    if($arrKakao["tempName"] == "at_surf_step3"){ //솔게하 알림톡 발송
+        $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"'.$Url.$arrKakao["link1"].'"},'
+			.'"button2":{"type":"WL","name":"위치안내","url_mobile":"'.$Url.$arrKakao["link2"].'"},'
+			.'"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"'.$Url.$arrKakao["link2"].'"},';
 	}
 
 	$arryKakao = '';

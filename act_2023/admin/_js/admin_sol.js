@@ -4,76 +4,19 @@ $j(function() {
         var $self = $j(this);
         var id = $self.data("gubun");
 
-        var date = (new Date()).yyyymmdd(); //오늘 날짜
+        if(id == "trbbq"){
+            if($j("input[calid=res_bbqdate]").eq(1).val() == null || $j("input[calid=res_bbqdate]").eq(1).val() == ""){
+                alert("첫번째열 바베큐 이용날짜를 선택하세요.");
+                return;
+            }
 
-        var objTr = $j("tr[id=" + id + "]").eq(0);
-    
-        $j("tr[id=" + id + "]:last").after(objTr.clone());
-        $j("tr[id=" + id + "]:last").css("display", "")
-        $j("tr[id=" + id + "]:last").find('input[cal=date]').removeClass('hasDatepicker').removeAttr('id').datepicker({
-            //minDate : plusDate(date, -1)
-            onClose: function(selectedDate) {
-                var date = jQuery(this).datepicker('getDate');
-                if (!(date == null)) {
-                    jQuery(this).next().select();
-                }
-            }
-        });
-        $j("tr[id=" + id + "]:last").find('input[cal=sol_sdate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
-            beforeShow: function(date) {
-                var date = jQuery(this).next().datepicker('getDate');
-    
-                if (!(date == null)) {
-                    date.setDate(date.getDate() - 1); // Add 7 days
-                    jQuery(this).datepicker("option", "maxDate", date);
-                }
-            },
-            onClose: function(selectedDate) {
-                // 시작일(fromDate) datepicker가 닫힐때
-                // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-                var date = jQuery(this).datepicker('getDate');
-                if (!(date == null)) {
-                    date.setDate(date.getDate()); // Add 7 days
-                    jQuery(this).next().datepicker("option", "minDate", date);
-    
-                    if (jQuery(this).next().val() == "") {
-                        jQuery(this).next().val(plusDate(date.yyyymmdd(), 1));
-                    }
-                }
-            },
-            onSelect: function(dateText, inst) {
-                fnSolAddInit($j(this));
-            }
-    
-        });
-        $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
-            beforeShow: function(date) {
-                var date = jQuery(this).prev().datepicker('getDate');
-    
-                if (!(date == null)) {
-                    date.setDate(date.getDate() + 1); // Add 7 days
-                    jQuery(this).datepicker("option", "minDate", date);
-                }
-            },
-            onClose: function(selectedDate) {
-                // 시작일(fromDate) datepicker가 닫힐때
-                // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-                var date = jQuery(this).datepicker('getDate');
-    
-                if (!(date == null)) {
-                    date.setDate(date.getDate()); // Add 7 days
-                    jQuery(this).prev().datepicker("option", "maxDate", date);
-    
-                    if (jQuery(this).prev().val() == "") {
-                        jQuery(this).prev().val(plusDate(date.yyyymmdd(), -1));
-                    }
-                }
-            },
-            onSelect: function(dateText, inst) {
-                fnSolAddInit($j(this));
-            }
-        });
-        $j("tr[id=" + id + "]:last").attr("rowadd", "1");
+            $j("input[calid=res_bbqdate]").val($j("input[calid=res_bbqdate]").eq(1).val());
+            $j("input[calid=res_bbqdate]").eq(0).val("");
+            return;
+        }
+
+        //row 추가
+        fnSolAdd(null, id, "");
     })
 });
 
@@ -86,21 +29,26 @@ function fnSolpopupReset() {
 }
 
 function fnSolInsert() {
-    if($j('#res_modify').css("display") == "none"){
-    }else{
-    }
-
-
     $j('#res_modify').toggle();
 }
 
-function fnSolAdd(obj, id) {
+function fnSolAdd(obj, id, num) {
     var date = (new Date()).yyyymmdd(); //오늘 날짜
 
+    id = id + num;
     var objTr = $j("tr[id=" + id + "]").eq(0);
 
     $j("tr[id=" + id + "]:last").after(objTr.clone());
     $j("tr[id=" + id + "]:last").css("display", "")
+
+    //숙소, 성별 디폴트 체크
+    $j("tr[id=" + id + "]:last").find('#res_stayshopChk').prop("checked", true)
+    $j("tr[id=" + id + "]:last").find('#res_staysexChk').prop("checked", true)
+    
+    //숙소, 성별 name 변경
+    $j("tr[id=" + id + "]:last").find('input[name=res_stayshopChk]').attr("name", "res_stayshopChk_" + $j("tr[id=" + id + "]").length);
+    $j("tr[id=" + id + "]:last").find('input[name=res_staysexChk]').attr("name", "res_staysexChk_" + $j("tr[id=" + id + "]").length);
+
     $j("tr[id=" + id + "]:last").find('input[cal=date]').removeClass('hasDatepicker').removeAttr('id').datepicker({
         //minDate : plusDate(date, -1)
         onClose: function(selectedDate) {
@@ -110,63 +58,68 @@ function fnSolAdd(obj, id) {
             }
         }
     });
-    $j("tr[id=" + id + "]:last").find('input[cal=sol_sdate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
-        beforeShow: function(date) {
-            var date = jQuery(this).next().datepicker('getDate');
 
-            if (!(date == null)) {
-                date.setDate(date.getDate() - 1); // Add 7 days
-                jQuery(this).datepicker("option", "maxDate", date);
-            }
-        },
-        onClose: function(selectedDate) {
-            // 시작일(fromDate) datepicker가 닫힐때
-            // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-            var date = jQuery(this).datepicker('getDate');
-            if (!(date == null)) {
-                date.setDate(date.getDate()); // Add 7 days
-                jQuery(this).next().datepicker("option", "minDate", date);
+    if(num == ""){
+        $j("tr[id=" + id + "]:last").find('input[cal=sol_sdate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
+            beforeShow: function(date) {
+                var date = jQuery(this).next().datepicker('getDate');
 
-                if (jQuery(this).next().val() == "") {
-                    jQuery(this).next().val(plusDate(date.yyyymmdd(), 1));
+                if (!(date == null)) {
+                    date.setDate(date.getDate() - 1); // Add 7 days
+                    jQuery(this).datepicker("option", "maxDate", date);
                 }
-            }
-        },
-        onSelect: function(dateText, inst) {
-            fnSolAddInit($j(this));
-        }
+            },
+            onClose: function(selectedDate) {
+                // 시작일(fromDate) datepicker가 닫힐때
+                // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
+                var date = jQuery(this).datepicker('getDate');
+                if (!(date == null)) {
+                    date.setDate(date.getDate()); // Add 7 days
+                    jQuery(this).next().datepicker("option", "minDate", date);
 
-    });
-    $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
-        beforeShow: function(date) {
-            var date = jQuery(this).prev().datepicker('getDate');
-
-            if (!(date == null)) {
-                date.setDate(date.getDate() + 1); // Add 7 days
-                jQuery(this).datepicker("option", "minDate", date);
-            }
-        },
-        onClose: function(selectedDate) {
-            // 시작일(fromDate) datepicker가 닫힐때
-            // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
-            var date = jQuery(this).datepicker('getDate');
-
-            if (!(date == null)) {
-                date.setDate(date.getDate()); // Add 7 days
-                jQuery(this).prev().datepicker("option", "maxDate", date);
-
-                if (jQuery(this).prev().val() == "") {
-                    jQuery(this).prev().val(plusDate(date.yyyymmdd(), -1));
+                    if (jQuery(this).next().val() == "") {
+                        jQuery(this).next().val(plusDate(date.yyyymmdd(), 1));
+                    }
                 }
+            },
+            onSelect: function(dateText, inst) {
+                fnSolAddInit($j(this));
             }
-        },
-        onSelect: function(dateText, inst) {
-            fnSolAddInit($j(this));
-        }
-    });
-    $j("tr[id=" + id + "]:last").attr("rowadd", "1");
+
+        });
+
+        $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
+            beforeShow: function(date) {
+                var date = jQuery(this).prev().datepicker('getDate');
+
+                if (!(date == null)) {
+                    date.setDate(date.getDate() + 1); // Add 7 days
+                    jQuery(this).datepicker("option", "minDate", date);
+                }
+            },
+            onClose: function(selectedDate) {
+                // 시작일(fromDate) datepicker가 닫힐때
+                // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
+                var date = jQuery(this).datepicker('getDate');
+
+                if (!(date == null)) {
+                    date.setDate(date.getDate()); // Add 7 days
+                    jQuery(this).prev().datepicker("option", "maxDate", date);
+
+                    if (jQuery(this).prev().val() == "") {
+                        jQuery(this).prev().val(plusDate(date.yyyymmdd(), -1));
+                    }
+                }
+            },
+            onSelect: function(dateText, inst) {
+                fnSolAddInit($j(this));
+            }
+        });
+    }
+    $j("tr[id=" + id + "]:last").attr("rowadd" + num, "1");
 }
 
+//객실 초기화
 function fnSolAddInit(obj) {
     var objId = obj.parent().parent();
     objId.find("#res_stayroom").val("");
@@ -174,6 +127,7 @@ function fnSolAddInit(obj) {
     objId.find("#res_staynum").append("<option value=''>-------</optoin>");
 }
 
+//바베큐 날짜 초기화
 function fnSolDateDel(obj) {
     $j(obj).prev().val("");
 }
@@ -183,59 +137,69 @@ function fnSolDel(obj) {
 }
 
 function fnSolStaySel(obj) {
-    var objId = $j(obj).parent().parent();
-
+    var objId = $j(obj).closest("#trstay");
+    
+    objId.find("#res_stayshop").val($j(obj).val());
     if ($j(obj).val() == "N") {
-        objId.find("input[calid=res_staysdate]").val("").prop("disabled", true);
-        objId.find("input[calid=res_stayedate]").val("").prop("disabled", true);
+        objId.find("input[calid=res_staysdate]").val("");
+        objId.find("input[calid=res_stayedate]").val("");
 
         objId.find("#res_stayroom").val("");
         objId.find("#res_staynum option").remove();
         objId.find("#res_staynum").append("<option value=''>-------</optoin>");
-    } else {
-        objId.find("input[calid=res_staysdate]").removeAttr("disabled");
-        objId.find("input[calid=res_stayedate]").removeAttr("disabled");
     }
 }
 
+function fnSolSexSel(obj) {
+    var objId = $j(obj).closest("#trstay");
+
+    objId.find("#res_staysex").val($j(obj).val());
+}
+
 function fnSolSurfSel(obj) {
-    var objId = $j(obj).parent().parent();
+    var objId = $j(obj).closest("#trsurf");
 
     if ($j(obj).val() == "") {
         objId.find("#res_surfM").val("0");
         objId.find("#res_surfW").val("0");
-    } else {
-        // objId.find("input[calid=res_staysdate]").removeAttr("disabled");
-        // objId.find("input[calid=res_stayedate]").removeAttr("disabled");
     }
 }
 
 function fnSolSurfRentSel(obj) {
-    var objId = $j(obj).parent().parent();
+    var objId = $j(obj).closest("#trsurf");
 
     if ($j(obj).val() == "N") {
         objId.find("#res_rentM").val("0");
         objId.find("#res_rentW").val("0");
-    } else {
-        // objId.find("input[calid=res_staysdate]").removeAttr("disabled");
-        // objId.find("input[calid=res_stayedate]").removeAttr("disabled");
     }
 }
 
-function fnSolModify(resseq) {
-    fnMapView('#containerTab', 40);
+function fnSolModify(resseq, num) {
+    if(num == null){
+        num = "";
+        fnMapView('#containerTab', 40);
+    }
 
     var params = "resparam=solview&resseq=" + resseq;
     $j.ajax({
         type: "POST",
-        url: "/act/admin/sol/res_sollist_info.php",
+        url: "/act_2023/admin/sol/list_info.php",
         data: params,
         success: function(data) {
-            fnSolpopupReset();
-            
-            
-            if($j('#res_modify').css("display") == "none"){
-                fnSolInsert();
+            if(num == ""){
+                fnSolpopupReset();
+
+                if($j('#res_modify').css("display") == "none"){
+                    fnSolInsert();
+                }
+            }else{
+                $j("tr[rowadd" + num + "=1]").remove();
+
+                $j.blockUI({
+                    message: $j('#res_modify' + num),
+                    focusInput: false,
+                    css: { width: '90%', textAlign: 'left', left: '5%', top: '12%' }
+                });
             }
 
             $j("#SolAdd").css("display", "none");
@@ -243,99 +207,123 @@ function fnSolModify(resseq) {
 
             for (let i = 0; i < data.length; i++) {
                 if (i == 0) {
-                    $j("#insdate").text(data[i].insdate);
-                    $j("#resseq").val(data[i].resseq);
-                    $j("#res_adminname").val(data[i].admin_user);
-                    $j("#user_name").val(data[i].user_name);
-                    $j("#user_tel").val(data[i].user_tel);
-                    // var arrTel = data[i].user_tel.split("-");
-                    // $j("#user_tel1").val(arrTel[0]);
-                    // $j("#user_tel2").val(arrTel[1]);
-                    // $j("#user_tel3").val(arrTel[2]);
-                    $j("#res_company").val(data[i].res_company);
-                    $j("#res_confirm").val(data[i].res_confirm);
-                    $j("#memo").val(data[i].memo);
-                    $j("#memo2").val(data[i].memo2);
+                    if(num == ""){
+                        $j("#insdate").text(data[i].insdate);
+                        $j("#resseq").val(data[i].resseq);
+                    }
+
+                    $j("#res_adminname" + num).val(data[i].admin_user);
+                    $j("#user_name" + num).val(data[i].user_name);
+                    $j("#user_tel" + num).val(data[i].user_tel);
+                    $j("#res_company" + num).val(data[i].res_company);
+                    $j("#res_confirm" + num).val(data[i].res_confirm);
+                    $j("#memo2" + num).val(data[i].memo2);
                 }
 
                 if (data[i].res_type == "stay") { //숙박&바베큐
-                    fnSolAdd(null, 'trstay');
+                    fnSolAdd(null, 'trstay', num);
 
-                    var objTr = $j("tr[id=trstay]:last");
-                    objTr.find("#stayseq").val(data[i].ressubseq);
-                    objTr.find("#staytype").val("U");
-                    objTr.find("#res_staysex").val(data[i].staysex);
-                    objTr.find("#res_stayM").val(data[i].stayM);
+                    var objTr = $j("tr[id=trstay" + num + "]:last");
+
+                    if(num == ""){
+                        objTr.find("#stayseq").val(data[i].ressubseq);
+                        objTr.find("#staytype").val("U");
+                        objTr.find("#res_stayM").val(data[i].stayM);
+
+                        if(data[i].staysex == "여"){
+                            objTr.find("#res_staysexChk1").prop("checked", true);
+                        } 
+                    }
+                    
+                    objTr.find("#res_staysex" + num).val(data[i].staysex);     
+
 
                     if (data[i].prod_name != "N") {
-                        objTr.find("#res_stayshop").val(data[i].prod_name);
-                        objTr.find("input[calid=res_staysdate]").val(data[i].sdate).removeAttr("disabled");
-                        objTr.find("input[calid=res_stayedate]").val(data[i].edate).removeAttr("disabled");
+                        if(num == ""){
+                            objTr.find("#res_stayshopChk1").prop("checked", true);
+                        }
+
+                        objTr.find("#res_stayshop" + num).val(data[i].prod_name);
+                        objTr.find("input[calid=res_staysdate" + num + "]").val(data[i].sdate);
+                        objTr.find("input[calid=res_stayedate" + num + "]").val(data[i].edate);
 
                         if (data[i].stayroom != "") {
-                            objTr.find("#res_stayroom").val(data[i].stayroom);
-                            objTr.find("#res_stayroom").attr("sel", data[i].stayroom);
+                            objTr.find("#res_stayroom" + num).val(data[i].stayroom);
 
-                            fnRoomNum(objTr.find("#res_stayroom"), data[i].staynum);
+                            if(num == ""){
+                                objTr.find("#res_stayroom").attr("sel", data[i].stayroom);
+
+                                fnRoomNum(objTr.find("#res_stayroom"), data[i].staynum);
+                            }else{
+                                var roombad = "번 (2층)";
+                                if ((data[i].staynum % 2) == 1) {
+                                    roombad = "번 (1층)";
+                                }
+                                objTr.find("#res_staynum" + num).val(data[i].staynum + roombad);
+                            }
                         }
                     }
                     if (data[i].resdate != "0000-00-00") {
-                        objTr.find("input[calid=res_bbqdate]").val(data[i].resdate);
+                        objTr.find("input[calid=res_bbqdate" + num + "]").val(data[i].resdate);
                     }
                 } else { //강습&렌탈
-                    fnSolAdd(null, 'trsurf');
+                    fnSolAdd(null, 'trsurf', num);
 
-                    var objTr = $j("tr[id=trsurf]:last");
-                    objTr.find("#surfseq").val(data[i].ressubseq);
-                    objTr.find("#surftype").val("U");
-                    objTr.find("input[calid=res_surfdate]").val(data[i].resdate);
+                    var objTr = $j("tr[id=trsurf" + num + "]:last");
+                    if(num == ""){
+                        objTr.find("#surfseq").val(data[i].ressubseq);
+                        objTr.find("#surftype").val("U");
+                    }
+                    objTr.find("input[calid=res_surfdate" + num + "]").val(data[i].resdate);
+
                     if (data[i].prod_name != "N") {
-                        objTr.find("#res_surfshop").val(data[i].prod_name);
-                        objTr.find("#res_surftime").val(data[i].restime);
-                        objTr.find("#res_surfM").val(data[i].surfM);
-                        objTr.find("#res_surfW").val(data[i].surfW);
+                        objTr.find("#res_surfshop" + num).val(data[i].prod_name);
+                        objTr.find("#res_surftime" + num).val(data[i].restime);
+                        objTr.find("#res_surfM" + num).val(data[i].surfM);
+                        objTr.find("#res_surfW" + num).val(data[i].surfW);
                     }
                     if (data[i].surfrent != "N") {
-                        objTr.find("#res_rent").val(data[i].surfrent);
-                        objTr.find("#res_rentM").val(data[i].surfrentM);
-                        objTr.find("#res_rentW").val(data[i].surfrentW);
+                        objTr.find("#res_rent" + num).val(data[i].surfrent);
+                        objTr.find("#res_rentM" + num).val(data[i].surfrentM);
+                        objTr.find("#res_rentW" + num).val(data[i].surfrentW);
                     }
                 }
             }
         }
     });
-
 }
 
 function fnSolDataAdd(gubun) {
     //공백 제거
     // fnFormTrim("#frmModify");
-
     if ($j("#user_name").val() == "") {
         alert("예약자이름을 입력하세요~");
         return;
     }
 
-    // if($j("#user_tel1").val() == "" || $j("#user_tel2").val() == "" || $j("#user_tel3").val() == ""){
-    //     alert("연락처를 입력하세요~");
-    //     return;
-    // }
     if ($j("#user_tel").val() == "") {
         alert("연락처를 입력하세요~");
         return;
     }
 
-    if ($j("select[id=res_stayshop]").length == 1 && $j("select[id=res_surfshop]").length == 1) {
+    if ($j("input[id=res_stayshop]").length == 1 && $j("select[id=res_surfshop]").length == 1) {
         alert("숙박 및 서핑강습 신청 정보가 없습니다.");
         return;
     } else {
-        for (let i = 1; i < $j("select[id=res_stayshop]").length; i++) {
-            if ($j("select[id=res_stayshop]").eq(i).val() == "N" && $j("select[id=res_bbq]").eq(i).val() == "N") {
-                alert("숙박/파티 중 하나이상 선택해주세요~");
-                return;
+        for (let i = 1; i < $j("input[id=res_stayshop]").length; i++) {
+            //바베큐 날짜
+            if ($j("input[calid=res_bbqdate]").eq(i).val() == "") {
+                $j("input[id=res_bbqdate]").eq(i).val("");
+            }else{
+                $j("input[id=res_bbqdate]").eq(i).val($j("input[calid=res_bbqdate]").eq(i).val());
             }
 
-            if ($j("select[id=res_stayshop]").eq(i).val() == "N") {
+            if ($j("input[id=res_stayshop]").eq(i).val() == "N" && $j("input[id=res_bbqdate]").eq(i).val() == "") {
+                alert(i + "번째 숙박/파티 중 하나이상 선택해주세요~");
+                return;
+            }
+            
+            if ($j("input[id=res_stayshop]").eq(i).val() == "N") {
                 $j("input[calid=res_staysdate]").eq(i).val("");
                 $j("input[calid=res_stayedate]").eq(i).val("");
             } else {
@@ -346,10 +334,6 @@ function fnSolDataAdd(gubun) {
 
                 $j("input[id=res_staysdate]").eq(i).val($j("input[calid=res_staysdate]").eq(i).val());
                 $j("input[id=res_stayedate]").eq(i).val($j("input[calid=res_stayedate]").eq(i).val());
-            }
-
-            if ($j("input[calid=res_bbqdate]").eq(i).val() != "") {
-                $j("input[id=res_bbqdate]").eq(i).val($j("input[calid=res_bbqdate]").eq(i).val());
             }
         }
 
@@ -393,7 +377,7 @@ function fnSolDataAdd(gubun) {
 
     //frmModify
     var formData = $j("#frmModify").serializeArray();
-    $j.post("/act/admin/sol/res_sollist_save.php", formData,
+    $j.post("/act_2023/admin/sol/list_save.php", formData,
         function(data, textStatus, jqXHR) {
             if (data == 0) {
                 alert(text2);
@@ -401,8 +385,7 @@ function fnSolDataAdd(gubun) {
 
                 var selDate = $j("#listdate").text(); //달력 선택 날짜
                 fnSearchAdminListSol(selDate);
-                fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));
-                fnModifyClose();
+                fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));fnSolInsert();
                 fnSolpopupReset();
             } else {
                 var arrRtn = data.split('|');
@@ -495,39 +478,9 @@ function fnRoomBed(sdate, edate, obj, objNext) {
     var params = "resparam=solroom&res_staysdate=" + sdate + "&res_stayedate=" + edate + "&res_stayroom=" + roomnum;
     var stayseq = $j(obj).parent().parent().find("#stayseq").val();
 
-    // var rtn = $j.ajax({
-    //     type: "POST",
-    //     url: "/act/admin/sol/res_sollist_info.php",
-    //     data: params,
-    //     async: false,
-    //     success: function (data) {
-    //         return data;
-    //         alert(JSON.stringify(data));
-    //         if(data != null){
-    //             for (let i = 0; i < data.length; i++) {
-    //                 if(arrRoom[roomnum + "_" + data[i].staynum] == null){
-    //                     arrRoom[roomnum + "_" + data[i].staynum] = 0;
-    //                 }else{
-    //                     arrRoom[roomnum + "_" + data[i].staynum]++;
-    //                 }
-
-    //                 if(arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] == null){
-    //                     arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = 0;
-    //                     arrRoomSubSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq] = data[i].ressubseq;
-    //                 }else{
-    //                     arrRoomSeq[roomnum + "_" + data[i].staynum + "_" + data[i].resseq]++;
-    //                 }                    
-    //             }
-    //         }
-
-    //         var arrRoomTotal = new Array(arrRoom, arrRoomSeq, arrRoomSubSeq);
-    //     }
-    // }).responseText;
-    // alert(rtn);
-    // return;
     $j.ajax({
         type: "POST",
-        url: "/act/admin/sol/res_sollist_info.php",
+        url: "/act_2023/admin/sol/list_info.php",
         data: params,
         async: false,
         success: function(data) {
@@ -594,7 +547,7 @@ function fnPassengerAdminSol(obj) {
 function fnCalMoveAdminListSol(selDate, day) {
     var nowDate = new Date();
 
-    $j("#right_article3").load("/act/admin/sol/res_calendar.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
+    $j("#right_article3").load("/act_2023/admin/sol/_calendar.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
 }
 
 function fnSearchAdminListSol(selDate) {
@@ -621,24 +574,26 @@ function fnSearchAdminListSol(selDate) {
                     if (rowCnt > 1) {
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(14).attr("rowspan", rowCnt);
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).attr("rowspan", rowCnt);
 
 
                         for (let x = 1; x < rowCnt; x++) {
                             nextrowCnt++;
+                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(14).remove();
+                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
                             $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
 
@@ -695,7 +650,7 @@ function fnSearchAdminListSol(selDate) {
 
 function fnSearchAdminListTabSol(selDate, url) {
     var formData = { "selDate": selDate };
-    $j.post("/act/admin/sol/" + url, formData,
+    $j.post("/act_2023/admin/sol/" + url, formData,
         function(data, textStatus, jqXHR) {
             $j("#mnglist").html(data);
         }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -704,13 +659,14 @@ function fnSearchAdminListTabSol(selDate, url) {
     });
 }
 
+//카톡 단일건 발송
 function fnKakaoSend(resseq) {
     if (!confirm("알림톡 발송을 하시겠습니까?")) {
         return;
     }
 
     var formData = { "resparam": "solkakao1", "resseq": resseq };
-    $j.post("/act/admin/sol/res_sollist_save.php", formData,
+    $j.post("/act_2023/admin/sol/list_save.php", formData,
         function(data, textStatus, jqXHR) {
             alert("알림톡 발송이 완료되었습니다.");
             $j("calbox[sel='yes']").click();
@@ -736,7 +692,7 @@ function fnKakaoCheckSend() {
         formData.push({ "name": "chkresseq[]", "value": $j(this).val() });
     });
 
-    $j.post("/act/admin/sol/res_sollist_save.php", formData,
+    $j.post("/act_2023/admin/sol/list_save.php", formData,
         function(data, textStatus, jqXHR) {
             alert("알림톡 발송이 완료되었습니다.");
             $j("calbox[sel='yes']").click();
@@ -749,24 +705,12 @@ function fnKakaoCheckSend() {
 function fnListTab(gubun, obj) {
     var selDate = $j("#listdate").text(); //달력 선택 날짜
 
-    if (gubun == "all") {
-        // $j("#mnglist").css("display", "inline-block");
-        // $j("#mnglistStay").css("display", "none");
-        // $j("#mnglistSurf").css("display", "none");
-
+    if (gubun == "all") { //전체 탭
         fnSearchAdminListSol(selDate);
-    } else if (gubun == "stay") {
-        // $j("#mnglist").css("display", "none");
-        // $j("#mnglistStay").css("display", "inline-block");
-        // $j("#mnglistSurf").css("display", "none");
-
-        fnSearchAdminListTabSol(selDate, "res_sollist_search_stay.php");
-    } else if (gubun == "surf") {
-        // $j("#mnglist").css("display", "none");
-        // $j("#mnglistStay").css("display", "none");
-        // $j("#mnglistSurf").css("display", "inline-block");
-
-        fnSearchAdminListTabSol(selDate, "res_sollist_search_surf.php");
+    } else if (gubun == "stay") { //숙박 탭
+        fnSearchAdminListTabSol(selDate, "list_search_stay.php");
+    } else if (gubun == "surf") { //강습 탭
+        fnSearchAdminListTabSol(selDate, "list_search_surf.php");
     }
 }
 
@@ -778,7 +722,7 @@ function fnExcelDown() {
         return;
     }
 
-    location.href = "/act/admin/sol/exceldown.php?selDate=" + selDate;
+    location.href = "/act_2023/admin/sol/_exceldown.php?selDate=" + selDate;
 }
 
 function fnRentYN(obj, subseq) {
@@ -791,44 +735,12 @@ function fnRentYN(obj, subseq) {
     }
 
     var formData = { "resparam": "solrentyn", "subseq": subseq, "rentyn": $j(obj).val() };
-    $j.post("/act/admin/sol/res_sollist_save.php", formData,
+    $j.post("/act_2023/admin/sol/list_save.php", formData,
         function(data, textStatus, jqXHR) {
             var selDate = $j("#listdate").text(); //달력 선택 날짜
-            fnSearchAdminListTabSol(selDate, "res_sollist_search_surf.php");
+            fnSearchAdminListTabSol(selDate, "list_search_surf.php");
         }).fail(function(jqXHR, textStatus, errorThrown) {
         alert(textStatus);
-    });
-}
-
-function mergeTable(target, index) {
-    var loop = null;
-    var start_idx = 0; //최초 td테그의 인덱스를 담을 변수 입니다.
-    var add_num = 1; //마지막 td 테그의 인덱스를 담을 변수 입니다.
-    $j(target).find('tr').each(function(idx) {
-        var target_text = $j(this).find('td').eq(index).text();
-        if (!loop) { //최초 동작이면
-            loop = target_text;
-            start_idx = idx;
-        } else if (target_text == loop) { //같은 열이 발견된 것 이라면
-            add_num++;
-            //같은열이긴 한데 근데 마지막이면
-            if (idx == $j(target).find('tr').length - 1) {
-                $j(target).find('tr').eq(start_idx).find('td').eq(index).attr("rowSpan", add_num).css('vertical-align', 'middle');
-                for (var i = start_idx + 1; i < start_idx + add_num; i++) {
-                    $j(target).find('tr').eq(i).find('td').eq(index).hide(); //hide로 변경
-                }
-            }
-        } else { //다른 텍스트가 발견된 것 이라면
-            if (add_num != 1) { //머지가 필요한 경우라면
-                $j(target).find('tr').eq(start_idx).find('td').eq(index).attr("rowSpan", add_num).css('vertical-align', 'middle');
-                for (var i = start_idx + 1; i < start_idx + add_num; i++) {
-                    $j(target).find('tr').eq(i).find('td').eq(index).hide(); //hide로 변경
-                }
-            }
-            start_idx = idx;
-            loop = target_text;
-            add_num = 1;
-        }
     });
 }
 

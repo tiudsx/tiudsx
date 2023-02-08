@@ -116,55 +116,35 @@ include __DIR__.'/../../common/logininfo.php';
                             <tr>
                                 <th>
 									숙소명
-									<!-- <br>
-									<select id="All_stayshop" name="All_stayshop" class="select" onchange="fnSolSelAll(this);">
-										<option value='N'>숙박미신청</option>
-										<option value='솔게스트하우스'>솔게하</option>
-									</select> -->
 								</th>
                                 <th>
 									이용일
-									<!-- <br>
-									<input type="text" calid="res_staysdate" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> ~ 
-									<input type="text" calid="res_stayedate" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> -->
 								</th>
-                                <th>성별</th>
                                 <th>고객정보</th>
+                                <th>성별</th>
 								<th>
 									바베큐
-									<!-- <br>									
-									<input type="text" calid="res_bbqdate" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> -->
+									<input type="button" class="btnsurfadd" style="width:60px; height:22px;" value="일괄적용" data-gubun="trbbq">
 								</th>
 							</tr>
 							<tr id="trstay" style="display:none;">
 								<td>
 									<input type="hidden" id="stayseq" name="stayseq[]" >
 									<input type="hidden" id="staytype" name="staytype[]" value="I">
-									<select id="res_stayshop" name="res_stayshop[]" class="select" onchange="fnSolStaySel(this);">
-										<option value='N'>숙박미신청</option>
-										<option value='솔게스트하우스'>솔게스트하우스</option>
-										<!-- <option value='모닝비치'>모닝비치</option>
-										<option value='방파제민박'>방파제민박</option> -->
-									</select>
+									<input type="hidden" id="res_stayshop" name="res_stayshop[]" value="N">
+									<input type="hidden" id="res_staysex" name="res_staysex[]" value="남">
+									<input type="hidden" id="res_stayM" name="res_stayM[]" value="1"> 
+
+									<label><input type="radio" name="res_stayshopChk" id="res_stayshopChk" value="N" onchange="fnSolStaySel(this);" checked>미신청</label> &nbsp;
+									<label><input type="radio" name="res_stayshopChk" id="res_stayshopChk1" value="솔게스트하우스" onchange="fnSolStaySel(this);">솔게하</label>
 								</td>
 								<td style="line-height:2.3em">
-									<input type="text" calid="res_staysdate" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> ~ 
-									<input type="text" calid="res_stayedate" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled>
+									<input type="text" calid="res_staysdate" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7"> ~ 
+									<input type="text" calid="res_stayedate" cal="sol_edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7">
 
 									<input type="hidden" id="res_staysdate" name="res_staysdate[]" value="">
 									<input type="hidden" id="res_stayedate" name="res_stayedate[]" value="">
 									<input type="hidden" id="res_bbqdate" name="res_bbqdate[]" value="">
-								</td>
-								<td>
-									<select id="res_staysex" name="res_staysex[]" class="select">
-										<option value="남">남</option>
-										<option value="여">여</option>	
-									</select>
-									<select id="res_stayM" name="res_stayM[]" class="select">
-									<?for($i=1;$i<=1;$i++){?>
-										<option value="<?=$i?>"><?=$i?></option>
-									<?}?>
-									</select>명
 								</td>
 								<td>
 									<select id="res_stayroom" name="res_stayroom[]" class="select" onchange="fnRoomNum(this);" sel="">
@@ -180,6 +160,10 @@ include __DIR__.'/../../common/logininfo.php';
 									<select id="res_staynum" name="res_staynum[]" class="select" sel="">
 										<option value="">-------</option>
 									</select>
+								</td>
+								<td>
+									<label><input type="radio" name="res_staysexChk" id="res_staysexChk" onchange="fnSolSexSel(this);" value="남" checked>남</label> &nbsp;
+									<label><input type="radio" name="res_staysexChk" id="res_staysexChk1" onchange="fnSolSexSel(this);" value="여">여</label>
 								</td>
 								<td>
 									<input type="text" calid="res_bbqdate" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7">
@@ -427,6 +411,139 @@ include __DIR__.'/../../common/logininfo.php';
 
 	</div>
 </div> 
+
+<div id="res_modify_2" style="display:none;padding:5px;height: 500px;overflow-y: scroll;"> 
+    <form id="frmModify_2" autocomplete="off">
+    <div class="gg_first" style="margin-top:0px;">솔게스트하우스 예약내역</div>
+    <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
+        <colgroup>
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+        </colgroup>
+        <tbody>
+			<tr>
+				<th>등록관리자</th>
+				<td><input type="text" id="res_adminname_2" size="10" class="itx"></td>
+                <th>예약자이름</th>
+                <td><input type="text" id="user_name_2" size="15" class="itx"></td>
+                <th>연락처</th>
+				<td><input type="text" id="user_tel_2" size="15"  class="itx"></td>
+				<th>예약처</th>
+				<td><input type="text" id="res_company_2" size="10" class="itx"></td>
+				<th>예약상태</th>
+				<td><input type="text" id="res_confirm_2" size="10" class="itx"></td>
+			</tr>
+			<tr>
+                <th>숙박</th>
+                <td colspan="9">
+					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
+						<colgroup>
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+						</colgroup>
+						<tbody>
+							<tr>
+                                <th colspan="5">숙박정보</th>
+                            </tr>
+                            <tr>
+                                <th>숙소명</th>
+                                <th>이용일</th>
+                                <th>고객정보</th>
+                                <th>성별</th>
+                                <th>바베큐</th>
+							</tr>
+							<tr id="trstay_2" style="display:none;">
+								<td>
+									<input type="text" id="res_stayshop_2" size="12" class="itx">
+								</td>
+								<td style="line-height:2.3em">
+									<input type="text" calid="res_staysdate_2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> ~ 
+									<input type="text" calid="res_stayedate_2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled>
+								</td>
+								<td>
+									<input type="text" id="res_stayroom_2" size="3" class="itx">
+									<input type="text" id="res_staynum_2" size="7" class="itx">
+								</td>
+								<td>
+									<input type="text" id="res_staysex_2" size="3" class="itx">
+								</td>
+								<td>
+									<input type="text" calid="res_bbqdate_2" readonly="readonly" style="width:66px;" class="itx2" maxlength="7" disabled>
+								</td>
+							</tr>
+                        </tbody>
+					</table>
+                </td>
+			</tr>
+            <tr>
+                <th>서핑강습</th>
+                <td colspan="9">
+					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
+						<colgroup>
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+							<col width="*" />
+						</colgroup>
+                        <tbody>
+                            <tr>
+                                <th rowspan="2">서핑샵</th>
+                                <th rowspan="2">이용일</th>
+                                <th colspan="3">서핑강습</th>
+                                <th colspan="3">장비렌탈</th>
+                            </tr>
+                            <tr>
+                                <th>시간</th>
+                                <th>남</th>
+                                <th>여</th>
+                                <th>종류</th>
+                                <th>남</th>
+                                <th>여</th>
+							</tr>
+							<tr id="trsurf_2" style="display:none;">
+								<td><input type="text" id="res_surfshop_2" size="12" class="itx"></td>
+								<td>
+									<input type="text" calid="res_surfdate_2" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+								</td>
+								<td><input type="text" id="res_surftime_2" size="10" class="itx"></td>
+								<td><input type="text" id="res_surfM_2" size="2" class="itx">명</td>
+								<td><input type="text" id="res_surfM_2" size="2" class="itx">명</td>
+								<td><input type="text" id="res_rent_2" size="10" class="itx">명</td>
+								<td><input type="text" id="res_rentM_2" size="2" class="itx">명</td>
+								<td><input type="text" id="res_rentW_2" size="2" class="itx">명</td>
+							</tr>
+                        </tbody>
+					</table>
+                </td>
+            </tr>
+			<tr>
+                <th>직원메모</th>
+                <td colspan="9"><textarea id="memo2_2" rows="5" style="width: 60%; resize:none;"></textarea></td>
+			</tr>
+            <tr>
+				<td class="col-02" style="text-align:center;" colspan="10">
+					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="$j.unblockUI();" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+</div>
 
 <script>
 $j(document).ready(function(){

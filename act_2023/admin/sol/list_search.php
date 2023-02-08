@@ -4,7 +4,6 @@ include __DIR__.'/../../common/kakaoalim.php';
 
 $reqDate = $_REQUEST["selDate"];
 if($reqDate == ""){
-    // $selDate = str_replace("-", "", date("Y-m-d"));
     $selDate = date("Y-m-d");
 }else{
     $selDate = $reqDate;
@@ -14,14 +13,7 @@ $arrDate = explode('-', $selDate);
 $Year = $arrDate[0];
 $Mon = $arrDate[1];
 $Day = $arrDate[2];
-
-// $select_query = "SELECT *, DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-//                     ON a.resseq = b.resseq 
-//                     WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
-//                         OR	b.resdate = '$selDate')
-//                         AND a.res_confirm IN ('대기', '확정')
-//                         ORDER BY a.resseq, b.ressubseq";
-// echo $select_query;                        
+                    
 $select_query = "
     SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
@@ -46,63 +38,7 @@ $select_query = "
                         AND a.res_confirm IN ('대기', '확정')
                         AND res_type = 'surf'
         ORDER BY resseq, ressubseq";
-                        //DATE_ADD(b.edate, INTERVAL -1 DAY) >= '2021-01-02'
-//  echo $select_query;
-
-// $chkResConfirm = $_REQUEST["chkResConfirm"];
-// $sDate = $_REQUEST["sDate"];
-// $eDate = $_REQUEST["eDate"];
-// $schText = trim($_REQUEST["schText"]);
-// $shopseq = $_REQUEST["seq"];
-
-// for($i = 0; $i < count($chkResConfirm); $i++){
-//     $res_confirm .= $chkResConfirm[$i].',';
-
-//     if($chkResConfirm[$i] == 0){
-//         $listText .= "미입금,";
-//     }else if($chkResConfirm[$i] == 3){
-//         $listText .= "확정,";
-//     }else if($chkResConfirm[$i] == 8){
-//         $listText .= "입금완료,";
-//     }else if($chkResConfirm[$i] == 2){
-//         $listText .= "임시확정/취소,";
-//         $res_confirm .= '6,';
-//     }else if($chkResConfirm[$i] == 6){
-//         $listText .= "임시취소,";
-//     }
-// }
-// $res_confirm .= '99';
-// if($listText != ""){
-//     $listText = substr($listText, 0, strlen($listText) - 1);
-// }
-
-// $shopDate = "";
-// if($sDate == "" && $eDate == ""){
-//     $titleText = "전체";
-// }else{
-//     if($sDate != "" && $eDate != ""){
-//         $shopDate = ' AND (b.res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
-//     }else if($sDate != ""){
-//         $shopDate = ' AND b.res_date >= CAST("'.$sDate.'" AS DATE)';
-//     }else if($eDate != ""){
-//         $shopDate = ' AND b.res_date <= CAST("'.$eDate.'" AS DATE)';
-//     }
-//     $titleText = "[$sDate ~ $eDate]";
-// }
-
-// if($schText != ""){
-//     $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
-// }
-
-// $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, c.optcode, c.stay_day FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-//                     ON a.resnum = b.resnum 
-//                 INNER JOIN `AT_PROD_OPT` c
-//                     ON b.optseq = c.optseq
-//                     WHERE b.seq = '.$shopseq.'
-//                         AND b.res_confirm IN ('.$res_confirm.')'.$shopDate.$schText.'
-//                         ORDER BY b.resnum, b.ressubseq';
-
-
+                   
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -186,8 +122,9 @@ $css_table_right = " border-right:2px solid #c0c0c0";
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
         <colgroup>
             <col width="4%" />
-            <col width="10%" />
             <col width="*" />
+            <col width="5%" />
+            <col width="8%" />
             <col width="3%" />
             <col width="3%" />
             <col width="3%" />
@@ -205,12 +142,12 @@ $css_table_right = " border-right:2px solid #c0c0c0";
             <col width="4%" />
             <col width="5%" />
             <col width="7%" />
-            <col width="7%" />
+            <col width="6%" />
         </colgroup>
         <tbody>
             <tr>
                 <th style="<?=$css_table?>" rowspan="2"><label><input type="checkbox" onclick="fnAllChk(this);"></label></th>
-                <th style="<?=$css_table?>" rowspan="2">예약자</th>
+                <th style="<?=$css_table?>" rowspan="2" colspan="2">예약자</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="3">숙박정보</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="2">바베큐</th>
                 <th style="<?=$css_table?>" rowspan="2">서핑샵</th>
@@ -444,8 +381,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <?}?>
             <br><?=$resseq?></label>
         </td>
-        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>);"><b><?=$user_name?><br><?=$user_tel?></b></td>
-        <!-- <td style="<?=$fontcolor?>"><?=$resText?></td> -->
+        <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>, '_2');"><b><?=$user_name?><br><?=$user_tel?></b></td>
+        <td style="<?=$fontcolor?>">
+            <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="수정" onclick="fnSolModify(<?=$resseq?>);" />
+        </td>
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
         <td style="<?=$fontcolor?>"><?=$stayMText?></td>
         <td style="<?=$fontcolor.$css_table_right?>"><?=$stayWText?></td>
@@ -477,7 +416,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 $rowlist .= $b."|";
 ?>
             <tr style="background-color:#ffa87d;">
-                <td colspan="2"><strong>합 계</strong></td>
+                <td colspan="3"><strong>합 계</strong></td>
                 <td colspan="3">
                     <strong>숙박</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
                     <br><strong>총 : <?=$TotalstayM+$TotalstayW."명"?></strong>

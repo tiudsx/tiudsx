@@ -38,7 +38,7 @@ function searchAddressToCoordinate(address) {
         }
 
         infoWindow.setContent([
-                '<div style="padding:10px;min-width:200px;line-height:150%;">',
+                '<div style="padding:10px;min-width:250px;line-height:150%;">',
                 '<h4 style="margin-top:5px;">검색 주소 : '+ address +' <a href="javascript:infoWindow.close();">[창닫기]</a></h4><br />',
                 htmlAddresses.join('<br />'),
                 '<br />&nbsp&nbsp&nbsp lat :  <b>'+ point.y + '</b>',
@@ -79,7 +79,7 @@ function searchCoordinateToAddress(latlng) {
         }
 
         infoWindow.setContent([
-            '<div style="padding:10px;min-width:200px;line-height:150%;">',
+            '<div style="padding:10px;min-width:250px;line-height:150%;">',
             '<h4 style="margin-top:5px;">검색 좌표 <a href="javascript:infoWindow.close();">[창닫기]</a></h4><br />',
             htmlAddresses.join('<br />'),
                 '<br />&nbsp&nbsp&nbsp lat :  <b>'+ latlng.x + '</b>',
