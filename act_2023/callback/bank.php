@@ -120,7 +120,7 @@ if($count == 1){
         $busSeatInfoTotal .= ' ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n';
 
 		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
+		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 10분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
 
 		$tempName = "at_bus_12";
         $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소

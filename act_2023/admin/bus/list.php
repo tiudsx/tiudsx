@@ -1,5 +1,5 @@
 <?php 
-include __DIR__.'/../../db.php';
+include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/logininfo.php';
 $shopseq = 0;
 ?>
@@ -8,11 +8,11 @@ $shopseq = 0;
 <link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
+
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
-<script type="text/javascript" src="/act/js/admin_surf.js"></script>
-<script type="text/javascript" src="/act/js/admin_bus.js"></script>
-<script type="text/javascript" src="/act/js/common.js"></script>
-<script type="text/javascript" src="/act/js/surfview_busday.js"></script>
+<script type="text/javascript" src="/act_2023/_js/common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 예약관리</h1>
@@ -27,7 +27,7 @@ $shopseq = 0;
 <div id="containerTab" class="areaRight">
     <section>
         <aside id="right_article3" class="left_article5">
-            <?include __DIR__.'/../shop/res_surfcalendar.php'?>
+        <?include '_calendar.php'?>
         </aside>
         <article class="right_article5">
             <ul class="tabs" style="margin-left:5px;">
@@ -72,9 +72,9 @@ $shopseq = 0;
                             <th rowspan="2"><label><input type="checkbox" id="chkBusY1" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울-양양행</label></th>
                             <th>사당선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y3" style="vertical-align:-3px;" />3호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y5" style="vertical-align:-3px;" />5호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YS1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YS2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YS3" style="vertical-align:-3px;" />3호차</label>
                             </td>
                             <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />양양-서울행</label></th>
                             <th>15시</th>
@@ -87,9 +87,9 @@ $shopseq = 0;
                         <tr>
                             <th>종로선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y4" style="vertical-align:-3px;" />4호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="Y6" style="vertical-align:-3px;" />6호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJ1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJ2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJ3" style="vertical-align:-3px;" />3호차</label>
                             </td>
                             <th>18시</th>
                             <td>
@@ -105,31 +105,28 @@ $shopseq = 0;
                         </tr>
                         <tr>
                             <th rowspan="2"><label><input type="checkbox" id="chkBusD1" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D1')" />서울-동해행</label></th>
-                            <th rowspan="2">사당선</th>
+                            <th>사당선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E3" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ES1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ES2" style="vertical-align:-3px;" />2호차</label>
                             </td>
                             <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />동해-서울행</label></th>
                             <th>15시</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A21" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A22" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A23" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A31" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A32" style="vertical-align:-3px;" />2호차</label>
                             </td>
                         </tr>
                         <tr>
+                            <th>종로선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E4" style="vertical-align:-3px;" />4호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E5" style="vertical-align:-3px;" />5호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="E6" style="vertical-align:-3px;" />6호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJ1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJ2" style="vertical-align:-3px;" />2호차</label>
                             </td>
                             <th>18시</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A51" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A52" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A53" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A61" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A62" style="vertical-align:-3px;" />2호차</label>
                             </td>
                         </tr>
                         <tr>
@@ -147,7 +144,7 @@ $shopseq = 0;
                             <td colspan="5"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
                         </tr>
                         <tr>
-                            <td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/res_buslist_search.php');" /></td>
+                            <td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/list_search.php');" /></td>
                         </tr>
                     </table>
                     </form>                
@@ -171,32 +168,38 @@ $shopseq = 0;
                     <form name="frmResKakao" id="frmResKakao" autocomplete="off">
                     <table class='et_vars exForm bd_tb'>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="6">
                                 알림톡 발송 번호
                             </td>
                         </tr>
                         <tr>
+                            <th>노선</th>
                             <th>채널</th>
                             <th>이름</th>
                             <th>연락처</th>
-                            <th>이용일 (서울>양양)</th>
-                            <th>이용일 (양양>서울)</th>
+                            <th>이용일 (서울출발)</th>
+                            <th>이용일 (서울복귀)</th>
                         </tr>
                         <tr>
+                        <td>
+                                <select id="resbus">
+                                    <option value="YY">양양</option>
+                                    <option value="DH">동해</option>
+                                </select>
+                            </td>
                             <td>
                                 <select id="reschannel">
-                                    <option value="7">네이버쇼핑</option>
-                                    <option value="10">네이버예약</option>
-                                    <option value="16">클룩</option>
                                     <option value="11">프립</option>
                                     <option value="17">프립 패키지</option>
+                                    <option value="16">클룩</option>
+                                    <option value="7">네이버쇼핑</option>
+                                    <option value="10">네이버예약</option>
                                     <option value="12">마이리얼트립</option>
-                                    <option value="14">망고패키지</option>
                                     <option value="15">서프엑스</option>
                                 </select>
                             </td>
                             <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
-                            <td><input type="text" id="userphone" name="userphone" style="width:150px;" value="" class="itx2" maxlength="15"></td>
+                            <td><input type="text" id="userphone" name="userphone" style="width:150px;" value="" class="itx2" maxlength="12"></td>
                             <td>
                                 <input type="text" id="resDate1" name="resDate1" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
                                 <select id="resbusseat1">
@@ -215,12 +218,12 @@ $shopseq = 0;
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
+                            <td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
                         </tr>
                     </table>
                     </form>
 
-                    <div class="gg_first">알림톡 발송 정보 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnKakaoSearchAdmin('bus/res_kakao_search.php');" /></div>
+                    <div class="gg_first">알림톡 발송 정보 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');" /></div>
                     <div id="mngKakaoSearch"> (https://alimtalk-api.bizmsg.kr/codeList.html)</div>
 
                 </div>
@@ -424,7 +427,7 @@ $shopseq = 0;
                     <input type="hidden" id="resparam" name="resparam" size="10" value="changeConfirmNew" class="itx">
                     <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd();" id="SolModify" />&nbsp;
-					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnModifyClose();fnBusPopupReset();" />
+					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnBlockClose();fnBusPopupReset();" />
                 </td>
             </tr>
         </tbody>
@@ -434,96 +437,8 @@ $shopseq = 0;
 
 <script>
 $j(document).ready(function(){
-	fnSearchAdmin('bus/res_buslist_search.php');
+	fnSearchAdmin('bus/list_search.php');
 
-	fnKakaoSearchAdmin('bus/res_kakao_search.php');
+	fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');
 });
-
-function fnKakaoSearchAdmin(url) {
-    $j.blockUI({ message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false, css: { width: '650px', height: "150px", textAlign: 'center', left: '23%', top: '20%' } });
-
-    var formData = null;//$j("#frmSearch").serializeArray();
-    $j.post("/act/admin/" + url, formData,
-        function(data, textStatus, jqXHR) {
-            $j("#mngKakaoSearch").html(data);
-            setTimeout('fnModifyClose();', 500);
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-        setTimeout('fnModifyClose();', 500);
-    });
-}
-
-function fnResKakaoAdmin(){
-    if($j("#username").val() == ""){
-        alert("이름을 입력하세요.");
-        return;
-    }
-    
-    if($j("#userphone").val() == ""){
-        alert("연락처를 입력하세요.");
-        return;
-    }
-
-    if(!confirm("알림톡 발송을 하시겠습니까?")){
-        return;
-    }
-
-    var params = "resparam=reskakao&username=" + $j("#username").val() + "&userphone=" + $j("#userphone").val() + "&reschannel=" + $j("#reschannel").val() + "&resDate1=" + $j("#resDate1").val() + "&resDate2=" + $j("#resDate2").val() + "&resbusseat1=" + $j("#resbusseat1").val() + "&resbusseat2=" + $j("#resbusseat2").val();
-    $j.ajax({
-        type: "POST",
-        url: "/act/admin/bus/res_bus_save.php",
-        data: params,
-        success: function (data) {
-            if(data == "err"){
-                alert("오류가 발생하였습니다.");
-            }else{
-                $j("#userphone").val("");
-                $j("#username").val("");
-                //alert("예약 알림톡 발송이 완료되었습니다.");
-                // alert(data + "\n\n발송이 완료되었습니다.");
-
-                fnKakaoSearchAdmin('bus/res_kakao_search.php');
-            }
-        }
-    });
-}
-
-function fnBusRe(username, usertel){
-    if(!confirm("독촉 발송 하시겠습니까?")){
-        return;
-    }
-
-    var params = "resparam=reskakaode2&user_name=" + username + "&user_tel=" + usertel;
-    $j.ajax({
-        type: "POST",
-        url: "/act/admin/bus/res_bus_save.php",
-        data: params,
-        success: function (data) {
-            if(data == "err"){
-                alert("오류가 발생하였습니다.");
-            }else{
-                fnKakaoSearchAdmin('bus/res_kakao_search.php');
-            }
-        }
-    });
-}
-
-function fnBusCouponDel(seq){
-    if(!confirm("삭제 하시겠습니까?")){
-        return;
-    }
-
-    var params = "resparam=reskakaodel&codeseq=" + seq;
-    $j.ajax({
-        type: "POST",
-        url: "/act/admin/bus/res_bus_save.php",
-        data: params,
-        success: function (data) {
-            if(data == "err"){
-                alert("오류가 발생하였습니다.");
-            }else{
-                fnKakaoSearchAdmin('bus/res_kakao_search.php');
-            }
-        }
-    });
-}
 </script>

@@ -312,8 +312,8 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		}
 	}
 
-	//알림톡 발송 (확정일경우)
-	if($res_kakao == "Y" && $res_confirm == "확정"){
+	//알림톡 발송 (확정, 등록일경우)
+	if($resseq == "" && $res_kakao == "Y" && $res_confirm == "확정"){
 		$select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq";
 		$result = mysqli_query($conn, $select_query);
 		$rowMain = mysqli_fetch_array($result);
@@ -324,13 +324,15 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		//==========================카카오 메시지 발송 ==========================
 		$msgTitle = '솔게스트하우스&솔서프 예약안내';
 		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
+			.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
 			.'\n예약하신 정보를 안내드립니다.'
 			.'\n\n예약정보'
 			.'\n ▶ 예약자 : '.$userName
 			.'\n ▶ 주소 : 동해시 대진항길 9'
-			.'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
 			.'\n---------------------------------'
 			.'\n ▶ 안내사항'
+			.'\n   - 자세한 이용안내는 이용일 하루전에 발송됩니다.'
+			.'\n   - 주말에 개인차량으로 이동하실 경우 예상시간보다 많이 걸릴 수 있으니 참고부탁드려요~'
 			.'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
 			.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
 	
@@ -339,12 +341,12 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 			, "admin"=> "N"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_surf_step3"
+			, "tempName"=> "at_res_step4" //이용안내
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
-			, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($seq)) //예약조회/취소
-			, "link2"=>"surflocation?seq=5" //지도로 위치보기
-			, "link3"=>"event_cafe" //공지사항
+			, "link1"=>""
+			, "link2"=>""
+			, "link3"=>""
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
@@ -366,10 +368,6 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		$select_query = kakaoDebug($arrKakao, $arrRtn);            
 		$result_set = mysqli_query($conn, $select_query);
 		// 카카오 알림톡 DB 저장 END
-		
-		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$userinfo."' WHERE resseq = $seq";
-		$result_set = mysqli_query($conn, $select_query);
-		if(!$result_set) goto errGo;
 	}
 		
 	mysqli_query($conn, "COMMIT");

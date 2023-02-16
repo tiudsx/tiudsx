@@ -28,7 +28,7 @@ include __DIR__.'/../../common/logininfo.php';
 		<ul class="tabs">
 			<li class="active" rel="tab1">예약현황</li>
 			<li rel="tab2">예약검색</li>
-			<li id="click" onclick="fnSolInsert();" style="background:#ff6666;color:white;">예약등록</li>
+			<li id="click" onclick="fnSolRes()" style="background:#ff6666;color:white;">예약등록</li>
 		</ul>
 		
 		<div class="tab_container">
@@ -90,10 +90,10 @@ include __DIR__.'/../../common/logininfo.php';
 				</td>
                 <th>알림톡</th>
 				<td>
-					<select id="res_kakao" name="res_kakao" class="select">						
+					<select id="res_kakao" name="res_kakao" class="select">
+						<option value='Y'>발송</option>				
 						<option value='N'>미발송</option>
-						<option value='Y'>발송</option>
-					</select> (확정일 경우만 발송)
+					</select> (등록일 경우만 발송)
 				</td>
 			</tr>
 			<tr>
@@ -431,15 +431,15 @@ include __DIR__.'/../../common/logininfo.php';
         <tbody>
 			<tr>
 				<th>등록관리자</th>
-				<td><input type="text" id="res_adminname_2" size="10" class="itx"></td>
+				<td><input type="text" id="res_adminname_2" size="10" class="itx" readonly></td>
                 <th>예약자이름</th>
-                <td><input type="text" id="user_name_2" size="15" class="itx"></td>
+                <td><input type="text" id="user_name_2" size="15" class="itx" readonly></td>
                 <th>연락처</th>
-				<td><input type="text" id="user_tel_2" size="15"  class="itx"></td>
+				<td><input type="text" id="user_tel_2" size="15"  class="itx" readonly></td>
 				<th>예약처</th>
-				<td><input type="text" id="res_company_2" size="10" class="itx"></td>
+				<td><input type="text" id="res_company_2" size="10" class="itx" readonly></td>
 				<th>예약상태</th>
-				<td><input type="text" id="res_confirm_2" size="10" class="itx"></td>
+				<td><input type="text" id="res_confirm_2" size="10" class="itx" readonly></td>
 			</tr>
 			<tr>
                 <th>숙박</th>
@@ -465,18 +465,18 @@ include __DIR__.'/../../common/logininfo.php';
 							</tr>
 							<tr id="trstay_2" style="display:none;">
 								<td>
-									<input type="text" id="res_stayshop_2" size="12" class="itx">
+									<input type="text" id="res_stayshop_2" size="12" class="itx" readonly>
 								</td>
 								<td style="line-height:2.3em">
 									<input type="text" calid="res_staysdate_2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled> ~ 
 									<input type="text" calid="res_stayedate_2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" disabled>
 								</td>
 								<td>
-									<input type="text" id="res_stayroom_2" size="3" class="itx">
-									<input type="text" id="res_staynum_2" size="7" class="itx">
+									<input type="text" id="res_stayroom_2" size="3" class="itx" readonly>
+									<input type="text" id="res_staynum_2" size="7" class="itx" readonly>
 								</td>
 								<td>
-									<input type="text" id="res_staysex_2" size="3" class="itx">
+									<input type="text" id="res_staysex_2" size="3" class="itx" readonly>
 								</td>
 								<td>
 									<input type="text" calid="res_bbqdate_2" readonly="readonly" style="width:66px;" class="itx2" maxlength="7" disabled>
@@ -516,16 +516,16 @@ include __DIR__.'/../../common/logininfo.php';
                                 <th>여</th>
 							</tr>
 							<tr id="trsurf_2" style="display:none;">
-								<td><input type="text" id="res_surfshop_2" size="12" class="itx"></td>
+								<td><input type="text" id="res_surfshop_2" size="12" class="itx" readonly></td>
 								<td>
-									<input type="text" calid="res_surfdate_2" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+									<input type="text" calid="res_surfdate_2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
 								</td>
-								<td><input type="text" id="res_surftime_2" size="10" class="itx"></td>
-								<td><input type="text" id="res_surfM_2" size="2" class="itx">명</td>
-								<td><input type="text" id="res_surfM_2" size="2" class="itx">명</td>
-								<td><input type="text" id="res_rent_2" size="10" class="itx">명</td>
-								<td><input type="text" id="res_rentM_2" size="2" class="itx">명</td>
-								<td><input type="text" id="res_rentW_2" size="2" class="itx">명</td>
+								<td><input type="text" id="res_surftime_2" size="10" class="itx" readonly></td>
+								<td><input type="text" id="res_surfM_2" size="2" class="itx" readonly>명</td>
+								<td><input type="text" id="res_surfM_2" size="2" class="itx" readonly>명</td>
+								<td><input type="text" id="res_rent_2" size="10" class="itx" readonly>명</td>
+								<td><input type="text" id="res_rentM_2" size="2" class="itx" readonly>명</td>
+								<td><input type="text" id="res_rentW_2" size="2" class="itx" readonly>명</td>
 							</tr>
                         </tbody>
 					</table>
@@ -533,7 +533,7 @@ include __DIR__.'/../../common/logininfo.php';
             </tr>
 			<tr>
                 <th>직원메모</th>
-                <td colspan="9"><textarea id="memo2_2" rows="5" style="width: 60%; resize:none;"></textarea></td>
+                <td colspan="9"><textarea id="memo2_2" rows="5" style="width: 60%; resize:none;" readonly></textarea></td>
 			</tr>
             <tr>
 				<td class="col-02" style="text-align:center;" colspan="10">

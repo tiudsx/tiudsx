@@ -20,16 +20,33 @@ $j(function() {
     })
 });
 
+function fnSolRes(){
+    if($j("#resseq").val() != ""){
+        if(!confirm("수정하던 작업이 있습니다.\n새로 등록하시겠습니까?")){
+            return;
+        }
+    }else{
+        if($j('#res_modify').css("display") != "none"){
+            return;
+        }
+    }
+    fnSolInsert(false);
+    fnSolpopupReset();
+}
+
 function fnSolpopupReset() {
     $j("#frmModify")[0].reset();
+    $j("#resseq").val("");
     $j("#SolAdd").css("display", "");
     $j("#SolModify").css("display", "none");
 
     $j("tr[rowadd=1]").remove();
 }
 
-function fnSolInsert() {
-    $j('#res_modify').toggle();
+function fnSolInsert(type) {
+    if(type == null || (!type && $j('#res_modify').css("display") == "none")){
+        $j('#res_modify').toggle();
+    }  
 }
 
 function fnSolAdd(obj, id, num) {
@@ -189,9 +206,7 @@ function fnSolModify(resseq, num) {
             if(num == ""){
                 fnSolpopupReset();
 
-                if($j('#res_modify').css("display") == "none"){
-                    fnSolInsert();
-                }
+                fnSolInsert(false);
             }else{
                 $j("tr[rowadd" + num + "=1]").remove();
 
