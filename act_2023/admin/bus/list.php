@@ -12,6 +12,7 @@ $shopseq = 0;
 <script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">

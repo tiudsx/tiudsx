@@ -4,13 +4,14 @@ include __DIR__.'/../../common/func.php';
 
 $selDate = $_REQUEST["selDate"];
 $busNum = $_REQUEST["busNum"];
+?>
 
-$select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, b.* FROM 
+<?
+$select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, a.resseq, b.res_seat, b.res_spointname FROM 
 						`AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
 							ON a.resnum = b.resnum 
                                 AND b.code = 'bus'
 						where b.res_date = '$selDate' AND b.res_busnum = '$busNum' AND b.res_confirm  = 3";
-// echo $select_query_sub;
 $result_setlist = mysqli_query($conn, $select_query_sub);
 $count_sub = mysqli_num_rows($result_setlist);
 
@@ -26,7 +27,7 @@ echo '<script type="text/javascript">$j(document).ready(function(){';
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	echo '$j("#seat'.$row['res_seat'].'").removeClass("tab1");';
 
-	echo '$j("#seat'.$row['res_seat'].'").attr("onclick", "fnModifyInfo(\'bus\','.$row['ressubseq'].', 2)");';
+	echo '$j("#seat'.$row['res_seat'].'").attr("onclick", "fnBusModify('.$row['resseq'].')");';
 	echo '$j("#seat'.$row['res_seat'].'").addClass("tab2");';
 	echo '$j("#seat'.$row['res_seat'].' input").remove();';
 
@@ -130,8 +131,6 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 					<?
 					foreach($arrSeatInfo1 as $key=>$value) {
 						$arrData = explode(".",$key);
-						// $pointname = explode("|",fnBusReturnPoint($arrData[1]));
-						// $pointtime = explode("|",fnBusPoint($arrData[1], $busNum, ""));
 						$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
 					?>
 						<tr>
@@ -154,7 +153,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						<?foreach($arrSeatInfo2 as $key=>$value) {
 							$arrData = explode(".",$key);
 							// $pointname = explode("|",fnBusReturnPoint($arrData[1]));
-							$pointname = explode("|", fnBusPoint($arrData[1], "S21"));
+							$pointname = explode("|", fnBusPoint($arrData[1], "S2"));
 						?>
 						<tr>
 						<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>

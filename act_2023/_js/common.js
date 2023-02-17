@@ -1,3 +1,7 @@
+$j.ajaxSetup({
+	async: false
+});
+
 jQuery(function() {
     var date = (new Date()).yyyymmdd(); //오늘 날짜
 

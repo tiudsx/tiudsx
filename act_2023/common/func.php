@@ -81,12 +81,12 @@ function fnBusPoint($vlu, $busNumber){
 		, "S1_남애3리"=> "14:30|남애3리 입구"
 		, "S1_인구해변"=> "14:35|현남면사무소 맞은편"
 		, "S1_죽도해변"=> "14:42|GS25 죽도비치점 맞은편"
-		, "S1_기사문"=> "14:50|기사문 해변주차장 입구"
+		, "S1_기사문해변"=> "14:50|기사문 해변주차장 입구"
 		, "S1_서피비치"=> "15:00|서피비치 회전교차로 횡단보도 앞"
 		, "S2_남애3리"=> "17:30|남애3리 입구"
 		, "S2_인구해변"=> "17:35|현남면사무소 맞은편"
 		, "S2_죽도해변"=> "17:42|GS25 죽도비치점 맞은편"
-		, "S2_기사문"=> "17:50|기사문 해변주차장 입구"
+		, "S2_기사문해변"=> "17:50|기사문 해변주차장 입구"
 		, "S2_서피비치"=> "18:00|서피비치 회전교차로 횡단보도 앞"
 		, "A1_금진해변"=> "13:35|금진해변 공영주차장 입구"
 		, "A1_대진해변"=> "13:55|대진항 입구"
@@ -94,22 +94,50 @@ function fnBusPoint($vlu, $busNumber){
 		, "A2_금진해변"=> "17:35|금진해변 공영주차장 입구"
 		, "A2_대진해변"=> "17:55|대진항 입구"
 		, "A2_솔.동해점"=> "18:00|솔.동해점 입구"
+
+		//미사용 정류장
+		, "Y1_봉천역"=> "06:40|봉천역 1번출구 앞"
+		, "Y2_당산역"=> "06:05|당산역 13출구 방향 버거킹 앞"
+		, "Y2_왕십리역"=> "06:50|왕십리역 11번출구 우리은행 앞"
+		, "S1_청시행비치"=> "14:15|청시행비치 주차장 입구"
+		, "S1_동산항"=> "14:45|동산카센타 맞은편"
+		, "S2_청시행비치"=> "17:15|청시행비치 주차장 입구"
+		, "S2_동산항"=> "17:45|동산카센타 맞은편"
 	);
 
 	if($busData[$busNumber.'_'.$vlu] == null){
 		return '|';
 	}else{
-		return $busData[$busType.'_'.$vlu];
+		return $busData[$busNumber.'_'.$vlu];
+	}
+}
+
+function fnBusPointArr($vlu, $gubun){
+	$arrData = explode("_", $vlu);
+
+	if($gubun == 0){ //정류장 위치
+		return explode("|", fnBusPoint($arrData[1], $arrData[0]))[1];
+	}else if($gubun == 1){ //탑승시간
+		$rtnData = explode(":", explode("|", fnBusPoint($arrData[1], $arrData[0]))[0]);
+		return $rtnData[0]."시 ".$rtnData[1]. "분";
+	}
+	else if($gubun == 2){ //서울행 탑승시간
+		$rtnData = explode(":", explode("|", fnBusPoint($arrData[1], "S1"))[0]);
+		$rtnData1 = $rtnData[0]."시 ".$rtnData[1]. "분 / ";
+		
+		$rtnData = explode(":", explode("|", fnBusPoint($arrData[1], "S2"))[0]);
+		return $rtnData1.$rtnData[0]."시 ".$rtnData[1]. "분";
 	}
 }
 
 //셔틀버스 정류장 목록
 function fnBusPointList($vlu){
 	$busData = array(
-		"busPoint_1"=> "신도림 &gt; 대림역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역"
-		, "busPoint_2"=> "합정역 &gt; 종로3가역 &gt; 건대입구 &gt; 종합운동장역"
-		, "busPoint_3"=> "남애3리 &gt; 인구해변 &gt; 죽도해변 &gt; 기사문 &gt; 서피비치"
-		, "busPoint_4"=> "금진해변 &gt; 대진해변 &gt; 솔.동해점"
+		"busPoint_Start1"=> "신도림 &gt; 대림역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역"
+		, "busPoint_Start2"=> "합정역 &gt; 종로3가역 &gt; 건대입구 &gt; 종합운동장역"
+		, "busPoint_End_yy"=> "남애3리 &gt; 인구해변 &gt; 죽도해변 &gt; 기사문해변 &gt; 서피비치"
+		, "busPoint_End_dh"=> "금진해변 &gt; 대진해변 &gt; 솔.동해점"
+		, "busPoint_End"=> "잠실역 &gt; 강남역 &gt; 사당역"
 	);
 
 	if($busData[$vlu] == null){
