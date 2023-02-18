@@ -90,7 +90,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <ul>
                             <li class="on" onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li>
                             <li onclick="fnResViewBus(false, '#view_tab2', 70, this);fnMapClick();"><a>정류장안내</a></li>
-                            <li onclick="fnResViewBus(true, '#cancelinfo', 70, this);"><a>취소/환불</a></li>
+                            <!-- <li onclick="fnResViewBus(true, '#cancelinfo', 70, this);"><a>취소/환불</a></li> -->
                             <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li>
                         </ul>
                     </div>
@@ -165,14 +165,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div id="resStep1">
                     <div class="busOption01" style="padding-bottom: 0px;">
                         <ul class="destination" id="ulDaytype" style="margin-bottom: 0px;">
-                            <li><img src="images/viewicon/sign.svg" alt="">일정</li>
+                            <li><img src="/act_2023/images/viewicon/sign.svg" alt="">일정</li>
                             <li class="toYang on" onclick="fnBusDayType(0, this);">편도<i class="fas fa-chevron-right"></i></li>
                             <li class="toYang" onclick="fnBusDayType(1, this);">왕복<i class="fas fa-chevron-right"></i></li>
                         </ul>
                     </div>
                     <div class="busOption01" style="padding-bottom: 0px;" id="route">
                         <ul class="destination" id="ulroute" style="margin-bottom: 0px;">
-                            <li><img src="images/viewicon/route.svg" alt="">행선지</li>
+                            <li><img src="/act_2023/images/viewicon/route.svg" alt="">행선지</li>
                         <?if($param == "surfbus_yy"){?>
                             <li class="toYang on" onclick="fnBusGubun('Y', this);">양양행<i class="fas fa-chevron-right"></i></li>
                             <li class="toYang" onclick="fnBusGubun('S', this);">서울행<i class="fas fa-chevron-right"></i></li>
@@ -184,31 +184,31 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </div>
                     <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
                         <ul class="busDate" id="busdate">
-                            <li><img src="images/viewicon/calendar.svg" alt="">이용일</li>
+                            <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">이용일</li>
                             <li class="calendar"><input type="text" id="SurfBus" name="SurfBus" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: ;">
-                            <li><img src="images/viewicon/bus.svg" alt="">노선</li>
+                            <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선</li>
                         </ul>
                         <ul class="busStop" id="buspointlist" style="display: none;">
                             <li id="buspointtext"></li>
                         </ul>
                         <ul class="busDate" id="sbusdate" style="display:none;">
-                            <li><img src="images/viewicon/calendar.svg" alt="">출발일</li>
+                            <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">출발일</li>
                             <li class="calendar"><input type="text" id="SurfBusS" name="SurfBusS" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: none;">
-                            <li><img src="images/viewicon/bus.svg" alt="">출발노선</li>
+                            <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
                         </ul>
                         <ul class="busStop" id="buspointlist" style="display: none;">
                             <li id="buspointtext"></li>
                         </ul>
                         <ul class="busDate" id="ebusdate" style="display:none;">
-                            <li><img src="images/viewicon/calendar.svg" alt="">복귀일</li>
+                            <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">복귀일</li>
                             <li class="calendar"><input type="text" id="SurfBusE" name="SurfBusE" readonly="readonly" class="itx" cal="busdate" gubun="<?=$busgubun?>"></li>
                         </ul>
                         <ul class="busLine" style="display: none;">
-                            <li><img src="images/viewicon/bus.svg" alt="">복귀노선</li>
+                            <li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>
                         </ul>
                         <ul class="busStop" id="buspointlist" style="display: none;">
                             <li id="buspointtext"></li>
@@ -276,23 +276,23 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </ul>
                     <ul class="selectStop" style="padding:0 4px;">
                     <?if($param == "surfbus_yy"){?>
-                        <li style="display:none;"><img src="images/button/btn061.png" alt="양양행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn061.png" alt="양양행 서핑버스"></li>
                         <li>
                             <div id="selBusY" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="images/button/btn062.png" alt="서울행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn062.png" alt="서울행 서핑버스"></li>
                         <li>
                             <div id="selBusS" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                     <?}else{?>
-                        <li style="display:none;"><img src="images/button/btn064.png" alt="동해행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn064.png" alt="동해행 서핑버스"></li>
                         <li>
                             <div id="selBusE" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="images/button/btn063.png" alt="서울행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn063.png" alt="서울행 서핑버스"></li>
                         <li>
                             <div id="selBusA" class="bd" style="padding-top:2px;">
                             </div>

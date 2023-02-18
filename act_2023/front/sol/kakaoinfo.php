@@ -3,8 +3,8 @@
     .tbcenter td{text-align:center;}
 </style>
 <?php 
-include __DIR__.'/../common/db.php';
-include __DIR__.'/../common/func.php';
+include __DIR__.'/../../common/db.php';
+include __DIR__.'/../../common/func.php';
 
 $resseq = $_REQUEST["seq"];
 $chk = $_REQUEST["chk"];
@@ -59,7 +59,6 @@ if($count_sub == 0){
 
         if($res_type == "stay"){ //숙박&바베큐
             if($prod_name != "N"){ //숙소 신청
-                $staytext = "숙소,";
                 $tablist1 = "<li tabid=\"viewli\" id=\"view_li2\" onclick=\"fnResViewSol(false, '#view_tab2', 80, this);\"><a>숙소</a></li>";
 
                 if($row['stayroom'] == "201"){
@@ -81,16 +80,17 @@ if($count_sub == 0){
                 $arrStay[$row['ressubseq']] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw";
             }
 
+            if($bbq != "N"){ //바베큐 신청
+                $tablist2 = "<li tabid=\"viewli\" id=\"view_li3\" onclick=\"fnResViewSol(false, '#view_tab3', 70, this);\"><a>바베큐</a></li>";
+            }
         }else{ //강습&렌탈
             if($row['restime'] != ""){ //강습 신청
-                $surftext = "서핑강습,";
                 $tablist3 = "<li tabid=\"viewli\" id=\"view_li4\" onclick=\"fnResViewSol(false, '#view_tab4', 80, this);\"><a>강습</a></li>";
 
                 $arrSurf[$row['ressubseq']] = $row['prod_name']."|".$row['resdate']."|".$row['restime']."|".$row['surfM']."|".$row['surfW'];
 
             }
             if($surfrent != "N"){ //렌탈 신청
-                $renttext = "장비렌탈,";
                 $tablist4 = "<li tabid=\"viewli\" id=\"view_li5\" onclick=\"fnResViewSol(false, '#view_tab5', 80, this);\"><a>렌탈</a></li>";
 
                 $arrRent[$row['ressubseq']] = $row['prod_name']."|".$row['surfrent']."|".$row['surfrentM']."|".$row['surfrentW'];
@@ -100,9 +100,6 @@ if($count_sub == 0){
             $surfShopName = $row['prod_name'];
         }
     }
-
-    $resText = $staytext.$bbqtext.$surftext.$renttext;
-    $resText = substr($resText, 0, strlen($resText) - 1);
 }
 ?>
 
@@ -113,9 +110,9 @@ $j(document).ready(function(){
 
 
 <div id="wrap">
-    <? include __DIR__.'/../_layout/_layout_top.php'; ?>
+    <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
 
-    <link rel="stylesheet" href="../_css/surfview.css">
+    <link rel="stylesheet" href="/act_2023/_css/surfview.css">
 
     <div class="top_area_zone bd">
         <section class="shoptitle">
@@ -124,7 +121,6 @@ $j(document).ready(function(){
                 <a class="reviewlink">
                     <span class="reviewcnt">[<?=$user_name?>] 님 예약내역 안내입니다.</span>
                 </a>
-                <!-- <div class="shopsubtitle"><?=$resText?></div> -->
             </div>
         </section>
 
@@ -155,7 +151,7 @@ $j(document).ready(function(){
                                 <?=$tablist3?>
                                 <?=$tablist4?>
                             <?}?>
-                            <li tabid="viewli" id="view_li6" onclick="fnResViewSol(false, '#view_tab6', 80, this);"><a>리뷰이벤트</a></li>
+                            <li tabid="viewli" id="view_li6" onclick="fnResViewSol(false, '#view_tab6', 80, this);"><a>리뷰</a></li>
                         </ul>
                     </div>
                 </div>
@@ -482,17 +478,16 @@ $j(document).ready(function(){
             </div>
 
             <div style="padding:10px 0 5px 0;font-size:12px;">
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/sol_02.jpg" class="placeholder">
-                <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="https://actrip.cdn1.cafe24.com/common/kakaochat.jpg" class="placeholder"></a>
+            <a href="http://pf.kakao.com/_wxhsxgd" target="_blank" rel="noopener"><img src="/act_2023/images/mainImg/kakaochat_sol.jpg" class="placeholder"></a>
             </div>
         </section>
     </div>
 </div>
 
-<? include __DIR__.'/../_layout/_layout_bottom.php'; ?>
+<? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
 
-<script src="../_js/common.js"></script>
-<script src="../_js/sol.js"></script>
+<script src="/act_2023/_js/common.js"></script>
+<script src="/act_2023/_js/sol.js"></script>
 
 <style>
     .SolLayer {
