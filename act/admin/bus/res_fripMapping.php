@@ -12,77 +12,78 @@
 
         function fnMakeTable() {
             
+            //복사된 html을 가공 table[class='el-table__body']
             $("#html_2").val($("#html_1").val().replace(/<!---->/gi,""));
             $("#divCopy").html($("#html_2").val());
+            $("#divCopy").html($("#divCopy").find("table[class='el-table__body']").html());
 
-            var addHtml = "";
-            
-            addHtml += '<table width="100%" border="1" id="td_select">';
+            //Json 인스턴스
+            var objList = new Array();
+            var objValue = new Object();
+
+            //html 생성
+            var addHtml = '<table width="100%" border="1" id="td_select">';
             $("#divCopy .el-table__row").each(function(){
+
+                objValue = new Object();
+
+                addHtml += '<tr name="' + $(this).find("td").eq(3).find(".cell").text() + '">';
+                
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += $(this).find("td").eq(1).find(".cell").text(); //이름
+                addHtml += '</td>';
+                objValue.name = $(this).find("td").eq(1).find(".cell").text(); //이름
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += $(this).find("td").eq(2).find(".cell").text(); //성별
+                addHtml += '</td>';
+                objValue.genser = $(this).find("td").eq(2).find(".cell").text(); //성별
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += $(this).find("td").eq(3).find(".cell").text(); //연락처
+                addHtml += '</td>';
+                objValue.tel = $(this).find("td").eq(3).find(".cell").text(); //연락처
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += $(this).find("td").eq(4).find(".cell").text(); //아이템명
+                addHtml += '</td>';
+                objValue.item = $(this).find("td").eq(4).find(".cell").text(); //아이템명
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += $(this).find("td").eq(5).find(".cell").text(); //추가정보
+                addHtml += '</td>';
+                objValue.addinfo = $(this).find("td").eq(5).find(".cell").text(); //추가정보
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += $(this).find("td").eq(6).find(".cell").text(); //예약상태
+                addHtml += '</td>';
+                objValue.state = $(this).find("td").eq(6).find(".cell").text(); //예약상태
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
                 
                 if ($(this).find("button").length > 0) {
-
-                    addHtml += '<tr name="' + $(this).find("td").eq(3).find(".cell").text() + '">';
-                    addHtml += '<td style="mso-data-placement:same-cell;">';
-                    addHtml += $(this).find("td").eq(1).find(".cell").text(); //이름
-                    addHtml += '</td>';
-                    addHtml += '<td style="mso-data-placement:same-cell;">';
-                    addHtml += $(this).find("td").eq(3).find(".cell").text(); //연락처
-                    addHtml += '</td>';
-                    addHtml += '<td style="mso-data-placement:same-cell;">';
-                    addHtml += '1';
-                    addHtml += '</td>';
-                    addHtml += '</tr>';
+                    addHtml += $(this).find("button").text(); //액션
+                    objValue.btn = $(this).find("button").text(); //액션
                 }
+                else{
+                    addHtml += 'none'; //액션
+                    objValue.btn = 'none'; //액션
+                }
+                
+                addHtml += '</td>';
+
+                addHtml += '<td style="mso-data-placement:same-cell;">';
+                addHtml += '1';
+                addHtml += '</td>';
+                addHtml += '</tr>';
+
+                objList.push(objValue);
             });
             addHtml += '</table>';
-            $("#divSet").html(addHtml);
-            fnChk();
-        }
-
-        function fnChk() {
             
-            var aryInfo = [];
-            var chkCnt = 0;
-            $("#divSet tr").each(function(){
-                
-                //하나 이상일때
-                if ($("#divSet tr[name='" + $(this).attr("name") + "']").length > 1) {
+            $("#divSet").html(addHtml);
 
-                    if (aryInfo.length <= 0) {
-                        aryInfo.push($(this).attr("name"));
-                    }
-                    else{
-                        chkCnt = 0;
-                        for (var i = 0; i < aryInfo.length; i++) {
-                            if (aryInfo[i] == $(this).attr("name")) {
-                                chkCnt++;
-                            } 
-                        }
-
-                        if (chkCnt <= 0) {
-                            aryInfo.push($(this).attr("name"));
-                        }
-
-                    }
-                }
-                
-
-            });
-
-            var itemCnt = 0;
-
-            $.each(aryInfo,function(index, item){
-
-                itemCnt = $("#divSet tr[name='" + item + "']").length;
-
-                $("#divSet tr[name='" + item + "']").eq(0).find("td").eq(2).text(itemCnt);
-
-                for (var i = itemCnt; i < 1; i--) {
-                    $("#divSet tr[name='" + item + "']").eq(i).remove();
-                }
-
-            });
+            alert(JSON.stringify(objList));
 
         }
 
@@ -102,9 +103,8 @@
         
         <button onclick="fnMakeTable()">생성</button>
     </div>
-
     <div id="divCopy" style="display: none;"></div>
-    <div style="width: 500px;" id="divSet"></div>
-
+    <br>
+    <div style="width: 80%;" id="divSet"></div>
 </body>
 </html>
