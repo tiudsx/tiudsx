@@ -238,53 +238,17 @@ if(date("H") >= 9 && $count == 0){
             $select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $resseq ORDER BY ressubseq";
             $resultSite = mysqli_query($conn, $select_query_sub);
     
-            $resList = "";
-            $resInfo = "";
-            while ($rowSub = mysqli_fetch_assoc($resultSite)){
-    
-                $res_type = $rowSub['res_type'];
-                if($res_type == "stay"){ //숙박,바베큐,펍파티
-                    if($rowSub['prod_name'] != "N"){ //숙박미신청
-                        $resList1 = "게스트하우스,";
-                        $resInfo1 = "   * 게스트하우스\n     - 입실:16시, 퇴실:익일 11시\n     - 방/침대 배정은 이용일 14시 이후로 하단에 있는 [필독]예약 상세안내 버튼에서 확인가능합니다\n\n";
-                    }
-    
-                    if($rowSub['bbq'] != "N"){ 
-                        if(!(strpos($rowSub['bbq'], "바베큐") === false))
-                        {
-                            $resList2 = "바베큐파티,";
-                            $resInfo2 = "   * 바베큐파티\n     - 파티시간 : 19시 ~ 21시30분\n     - 파티시작 10분전에 1층으로 와주세요~\n\n";
-                        }
-    
-                        if(!(strpos($rowSub['bbq'], "펍파티") === false))
-                        {
-                            $resList3 = "펍파티,";
-                            $resInfo3 = "   * 펍파티\n     - 파티시간 : 22시 ~ 24시\n\n";
-                        }
-                    }
-                }else{ //강습,렌탈
-                    if($rowSub['prod_name'] != "N"){ //숙박미신청
-                        $resList4 = "서핑강습,";
-                        $resInfo4 = "   * 서핑강습\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
-                    }
-    
-                    if($rowSub['surfrent'] != "N"){ //숙박미신청
-                        $resList5 = "장비렌탈,";
-                        $resInfo5 = "   * 장비렌탈\n     - 제휴된 서핑샵으로 안내됩니다~\n     - 상세안내 버튼을 클릭해주세요~\n\n";
-                    }
-                }
-            }
-    
-            $resList = $resList1.$resList2.$resList3.$resList4.$resList5;
-            $resList = substr($resList, 0, strlen($resList) - 1);
-            
-            $resInfo = $resInfo1.$resInfo2.$resInfo3.$resInfo4.$resInfo5;
-            $resInfo = substr($resInfo, 0, strlen($resInfo) - 1);
-            $resInfo = "하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요.\n";
-            
-            $msgTitle = '액트립 솔.동해서핑점 예약안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n솔.동해서핑점 예약정보\n ▶ 예약자 : '.$userName.'\n ▶ 예약내역 : '.$resList.'\n\n'.$resInfo.'---------------------------------\n ▶ 안내사항\n      - 예약하신 시간보다 늦게 도착하실 경우 꼭 연락주세요.\n\n ▶ 문의\n      - 010.4337.5080\n      - http://pf.kakao.com/_HxmtMxl';
-    
+            $msgTitle = '솔게스트하우스&솔서프 예약안내';
+            $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
+                .'\n예약하신 정보를 안내드립니다.'
+                .'\n\n예약정보'
+                .'\n ▶ 예약자 : '.$userName
+                .'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
+                .'\n---------------------------------'
+                .'\n ▶ 안내사항'
+                .'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
+                .'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
+
             $arrKakao = array(
                 "gubun"=> $code
                 , "admin"=> "N"
@@ -294,8 +258,8 @@ if(date("H") >= 9 && $count == 0){
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
                 , "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
-                , "link2"=>"surflocation?seq=5" //지도로 위치보기
-                , "link3"=>"event" //공지사항
+                , "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
+                , "link3"=>"event_cafe" //이벤트
                 , "link4"=>""
                 , "link5"=>""
                 , "smsOnly"=>"N"

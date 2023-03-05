@@ -39,6 +39,7 @@ function fnSolpopupReset() {
     $j("#resseq").val("");
     $j("#SolAdd").css("display", "");
     $j("#SolModify").css("display", "none");
+    $j("#SolDel").css("display", "none");
 
     $j("tr[rowadd=1]").remove();
 }
@@ -219,6 +220,7 @@ function fnSolModify(resseq, num) {
 
             $j("#SolAdd").css("display", "none");
             $j("#SolModify").css("display", "");
+            $j("#SolDel").css("display", "");
 
             for (let i = 0; i < data.length; i++) {
                 if (i == 0) {
@@ -412,6 +414,27 @@ function fnSolDataAdd(gubun) {
                 }
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
+function fnSolDel(){
+    if (!confirm("예약내역을 삭제하시겠습니까?")) {
+        return;
+    }
+
+    var formData = { "resparam": "soldel", "resseq": $j("#resseq").val() };
+    $j.post("/act_2023/admin/sol/list_save.php", formData,
+    function(data, textStatus, jqXHR) {
+        var arrRtn = data.split('|');
+        if (arrRtn[0] == "err") {
+            alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+            $j("#memo2").val(arrRtn[1]);
+        } else {
+            var selDate = $j("#listdate").text(); //달력 선택 날짜
+            fnSearchAdminListSol(selDate);
+            fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));fnSolInsert();
+            fnSolpopupReset();
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
 function fnRoomNum(obj, val) {

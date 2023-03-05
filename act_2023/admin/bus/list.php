@@ -218,6 +218,95 @@ $shopseq = 0;
                                 </select>
                             </td>
                         </tr>
+                        <tr id="fripMapping" style="display:;">
+                            <td colspan="2">프립 데이터 맵핑</td>
+                            <td colspan="4">
+                                <textarea id="html_1" cols="40" rows="7"></textarea>
+                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="맵핑" onclick="fnMakeTable();" />
+
+                                <textarea id="html_2" cols="40" rows="7" style="display: ;"></textarea>
+                                <div id="divCopy" style="display: none;"></div>
+                                <div style="width: 500px;" id="divSet"></div>
+
+<script>
+function fnMakeTable() {
+    //복사된 html을 가공 table[class='el-table__body']
+    var strHtml = $j("#html_1").val().replace(/<!---->/gi,"");
+    $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
+    //$j("#divCopy").html($j("#divCopy").find("table[class='el-table__body']").html());
+
+    //Json 인스턴스
+    var objList = new Array();
+    var objValue = new Object();
+
+    //html 생성
+    var addHtml = '<table width="100%" border="1" id="td_select">';
+    $j("#divCopy .el-table__row").each(function(){
+
+        objValue = new Object();
+
+        addHtml += '<tr name="' + $j(this).find("td").eq(3).find(".cell").text() + '">';
+        
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(1).find(".cell").text(); //이름
+        addHtml += '</td>';
+        objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(2).find(".cell").text(); //성별
+        addHtml += '</td>';
+        objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(3).find(".cell").text(); //연락처
+        addHtml += '</td>';
+        objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(4).find(".cell").text(); //아이템명
+        addHtml += '</td>';
+        objValue.item = $j(this).find("td").eq(4).find(".cell").text(); //아이템명
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(5).find(".cell").text(); //추가정보
+        addHtml += '</td>';
+        objValue.addinfo = $j(this).find("td").eq(5).find(".cell").text(); //추가정보
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(6).find(".cell").text(); //예약상태
+        addHtml += '</td>';
+        objValue.state = $j(this).find("td").eq(6).find(".cell").text(); //예약상태
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        
+        if ($j(this).find("button").length > 0) {
+            addHtml += $j(this).find("button").text(); //액션
+            objValue.btn = $j(this).find("button").text(); //액션
+        }
+        else{
+            addHtml += 'none'; //액션
+            objValue.btn = 'none'; //액션
+        }
+        
+        addHtml += '</td>';
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += '1';
+        addHtml += '</td>';
+        addHtml += '</tr>';
+
+        objList.push(objValue);
+    });
+    addHtml += '</table>';
+    
+    $j("#divSet").html(addHtml);
+
+    $j("#html_2").val(JSON.stringify(objList));
+}
+</script>
+
+                            </td>
+                        </tr>
                         <tr>
                             <td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
                         </tr>

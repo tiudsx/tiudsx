@@ -336,7 +336,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $rtnText = "";
     $rtnTextCode = "0회";
     if($res_kakao == "0"){
-
+        $rtnText = '<span class="btn_view" seq="40'.$c.'">X</span><span style="display:none;"><b><a href="/sol_kakao?chk=1&seq='.$resseq.'" target="_blank">[알림톡 보기]<a></b></span>';
     }else{
         $userinfo = $row['userinfo'];
         $arrChk = explode("|", $userinfo);

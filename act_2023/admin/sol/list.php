@@ -224,7 +224,6 @@ include __DIR__.'/../../common/logininfo.php';
 									<select id="res_surftime" name="res_surftime[]" class="select" onchange="fnSolSurfSel(this);">
 										<option value=''>강습미신청</option>
 										<option value='9시'>9시</option>
-										<option value='10시'>10시</option>
 										<option value='11시'>11시</option>
 										<option value='13시'>13시</option>
 										<option value='15시'>15시</option>
@@ -281,13 +280,16 @@ include __DIR__.'/../../common/logininfo.php';
                 <td colspan="5"><textarea id="memo2" name="memo2" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
             <tr>
-				<td class="col-02" style="text-align:center;" colspan="6">
+				<td class="col-02" style="text-align:center;" colspan="5">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="soladd" class="itx">
                     <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="등록" onclick="fnSolDataAdd('soladd');" id="SolAdd"/>
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;display:none;" value="수정" onclick="fnSolDataAdd('modify');" id="SolModify" />&nbsp;
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnSolInsert();fnSolpopupReset();" />
                 </td>
+				<td style="text-align:center;">
+					<input type="button" class="btnsurfadd" style="width:120px; height:40px;display:none;" id="SolDel" value="삭제" onclick="fnSolDel();" />
+				</td>
             </tr>
         </tbody>
     </table>
@@ -523,7 +525,7 @@ include __DIR__.'/../../common/logininfo.php';
 								<td><input type="text" id="res_surftime_2" size="10" class="itx" readonly></td>
 								<td><input type="text" id="res_surfM_2" size="2" class="itx" readonly>명</td>
 								<td><input type="text" id="res_surfM_2" size="2" class="itx" readonly>명</td>
-								<td><input type="text" id="res_rent_2" size="10" class="itx" readonly>명</td>
+								<td><input type="text" id="res_rent_2" size="10" class="itx" readonly></td>
 								<td><input type="text" id="res_rentM_2" size="2" class="itx" readonly>명</td>
 								<td><input type="text" id="res_rentW_2" size="2" class="itx" readonly>명</td>
 							</tr>

@@ -32,7 +32,6 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		.'\n예약하신 정보를 안내드립니다.'
 		.'\n\n예약정보'
 		.'\n ▶ 예약자 : '.$userName
-		.'\n ▶ 주소 : 동해시 대진항길 9'
 		.'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
 		.'\n---------------------------------'
 		.'\n ▶ 안내사항'
@@ -48,7 +47,7 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
 		, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
-		, "link2"=>"surflocation?seq=5" //지도로 위치보기
+		, "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
 		, "link3"=>"event_cafe" //이벤트
 		, "link4"=>""
 		, "link5"=>""
@@ -97,7 +96,6 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 			.'\n예약하신 정보를 안내드립니다.'
 			.'\n\n예약정보'
 			.'\n ▶ 예약자 : '.$userName
-			.'\n ▶ 주소 : 동해시 대진항길 9'
 			.'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
 			.'\n---------------------------------'
 			.'\n ▶ 안내사항'
@@ -113,7 +111,7 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
-			, "link2"=>"surflocation?seq=5" //지도로 위치보기
+			, "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
 			, "link3"=>"event_cafe" //공지사항
 			, "link4"=>""
 			, "link5"=>""
@@ -155,6 +153,24 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	
 	mysqli_query($conn, "COMMIT");
 
+}else if($param == "soldel"){
+	$resseq = $_REQUEST["resseq"];
+
+	//예약 메인데이터 삭제
+	$select_query = "DELETE FROM AT_SOL_RES_MAIN WHERE resseq = $resseq";
+	$result_set = mysqli_query($conn, $select_query);
+
+	$errmsg = $select_query;
+	if(!$result_set) goto errGo;
+
+	//예약 상세데이터 삭제
+	$select_query = "DELETE FROM AT_SOL_RES_SUB WHERE resseq = $resseq";
+	$result_set = mysqli_query($conn, $select_query);
+
+	$errmsg = $select_query;
+	if(!$result_set) goto errGo;
+
+	mysqli_query($conn, "COMMIT");
 }else if($param == "soladd"){
 	$resseq = $_REQUEST["resseq"];
 	$res_adminname = $_REQUEST["res_adminname"];
@@ -264,10 +280,13 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 				if($count > 0){
 					goto errGoRoom;
 				}
+
+				$kaka_stay = "숙박,";
 			}
 
-			if($res_bbq[$i] != "N"){
+			if($res_bbqdate[$i] != ""){
 				$resdate = $res_bbqdate[$i];
+				$kaka_bbq = "바베큐,";
 			}
 
 			$select_query = "INSERT INTO `AT_SOL_RES_SUB`(`resseq`, `res_type`, `prod_name`, `sdate`, `edate`, `resdate`, `staysex`, `stayroom`, `staynum`, `bbq`, `stayM`) VALUES ($seq, 'stay', '$prod_name', '$sdate', '$edate', '$resdate', '$staysex', '$stayroom', '$staynum', '$bbq', $stayM)";
@@ -296,12 +315,16 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 				$restime = $res_surftime[$i];
 				$surfM = $res_surfM[$i];
 				$surfW = $res_surfW[$i];
+
+				$kaka_surf = "서핑강습,";
 			}
 
 			if($res_rent[$i] != "N"){
 				$resdate = $res_surfdate[$i];
 				$surfrentM = $res_rentM[$i];
 				$surfrentW = $res_rentW[$i];
+
+				$kaka_rent = "장비렌탈,";
 			}
 
 			$select_query = "INSERT INTO `AT_SOL_RES_SUB`(`resseq`, `res_type`, `prod_name`, `resdate`, `restime`, `surfM`, `surfW`, `surfrent`, `surfrentM`, `surfrentW`, `sdate`, `edate`) VALUES ($seq, 'surf', '$prod_name', '$resdate', '$restime', $surfM, $surfW, '$surfrent', $surfrentM, $surfrentW, '', '')";
@@ -320,21 +343,28 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	
 		$userName = $rowMain["user_name"];
 		$userPhone = $rowMain["user_tel"];
+
+		$kakaoRes = $kaka_stay.$kaka_bbq.$kaka_surf.$kaka_rent;
+
+		if($kakaoRes != ""){
+			$kakaoRes = substr($kakaoRes, 0, strlen($kakaoRes) - 1);
+		}
+
 	
 		//==========================카카오 메시지 발송 ==========================
 		$msgTitle = '솔게스트하우스&솔서프 예약안내';
 		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
 			.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
-			.'\n예약하신 정보를 안내드립니다.'
+			.'\n예약이 확정되어 안내드립니다.'
+			.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
 			.'\n\n예약정보'
 			.'\n ▶ 예약자 : '.$userName
-			.'\n ▶ 주소 : 동해시 대진항길 9'
+			.'\n ▶ 예약항목 : '.$kakaoRes
 			.'\n---------------------------------'
 			.'\n ▶ 안내사항'
-			.'\n   - 자세한 이용안내는 이용일 하루전에 발송됩니다.'
-			.'\n   - 주말에 개인차량으로 이동하실 경우 예상시간보다 많이 걸릴 수 있으니 참고부탁드려요~'
-			.'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
-			.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
+			.'\n    - 주말에 개인차량으로 이동하실 경우 예상시간보다 많이 걸릴 수 있으니 참고부탁드려요~'
+			.'\n    - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
+			.'\n    - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
 	
 		$arrKakao = array(
 			"gubun"=> $code

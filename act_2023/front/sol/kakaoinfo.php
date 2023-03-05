@@ -41,7 +41,6 @@ if($count_sub == 0){
     $tablist = "";
     $arrStay = array();
     $arrSurf = array();
-    $arrRent = array();
     $surfShopName = "";
 
     while ($row = mysqli_fetch_assoc($result)){
@@ -87,13 +86,17 @@ if($count_sub == 0){
             if($row['restime'] != ""){ //강습 신청
                 $tablist3 = "<li tabid=\"viewli\" id=\"view_li4\" onclick=\"fnResViewSol(false, '#view_tab4', 80, this);\"><a>강습</a></li>";
 
-                $arrSurf[$row['ressubseq']] = $row['prod_name']."|".$row['resdate']."|".$row['restime']."|".$row['surfM']."|".$row['surfW'];
+                $arrSurf[$row['ressubseq']."0"] = "서핑강습|".$row['resdate']."|".$row['restime']."|".$row['surfM']."|".$row['surfW'];
 
             }
             if($surfrent != "N"){ //렌탈 신청
-                $tablist4 = "<li tabid=\"viewli\" id=\"view_li5\" onclick=\"fnResViewSol(false, '#view_tab5', 80, this);\"><a>렌탈</a></li>";
+                if($row['restime'] != ""){
+                    $tablist3 = "<li tabid=\"viewli\" id=\"view_li4\" onclick=\"fnResViewSol(false, '#view_tab4', 80, this);\"><a>강습/렌탈</a></li>";
+                }else{
+                    $tablist3 = "<li tabid=\"viewli\" id=\"view_li4\" onclick=\"fnResViewSol(false, '#view_tab4', 80, this);\"><a>렌탈</a></li>";
+                }
 
-                $arrRent[$row['ressubseq']] = $row['prod_name']."|".$row['surfrent']."|".$row['surfrentM']."|".$row['surfrentW'];
+                $arrSurf[$row['ressubseq']."1"] = $row['surfrent']." 렌탈|".$row['resdate']."||".$row['surfrentM']."|".$row['surfrentW'];
             }
 
             //서핑샵 배정
@@ -102,12 +105,6 @@ if($count_sub == 0){
     }
 }
 ?>
-
-<script>
-$j(document).ready(function(){
-});
-</script>
-
 
 <div id="wrap">
     <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
@@ -131,25 +128,14 @@ $j(document).ready(function(){
                         <ul>
                             <?
                             $Displaytab4 = "none";
-                            $Displaytab5 = "none";
                             
                             if($tablist1 == "" && $tablist2 == ""){
-                                if($tablist3 != "" && $tablist4 != ""){
-                                    echo "<li tabid=\"viewli\" id=\"view_li4\" class=\"on\" onclick=\"fnResViewSol(false, '#view_tab4', 80, this);\"><a>강습 이용안내</a></li>";
-                                    echo $tablist4;
-                                    $Displaytab4 = "";
-                                }elseif($tablist3 == ""){
-                                    echo "<li tabid=\"viewli\" id=\"view_li5\" class=\"on\" onclick=\"fnResViewSol(false, '#view_tab5', 80, this);\"><a>렌탈 이용안내</a></li>";;
-                                    $Displaytab5 = "";
-                                }else{
-                                    echo "<li tabid=\"viewli\" id=\"view_li4\" class=\"on\" onclick=\"fnResViewSol(false, '#view_tab4', 80, this);\"><a>강습 이용안내</a></li>";
-                                    $Displaytab4 = "";
-                                }
+                                echo str_replace("tabid", "class='on' tabid", $tablist3);
+                                $Displaytab4 = "";
                             }else{
                             ?>
                                 <li tabid="viewli" id="view_li1" class="on" onclick="fnResViewSol(false, '#view_tab1', 80, this);"><a>예약안내</a></li>
                                 <?=$tablist3?>
-                                <?=$tablist4?>
                             <?}?>
                             <li tabid="viewli" id="view_li6" onclick="fnResViewSol(false, '#view_tab6', 80, this);"><a>리뷰</a></li>
                         </ul>
@@ -158,22 +144,19 @@ $j(document).ready(function(){
             </div>
             <div tabid="viewtab" id="view_tab1">
                 <div class="contentimg">
-                    <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/sol_01.jpg?v=1" class="placeholder"> -->
-
                     <?if($tablist1 != ""){?>
-                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_01.jpg" class="placeholder">
-
                     <center>
+                    <!-- <p class="restitle">✔ 객실조회가 완료되었습니다.</p> -->
+                    
                     <?
                     $layerCss = "none";
                     if($res_room_chk == "N"){
                         $layerCss = "";
                     ?>
-                        
-                    <?}else{?>
-                        <!-- <p class="restitle">✔ 객실조회가 완료되었습니다.</p> -->
-                    <p>배정된 객실은 <strong class="restitle">오후 4시</strong> 이후부터 입실 가능합니다.</p>
+                    <p id="staysearch">✔ 객실 조회는 당일 <strong class="restitle">오후 3시</strong>  부터 조회 가능합니다.<br><strong style="color:red;">[객실 조회하기]</strong>  버튼을 클릭해주세요.</p>
                     <?}?>
+                    
+                    <p class="restitle">✔ 배정된 객실은 <strong class="restitle">오후 4시</strong> 이후부터 입실 가능합니다.</p>
                     
                     <div style="position: relative; min-height:150px;">
                         <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:90%;">
@@ -224,8 +207,7 @@ $j(document).ready(function(){
                         <div class="SolLayer">
                             <div class="box">
                                 <div class="in">
-                                    <strong>&nbsp;</strong>
-                                    <p class="restitle">✔ 이용당일 오후 3시 부터 조회 가능합니다.</p>
+                                    <p>&nbsp;</p>
                                     <a class="SolLayer_btn" onclick="fnStaySearch(<?=$resseq?>);">객실 조회하기</a>
                                     
                                 </div>
@@ -233,14 +215,11 @@ $j(document).ready(function(){
                         </div>
                     </div>
                     </center>
-                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_02.jpg" class="placeholder">
-                    
-                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/stay_03.jpg" class="placeholder">
+                    <img src="/act_2023/images/alim/stay.jpg" class="placeholder">
                     <?}?>
                     
                     <?if($tablist2 != ""){?>
-                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/bbq_01.jpg" class="placeholder">
-                    <img src="https://actrip.cdn1.cafe24.com/sol_kakao/bbq_02.jpg" class="placeholder">
+                    <img src="/act_2023/images/alim/bbq.jpg" class="placeholder">
                     <?}?>
                 </div>
             </div>
@@ -254,12 +233,12 @@ $j(document).ready(function(){
                         <?}
                         if($tablist2 != ""){ //바베큐 이용안내?> 
                         <p class="restitle" style="font-size:22px;">바베큐 이용안내</p>
-                        <p class="info">✔ 이용시간 : 19:00 ~ 21:30</p>
+                        <p class="info">✔ 이용시간 : 18:50 ~ 21:30</p>
                         <p class="info">✔ 18:50까지 지하 1층으로 오세요~</p>
                         <?}
                         if($tablist3 != "" || $tablist4 != ""){ //서핑강습 이용안내?> 
                         <p class="restitle" style="font-size:22px;">서핑예약 이용안내</p>
-                        <p class="info">✔ 예약시간 최소 15분 전 안내장소로 모여주세요.</p>
+                        <p class="info">✔ 예약시간 최소 20분 전 안내장소로 모여주세요.</p>
                         <p class="info">✔ 자세한 내용은 [강습] 메뉴를 확인하세요.</p>
                         <?}?> 
 
@@ -285,10 +264,6 @@ $j(document).ready(function(){
                 ?>
                 <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_01.jpg" class="placeholder">
                 <?
-                }else if($surfShopName == "라라서프"){
-                ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_3_01.jpg" class="placeholder">
-                <?
                 }else if($surfShopName == "솔서프"){
                 ?>
                 <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_4_01.jpg" class="placeholder">
@@ -299,19 +274,12 @@ $j(document).ready(function(){
                 <center>
 
                 <div>
-                    <p class="restitle">✔ 서핑샵으로 방문하셔서 예약자분 성함<br>말씀하시면 강습 가능합니다.</p>
+                    <p class="restitle">✔ 서핑샵으로 방문하셔서 예약자분 성함<br>말씀하시면 이용 가능합니다.</p>
                 </div>
 
                 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:85%;">
-                    <colgroup>
-                        <col width="23%" />
-                        <col width="26%" />
-                        <col width="19%" />
-                        <col width="16%" />
-                        <col width="16%" />
-                    </colgroup>
                     <tr>
-                        <th>서핑샵</th>
+                        <th>예약종류</th>
                         <th>이용일</th>
                         <th>강습시간</th>
                         <th>남</th>
@@ -352,129 +320,24 @@ $j(document).ready(function(){
                 <?
                 if($surfShopName == "서프팩토리"){
                 ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surffactory_04.jpg" class="placeholder">
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_02.jpg" class="placeholder">
-                <!-- <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder"> -->
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
+                <img src="/act_2023/images/alim/surffactory.jpg" class="placeholder">
                 <?
                 }else if($surfShopName == "서퍼랑"){
                 ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_02.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
-                <?
-                }else if($surfShopName == "라라서프"){
-                ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/lalasurf_04.jpg" class="placeholder">
+                <img src="/act_2023/images/alim/surferrang.jpg" class="placeholder">
                 <?
                 }else if($surfShopName == "솔서프"){
                 ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/05.jpg" class="placeholder"> 
-                <?
-                }
-                ?>
-                
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_01.jpg" class="placeholder">
-            </div>
-
-            <!-- 장비렌탈 안내 -->
-            <div tabid="viewtab" id="view_tab5" style="min-height: 800px;display:<?=$Displaytab5?>;">
-                <?                
-                if($surfShopName != "솔서프"){
-                ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_00.jpg" class="placeholder">
-                <?
-                }
-                if($surfShopName == "서프팩토리"){
-                ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_2_01.jpg" class="placeholder">
-                <?
-                }else if($surfShopName == "서퍼랑"){
-                ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_01.jpg" class="placeholder">
-                <?
-                }else if($surfShopName == "라라서프"){
-                ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_01.jpg" class="placeholder">
-                <?
-                }else if($surfShopName == "솔서프"){
-                ?>
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_01.jpg" class="placeholder">
-                <?
-                }
-                ?>
-                <br>
-                <center>
-
-                <div>
-                    <p class="restitle">✔ 서핑샵으로 방문하셔서 예약자분 성함<br>말씀하시면 렌탈 가능합니다.</p>
-                </div>
-                <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:80%;">
-                    <tr>
-                        <th>렌탈종류</th>
-                        <th>남</th>
-                        <th>여</th>
-                    </tr>
-                    <?
-                    foreach ($arrRent as $key => $value) {
-                        $arrVlu = explode("|", $value);
-
-                        if($arrVlu[2] == 0){
-                            $arrVlu[2] = "";
-                        }else{
-                            $arrVlu[2] .= "명";
-                        }
-    
-                        if($arrVlu[3] == 0){
-                            $arrVlu[3] = "";
-                        }else{
-                            $arrVlu[3] .= "명";
-                        }
-                    ?>
-                    
-                    <tr>
-                        <td><?=$arrVlu[1]?></td>
-                        <td><?=$arrVlu[2]?></td>
-                        <td><?=$arrVlu[3]?></td>
-                    </tr>
-
-                    <?
-                    }
-                    ?>
-                </table>
-                </center>
-                <br>
-                <?
-                if($surfShopName == "서프팩토리"){
-                ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surffactory_04.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
-                <?
-                }else if($surfShopName == "서퍼랑"){
-                ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/surf_1_02.jpg" class="placeholder">
-                <?
-                }else if($surfShopName == "라라서프"){
-                ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
-                <?
-                }else if($surfShopName == "솔서프"){
-                ?>
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/surfrang_04.jpg" class="placeholder">
-                <img src="https://actrip.co.kr/act/images/sol_kakao/surf/06.jpg" class="placeholder">
+                <img src="/act_2023/images/alim/solsurf.jpg" class="placeholder">
                 <?
                 }
                 ?>
             </div>
+
 
             <!-- 리뷰이벤트 안내 -->
             <div tabid="viewtab" id="view_tab6" style="min-height: 600px;display:none;">
-                <img src="https://actrip.cdn1.cafe24.com/sol_kakao/event_review.jpg" class="placeholder">
+                <img src="/act_2023/images/alim/review.jpg" class="placeholder">
             </div>
 
             <div style="padding:10px 0 5px 0;font-size:12px;">
@@ -486,8 +349,8 @@ $j(document).ready(function(){
 
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
 
-<script src="/act_2023/_js/common.js"></script>
-<script src="/act_2023/_js/sol.js"></script>
+<script src="/act_2023/_js/common.js?v=<?=time()?>"></script>
+<script src="/act_2023/_js/sol.js?v=<?=time()?>"></script>
 
 <style>
     .SolLayer {
