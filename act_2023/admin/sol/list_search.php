@@ -3,6 +3,7 @@ include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/kakaoalim.php';
 
 $reqDate = $_REQUEST["selDate"];
+$gubun = $_REQUEST["gubun"];
 if($reqDate == ""){
     $selDate = date("Y-m-d");
 }else{
@@ -13,7 +14,13 @@ $arrDate = explode('-', $selDate);
 $Year = $arrDate[0];
 $Mon = $arrDate[1];
 $Day = $arrDate[2];
-                    
+
+if($gubun == "cancel"){
+    $confirmText = "'취소'";
+}else{
+    $confirmText = "'대기', '확정'";
+}
+
 $select_query = "
     SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
@@ -24,7 +31,7 @@ $select_query = "
                 WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
                         OR b.resdate = '$selDate')
                     AND res_type = 'stay'
-                    AND a.res_confirm IN ('대기', '확정')
+                    AND a.res_confirm IN ($confirmText)
         UNION ALL
         SELECT 
             a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
@@ -35,7 +42,7 @@ $select_query = "
                 FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
                     WHERE b.resdate = '$selDate'                    
-                        AND a.res_confirm IN ('대기', '확정')
+                        AND a.res_confirm IN ($confirmText)
                         AND res_type = 'surf'
         ORDER BY resseq, ressubseq";
                    
@@ -45,7 +52,14 @@ $count = mysqli_num_rows($result_setlist);
 if($count == 0){
 ?>
  <div class="contentimg bd">
-    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>)</div>
+    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
+
+        <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoCheckSend();" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
+    </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;" id="tbSolList">
         <colgroup>
             <col width="9%" />
@@ -112,12 +126,13 @@ $css_table_right = " border-right:2px solid #c0c0c0";
 
 <div class="contentimg bd">
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>)
+    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
 
         <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoCheckSend();" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
         <colgroup>
@@ -326,7 +341,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     if($res_confirm == "대기"){
         $fontcolor = "color:#c0c0c0;";
     }else if($res_confirm == "취소"){
-        $fontcolor = "color:#c0c0c0;";
+        //$fontcolor = "color:#c0c0c0;";
     }else{
         if($row['res_type'] == "stay" && $prod_name != "N" && $prod_name != "솔게하"){
             $fontcolor = "color:#8080ff;";

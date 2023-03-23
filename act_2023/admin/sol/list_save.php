@@ -336,68 +336,73 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	}
 
 	//알림톡 발송 (확정, 등록일경우)
-	if($resseq == "" && $res_kakao == "Y" && $res_confirm == "확정"){
-		$select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq";
+	if($res_kakao == "Y" && $res_confirm == "확정"){
+		$select_query = "SELECT user_name, user_tel, res_kakaoinfo FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq";
 		$result = mysqli_query($conn, $select_query);
 		$rowMain = mysqli_fetch_array($result);
 	
 		$userName = $rowMain["user_name"];
 		$userPhone = $rowMain["user_tel"];
+		$res_kakaoinfo = $rowMain["res_kakaoinfo"];
 
-		$kakaoRes = $kaka_stay.$kaka_bbq.$kaka_surf.$kaka_rent;
+		if($res_kakaoinfo == "N"){
+			$kakaoRes = $kaka_stay.$kaka_bbq.$kaka_surf.$kaka_rent;
 
-		if($kakaoRes != ""){
-			$kakaoRes = substr($kakaoRes, 0, strlen($kakaoRes) - 1);
+			if($kakaoRes != ""){
+				$kakaoRes = substr($kakaoRes, 0, strlen($kakaoRes) - 1);
+			}
+		
+			//==========================카카오 메시지 발송 ==========================
+			$msgTitle = '솔게스트하우스&솔서프 예약안내';
+			$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
+				.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
+				.'\n예약이 확정되어 안내드립니다.'
+				.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
+				.'\n\n예약정보'
+				.'\n ▶ 예약자 : '.$userName
+				.'\n ▶ 예약항목 : '.$kakaoRes
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n    - 주말에 개인차량으로 이동하실 경우 예상시간보다 많이 걸릴 수 있으니 참고부탁드려요~'
+				.'\n    - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
+				.'\n    - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
+		
+			$arrKakao = array(
+				"gubun"=> $code
+				, "admin"=> "N"
+				, "smsTitle"=> $msgTitle
+				, "userName"=> $userName
+				, "tempName"=> "at_res_step4" //이용안내
+				, "kakaoMsg"=>$kakaoMsg
+				, "userPhone"=> $userPhone
+				, "link1"=>""
+				, "link2"=>""
+				, "link3"=>""
+				, "link4"=>""
+				, "link5"=>""
+				, "smsOnly"=>"N"
+			);
+		
+			$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+			//------- 알림톡 디버깅 -----
+			$data = json_decode($arrRtn[0], true);
+			$kakao_code = $data[0]["code"];
+			$kakao_type = $data[0]["data"]["type"];
+			$kakao_msgid = $data[0]["data"]["msgid"];
+			$kakao_message = $data[0]["message"];
+			$kakao_originMessage = $data[0]["originMessage"];
+
+			$userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
+
+			// 카카오 알림톡 DB 저장 START
+			$select_query = kakaoDebug($arrKakao, $arrRtn);            
+			$result_set = mysqli_query($conn, $select_query);
+			// 카카오 알림톡 DB 저장 END
+			
+			$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', userinfo = '".$userinfo."' WHERE resseq = $resseq";
+			$result_set = mysqli_query($conn, $select_query);
 		}
-
-	
-		//==========================카카오 메시지 발송 ==========================
-		$msgTitle = '솔게스트하우스&솔서프 예약안내';
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
-			.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
-			.'\n예약이 확정되어 안내드립니다.'
-			.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
-			.'\n\n예약정보'
-			.'\n ▶ 예약자 : '.$userName
-			.'\n ▶ 예약항목 : '.$kakaoRes
-			.'\n---------------------------------'
-			.'\n ▶ 안내사항'
-			.'\n    - 주말에 개인차량으로 이동하실 경우 예상시간보다 많이 걸릴 수 있으니 참고부탁드려요~'
-			.'\n    - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
-			.'\n    - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
-	
-		$arrKakao = array(
-			"gubun"=> $code
-			, "admin"=> "N"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "tempName"=> "at_res_step4" //이용안내
-			, "kakaoMsg"=>$kakaoMsg
-			, "userPhone"=> $userPhone
-			, "link1"=>""
-			, "link2"=>""
-			, "link3"=>""
-			, "link4"=>""
-			, "link5"=>""
-			, "smsOnly"=>"N"
-		);
-	
-		$arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-		//------- 알림톡 디버깅 -----
-		$data = json_decode($arrRtn[0], true);
-		$kakao_code = $data[0]["code"];
-		$kakao_type = $data[0]["data"]["type"];
-		$kakao_msgid = $data[0]["data"]["msgid"];
-		$kakao_message = $data[0]["message"];
-		$kakao_originMessage = $data[0]["originMessage"];
-
-		$userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
-
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);            
-		$result_set = mysqli_query($conn, $select_query);
-		// 카카오 알림톡 DB 저장 END
 	}
 		
 	mysqli_query($conn, "COMMIT");

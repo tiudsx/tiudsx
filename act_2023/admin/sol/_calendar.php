@@ -138,8 +138,12 @@ for($r=0;$r<=$ra;$r++){
 			}
 			
 			$adminText = "";
+			if($arrResCount["취소"][$ru] != ""){
+				$adminText = "<font color='#808080'>취소</font>";
+			}
+
 			if($arrResCount["대기"][$ru] != ""){
-				$adminText = "<font color='gray'>대기</font>";
+				$adminText .= (($adminText == "") ? "" : "<br>")."<font color='#575757'>대기</font>";
 			}
 
 			if($arrResCount["확정"][$ru] != ""){

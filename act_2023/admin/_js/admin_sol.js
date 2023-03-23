@@ -588,101 +588,104 @@ function fnCalMoveAdminListSol(selDate, day) {
     $j("#right_article3").load("/act_2023/admin/sol/_calendar.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
 }
 
-function fnSearchAdminListSol(selDate) {
+function fnSearchAdminListSol(selDate, gubun) {
     $j("#mnglist").css("display", "inline-block");
     $j("#mnglistStay").css("display", "none");
     $j("#mnglistSurf").css("display", "none");
 
-    var formData = { "selDate": selDate };
-    $j.post("/act_2023/admin/sol/list_search.php", formData,
-        function(data, textStatus, jqXHR) {
-            $j("#mnglist").html(data);
-            $j("#roomdate").text($j("#listdate").text());
+    if(gubun == "cancel"){
+        var formData = { "selDate": selDate,  "gubun": gubun};
+    }else{
+        var formData = { "selDate": selDate };
+    }
 
-            if ($j("#hidrowcnt").length > 0 && $j("#hidrowcnt").val() != "") {
-                var arrRowCnt = $j("#hidrowcnt").val().split('|');
-                var nextrowCnt = 2;
-                for (let i = 0; i < (arrRowCnt.length - 1); i++) {
-                    var rowCnt = arrRowCnt[i];
+    $j.post("/act_2023/admin/sol/list_search.php", formData, function(data, textStatus, jqXHR) {
+        $j("#mnglist").html(data);
+        $j("#roomdate").text($j("#listdate").text());
 
-                    if ((i % 2) == 1) {
-                        $j("#tbSolList tr").eq(nextrowCnt).attr("class", "selTr2");
-                    }
+        if ($j("#hidrowcnt").length > 0 && $j("#hidrowcnt").val() != "") {
+            var arrRowCnt = $j("#hidrowcnt").val().split('|');
+            var nextrowCnt = 2;
+            for (let i = 0; i < (arrRowCnt.length - 1); i++) {
+                var rowCnt = arrRowCnt[i];
 
-                    if (rowCnt > 1) {
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).attr("rowspan", rowCnt);
-
-
-                        for (let x = 1; x < rowCnt; x++) {
-                            nextrowCnt++;
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
-                            $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
-
-                            if ((i % 2) == 1) {
-                                $j("#tbSolList tr").eq(nextrowCnt).attr("class", "selTr2");
-                            }
-                        }
-                    }
-                    nextrowCnt++;
+                if ((i % 2) == 1) {
+                    $j("#tbSolList tr").eq(nextrowCnt).attr("class", "selTr2");
                 }
-            }
-            //1|2|1|1|1|2|
 
-            $j("td[room]").html("");
-            $j("td[room]").prev().css("color", "#c0c0c0");
-            $j("td[room]").removeAttr("onclick");
-            $j("td[room]").css("cursor", "");
+                if (rowCnt > 1) {
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).attr("rowspan", rowCnt);
 
-            if ($j("td[stayinfo]").length > 0) {
-                for (let i = 0; i < $j("td[stayinfo]").length; i++) {
-                    var arrInfo = $j("td[stayinfo]").eq(i).attr("stayinfo").split('|');
-                    if (arrInfo[2] == "솔게하") {
-                        //stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'
-                        var tbID = arrInfo[4];
-                        // if(arrInfo[4] == "301"){
-                        //     if(arrInfo[5] < 7){
-                        //         tbID = "3011";
-                        //     }else{
-                        //         tbID = "3012";
-                        //     }
-                        // }else{
 
-                        // }
+                    for (let x = 1; x < rowCnt; x++) {
+                        nextrowCnt++;
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();
 
-                        //((arrInfo[6] > 1) ? "(" + arrInfo[6] + "박)" : "")
-                        $j("#" + tbID + arrInfo[5]).attr("onclick", "fnSolModify(" + arrInfo[8] + ");");
-
-                        if (arrInfo[9] == "확정") {
-                            $j("#" + tbID + arrInfo[5]).prev().css("color", "black");
-                            $j("#" + tbID + arrInfo[5]).css("color", "black").css("cursor", "pointer");
-                            $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / " + arrInfo[7] + "일" + "(" + arrInfo[6] + "박)");
-                        } else {
-                            $j("#" + tbID + arrInfo[5]).css("cursor", "pointer");
-                            $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / 대기");
+                        if ((i % 2) == 1) {
+                            $j("#tbSolList tr").eq(nextrowCnt).attr("class", "selTr2");
                         }
                     }
                 }
+                nextrowCnt++;
             }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
+        }
+        //1|2|1|1|1|2|
+
+        $j("td[room]").html("");
+        $j("td[room]").prev().css("color", "#c0c0c0");
+        $j("td[room]").removeAttr("onclick");
+        $j("td[room]").css("cursor", "");
+
+        if ($j("td[stayinfo]").length > 0) {
+            for (let i = 0; i < $j("td[stayinfo]").length; i++) {
+                var arrInfo = $j("td[stayinfo]").eq(i).attr("stayinfo").split('|');
+                if (arrInfo[2] == "솔게하") {
+                    //stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'
+                    var tbID = arrInfo[4];
+                    // if(arrInfo[4] == "301"){
+                    //     if(arrInfo[5] < 7){
+                    //         tbID = "3011";
+                    //     }else{
+                    //         tbID = "3012";
+                    //     }
+                    // }else{
+
+                    // }
+
+                    //((arrInfo[6] > 1) ? "(" + arrInfo[6] + "박)" : "")
+                    $j("#" + tbID + arrInfo[5]).attr("onclick", "fnSolModify(" + arrInfo[8] + ");");
+
+                    if (arrInfo[9] == "확정") {
+                        $j("#" + tbID + arrInfo[5]).prev().css("color", "black");
+                        $j("#" + tbID + arrInfo[5]).css("color", "black").css("cursor", "pointer");
+                        $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / " + arrInfo[7] + "일" + "(" + arrInfo[6] + "박)");
+                    } else {
+                        $j("#" + tbID + arrInfo[5]).css("cursor", "pointer");
+                        $j("#" + tbID + arrInfo[5]).html((($j("#" + tbID + arrInfo[5]).text() == "" ? "" : $j("#" + tbID + arrInfo[5]).text() + "<br>")) + arrInfo[0] + "(" + arrInfo[3] + ") / 대기");
+                    }
+                }
+            }
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
         alert(textStatus);
-
     });
 }
 
@@ -745,6 +748,8 @@ function fnListTab(gubun, obj) {
 
     if (gubun == "all") { //전체 탭
         fnSearchAdminListSol(selDate);
+    } else if (gubun == "cancel") { //취소건 탭
+        fnSearchAdminListSol(selDate, gubun);
     } else if (gubun == "stay") { //숙박 탭
         fnSearchAdminListTabSol(selDate, "list_search_stay.php");
     } else if (gubun == "surf") { //강습 탭
