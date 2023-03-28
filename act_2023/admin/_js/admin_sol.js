@@ -150,10 +150,6 @@ function fnSolDateDel(obj) {
     $j(obj).prev().val("");
 }
 
-function fnSolDel(obj) {
-    $j(obj).parent().parent().remove();
-}
-
 function fnSolStaySel(obj) {
     var objId = $j(obj).closest("#trstay");
     
@@ -416,7 +412,12 @@ function fnSolDataAdd(gubun) {
         }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
-function fnSolDel(){
+function fnSolDel(obj){
+    if(obj != null){
+        $j(obj).parent().parent().remove();
+        return;
+    }
+
     if (!confirm("예약내역을 삭제하시겠습니까?")) {
         return;
     }
