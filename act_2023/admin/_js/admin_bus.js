@@ -1,3 +1,44 @@
+$j(function() {
+    $j('.btnsurfadd').on('click', function(e){
+        
+        var $self = $j(this);
+        var id = $self.data("gubun");
+
+        if($j("#hidselDate").val() == ""){
+            alert("등록할 날짜를 달력에서 클릭하세요.");
+            return;
+        }
+        //row 추가
+        fnBusAdd(id);
+    })
+});
+
+function fnBusDel(obj){
+    if(obj != null){
+        $j(obj).parent().parent().remove();
+        return;
+    }
+
+    if (!confirm("등록내역을 삭제하시겠습니까?")) {
+        return;
+    }
+
+    var formData = { "resparam": "soldel", "resseq": $j("#resseq").val() };
+    $j.post("/act_2023/admin/sol/list_save.php", formData,
+    function(data, textStatus, jqXHR) {
+        var arrRtn = data.split('|');
+        if (arrRtn[0] == "err") {
+            alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+            $j("#memo2").val(arrRtn[1]);
+        } else {
+            var selDate = $j("#listdate").text(); //달력 선택 날짜
+            fnSearchAdminListSol(selDate);
+            fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));fnSolInsert();
+            fnSolpopupReset();
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
 //타채널 알림톡 발송
 function fnResKakaoAdmin(){
     if($j("#username").val() == ""){
@@ -313,6 +354,51 @@ function fnBusDataAdd() {
                 fnSearchAdmin('bus/list_search.php');
                 fnBlockClose();
                 fnBusPopupReset();
+            } else {
+                var arrRtn = data.split('|');
+                if (arrRtn[0] == "err") {
+                    alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+                } else {
+                    alert(arrRtn[1] + "호 " + arrRtn[2] + "번 좌석은 예약되어있습니다.\n\n다른 호차 및 좌석을 선택해주세요~");
+                }
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
+
+function fnBusMngDataAdd() {
+   for (let i = 1; i < $j("input[id=res_busgubun]").length; i++) {
+        if ($j("input[calid=res_busgubun]").eq(i).val() == "") {
+            alert(i + "열 버스번호를 선택해주세요~");
+            return;
+        }
+        if ($j("select[id=res_point]").eq(i).val() == "N") {
+            alert(i + "열 노선을 선택해주세요~");
+            return;
+        }
+    }
+
+    var text1 = "등록을 하시겠습니까?";
+    var text2 = "등록이 완료되었습니다.";
+    if (gubun == "modify") {
+        text1 = "수정을 하시겠습니까?";
+        text2 = "수정이 완료되었습니다.";
+    }
+
+    if (!confirm(text1)) {
+        return;
+    }
+
+    var calObj = $j("calBox[sel=yes]");
+    var formData = $j("#frmModify").serializeArray();
+    $j.post("/act_2023/admin/busMng/list_save.php", formData,
+        function(data, textStatus, jqXHR) {
+            if (data == 0) {
+                alert("정상적으로 처리되었습니다.");
+
+                fnBusMngList(selDate);
+                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
+                fnBlockClose();
             } else {
                 var arrRtn = data.split('|');
                 if (arrRtn[0] == "err") {

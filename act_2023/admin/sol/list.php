@@ -524,7 +524,7 @@ include __DIR__.'/../../common/logininfo.php';
 								</td>
 								<td><input type="text" id="res_surftime_2" size="10" class="itx" readonly></td>
 								<td><input type="text" id="res_surfM_2" size="2" class="itx" readonly>명</td>
-								<td><input type="text" id="res_surfM_2" size="2" class="itx" readonly>명</td>
+								<td><input type="text" id="res_surfW_2" size="2" class="itx" readonly>명</td>
 								<td><input type="text" id="res_rent_2" size="10" class="itx" readonly></td>
 								<td><input type="text" id="res_rentM_2" size="2" class="itx" readonly>명</td>
 								<td><input type="text" id="res_rentW_2" size="2" class="itx" readonly>명</td>

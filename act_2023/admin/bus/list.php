@@ -112,7 +112,7 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ES2" style="vertical-align:-3px;" />2호차</label>
                             </td>
                             <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />동해-서울행</label></th>
-                            <th>15시</th>
+                            <th>13시</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A31" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="A32" style="vertical-align:-3px;" />2호차</label>
