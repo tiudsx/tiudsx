@@ -11,9 +11,9 @@ if($param == "busmnglist"){ //상세정보
     $arrType = true;
     $selDate = $_REQUEST["selDate"];
 
-    $select_query = "SELECT * FROM AT_PROD_BUS as a 
-                        WHERE a.busdate = '$selDate'
-                            ORDER BY a.busseq";
+    $select_query = "SELECT * FROM AT_PROD_BUS_DAY as a 
+                        WHERE a.bus_date = '$selDate'
+                            ORDER BY a.dayseq";
 }
 $result = mysqli_query($conn, $select_query);
 $count_sub = mysqli_num_rows($result);

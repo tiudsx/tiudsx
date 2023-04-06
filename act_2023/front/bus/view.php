@@ -411,9 +411,11 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
         "bus":"<?=$busgubun?>",
         "seq":"<?=$shopseq?>"
     }
-    $j.getJSON("/act/surf/surfbus_day.php", objParam,
+
+    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
         function (data, textStatus, jqXHR) {
             busData = data;
+            console.log(data);
         }
     );
     function fnMapClick(){

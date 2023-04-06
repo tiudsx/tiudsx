@@ -4,17 +4,22 @@ $j(function() {
         var $self = $j(this);
         var id = $self.data("gubun");
 
+        var calObj = $j("calBox[sel=yes]");
+        $j("#hidselDate").val(calObj.attr("value"));
+        $j("#res_busdate").val(calObj.attr("value"));
+
         if($j("#hidselDate").val() == ""){
             alert("등록할 날짜를 달력에서 클릭하세요.");
             return;
         }
+
         //row 추가
         fnBusAdd(id);
     })
 });
 
 function fnBusDel(obj){
-    if(obj != null){
+    if($j(obj).closest("#trbus").find("#resseq").val() == ""){
         $j(obj).parent().parent().remove();
         return;
     }
@@ -23,18 +28,15 @@ function fnBusDel(obj){
         return;
     }
 
-    var formData = { "resparam": "soldel", "resseq": $j("#resseq").val() };
-    $j.post("/act_2023/admin/sol/list_save.php", formData,
+    var formData = { "resparam": "busMngdel", "resseq": $j(obj).closest("#trbus").find("#resseq").val() };
+    $j.post("/act_2023/admin/busMng/list_save.php", formData,
     function(data, textStatus, jqXHR) {
         var arrRtn = data.split('|');
         if (arrRtn[0] == "err") {
             alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
-            $j("#memo2").val(arrRtn[1]);
-        } else {
-            var selDate = $j("#listdate").text(); //달력 선택 날짜
-            fnSearchAdminListSol(selDate);
-            fnCalMoveAdminListSol($j(".tour_calendar_month").text().replace(".", ""));fnSolInsert();
-            fnSolpopupReset();
+        } else {            
+            fnBusMngList($j("#hidselDate").val());
+            fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), $j("#hidselDate").val().split('-')[2], -2);
         }
     }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
@@ -366,9 +368,14 @@ function fnBusDataAdd() {
 }
 
 
-function fnBusMngDataAdd() {
-   for (let i = 1; i < $j("input[id=res_busgubun]").length; i++) {
-        if ($j("input[calid=res_busgubun]").eq(i).val() == "") {
+function fnBusMngDataAdd(gubun) {
+    if($j("input[id=res_busdate]").length <= 1)    {
+        alert("날짜 선택 및 버스 추가하세요.");
+        return;
+    }
+
+    for (let i = 1; i < $j("input[id=res_busdate]").length; i++) {
+        if ($j("select[id=res_busgubun]").eq(i).val() == "") {
             alert(i + "열 버스번호를 선택해주세요~");
             return;
         }
@@ -396,15 +403,13 @@ function fnBusMngDataAdd() {
             if (data == 0) {
                 alert("정상적으로 처리되었습니다.");
 
-                fnBusMngList(selDate);
+                fnBusMngList(calObj.attr("value"));
                 fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
                 fnBlockClose();
             } else {
                 var arrRtn = data.split('|');
                 if (arrRtn[0] == "err") {
                     alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
-                } else {
-                    alert(arrRtn[1] + "호 " + arrRtn[2] + "번 좌석은 예약되어있습니다.\n\n다른 호차 및 좌석을 선택해주세요~");
                 }
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {});

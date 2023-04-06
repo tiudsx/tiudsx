@@ -71,41 +71,20 @@ echo ("
 		<tbody>
 	");
 	
-$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm, "" as res_bus FROM `AT_RES_SUB`
-			WHERE code = "bus"			
-				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
-				AND res_confirm <> 3
-			GROUP BY res_date, res_confirm
-			UNION ALL
-			SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm, res_bus FROM `AT_RES_SUB`
-			WHERE code = "bus"			
-				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
-				AND res_confirm = 3
-			GROUP BY res_date, res_confirm, res_bus';
+$select_query_cal = 'SELECT COUNT(*) AS Cnt, bus_date, DAY(bus_date) AS sDay, useYN FROM `AT_PROD_BUS_DAY` 
+						WHERE (Year(bus_date) = '.$Year.' AND Month(bus_date) = '.$Mon.')
+						GROUP BY bus_date, useYN';
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 
 $arrResCount = array();
 $arrResConfirm = array();
 while ($rowCal = mysqli_fetch_assoc($result_setlist_cal)){
-	if($rowCal['res_confirm'] == 3){
-		$arrResConfirm[$rowCal['res_bus']][$rowCal['sDay']] = $rowCal['Cnt'];
+	if($rowCal['useYN'] == "Y"){
+		$arrResCount[$rowCal['sDay']][0] = $rowCal['Cnt'];
+	}else{
+		$arrResCount[$rowCal['sDay']][1] = $rowCal['Cnt'];
 	}
-	
-	$arrResCount[$rowCal['res_confirm']][$rowCal['sDay']] = $rowCal['Cnt'];
 }
-
-/*
-예약상태
-    0 : 미입금
-    1 : 예약대기
-    2 : 임시확정
-    3 : 확정
-    4 : 환불요청
-    5 : 환불완료
-    6 : 임시취소
-    7 : 취소
-    8 : 입금완료
-*/
 
 //달력 for
 for($r=0;$r<=$ra;$r++){
@@ -130,61 +109,13 @@ for($r=0;$r<=$ra;$r++){
 			}
 			
 			$adminText = "";
-			$gubunChk = "";
-			if($arrResCount[0][$ru] != ""){
-				$adminText = "<font color='black'>미입금</font>";
-				$gubunChk = "0,";
+			if($arrResCount[$ru][0] != ""){
+				$adminText .= "<br><font color='red'><b>".$arrResCount[$ru][0]."대 배차</b></font>";
 			}
 
-			if($arrResCount[1][$ru] != ""){
-				$adminText .= "<br><font color='blue'>예약대기</font>";
-				$gubunChk .= "1,";
+			if($arrResCount[$ru][1] != ""){
+				$adminText .= "<br><font color='black'>".$arrResCount[$ru][1]."대 취소</font>";
 			}
-
-			if($arrResCount[2][$ru] != ""){
-				$adminText .= "<br><font color='red'>임시확정</font>";
-				$gubunChk .= "2,";
-			}
-
-			if($arrResCount[3][$ru] != ""){
-				$cnt = 0;
-				foreach ($arrResConfirm as $key => $value) {
-					//$adminText .= "<br><font color='red'><b>".$key.$value[$ru]."명 확정</b></font>";
-					$cnt += $value[$ru];
-				}
-				
-				$adminText .= "<br><font color='red'><b>".$cnt."명 확정</b></font>";
-
-				$gubunChk .= "3,";
-			}
-
-			if($arrResCount[4][$ru] != ""){
-				$adminText .= "<br><font color='008040'><b>환불요청</b></font>";
-				$gubunChk .= "4,";
-			}
-
-			if($arrResCount[5][$ru] != ""){
-				$adminText .= "<br><font color='919191'>환불완료</font>";
-				$gubunChk .= "95,";
-			}
-
-			if($arrResCount[6][$ru] != ""){
-				$adminText .= "<br><font color='black'>임시취소</font>";
-				// $gubunChk .= "6,";
-				$gubunChk .= "2,";
-			}
-
-			if($arrResCount[7][$ru] != ""){
-				$adminText .= "<br><font color='black'>취소</font>";
-				$gubunChk .= "97,";
-			}
-
-			if($arrResCount[8][$ru] != ""){
-				$adminText .= "<br><font color='blue'>입금완료</font>";
-				$gubunChk .= "8,";
-			}
-
-			$gubunChk .= "99";
 
 			$selYN = 'no';
 			$selYNbg = '';
@@ -193,7 +124,7 @@ for($r=0;$r<=$ra;$r++){
 				$selYNbg = 'background:#efefef;';
 			}
 			
-			echo "<td class='cal_type2'><calBox sel='$selYN' style='cursor:pointer;min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, -2);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+			echo "<td class='cal_type2'><calBox sel='$selYN' style='cursor:pointer;min-height:90px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' onclick='fnPassengerAdmin(this, -2);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 		}
 	}
 

@@ -97,8 +97,22 @@ function fnBusMngList(selDate){
             $j("#res_busdate").val($j("#hidselDate").val());
             if(data == 0){
                 //row 추가
-                fnBusAdd("trbus");
+                //fnBusAdd("trbus");
             }else{
+                for (let i = 0; i < data.length; i++) {
+                    fnBusAdd("trbus");
+
+                    var objTr = $j("tr[id=trbus]:last");
+
+                    $j("#hidselDate").val(data[i].bus_date);
+
+                    objTr.find("#resseq").val(data[i].dayseq);
+                    objTr.find("#res_busdate").val(data[i].bus_date);
+                    objTr.find("#res_busgubun").val(data[i].bus_gubun + "|" + data[i].bus_num + "|" + data[i].bus_name);
+                    objTr.find("#res_seat").val(data[i].seat);
+                    objTr.find("#res_gpsname").val(data[i].gpsname);
+                    objTr.find("#res_useYN").val(data[i].useYN);
+                }
                 console.log(data);
             }
             setTimeout('fnBlockClose();', 500);
