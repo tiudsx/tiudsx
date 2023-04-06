@@ -238,22 +238,6 @@ body {
     border-radius: 6px;
 }
 
-#promo .promoBox a:nth-child(1) {
-    background: url(../images/mainImg/01.jpg) 0 0/cover no-repeat;
-}
-
-#promo .promoBox a:nth-child(2) {
-    background: url(../images/mainImg/02.jpg) 0 0/cover no-repeat;
-}
-
-#promo .promoBox a:nth-child(3) {
-    background: url(../images/mainImg/03.jpg) 0 0/cover no-repeat;
-}
-
-#promo .promoBox a:nth-child(4) {
-    background: url(../images/mainImg/04.jpg) 0 0/cover no-repeat;
-}
-
 #promo .promoBox>a>span {
     color: #fff;
     font-size: 1.5rem;
