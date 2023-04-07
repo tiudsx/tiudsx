@@ -1,58 +1,58 @@
 var busPoint = {}
 busPoint.sPointYS = [];
-busPoint.sPointYS.push({ "code": "N", "codename": "출발", "time1":"", "time2":"", "location":"" });
-busPoint.sPointYS.push({ "code": "신도림", "codename": "신도림", "time1":"06:00", "time2":"", "location":"홈플러스 신도림점 앞"  });
-busPoint.sPointYS.push({ "code": "대림역", "codename": "대림역", "time1":"06:07", "time2":"", "location":"대림역 2번출구 앞"  });
-busPoint.sPointYS.push({ "code": "사당역", "codename": "사당역", "time1":"06:20", "time2":"", "location":"사당역 6번출구 방향 참약사 장수약국 앞"  });
-busPoint.sPointYS.push({ "code": "강남역", "codename": "강남역", "time1":"06:35", "time2":"", "location":"강남역 1번출구 버스정류장"  });
-busPoint.sPointYS.push({ "code": "종합운동장역", "codename": "종합운동장역", "time1":"06:50", "time2":"", "location":"종합운동장역 4번출구 방향 버스정류장 뒤쪽"  });
+busPoint.sPointYS.push({ "code": "N", "codename": "출발" });
+busPoint.sPointYS.push({ "code": "신도림", "codename": "신도림" });
+busPoint.sPointYS.push({ "code": "대림역", "codename": "대림역" });
+busPoint.sPointYS.push({ "code": "사당역", "codename": "사당역" });
+busPoint.sPointYS.push({ "code": "강남역", "codename": "강남역" });
+busPoint.sPointYS.push({ "code": "종합운동장역", "codename": "종합운동장역" });
 
 busPoint.sPointYJ = [];
-busPoint.sPointYJ.push({ "code": "N", "codename": "출발", "time1":"", "time2":"", "location":"" });
-busPoint.sPointYJ.push({ "code": "합정역", "codename": "합정역", "time1":"06:50", "time2":"", "location":"합정역 3번출구 앞" });
-busPoint.sPointYJ.push({ "code": "종로3가역", "codename": "종로3가역", "time1":"06:50", "time2":"", "location":"종로3가역 12번출구 새마을금고 앞" });
-busPoint.sPointYJ.push({ "code": "건대입구", "codename": "건대입구", "time1":"06:50", "time2":"", "location":"건대입구역 롯데백화점 스타시티점 입구" });
-busPoint.sPointYJ.push({ "code": "종합운동장역", "codename": "종합운동장역", "time1":"06:50", "time2":"", "location":"종합운동장역 4번출구 방향 버스정류장 뒤쪽" });
+busPoint.sPointYJ.push({ "code": "N", "codename": "출발" });
+busPoint.sPointYJ.push({ "code": "합정역", "codename": "합정역" });
+busPoint.sPointYJ.push({ "code": "종로3가역", "codename": "종로3가역" });
+busPoint.sPointYJ.push({ "code": "건대입구", "codename": "건대입구" });
+busPoint.sPointYJ.push({ "code": "종합운동장역", "codename": "종합운동장역" });
 
 busPoint.sPointSY = [];
-busPoint.sPointSY.push({ "code": "N", "codename": "출발", "time1":"", "time2":"", "location":"" });
-busPoint.sPointSY.push({ "code": "남애3리", "codename": "남애3리", "time1":"14:30", "time2":"17:30", "location":"남애3리 입구" });
-busPoint.sPointSY.push({ "code": "인구해변", "codename": "인구해변", "time1":"14:35", "time2":"17:35", "location":"현남면사무소 맞은편" });
-busPoint.sPointSY.push({ "code": "죽도해변", "codename": "죽도해변", "time1":"14:42", "time2":"17:42", "location":"GS25 죽도비치점 맞은편" });
-busPoint.sPointSY.push({ "code": "기사문해변", "codename": "기사문해변", "time1":"14:50", "time2":"17:50", "location":"기사문 해변주차장 입구" });
-busPoint.sPointSY.push({ "code": "서피비치", "codename": "서피비치", "time1":"15:00", "time2":"18:00", "location":"서피비치 회전교차로 횡단보도 앞" });
+busPoint.sPointSY.push({ "code": "N", "codename": "출발" });
+busPoint.sPointSY.push({ "code": "남애3리", "codename": "남애3리" });
+busPoint.sPointSY.push({ "code": "인구해변", "codename": "인구해변" });
+busPoint.sPointSY.push({ "code": "죽도해변", "codename": "죽도해변" });
+busPoint.sPointSY.push({ "code": "기사문해변", "codename": "기사문해변" });
+busPoint.sPointSY.push({ "code": "서피비치", "codename": "서피비치" });
 
 //서울 > 양양 도착
 busPoint.ePointYend = [];
-busPoint.ePointYend.push({ "code": "N", "codename": "도착", "time1":"", "time2":"", "location":"" });
-busPoint.ePointYend.push({ "code": "서피비치", "codename": "서피비치", "time1":"", "time2":"", "location":"" });
-busPoint.ePointYend.push({ "code": "기사문해변", "codename": "기사문해변", "time1":"", "time2":"", "location":"" });
-busPoint.ePointYend.push({ "code": "죽도해변", "codename": "죽도해변", "time1":"", "time2":"", "location":"" });
-busPoint.ePointYend.push({ "code": "인구해변", "codename": "인구해변", "time1":"", "time2":"", "location":"" });
-busPoint.ePointYend.push({ "code": "남애3리", "codename": "남애3리", "time1":"", "time2":"", "location":"" });
+busPoint.ePointYend.push({ "code": "N", "codename": "도착" });
+busPoint.ePointYend.push({ "code": "서피비치", "codename": "서피비치" });
+busPoint.ePointYend.push({ "code": "기사문해변", "codename": "기사문해변" });
+busPoint.ePointYend.push({ "code": "죽도해변", "codename": "죽도해변" });
+busPoint.ePointYend.push({ "code": "인구해변", "codename": "인구해변" });
+busPoint.ePointYend.push({ "code": "남애3리", "codename": "남애3리" });
 
 busPoint.sPointES = busPoint.sPointYS;
 busPoint.sPointEJ = busPoint.sPointYJ;
 
 busPoint.sPointAE = [];
-busPoint.sPointAE.push({ "code": "N", "codename": "출발", "time1":"", "time2":"", "location":"" });
-busPoint.sPointAE.push({ "code": "금진해변", "codename": "금진해변", "time1":"12:35", "time2":"17:35", "location":"금진해변 공영주차장 입구" });
-busPoint.sPointAE.push({ "code": "대진해변", "codename": "대진해변", "time1":"12:55", "time2":"17:55", "location":"대진해변 공영주차장 입구" });
-busPoint.sPointAE.push({ "code": "솔.동해점", "codename": "솔.동해점", "time1":"13:00", "time2":"18:00", "location":"솔게하&솔서프 앞" });
+busPoint.sPointAE.push({ "code": "N", "codename": "출발" });
+busPoint.sPointAE.push({ "code": "금진해변", "codename": "금진해변" });
+busPoint.sPointAE.push({ "code": "대진해변", "codename": "대진해변" });
+busPoint.sPointAE.push({ "code": "솔.동해점", "codename": "솔.동해점" });
 
 //서울 > 동해 도착
 busPoint.ePointEend = [];
-busPoint.ePointEend.push({ "code": "N", "codename": "도착", "time1":"", "time2":"", "location":"" });
-busPoint.ePointEend.push({ "code": "금진해변", "codename": "금진해변", "time1":"", "time2":"", "location":"" });
-busPoint.ePointEend.push({ "code": "대진해변", "codename": "대진해변", "time1":"", "time2":"", "location":"" });
-busPoint.ePointEend.push({ "code": "솔.동해점", "codename": "솔.동해점", "time1":"", "time2":"", "location":"" });
+busPoint.ePointEend.push({ "code": "N", "codename": "도착" });
+busPoint.ePointEend.push({ "code": "금진해변", "codename": "금진해변" });
+busPoint.ePointEend.push({ "code": "대진해변", "codename": "대진해변" });
+busPoint.ePointEend.push({ "code": "솔.동해점", "codename": "솔.동해점" });
 
 //양양,동해 > 서울 도착
 busPoint.ePointSend = [];
-busPoint.ePointSend.push({ "code": "N", "codename": "도착", "time1":"", "time2":"", "location":"" });
-busPoint.ePointSend.push({ "code": "잠실역", "codename": "잠실역", "time1":"", "time2":"", "location":"" });
-busPoint.ePointSend.push({ "code": "강남역", "codename": "강남역", "time1":"", "time2":"", "location":"" });
-busPoint.ePointSend.push({ "code": "사당역", "codename": "사당역", "time1":"", "time2":"", "location":"" });
+busPoint.ePointSend.push({ "code": "N", "codename": "도착" });
+busPoint.ePointSend.push({ "code": "잠실역", "codename": "잠실역" });
+busPoint.ePointSend.push({ "code": "강남역", "codename": "강남역" });
+busPoint.ePointSend.push({ "code": "사당역", "codename": "사당역" });
 
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
 var busPoint_2 = "합정역 &gt; 종로3가역 &gt; 건대입구 &gt; 종합운동장역";
