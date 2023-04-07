@@ -1,109 +1,71 @@
 var busPoint = {}
-busPoint.sPointY1 = [];
-busPoint.sPointY1.push({ "code": "N", "codename": "출발" });
-busPoint.sPointY1.push({ "code": "신도림", "codename": "신도림" });
-busPoint.sPointY1.push({ "code": "대림역", "codename": "대림역" });
-busPoint.sPointY1.push({ "code": "사당역", "codename": "사당역" });
-busPoint.sPointY1.push({ "code": "강남역", "codename": "강남역" });
-busPoint.sPointY1.push({ "code": "종합운동장역", "codename": "종합운동장역" });
+busPoint.sPointYS = [];
+busPoint.sPointYS.push({ "code": "N", "codename": "출발" });
+busPoint.sPointYS.push({ "code": "신도림", "codename": "신도림" });
+busPoint.sPointYS.push({ "code": "대림역", "codename": "대림역" });
+busPoint.sPointYS.push({ "code": "사당역", "codename": "사당역" });
+busPoint.sPointYS.push({ "code": "강남역", "codename": "강남역" });
+busPoint.sPointYS.push({ "code": "종합운동장역", "codename": "종합운동장역" });
 
-busPoint.sPointY3 = busPoint.sPointY1;
-busPoint.sPointY5 = busPoint.sPointY1;
+busPoint.sPointYJ = [];
+busPoint.sPointYJ.push({ "code": "N", "codename": "출발" });
+busPoint.sPointYJ.push({ "code": "합정역", "codename": "합정역" });
+busPoint.sPointYJ.push({ "code": "종로3가역", "codename": "종로3가역" });
+busPoint.sPointYJ.push({ "code": "건대입구", "codename": "건대입구" });
+busPoint.sPointYJ.push({ "code": "종합운동장역", "codename": "종합운동장역" });
 
-busPoint.sPointY2 = [];
-busPoint.sPointY2.push({ "code": "N", "codename": "출발" });
-busPoint.sPointY2.push({ "code": "합정역", "codename": "합정역" });
-busPoint.sPointY2.push({ "code": "종로3가역", "codename": "종로3가역" });
-busPoint.sPointY2.push({ "code": "건대입구", "codename": "건대입구" });
-busPoint.sPointY2.push({ "code": "종합운동장역", "codename": "종합운동장역" });
+busPoint.sPointSY = [];
+busPoint.sPointSY.push({ "code": "N", "codename": "출발" });
+busPoint.sPointSY.push({ "code": "남애3리", "codename": "남애3리" });
+busPoint.sPointSY.push({ "code": "인구해변", "codename": "인구해변" });
+busPoint.sPointSY.push({ "code": "죽도해변", "codename": "죽도해변" });
+busPoint.sPointSY.push({ "code": "기사문해변", "codename": "기사문해변" });
+busPoint.sPointSY.push({ "code": "서피비치", "codename": "서피비치" });
 
-busPoint.sPointY4 = busPoint.sPointY2;
-busPoint.sPointY6 = busPoint.sPointY2;
+//서울 > 양양 도착
+busPoint.ePointYend = [];
+busPoint.ePointYend.push({ "code": "N", "codename": "도착" });
+busPoint.ePointYend.push({ "code": "서피비치", "codename": "서피비치" });
+busPoint.ePointYend.push({ "code": "기사문해변", "codename": "기사문해변" });
+busPoint.ePointYend.push({ "code": "죽도해변", "codename": "죽도해변" });
+busPoint.ePointYend.push({ "code": "인구해변", "codename": "인구해변" });
+busPoint.ePointYend.push({ "code": "남애3리", "codename": "남애3리" });
 
-busPoint.ePointY = [];
-busPoint.ePointY.push({ "code": "N", "codename": "도착" });
-busPoint.ePointY.push({ "code": "서피비치", "codename": "서피비치" });
-busPoint.ePointY.push({ "code": "기사문해변", "codename": "기사문해변" });
-busPoint.ePointY.push({ "code": "죽도해변", "codename": "죽도해변" });
-busPoint.ePointY.push({ "code": "인구해변", "codename": "인구해변" });
-busPoint.ePointY.push({ "code": "남애3리", "codename": "남애3리" });
+busPoint.sPointES = busPoint.sPointYS;
+busPoint.sPointEJ = busPoint.sPointYJ;
 
-busPoint.sPointE1 = busPoint.sPointY1;
-busPoint.sPointE2 = busPoint.sPointY2;
-busPoint.sPointE3 = busPoint.sPointY1;
-busPoint.sPointE4 = busPoint.sPointY2;
-busPoint.sPointE5 = busPoint.sPointY1;
-busPoint.sPointE6 = busPoint.sPointY2;
+busPoint.sPointAE = [];
+busPoint.sPointAE.push({ "code": "N", "codename": "출발" });
+busPoint.sPointAE.push({ "code": "금진해변", "codename": "금진해변" });
+busPoint.sPointAE.push({ "code": "대진해변", "codename": "대진해변" });
+busPoint.sPointAE.push({ "code": "솔.동해점", "codename": "솔.동해점" });
 
-busPoint.ePointE = [];
-busPoint.ePointE.push({ "code": "N", "codename": "도착" });
-busPoint.ePointE.push({ "code": "금진해변", "codename": "금진해변" });
-busPoint.ePointE.push({ "code": "대진해변", "codename": "대진해변" });
-busPoint.ePointE.push({ "code": "솔.동해점", "codename": "솔.동해점" });
+//서울 > 동해 도착
+busPoint.ePointEend = [];
+busPoint.ePointEend.push({ "code": "N", "codename": "도착" });
+busPoint.ePointEend.push({ "code": "금진해변", "codename": "금진해변" });
+busPoint.ePointEend.push({ "code": "대진해변", "codename": "대진해변" });
+busPoint.ePointEend.push({ "code": "솔.동해점", "codename": "솔.동해점" });
 
-busPoint.sPointS21 = [];
-busPoint.sPointS21.push({ "code": "N", "codename": "출발" });
-busPoint.sPointS21.push({ "code": "남애3리", "codename": "남애3리" });
-busPoint.sPointS21.push({ "code": "인구해변", "codename": "인구해변" });
-busPoint.sPointS21.push({ "code": "죽도해변", "codename": "죽도해변" });
-busPoint.sPointS21.push({ "code": "기사문해변", "codename": "기사문해변" });
-busPoint.sPointS21.push({ "code": "서피비치", "codename": "서피비치" });
-
-busPoint.sPointS22 = busPoint.sPointS21;
-busPoint.sPointS23 = busPoint.sPointS21;
-busPoint.sPointS51 = busPoint.sPointS21;
-busPoint.sPointS52 = busPoint.sPointS21;
-busPoint.sPointS53 = busPoint.sPointS21;
-
-busPoint.ePointS = [];
-busPoint.ePointS.push({ "code": "N", "codename": "도착" });
-busPoint.ePointS.push({ "code": "잠실역", "codename": "잠실역" });
-busPoint.ePointS.push({ "code": "강남역", "codename": "강남역" });
-busPoint.ePointS.push({ "code": "사당역", "codename": "사당역" });
-
-busPoint.ePointA = busPoint.ePointS;
-
-busPoint.sPointA21 = [];
-busPoint.sPointA21.push({ "code": "N", "codename": "출발" });
-busPoint.sPointA21.push({ "code": "솔.동해점", "codename": "솔.동해점" });
-busPoint.sPointA21.push({ "code": "대진해변", "codename": "대진해변" });
-busPoint.sPointA21.push({ "code": "금진해변", "codename": "금진해변" });
-
-busPoint.sPointA22 = busPoint.sPointA21;
-busPoint.sPointA23 = busPoint.sPointA21;
-busPoint.sPointA51 = busPoint.sPointA21;
-busPoint.sPointA52 = busPoint.sPointA21;
-busPoint.sPointA53 = busPoint.sPointA21;
+//양양,동해 > 서울 도착
+busPoint.ePointSend = [];
+busPoint.ePointSend.push({ "code": "N", "codename": "도착" });
+busPoint.ePointSend.push({ "code": "잠실역", "codename": "잠실역" });
+busPoint.ePointSend.push({ "code": "강남역", "codename": "강남역" });
+busPoint.ePointSend.push({ "code": "사당역", "codename": "사당역" });
 
 var busPoint_1 = "신도림 &gt; 대림역 &gt; 사당역 &gt; 강남역 &gt; 종합운동장역";
 var busPoint_2 = "합정역 &gt; 종로3가역 &gt; 건대입구 &gt; 종합운동장역";
 var busPoint_3 = "남애3리 &gt; 인구해변 &gt; 죽도해변 &gt; 기사문해변 &gt; 서피비치";
 var busPoint_4 = "금진해변 &gt; 대진해변 &gt; 솔.동해점";
 var busPointList = {
-    "Y1": { li: busPoint_1 },
-    "Y2": { li: busPoint_2 },
-    "Y3": { li: busPoint_1 },
-    "Y4": { li: busPoint_2 },
-    "Y5": { li: busPoint_1 },
-    "Y6": { li: busPoint_2 },
-    "E1": { li: busPoint_1 },
-    "E2": { li: busPoint_2 },
-    "E3": { li: busPoint_1 },
-    "E4": { li: busPoint_2 },
-    "E5": { li: busPoint_1 },
-    "E6": { li: busPoint_2 },
-    "S21": { li: busPoint_3 },
-    "S22": { li: busPoint_3 },
-    "S23": { li: busPoint_3 },
-    "S51": { li: busPoint_3 },
-    "S52": { li: busPoint_3 },
-    "S53": { li: busPoint_3 },
-    "A21": { li: busPoint_4 },
-    "A22": { li: busPoint_4 },
-    "A23": { li: busPoint_4 },
-    "A51": { li: busPoint_4 },
-    "A52": { li: busPoint_4 },
-    "A53": { li: busPoint_4 }
+    "YS": { li: busPoint_1 }, //사당 > 양양
+    "YJ": { li: busPoint_2 }, //종로 > 양양
+    "SY": { li: busPoint_3 }, //양양 > 서울
+
+    "ES": { li: busPoint_1 }, //사당 > 동해
+    "EJ": { li: busPoint_2 }, //종로 > 동해
+    "AE": { li: busPoint_4 } //동해 > 서울
 };
 
 var MARKER_SPRITE_X_OFFSET = 29,
@@ -144,10 +106,10 @@ function fnBusTime(obj, busnum, num) {
         objStop.text('');
         return;
     }
-    var params = "res_spointname=" + obj.value + "&res_bus=" + busnum;
+    var params = "res_spointname=" + obj.value + "&res_bus=" + busnum.substring(0, 2);
     $j.ajax({
         type: "POST",
-        url: "/act/surf/surfbus_point.php",
+        url: "/act_2023/front/bus/view_bus_point.php",
         data: params,
         success: function(data) {
             objStop.text(data);

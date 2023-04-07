@@ -34,11 +34,11 @@ if($param == "busMngdel"){
 	$res_gpsname = $_REQUEST["res_gpsname"]; //GPS 이름
 	$res_useYN = $_REQUEST["res_useYN"]; //사용여부
 
-	$select_query = "DELETE FROM AT_PROD_BUS_DAY WHERE bus_date = '$bus_date'";
-	$result_set = mysqli_query($conn, $select_query);
+	//$select_query = "DELETE FROM AT_PROD_BUS_DAY WHERE bus_date = '$bus_date'";
+	//$result_set = mysqli_query($conn, $select_query);
 
-	$errmsg = $select_query;
-	if(!$result_set) goto errGo;
+	//$errmsg = $select_query;
+	//if(!$result_set) goto errGo;
 
 	//서핑버스 정보등록
 	for($i = 1; $i < count($resseq); $i++){

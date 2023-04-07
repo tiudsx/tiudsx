@@ -18,7 +18,7 @@ if($reqCode == "busday"){
     }
 
     $now = date("Y-m-d");
-    $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' AND bus_gubun IN ('".$_REQUEST["bus"]."', '".$busgubun."') AND bus_date >= '$now' ORDER BY bus_num";
+    $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' AND bus_gubun IN ('".$_REQUEST["bus"]."', '".$busgubun."') AND bus_date >= '$now' ORDER BY bus_date, bus_gubun, bus_name";
     $result_buslist = mysqli_query($conn, $select_query);
     
     while ($row = mysqli_fetch_assoc($result_buslist)){

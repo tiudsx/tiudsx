@@ -226,6 +226,16 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
                 <div class="busOption02" style="display:none;">
                     <ul class="busSeat">
+                        <div style="text-align:center">
+                            <span style="font-size: 1.3em;">
+                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.png" alt="">선택가능 &nbsp;&nbsp;
+                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.jpg" alt="">선택불가 &nbsp;&nbsp;
+                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_2.jpg" alt="">나의좌석
+                            </span>
+                            <p class="restitle" style="color:#d20000;">
+                                # 배차된 셔틀버스에 따라 좌석번호는 <Br>좌/우<span style="font-size: 0.8em;font-weight: 400;color:black;">(창측/내측은 그대로 유지)</span> 방향이 바뀔수 있습니다.
+                            </p>
+                        </div>
                         <div class="busSeatTable">
                             <div style="padding-bottom:155px;"></div>
                             <table style="width:312px;margin-left:7px;" id="tbSeat">
@@ -356,7 +366,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/act/clause/privacy.html" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/act_2023/_clause/privacy.html" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
                                 </td>
                             </tr>
                         </tbody>

@@ -22,8 +22,8 @@
 				<div class="promoInner">
 					<h2>기획전</h2>
 					<div class="promoBox">
-						<a href="https://cafe.naver.com/actrip/381" target="_blank" style="background: url(../images/mainImg/01.jpg) 0 0/cover no-repeat;"><img src="/act_2023/images/mainImg/promobg.png" alt=""><span>양양 셔틀버스 예약하기 <i class="fas fa-chevron-circle-right"></i><span class="subinst">양양서핑의 불편한 교통은 액트립과 함께!</span></span></a>
-						<a href="https://cafe.naver.com/actrip/380" target="_blank" style="background: url(../images/mainImg/03.jpg) 0 0/cover no-repeat;"><img src="/act_2023/images/mainImg/promobg.png" alt=""><span>동해 셔틀버스 예약하기 <i class="fas fa-chevron-circle-right"></i><span class="subinst">에메랄드빛 동해바다에서 서핑과 힐링을...</span></span></a>
+						<a href="/surfbus_yy" style="background: url(../images/mainImg/01.jpg) 0 0/cover no-repeat;"><img src="/act_2023/images/mainImg/promobg.png" alt=""><span>양양 셔틀버스 예약하기 <i class="fas fa-chevron-circle-right"></i><span class="subinst">양양서핑의 불편한 교통은 액트립과 함께!</span></span></a>
+						<a href="/surfbus_dh" style="background: url(../images/mainImg/03.jpg) 0 0/cover no-repeat;"><img src="/act_2023/images/mainImg/promobg.png" alt=""><span>동해 셔틀버스 예약하기 <i class="fas fa-chevron-circle-right"></i><span class="subinst">에메랄드빛 동해바다에서 서핑과 힐링을...</span></span></a>
 					
 					</div>
 					<div style="padding-top:20px;"><a href="https://pf.kakao.com/_HxmtMxl" target="_blank"><img src="/act_2023/images/mainImg/kakaochat.jpg" alt="액트립 카카오채널" style="width:100%;"></a></div>

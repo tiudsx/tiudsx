@@ -68,6 +68,7 @@ function fnPointList(busnum, busseat, obj) {
         $j("ul[class=busLine]:eq(0) li").removeClass("on");
         $j(obj).addClass("on");
 
+        busnum = busnum.substring(0, 2);
         $j("ul[id=buspointlist]").eq(0).css("display", "block");
         $j("li[id=buspointtext]").eq(0).html(busPointList[busnum].li);
     } else {
@@ -118,7 +119,7 @@ function fnBusSeatInit(busnum, busseat, obj, busname) {
         "busDate": selDate,
         "busNum": busnum
     }
-    $j.getJSON("/act/surf/surfbus_day.php", objParam,
+    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
         function(data, textStatus, jqXHR) {
             seatjson = data;
         }
@@ -134,15 +135,6 @@ function fnBusSeatInit(busnum, busseat, obj, busname) {
                 if (businit == 1) {} else {
                     $j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
                 }
-                // if($j("#" + selDate + "_" + busNum + "_" + el.seatnum).length == 0){
-                // 	$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListY");
-                // 	// $j("#" + $j("#SurfBus").val()  + "_" + busNum + "_" + el.seatnum).remove();
-                // 	$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
-                // 	//$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListC");
-                // 	//$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeAttr("onclick");
-                // }else{
-                // 	$j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListC");
-                // }
             }
         }
     });
@@ -183,15 +175,15 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
     var eqnum = 0;
     if (objid == "SurfBusS") {
         $j("ul[class=busLine]:eq(1) li").remove();
-        $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">출발노선</li>');
+        $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>');
         eqnum = 1;
     } else if (objid == "SurfBusE") {
         $j("ul[class=busLine]:eq(2) li").remove();
-        $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">복귀노선</li>');
+        $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>');
         eqnum = 2;
     } else {
         $j("ul[class=busLine]:eq(0) li").remove();
-        $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">노선</li>');
+        $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선</li>');
     }
 
     if (objid == "SurfBusE") {
@@ -204,7 +196,7 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
             "busDate": selectedDate,
             "busNum": el.busnum
         }
-        $j.getJSON("/act/surf/surfbus_day.php", objParam,
+        $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
             function(data, textStatus, jqXHR) {
                 if (data[0].seatcnt == el.busseat) {
                     if (busrestype == "change") {
@@ -420,7 +412,7 @@ function fnBusDayType(gubun, obj) {
         $j("#ebusdate").css("display", "none");
 
         $j("ul[class=busLine] li").remove();
-        $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">노선</li>');
+        $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선</li>');
     } else { //왕복
         $j("#route").css("display", "none");
         $j("#busdate").css("display", "none");
@@ -428,8 +420,8 @@ function fnBusDayType(gubun, obj) {
         $j("#ebusdate").css("display", "");
 
         $j("ul[class=busLine] li").remove();
-        $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">출발노선</li>');
-        $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">복귀노선</li>');
+        $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>');
+        $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>');
     }
 }
 
@@ -439,7 +431,7 @@ function fnBusGubun(gubun, obj, type) {
     $j(obj).addClass("on");
 
     $j("ul[class=busLine] li").remove();
-    $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="act/images/viewicon/bus.svg" alt="">노선</li>');
+    $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선</li>');
 
     $j("ul[id=buspointlist]").css("display", "none");
 
@@ -735,8 +727,11 @@ function fnSeatSelected(obj) {
 
         var sPoint = "";
         var ePoint = "";
-        var arrObjs = eval("busPoint.sPoint" + busNum);
-        var arrObje = eval("busPoint.ePoint" + busType);
+
+        var busPointCode = busNum.substring(0, 2);
+        var arrObjs = eval("busPoint.sPoint" + busPointCode);
+        var arrObje = eval("busPoint.ePoint" + busType + "end");
+
         arrObjs.forEach(function(el) {
             sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
         });
@@ -776,7 +771,7 @@ function fnSeatSelected(obj) {
             '						<input type="hidden" id="hidbusDate' + busType + '" name="hidbusDate' + busType + '[]" value="' + selDate + '" />' +
             '						<input type="hidden" id="hidbusNum' + busType + '" name="hidbusNum' + busType + '[]" value="' + busNum + '" />' +
             '					</td>' +
-            '					<td style="text-align:center;" onclick="fnSeatDel(this, ' + objVlu + ');"><img src="act/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
+            '					<td style="text-align:center;" onclick="fnSeatDel(this, ' + objVlu + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
             '				</tr>';
         if (tbCnt == 0) {
             insHtml += '			</tbody>' +
@@ -805,8 +800,9 @@ function fnSeatChangeSelected(arrVlu) {
 
     var sPoint = "";
     var ePoint = "";
-    var arrObjs = eval("busPoint.sPoint" + returnBusNum);
-    var arrObje = eval("busPoint.ePoint" + returnBusType);
+    
+    var arrObjs = eval("busPoint.sPoint" + returnBusNum.substring(0, 2));
+    var arrObje = eval("busPoint.ePoint" + returnBusType + "end");
     arrObjs.forEach(function(el) {
         sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
     });
@@ -846,7 +842,7 @@ function fnSeatChangeSelected(arrVlu) {
         '						<input type="hidden" id="hidbusDate' + returnBusType + '" name="hidbusDate' + returnBusType + '[]" value="' + returnDate + '" />' +
         '						<input type="hidden" id="hidbusNum' + returnBusType + '" name="hidbusNum' + returnBusType + '[]" value="' + returnBusNum + '" />' +
         '					</td>' +
-        '					<td style="text-align:center;" onclick="fnSeatDel(this, ' + returnSeat + ');"><img src="act/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
+        '					<td style="text-align:center;" onclick="fnSeatDel(this, ' + returnSeat + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
         '				</tr>';
     if (tbCnt == 0) {
         insHtml += '			</tbody>' +
@@ -968,7 +964,7 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
     $j(".mapviewid").css("background", "").css("color", "");
     $j(obj).css("background", "#1973e1").css("color", "#fff");
 
-    $j("#ifrmBusMap").css("display", "block").attr("src", "/act/surf/surfmap_bus.html");
+    $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/surfmap_bus.html");
     // var obj = $j("#ifrmBusMap").get(0);
     // var objDoc = obj.contentWindow || obj.contentDocument;
     // objDoc.mapMove(pointname);
@@ -1019,7 +1015,7 @@ function fnBusSave() {
         return;
     }
 
-    var submiturl = "/act/surf/surf_save.php";
+    var submiturl = "/act_2023/front/bus/view_bus_save.php";
     if (busrestype == "change") {
         if ($j("#daytype").val() == 0) { //편도
             var defaultCnt = Object.keys(busResData).length;
@@ -1065,7 +1061,7 @@ function fnBusSave() {
             }
         }
 
-        submiturl = "/act/surf/surf_return.php";
+        submiturl = "/act_2023/front/bus/view_bus_return.php";
 
         if (!confirm("액트립 셔틀버스 예약건을 수정하시겠습니까?")) {
             return;

@@ -226,6 +226,8 @@ $shopseq = 0;
                             <td colspan="4">
                                 <textarea id="html_1" cols="40" rows="7"></textarea>
                                 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="맵핑" onclick="fnMakeTable();" />
+                                
+                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="클룩" onclick="fnGetJson();" />
 
                                 <textarea id="html_2" cols="40" rows="7" style="display: ;"></textarea>
                                 <div id="divCopy" style="display: none;"></div>
@@ -305,6 +307,62 @@ function fnMakeTable() {
     $j("#divSet").html(addHtml);
 
     $j("#html_2").val(JSON.stringify(objList));
+}
+
+function fnGetJson() {
+    // var strHtml = $j("#html_1").val().replace(/<!---->/gi,"");
+    // $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
+    // $j("#divCopy").html($j("#divCopy").find(".booking-list-result").html());
+
+    $j("#divCopy").html($j("#html_1").val());
+    $j("#divCopy").html($j("#divCopy").find(".booking-list-result").html());
+    var $state = "";    //예약 상태영역
+    var $info = "";     //예약 상세영역
+
+    //Json 인스턴스
+    var objList = new Array();
+    var objValue = new Object();
+
+    $j("#divCopy").find(".booking-item").each(function(){
+
+        var objValue = new Object();
+
+        //#region 예약 상태정보
+        $state = $j(this).find(".boooking-general-info-operation");
+
+        //예약확인ID
+        objValue.res_id = $state.find(".info-item").eq(0).find("span").eq(1).text();
+        //예약시간
+        objValue.res_time = $state.find(".info-item").eq(1).text().split(":")[1].trim().substring(0,10);
+        //예약상태
+        objValue.state = $state.find(".info-item").eq(2).find(".ant-tag").eq(0).text();;
+
+        //#regionend
+
+        /******************************************************************************/
+
+        //#region 예약 상세정보
+        $info = $j(this).find(".booking-info");
+
+        $info.find("ul").each(function(){
+            $j(this).find("li").each(function(){
+                if(objValue[$j(this).find("p").eq(0).text()] == null){
+                    objValue[$j(this).find("p").eq(0).text()] = $j(this).find("p").eq(1).text();
+                }else{
+                    objValue[$j(this).find("p").eq(0).text() + "_2"] = $j(this).find("p").eq(1).text();
+                }
+            });
+        });
+
+        //#regionend
+
+        objList.push(objValue);
+
+    });
+
+    $j("#html_2").val(JSON.stringify(objList));
+    //alert(JSON.stringify(objList));
+
 }
 </script>
 
