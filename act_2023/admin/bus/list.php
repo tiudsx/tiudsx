@@ -222,10 +222,10 @@ $shopseq = 0;
                             </td>
                         </tr>
                         <tr id="fripMapping" style="display:;">
-                            <td colspan="2">프립 데이터 맵핑</td>
+                            <td colspan="2">json 데이터 맵핑</td>
                             <td colspan="4">
                                 <textarea id="html_1" cols="40" rows="7"></textarea>
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="맵핑" onclick="fnMakeTable();" />
+                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="프립" onclick="fnMakeTable();" />
                                 
                                 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="클룩" onclick="fnGetJson();" />
 
@@ -310,18 +310,30 @@ function fnMakeTable() {
 }
 
 function fnGetJson() {
-    // var strHtml = $j("#html_1").val().replace(/<!---->/gi,"");
-    // $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
-    // $j("#divCopy").html($j("#divCopy").find(".booking-list-result").html());
-
+            
     $j("#divCopy").html($j("#html_1").val());
     $j("#divCopy").html($j("#divCopy").find(".booking-list-result").html());
+
     var $state = "";    //예약 상태영역
     var $info = "";     //예약 상세영역
 
     //Json 인스턴스
     var objList = new Array();
     var objValue = new Object();
+    var colKey = "";
+    var colValue = "";
+    
+    var colNameTitle = {
+        "상품명":"prod_name",
+        "패키지명":"prod_pkg",
+        "단위":"ea",
+        "이용시간":"bus_date",
+        "전화번호":"user_tel_sub",
+        "전화번호_2":"user_tel",
+        "성":"user_name1",
+        "이름":"user_name2",
+        "성명":"user_fullname"
+    }
 
     $j("#divCopy").find(".booking-item").each(function(){
 
@@ -333,7 +345,7 @@ function fnGetJson() {
         //예약확인ID
         objValue.res_id = $state.find(".info-item").eq(0).find("span").eq(1).text();
         //예약시간
-        objValue.res_time = $state.find(".info-item").eq(1).text().split(":")[1].trim().substring(0,10);
+        //objValue.res_time = $state.find(".info-item").eq(1).text().split(":")[1].trim().substring(0,10);
         //예약상태
         objValue.state = $state.find(".info-item").eq(2).find(".ant-tag").eq(0).text();;
 
@@ -346,11 +358,18 @@ function fnGetJson() {
 
         $info.find("ul").each(function(){
             $j(this).find("li").each(function(){
-                if(objValue[$j(this).find("p").eq(0).text()] == null){
-                    objValue[$j(this).find("p").eq(0).text()] = $j(this).find("p").eq(1).text();
-                }else{
-                    objValue[$j(this).find("p").eq(0).text() + "_2"] = $j(this).find("p").eq(1).text();
+
+                colKey = $j(this).find("p").eq(0).text().replace(":","").replace(/ /g, ''); //json Text
+                colValue = $j(this).find("p").eq(1).text(); //json Value
+
+                if (objValue.user_tel_sub != undefined && colKey == "전화번호") {
+                    colKey = "전화번호_2";
                 }
+
+                if (colNameTitle[colKey] != undefined) {
+                    objValue[colNameTitle[colKey]] = colValue;
+                }
+                
             });
         });
 
