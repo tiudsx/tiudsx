@@ -64,11 +64,11 @@ var busType;
 //노선 클릭시 정류장 및 좌석 바인딩
 function fnPointList(busnum, busseat, obj) {
     //$j('.busSeat').unblock(); 
+    busnum = busnum.substring(0, 2);
     if ($j("#daytype").val() == 0) { //편도
         $j("ul[class=busLine]:eq(0) li").removeClass("on");
         $j(obj).addClass("on");
 
-        busnum = busnum.substring(0, 2);
         $j("ul[id=buspointlist]").eq(0).css("display", "block");
         $j("li[id=buspointtext]").eq(0).html(busPointList[busnum].li);
     } else {
@@ -939,7 +939,7 @@ function fnBusPoint(obj) {
         tbBus = 3;
         gubun = "S";
         busnum = 1;
-        pointname = "남애해변";
+        pointname = "남애3리";
         imgnum = 2;
     }
 
@@ -964,7 +964,7 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
     $j(".mapviewid").css("background", "").css("color", "");
     $j(obj).css("background", "#1973e1").css("color", "#fff");
 
-    $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/surfmap_bus.html");
+    $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/view_bus_map.html");
     // var obj = $j("#ifrmBusMap").get(0);
     // var objDoc = obj.contentWindow || obj.contentDocument;
     // objDoc.mapMove(pointname);
@@ -1138,4 +1138,32 @@ function fnCouponCheck(obj) {
     $j("#coupon").val("");
 
     fnPriceSum('', 1);
+}
+
+function fnResViewBus(bool, objid, topCnt, obj) {
+    $j(".vip-tabnavi li").removeClass("on");
+    $j(obj).addClass("on");
+
+    $j(".con_footer").css("display", "block");
+    if (bool) {
+        $j("#view_tab1").css("display", "block");
+        $j("#view_tab2").css("display", "none");
+        $j("#view_tab3").css("display", "none");
+    } else {
+        $j("#view_tab1").css("display", "none");
+
+        if (objid == "#view_tab2") {
+            $j("#view_tab2").css("display", "block");
+            $j("#view_tab3").css("display", "none");
+        } else {
+            $j("#view_tab2").css("display", "none");
+            $j("#view_tab3").css("display", "block");
+
+            if (objid == "#view_tab3") {
+                $j(".con_footer").css("display", "none");
+            }
+        }
+    }
+
+    fnMapView(objid, topCnt);
 }

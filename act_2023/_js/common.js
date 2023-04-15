@@ -2,6 +2,7 @@ $j.ajaxSetup({
 	async: false
 });
 
+var isVisible = false;
 jQuery(function() {
     var date = (new Date()).yyyymmdd(); //오늘 날짜
 
@@ -62,7 +63,55 @@ jQuery(function() {
             }
         }
     });
+
+    var topBar = $j(".vip-tabwrap").offset();
+    $j(window).scroll(function() {
+        var docScrollY = $j(document).scrollTop();
+
+        if ((docScrollY + 47) > (topBar.top + 0)) {
+            $j("#tabnavi").addClass("vip-tabwrap-fixed");
+            $j(".vip-tabwrap").addClass("vip-tabwrap-top");
+        } else {
+            $j("#tabnavi").removeClass("vip-tabwrap-fixed");
+            $j(".vip-tabwrap").removeClass("vip-tabwrap-top");
+        }
+        // if ($j('.contentimg').length > 0) {
+        //     if (checkVisible($j('.contentimg')) && !isVisible) {
+        //         $j(".vip-tabnavi li").removeClass("on");
+        //         $j(".vip-tabnavi li").eq(0).addClass("on");
+        //     }
+        // }
+
+        // if ($j('#shopmap').length > 0) {
+        //     if (checkVisible($j('#shopmap')) && !isVisible) {
+        //         $j(".vip-tabnavi li").removeClass("on");
+        //         $j(".vip-tabnavi li").eq(1).addClass("on");
+        //     }
+        // }
+        // if ($j('#cancelinfo').length > 0) {
+        //     if (checkVisible($j('#cancelinfo')) && !isVisible) {
+        //         $j(".vip-tabnavi li").removeClass("on");
+        //         $j(".vip-tabnavi li").eq(2).addClass("on");
+        //     }
+        // }
+    });
+
+    $j('#coupon').bind("keyup", function() {
+        //var regexp = /[^a-z0-9]/gi;
+        //$j(this).val($j(this).val().toUpperCase().replace(regexp,''));
+        $j(this).val($j(this).val().toUpperCase());
+    });
 });
+
+function checkVisible(elm, eval) {
+    eval = eval || "object visible";
+    var viewportHeight = $j(window).height(), // Viewport Height
+        scrolltop = $j(window).scrollTop(), // Scroll Top
+        y = $j(elm).offset().top,
+        elementHeight = $j(elm).height();
+    if (eval == "object visible") return ((y < (viewportHeight + scrolltop)) && (y > (scrolltop - elementHeight)));
+    if (eval == "above") return ((y < (viewportHeight + scrolltop)));
+}
 
 function plusDate(date, count) {
     var dateArr = date.split("-");
@@ -113,4 +162,32 @@ function fnMapView(objid, topCnt) {
     $j('html, body').animate({
         scrollTop: divLoc.top - topCnt
     }, "slow");
+}
+
+//쿠폰 조회
+function fnCoupon(type, gubun, coupon) {
+    if (coupon == "") {
+        alert("쿠폰코드를 입력하세요.")
+        return 0;
+    }
+
+    var params = "type=" + type + "&gubun=" + gubun + "&coupon=" + coupon;
+    var rtn = $j.ajax({
+        type: "POST",
+        url: "/act/coupon/coupon_load.php",
+        data: params,
+        success: function(data) {
+            return data;
+        }
+    }).responseText;
+
+    if (rtn == "yes") {
+        alert("이미 사용 된 쿠폰입니다.");
+        return 0;
+    } else if (rtn == "no") {
+        alert("사용가능한 쿠폰이 없습니다.");
+        return 0;
+    } else {
+        return rtn;
+    }
 }

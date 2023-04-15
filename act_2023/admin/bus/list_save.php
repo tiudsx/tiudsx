@@ -138,7 +138,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
 		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
 		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
-		$btn_ResPoint = "pointlist"; //문의하기
+		$btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
 		$btn_Notice = "";
 		$btn_ResContent = ""; //예약 상세안내
 

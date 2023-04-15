@@ -42,9 +42,11 @@ function kakaoMsg($arrKakao){
         $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"'.$Url.$arrKakao["link1"].'"},'
 			.'"button2":{"type":"WL","name":"위치안내","url_mobile":"'.$Url.$arrKakao["link2"].'"},'
 			.'"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"'.$Url.$arrKakao["link3"].'"},';
+	}else if($arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 입금대기
+        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',';
 	}else if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
         $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',"button4":'.$btn_ResGPS.',';
-	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //셔틀버스 좌석예약 알림톡 발송
+	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채녈 셔틀버스 예약안내
 		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
 		$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 예약하기 : https://actrip.co.kr/'.$arrKakao["link1"];
 	}

@@ -52,6 +52,10 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		, "link4"=>""
 		, "link5"=>""
 		, "smsOnly"=>"N"
+		, "PROD_NAME"=>"솔게하"
+		, "PROD_URL"=>""
+		, "PROD_TYPE"=>"sol_complete"
+		, "RES_CONFIRM"=>"-1"
 	);
 
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
@@ -116,6 +120,10 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 			, "link4"=>""
 			, "link5"=>""
 			, "smsOnly"=>"N"
+			, "PROD_NAME"=>"솔게하"
+			, "PROD_URL"=>""
+			, "PROD_TYPE"=>"sol_standby"
+			, "RES_CONFIRM"=>"-1"
 		);
 
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
@@ -381,6 +389,10 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 				, "link4"=>""
 				, "link5"=>""
 				, "smsOnly"=>"N"
+				, "PROD_NAME"=>"솔게하"
+				, "PROD_URL"=>""
+				, "PROD_TYPE"=>"sol_complete"
+				, "RES_CONFIRM"=>"-1"
 			);
 		
 			$arrRtn = sendKakao($arrKakao); //알림톡 발송
@@ -400,7 +412,7 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 			$result_set = mysqli_query($conn, $select_query);
 			// 카카오 알림톡 DB 저장 END
 			
-			$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', userinfo = '".$userinfo."' WHERE resseq = $resseq";
+			$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', userinfo = '".$userinfo."' WHERE resseq = $seq";
 			$result_set = mysqli_query($conn, $select_query);
 		}
 	}

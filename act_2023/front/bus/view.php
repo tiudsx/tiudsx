@@ -233,7 +233,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 <img src="https://actrip.cdn1.cafe24.com/bus/bus_2.jpg" alt="">나의좌석
                             </span>
                             <p class="restitle" style="color:#d20000;">
-                                # 배차된 셔틀버스에 따라 좌석번호는 <Br>좌/우<span style="font-size: 0.8em;font-weight: 400;color:black;">(창측/내측은 그대로 유지)</span> 방향이 바뀔수 있습니다.
+                                # 배차된 셔틀버스에 따라 좌석번호는 <Br>좌/우<span style="font-size: 0.8em;font-weight: 400;color:black;">(창측/내측은 유지)</span> 방향이 바뀔수 있습니다.
                             </p>
                         </div>
                         <div class="busSeatTable">
@@ -404,7 +404,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 </script>
 
 <script type="text/javascript" src="/act_2023/_js/jquery-ui.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/surfview.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 
