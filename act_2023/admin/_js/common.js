@@ -48,7 +48,7 @@ function fnPassengerAdmin(obj, seq) {
 
     $j("#schText").val('');
 
-    if (seq == 0) { //서핑버스 관리자
+    if (seq == 0 || seq == -3) { //서핑버스 관리자
         $j('input[id=chkbusNumY1]').prop('checked', true);
         $j('input[id=chkbusNumY2]').prop('checked', true);
         $j('input[id=chkbusNumD1]').prop('checked', true);
@@ -59,9 +59,13 @@ function fnPassengerAdmin(obj, seq) {
         $j('#chkBusD2').prop('checked', true);
         $j('#chkGubun').prop('checked', false);
 
-        $j("#divResList").load("/act_2023/admin/bus/list_mng.php?selDate=" + selDate);
+        var folderName = "bus";
+        if(seq == -3){
+            folderName = "busDrive";
+        }
+        $j("#divResList").load("/act_2023/admin/" + folderName + "/list_mng.php?selDate=" + selDate);
         $j("#initText2").css("display", "none");
-        var url = "bus/list_search.php";
+        var url = folderName + "/list_search.php";
     } else if (seq == -2) { //서핑버스 등록
         fnBusMngList(selDate);
         return;
@@ -128,7 +132,7 @@ function fnDateReset() {
 function fnCalMoveAdminList(selDate, day, seq) {
     var nowDate = new Date();
 
-    if (seq == 0 || seq == -2) { //서핑버스
+    if (seq == 0 || seq == -2 || seq == -3) { //서핑버스
         $j("#divResList").html("");
         $j("#initText2").css("display", "");
 
@@ -136,6 +140,8 @@ function fnCalMoveAdminList(selDate, day, seq) {
             var calurl = "bus/_calendar.php";
         }else if (seq == -2) { //서핑버스 등록관리
             var calurl = "busMng/_calendar.php";
+        }else if (seq == -3) { //서핑버스 등록관리
+            var calurl = "busDrive/_calendar.php";
         }
     } else if (seq == -1) { //입점샵 전체
         var url = "act_admin/res_surflist_search.php";

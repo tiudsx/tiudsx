@@ -1,7 +1,7 @@
 <?php 
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/logininfo.php';
-$shopseq = 0;
+$shopseq = -2;
 ?>
 
 <link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
@@ -124,8 +124,8 @@ $shopseq = 0;
                                 <select id="res_gpsname" name="res_gpsname[]" class="select" sel="">
                                     <option value="양양 1호차">양양 1호차</option>
                                     <option value="양양 2호차">양양 2호차</option>
-                                    <option value="동해 1호차">동해 1호차</option>
-                                    <option value="동해 2호차">동해 2호차</option>
+                                    <option value="양양 3호차">양양 3호차</option>
+                                    <option value="양양 4호차">양양 4호차</option>
                                 </select>
                             </td>
                             <td style="text-align:center;">

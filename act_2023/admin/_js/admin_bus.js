@@ -414,3 +414,27 @@ function fnBusMngDataAdd(gubun) {
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
+
+function fnDayList(vlu, obj, folderName){
+	$j("input[name=buspoint]").removeClass("buson");
+	$j("input[name=buspoint]").css("background", "white");
+	if(vlu == "ALL"){
+		$j("#dayList").html('<div style="text-align:center;font-size:14px;padding:50px;"><b>버스종류를 선택하세요.</b></div>');
+	}else{
+		$j('#dayList').block({ message: "<br><h1>셔틀버스 좌석 조회 중...</h1><br><br>" }); 
+
+		$j(obj).addClass("buson");
+		$j(obj).css("background", "#2dc15e");
+		$j("#busNum").val(vlu);
+
+		var formData = $j("#frmDaySearch").serializeArray();
+
+		$j.post("/act_2023/admin/" + folderName + "/list_mngsearch.php", formData,
+			function(data, textStatus, jqXHR){
+			   $j("#dayList").html(data);
+			   $j('#dayList').unblock();
+			}).fail(function(jqXHR, textStatus, errorThrown){
+		 
+		});
+	}
+}

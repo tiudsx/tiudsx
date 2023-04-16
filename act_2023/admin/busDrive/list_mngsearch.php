@@ -4,14 +4,13 @@ include __DIR__.'/../../common/func.php';
 
 $selDate = $_REQUEST["selDate"];
 $busNum = $_REQUEST["busNum"];
-?>
 
-<?
-$select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, a.resseq, b.res_seat, b.res_spointname FROM 
+$select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, b.* FROM 
 						`AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
 							ON a.resnum = b.resnum 
                                 AND b.code = 'bus'
 						where b.res_date = '$selDate' AND b.res_busnum = '$busNum' AND b.res_confirm  = 3";
+// echo $select_query_sub;
 $result_setlist = mysqli_query($conn, $select_query_sub);
 $count_sub = mysqli_num_rows($result_setlist);
 
@@ -26,12 +25,10 @@ echo '<script type="text/javascript">$j(document).ready(function(){';
 
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	echo '$j("#seat'.$row['res_seat'].'").removeClass("tab1");';
-
-	echo '$j("#seat'.$row['res_seat'].'").attr("onclick", "fnBusModify('.$row['resseq'].')");';
 	echo '$j("#seat'.$row['res_seat'].'").addClass("tab2");';
 	echo '$j("#seat'.$row['res_seat'].' input").remove();';
 
-	echo '$j("#seat'.$row['res_seat'].'").parent().append(" <span  '.$cssColor.'></span> <br><b>'.$row["user_name"].'</b> (<span><a href=tel:'.$row["user_tel"].' style=cursor:text;>'.$row["user_tel"].'</a>)<br>['.$row["res_spointname"].']</span>");';
+	echo '$j("#seat'.$row['res_seat'].'").parent().append(" <span  '.$cssColor.'></span> <br><b>'.$row["user_name"].'</b><br><span><a href=tel:'.$row["user_tel"].' style=cursor:text;>'.$row["user_tel"].'</a><br>['.$row["res_spointname"].']</span>");';
 }
 
 echo '});</script>';
@@ -60,9 +57,10 @@ $select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_spoint, c.ordernum FROM `AT_
 						ON b.code = 'bus' 
 							AND b.res_spoint = c.codename
 							AND c.code = '$busType'
+							AND c.use_yn = 'Y'
 						WHERE b.res_Date = '$selDate' AND b.res_bus = '$busNum' AND b.res_confirm = 3
 						GROUP BY b.res_spoint ORDER BY c.ordernum";
-//  echo $select_query_sub3;
+//   echo $select_query_sub3;
 $resultSite3 = mysqli_query($conn, $select_query_sub3);
 $i = 0;
 while ($row = mysqli_fetch_assoc($resultSite3)){
@@ -98,10 +96,9 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 				<td style="vertical-align:top;">
 					<table width="100%">
 						<colgroup>
-							<col style="width:21%;">
+							<col style="width:33%;">
 							<col style="width:12%;">
 							<col style="width:*;">
-							<col style="width:12%;">
 						</colgroup>
 						<tr>
 							<th style="padding:4px;text-align:center;" colspan="4">출발 정류장</th>
@@ -110,7 +107,6 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 							<th style="padding:4px;text-align:center;">정류장</th>
 							<th style="padding:4px;text-align:center;">시간</th>
 							<th style="padding:4px;text-align:center;">탑승위치</th>
-							<th style="padding:4px;text-align:center;">인원</th>
 						</tr>
 					<?
 					foreach($arrSeatInfo1 as $key=>$value) {
@@ -118,17 +114,16 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
 					?>
 						<tr>
-							<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>
+							<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b><br>(<?=$value?> 명)</b></td>
 							<td style="padding:4px;text-align:center;"><?=$pointname[0]?></td>
 							<td style="padding:4px;text-align:left;">&nbsp;<?=$pointname[1]?></td>
-							<td style="padding:4px;text-align:center;"><?=$value?> 명</td>
 						</tr>
 					<?}?>
 					</table>
 					
 					<table width="100%" style="margin-top:10px;">
 						<colgroup>
-							<col style="width:21%;">
+							<col style="width:35%;">
 							<col style="width:*;">
 						</colgroup>
 						<tr>
@@ -139,7 +134,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 							$pointname = explode("|", fnBusPoint($arrData[1], $busEType));
 						?>
 						<tr>
-						<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>
+						<td style="padding:4px;text-align:left;">&nbsp;<?=$key?></td>
 							<td><b><?=$pointname[1]?></b></td>
 						</tr>
 						<?}?>
@@ -182,32 +177,32 @@ $rowMain = mysqli_fetch_array($result);
 			if($rowMain["seat"] == 44){
 	?>
 			<tr height="68">
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:45px;"><label><?=$num1?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:45px;"><label><?=$num2?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:35px;"><label><?=$num1?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:35px;"><label><?=$num2?></label></span></span></td>
 				<td class="col-3">&nbsp;</td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:45px;"><label><?=$num3?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:45px;"><label><?=$num4?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:35px;"><label><?=$num3?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:35px;"><label><?=$num4?></label></span></span></td>
 			</tr>
 	<?
 			}else{
 	?>
 			<tr height="68">
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:45px;"><label><?=$num1?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:45px;"><label><?=$num2?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:45px;"><label><?=$num3?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:45px;"><label><?=$num4?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num5?>" class="tab1"><span style="width:45px;"><label><?=$num5?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:35px;"><label><?=$num1?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:35px;"><label><?=$num2?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:35px;"><label><?=$num3?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:35px;"><label><?=$num4?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num5?>" class="tab1"><span style="width:35px;"><label><?=$num5?></label></span></span></td>
 			</tr>
 	<?
 			}
 		}else{
 	?>
 			<tr height="68">
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:45px;"><label><?=$num1?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:45px;"><label><?=$num2?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num1?>" class="tab1"><span style="width:35px;"><label><?=$num1?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num2?>" class="tab1"><span style="width:35px;"><label><?=$num2?></label></span></span></td>
 				<td>&nbsp;</td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:45px;"><label><?=$num3?></label></span></span></td>
-				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:45px;"><label><?=$num4?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num3?>" class="tab1"><span style="width:35px;"><label><?=$num3?></label></span></span></td>
+				<td class="col-3" style="text-align:center;vertical-align:top;"><span id="seat<?=$num4?>" class="tab1"><span style="width:35px;"><label><?=$num4?></label></span></span></td>
 			</tr>
 	<?
 		}
