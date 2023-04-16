@@ -85,7 +85,10 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
     $intseq3 .= '0';
 
-    $arrSeatInfo = array();
+	$busSeatInfoS = "";
+	$busSeatInfoE = "";
+	$arrSeatInfoS = array();
+	$arrSeatInfoE = array();
 
     $ResNumber = $resnum;
 	$userName = $user_name;
@@ -102,39 +105,47 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
             $shopSeq = $rowSub['seq'];
 			$shopname = $rowSub['shopname'];
 			$coupon = $rowSub['res_coupon'];
+			$busGubun = substr($rowSub['res_bus'], 0, 1);
 
-            if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfo)){
-                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
-            }else{
-                $arrSeatInfo[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
-            }
+			if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
+				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}else{
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}
+			}else{
+				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}else{
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}
+			}
         }
         
-		//좌석 / 정류장 정보
-        foreach($arrSeatInfo as $x) {
-            $busSeatInfo .= $x.'\n';
-        }
+		// 예약좌석 정보 : 양양행
+		foreach($arrSeatInfoS as $x) {
+			$busSeatInfoS .= $x;
+		}
 
-		
-		if($shopSeq == 7){ //양양
-			$resparam = "surfbus_yy";
-		}else{ //동해
-			$resparam = "surfbus_dh";			
+		// 예약좌석 정보 : 서울행
+		foreach($arrSeatInfoE as $x) {
+			$busSeatInfoE .= $x;
+		}
+
+        $busSeatInfoTotal = "";
+        if($busSeatInfoS != ""){
+            $busSeatInfoTotal .= " ▶ ".$busSeatInfoS;
+        }
+        if($busSeatInfoE != ""){
+            if($busSeatInfoS != ""){
+                $busSeatInfoTotal .= "\n";
+            }
+            $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
         }
 
         $busSeatInfo = $busSeatInfo;
-		$pointMsg = "  ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n";
 
-        if($etc != ''){
-            $etcMsg = '  ▶ 요청사항\n      '.$etc.'\n';
-        }
-
-		$infomsg = "\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 10분전에는 도착해주세요~";
-
-        $msgTitle = '액트립 양양 셔틀버스 예약안내';
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n액트립 셔틀버스를 예약해주셔서 감사합니다.\n좌석/정류장 예약이 확정되었습니다. \n\n액트립 셔틀버스 예약정보\n ▶ 예약번호 : [예약확정]\n ▶ 예약자 : '.$userName.'\n ▶ 좌석안내\n'.$busSeatInfo.$pointMsg.$etcMsg.'---------------------------------\n ▶ 안내사항'.$infomsg;
-
-		$tempName = "frip_bus02"; //셔틀버스 예약확정
+		$tempName = "frip_bus02"; //예약확정
 		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
 		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
 		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
@@ -142,27 +153,32 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$btn_Notice = "";
 		$btn_ResContent = ""; //예약 상세안내
 
+		$msgInfo = $busSeatInfoTotal;
+
 		// 고객 카카오톡 발송
+        $msgTitle = '액트립 서핑버스 예약안내';
 		$arrKakao = array(
-			"gubun"=> "bus"
-			, "admin"=> "N"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "tempName"=> $tempName
-			, "kakaoMsg"=>$kakaoMsg
-			, "userPhone"=> $userPhone
-			, "btn_ResSearch"=> $btn_ResSearch
-			, "btn_ResChange"=> $btn_ResChange
-			, "btn_ResGPS"=> $btn_ResGPS
+            "gubun"=> "bus"
+            , "admin"=> "N"
+            , "tempName"=> $tempName
+            , "smsTitle"=> $msgTitle
+            , "userName"=> $userName
+            , "userPhone"=> $userPhone
+            , "msgType"=>$msgType
+            , "MainNumber"=>$ResNumber
+            , "msgInfo"=>$msgInfo
+            , "btn_ResContent"=> $btn_ResContent
+            , "btn_ResSearch"=> $btn_ResSearch
+            , "btn_ResChange"=> $btn_ResChange
+            , "btn_ResGPS"=> $btn_ResGPS
             , "btn_ResPoint"=> $btn_ResPoint
-			, "btn_Notice"=> $btn_Notice
-			, "btn_ResContent"=> $btn_ResContent
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=>"서핑버스"
-			, "PROD_URL"=>$shopseq
-			, "PROD_TYPE"=>"bus"
-			, "RES_CONFIRM"=>"3"
-		);
+            , "btn_Notice"=> $btn_Notice
+            , "smsOnly"=>"N"
+            , "PROD_NAME"=>"서핑버스"
+            , "PROD_URL"=>$shopseq
+            , "PROD_TYPE"=>"bus"
+            , "RES_CONFIRM"=>"3"
+        );
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
 		// 카카오 알림톡 DB 저장 START
@@ -211,7 +227,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	
 	mysqli_query($conn, "COMMIT");
 	
-}else if($param == "reskakaode2"){
+}else if($param == "reskakaode2"){ //타채널 예약안내 재발송
 	$user_tel = $_REQUEST['user_tel'];
 	$user_name = $_REQUEST['user_name'];
 
@@ -281,10 +297,14 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$seatName = "동해행";
 	}
 
-	$infomsg = "\n      - [예약하기] 버튼을 클릭해서 좌석/정류장을 예약해주세요.";
-	$infomsg .= "\n      - 셔틀버스 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~";
-	
-	$channelMsg = "액트립 셔틀버스를 예약해주셔서 감사합니다.\n셔틀버스 좌석/정류장 예약관련 안내드립니다.";
+	$resseatMsg = "";
+	if($resbusseat1 > 0){ //양양행,동해행 좌석예약
+		$resseatMsg = "\n    [$seatName] ".$resDate1." / ".$resbusseat1."자리";
+	}
+
+	if($resbusseat2 > 0){ //서울행 좌석예약
+		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
+	}
 
 	$msgTitle = ' 셔틀버스';
 	if($reschannel == 11){ //프립
@@ -302,35 +322,19 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	}
 
 	$msgTitle = "액트립$msgTitle 예약안내";
-
-	$resseatMsg = "";
-	if($resbusseat1 > 0){ //양양행 좌석예약
-		$resseatMsg = "\n    [$seatName] ".$resDate1." / ".$resbusseat1."자리";
-	}
-
-	if($resbusseat2 > 0){ //양양행 좌석예약
-		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
-	}
-
-	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n'.$channelMsg.'\n\n액트립 셔틀버스 예약정보\n ▶ 예약번호 : -\n ▶ 예약자 : '.$userName.'\n ▶ 예약가능 좌석'.$resseatMsg.'\n---------------------------------\n ▶ 안내사항'.$infomsg;
-		
 	$arrKakao = array(
 		"gubun"=> "bus"
 		, "admin"=> "N"
+		, "tempName"=> "at_bus_kakao"
 		, "smsTitle"=> $msgTitle
 		, "userName"=> $userName
-		, "tempName"=> "at_bus_kakao"
-		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
+		, "msgInfo"=>$resseatMsg
 		, "link1"=>"surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'))
-		, "link2"=>""
-		, "link3"=>""
-		, "link4"=>""
-		, "link5"=>""
 		, "smsOnly"=>"N"
 		, "PROD_NAME"=>"타채널 알림톡발송"
 		, "PROD_URL"=>$reschannel
-		, "PROD_TYPE"=>"bus_kakao"
+		, "PROD_TYPE"=>"bus_channel"
 		, "RES_CONFIRM"=>"-1"
 	);
 
@@ -349,21 +353,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$result_set = mysqli_query($conn, $select_query);
  	if(!$result_set) goto errGo;
 	//------- 쿠폰코드 입력 -----
-
-/*
-	$tmp = '[{"code":"fail","data":{"phn":"82104437000","msgid":"WEB20220105180807623437","type":"L"},"message":"M107:DeniedSenderNumber","originMessage":"K102:InvalidPhoneNumber"}]';
-
-	$tmp = '[{"code":"success","data":{"phn":"821044370009","msgid":"WEB20220105132932579875","type":"L"},"message":"M001","originMessage":"K208:InvalidParameterException"}]';
-
-	$tmp = '[{"code":"success","data":{"phn":"821044370009","msgid":"WEB20220105163752467667","type":"AT"},"message":"K000","originMessage":null}]';
-
-	echo $tmp."<br>";
-	$data = json_decode($tmp, true);
-	echo $data[0]["code"]."<br>";
-	echo $data[0]["message"]."<br>";
-	echo $data[0]["originMessage"]."<br>";
-	echo $data[0]["data"]["type"]."<br>";
-*/
 
 	// 카카오 알림톡 DB 저장 START
 	$select_query = kakaoDebug($arrKakao, $arrRtn);            

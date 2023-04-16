@@ -228,9 +228,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <ul class="busSeat">
                         <div style="text-align:center">
                             <span style="font-size: 1.3em;">
-                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.png" alt="">선택가능 &nbsp;&nbsp;
-                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.jpg" alt="">선택불가 &nbsp;&nbsp;
-                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_2.jpg" alt="">나의좌석
+                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.jpg" alt="">선택가능 &nbsp;&nbsp;
+                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_2.jpg" alt="">선택불가 &nbsp;&nbsp;
+                                <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.png" alt="">나의좌석
                             </span>
                             <p class="restitle" style="color:#d20000;">
                                 # 배차된 셔틀버스에 따라 좌석번호는 <Br>좌/우<span style="font-size: 0.8em;font-weight: 400;color:black;">(창측/내측은 유지)</span> 방향이 바뀔수 있습니다.
@@ -427,11 +427,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             console.log(data);
         }
     );
-    function fnMapClick(){
-        if($j("#ifrmBusMap").css("display") == "none"){
-            setTimeout('$j("input[type=button]").eq(0).click();', 500);
-        }
-    }
 
     var resbusseat1 = 0;
     var resbusseat2 = 0;

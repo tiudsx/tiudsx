@@ -92,14 +92,15 @@ if($count == 0){
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
         <colgroup>
             <col width="8%" />
-            <col width="auto" />
-            <col width="9%" />
-            <col width="9%" />
-            <col width="9%" />
-            <col width="5%" />
-            <col width="14%" />
             <col width="8%" />
+            <col width="auto" />
+            <col width="7%" />
+            <col width="11%" />
+            <col width="5%" />
+            <col width="12%" />
+            <col width="5%" />
             <col width="4%" />
+            <col width="6%" />
             <col width="6%" />
             <col width="8%" />
             <col width="6%" />
@@ -253,8 +254,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <col width="8%" />
                     <col width="8%" />
                     <col width="auto" />
-                    <col width="8%" />
-                    <col width="9%" />
+                    <col width="7%" />
+                    <col width="11%" />
                     <col width="5%" />
                     <col width="12%" />
                     <col width="5%" />

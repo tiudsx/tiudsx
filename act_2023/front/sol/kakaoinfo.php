@@ -150,15 +150,17 @@ if($count_sub == 0){
                     
                     <?
                     $layerCss = "none";
+                    $layerCss2 = "";
                     if($res_room_chk == "N"){
                         $layerCss = "";
+                        $layerCss2 = "none";
                     ?>
                     <p id="staysearch">✔ 객실 조회는 당일 <strong class="restitle">오후 3시</strong>  부터 조회 가능합니다.<br><strong style="color:red;">[객실 조회하기]</strong>  버튼을 클릭해주세요.</p>
+                    <?}else{?>
                     <?}?>
                     
-                    <p class="restitle">✔ 배정된 객실은 <strong class="restitle">오후 4시</strong> 이후부터 입실 가능합니다.</p>
-                    
-                    <div style="position: relative; min-height:150px;">
+                    <p id="staysearch2" style="display:<?=$layerCss2?>;">✔ 객실조회가 완료되었습니다.<br><strong style="color:red;">호실,침대번호,도어락 비밀번호</strong> 확인 후 입실해주세요~</p>
+                    <div style="position: relative; padding: 0px 0px 20px 0px;">
                         <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:90%;">
                             <colgroup>
                                 <col width="13%" />
@@ -207,7 +209,6 @@ if($count_sub == 0){
                         <div class="SolLayer">
                             <div class="box">
                                 <div class="in">
-                                    <p>&nbsp;</p>
                                     <a class="SolLayer_btn" onclick="fnStaySearch(<?=$resseq?>);">객실 조회하기</a>
                                     
                                 </div>

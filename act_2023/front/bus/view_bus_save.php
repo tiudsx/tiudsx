@@ -38,17 +38,17 @@ if($param == "BusI"){
         $resparam = "surfbus_dh";	
     }
 
-	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행 날짜
+	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행,동해행 날짜
     $SurfDateBusS = $_REQUEST["hidbusDate".$busTypeS]; //서울행 날짜
     
-	$busNumY = $_REQUEST["hidbusNum".$busTypeY]; //양양행 버스번호
+	$busNumY = $_REQUEST["hidbusNum".$busTypeY]; //양양행,동해행 버스번호
     $busNumS = $_REQUEST["hidbusNum".$busTypeS]; //서울행 버스번호
     
-	$arrSeatY = $_REQUEST["hidbusSeat".$busTypeY]; //양양행 좌석번호
+	$arrSeatY = $_REQUEST["hidbusSeat".$busTypeY]; //양양행,동해행 좌석번호
     $arrSeatS = $_REQUEST["hidbusSeat".$busTypeS]; //서울행 좌석번호
     
-	$startLocationY = $_REQUEST["startLocation".$busTypeY]; //양양행 출발 정류장
-	$endLocationY = $_REQUEST["endLocation".$busTypeY]; //양양행 도착 정류장
+	$startLocationY = $_REQUEST["startLocation".$busTypeY]; //양양행,동해행 출발 정류장
+	$endLocationY = $_REQUEST["endLocation".$busTypeY]; //양양행,동해행 도착 정류장
 	$startLocationS = $_REQUEST["startLocation".$busTypeS]; //서울행 출발 정류장
 	$endLocationS = $_REQUEST["endLocation".$busTypeS]; //서울행 도착 정류장
 
@@ -206,18 +206,10 @@ if($param == "BusI"){
 		foreach($arrSeatInfoS as $x) {
 			$busSeatInfoS .= $x;
 		}
-        // 정류장 정보 : 양양행
-		foreach($arrStopInfoS as $x) {
-			$busStopInfoS .= $x;
-		}
         
         // 예약좌석 정보 : 서울행
 		foreach($arrSeatInfoE as $x) {
 			$busSeatInfoE .= $x;
-		}
-        // 정류장 정보 : 서울행
-		foreach($arrStopInfoE as $x) {
-			$busStopInfoE .= $x;
 		}
 
         $busSeatInfoTotal = "";
@@ -230,9 +222,8 @@ if($param == "BusI"){
             }
             $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
         }
-        $busSeatInfoTotal .= '\n ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n';
 
-        $totalPrice = " ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
+        $totalPrice = "\n ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
         
         //신규 로직 : 2022-01-04
         $gubun_title = $busTitleName.'서핑버스';
@@ -252,14 +243,9 @@ if($param == "BusI"){
             
         }else{
 
-        }
-        
-        //$msgTitle = '액트립'.$msgChannelName.' 서핑버스 예약안내';
-        $msgTitle = '액트립 서핑버스 예약안내';
+        }        
 
         if($msgType == 2){ //입금대기
-            $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [입금대기]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.$etcMsg.$totalPrice.'---------------------------------\n ▶ 안내사항\n      - 1시간 이내 미입금시 자동취소됩니다.\n\n ▶ 입금계좌\n      - 우리은행 / 1002-845-467316 / 이승철\n\n';
-
             $tempName = "frip_bus03"; //입금대기
             $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
             $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
@@ -267,9 +253,9 @@ if($param == "BusI"){
             $btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
             $btn_Notice = "";
             $btn_ResContent = ""; //예약 상세안내
-        }else{ //예약확정
-            $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfoTotal.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.'.$msgChannelName2.'\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 5분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
 
+            $msgInfo = $busSeatInfoTotal.$totalPrice;
+        }else{ //예약확정
             $tempName = "frip_bus02"; //예약확정
             $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
             $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
@@ -277,17 +263,22 @@ if($param == "BusI"){
             $btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
             $btn_Notice = "";
             $btn_ResContent = ""; //예약 상세안내
+
+            $msgInfo = $busSeatInfoTotal;
         }
         
         // 고객 카카오톡 발송
+        $msgTitle = '액트립 서핑버스 예약안내';
         $arrKakao = array(
             "gubun"=> "bus"
             , "admin"=> "N"
+            , "tempName"=> $tempName
             , "smsTitle"=> $msgTitle
             , "userName"=> $userName
-            , "tempName"=> $tempName
-            , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
+            , "msgType"=>$msgType
+            , "MainNumber"=>$ResNumber
+            , "msgInfo"=>$msgInfo
             , "btn_ResContent"=> $btn_ResContent
             , "btn_ResSearch"=> $btn_ResSearch
             , "btn_ResChange"=> $btn_ResChange
@@ -333,14 +324,6 @@ if($param == "BusI"){
 
         $info2_title = "탑승시간/<br>위치 안내";
         $info2 = "https://actrip.co.kr/pointlist";
-        /*
-        if($busSeatInfoS != ""){
-            $info2 .= str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfoS));
-        }
-        if($busSeatInfoE != ""){
-            $info2 .= str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busStopInfoE));
-        }
-        */
 
         $arrMail = array(
             "gubun"=> "bus"

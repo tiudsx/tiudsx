@@ -33,6 +33,6 @@
 
 .busSeatTable{background:url(https://actrip.cdn1.cafe24.com/bus/bus_0.jpg);background-repeat:no-repeat;background-position:center;width:325px;height:1000px;border:0px solid #DDD;text-align:center;margin:auto;}
 .busSeatList{background-repeat:no-repeat;background-position:center;padding:2px;}
-.busSeatListY{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_1.png); color: black; cursor: pointer;}
-.busSeatListC{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_2.jpg); color: black; cursor: pointer;}
-.busSeatListN{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_1.jpg); color: #959595;}
+.busSeatListY{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_1.jpg); color: black; cursor: pointer;}
+.busSeatListC{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_1.png); color: black; cursor: pointer;}
+.busSeatListN{background-image:url(https://actrip.cdn1.cafe24.com/bus/bus_2.jpg); color: #959595;}

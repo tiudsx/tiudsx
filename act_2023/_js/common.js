@@ -191,3 +191,13 @@ function fnCoupon(type, gubun, coupon) {
         return rtn;
     }
 }
+
+function fnRtnText(data, type){
+	if(data == "0"){
+		alert("정상적으로 처리되었습니다.");
+		return true;
+	}else{
+		alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요.");	   
+		return false;
+	}
+ }

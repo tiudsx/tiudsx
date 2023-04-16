@@ -22,6 +22,7 @@ function fnStaySearch(resseq) {
                 alert("객실조회가 완료되었습니다.\n\n호실,침대번호,도어락 비밀번호를 확인 후 입실해주세요~");
                 $j(".SolLayer").css("display", "none");
                 $j("#staysearch").css("display", "none");
+                $j("#staysearch2").css("display", "");
             }
         }
     });

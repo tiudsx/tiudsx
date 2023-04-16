@@ -60,7 +60,7 @@ if(!$result_set) goto errGo;
 
 //주문내역과 문자내역의 이름/금액 매칭
 $select_query = "SELECT a.user_name, a.user_tel, a.user_email, a.etc, b.* 
-					FROM AT_RES_MAIN as a INNER JOIN (SELECT resnum, SUM(res_totalprice) as price, MAX(seq) as shopSeq, MAX(shopname) as shopname, MAX(code) as code FROM AT_RES_SUB WHERE res_confirm = 0 GROUP BY resnum) as b 
+					FROM AT_RES_MAIN as a INNER JOIN (SELECT resnum, SUM(res_totalprice) as price, MAX(seq) as shopSeq, MAX(shopname) as shopname, MAX(code) as code FROM AT_RES_SUB WHERE res_confirm IN (0, 1) GROUP BY resnum) as b 
 						ON a.resnum = b.resnum 
 					WHERE price = $bankprice AND a.user_name = '$bankuser'";
 $result_setlist = mysqli_query($conn, $select_query);
@@ -78,76 +78,90 @@ if($count == 1){
 		$code = $row['code'];
 	}
 
-	$select_query_sub = 'SELECT * FROM AT_RES_SUB WHERE res_confirm = 0 AND resnum = '.$ResNumber.' ORDER BY res_date, ressubseq';
+	$select_query_sub = 'SELECT * FROM AT_RES_SUB WHERE res_confirm IN (0, 1) AND resnum = '.$ResNumber.' ORDER BY res_date, ressubseq';
 	$resultSite = mysqli_query($conn, $select_query_sub);
 
 	if($code == "bus"){
 		$res_confirm = 3;
-		$busSeatInfo = "";
-		$busStopInfo = "";
+		$busSeatInfoS = "";
+		$busSeatInfoE = "";
 		$ressubseq = "";
-		$arrSeatInfo = array();
-		$arrStopInfo = array();
+		$arrSeatInfoS = array();
+		$arrSeatInfoE = array();
 
 		while ($rowSub = mysqli_fetch_assoc($resultSite)){
 			$shopname = $rowSub['shopname'];
 			$ressubseq .= $rowSub['ressubseq'].',';
+			$busGubun = substr($rowSub['res_bus'], 0, 1);
 
-			if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfo)){
-				$arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+			if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
+				if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoS)){
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}else{
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}
 			}else{
-				$arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoE)){
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}else{
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+				}
 			}
-
-			$arrData = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']));
-			$arrStopInfo[$rowSub['res_spointname']] = '    ['.$rowSub['res_spointname'].'] '.$arrData[0].'\n      - '.$arrData[1].'\n';
 		}
 		$ressubseq .= '0';
 
-		foreach($arrSeatInfo as $x) {
-			$busSeatInfo .= $x.'\n';
+		// 예약좌석 정보 : 양양행
+		foreach($arrSeatInfoS as $x) {
+			$busSeatInfoS .= $x;
 		}
 
-		foreach($arrStopInfo as $x) {
-			$busStopInfo .= $x;
+		// 예약좌석 정보 : 서울행
+		foreach($arrSeatInfoE as $x) {
+			$busSeatInfoE .= $x;
 		}
 
-		//$pointMsg = ' ▶ 탑승시간/위치 안내\n'.$busStopInfo;
-		// if($etc != ''){
-		// 	$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
-		// }
+        $busSeatInfoTotal = "";
+        if($busSeatInfoS != ""){
+            $busSeatInfoTotal .= " ▶ ".$busSeatInfoS;
+        }
+        if($busSeatInfoE != ""){
+            if($busSeatInfoS != ""){
+                $busSeatInfoTotal .= "\n";
+            }
+            $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
+        }
 
-        $busSeatInfoTotal .= ' ▶ 탑승시간/위치 안내\n      - https://actrip.co.kr/pointlist\n';
+		$tempName = "frip_bus02"; //예약확정
+		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
+		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
+		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+		$btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
+		$btn_Notice = "";
+		$btn_ResContent = ""; //예약 상세안내
 
-		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님\n서핑버스를 예약해주셔서 감사합니다.\n\n예약정보 [예약확정]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$busSeatInfo.$busSeatInfoTotal.'---------------------------------\n ▶ 안내사항\n      - 교통상황으로 인해 정류장에 지연 도착할 수 있으니 양해부탁드립니다.\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.\n      - 탑승시간 10분전에는 도착해주세요~\n\n ▶ 문의\n      - 010.3308.6080';
-
-		$tempName = "at_bus_12";
-        $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
-        $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
-        $btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
-        $btn_ResCustomer = "kakaocustomer"; //문의하기
-        $btn_Notice = "";
-        $btn_ResContent = ""; //예약 상세안내
+		$msgInfo = $busSeatInfoTotal;
 
         // 고객 카카오톡 발송
-        $arrKakao = array(
+        $msgTitle = '액트립 서핑버스 예약안내';
+		$arrKakao = array(
             "gubun"=> "bus"
             , "admin"=> "N"
+            , "tempName"=> $tempName
             , "smsTitle"=> $msgTitle
             , "userName"=> $userName
-            , "tempName"=> $tempName
-            , "kakaoMsg"=>$kakaoMsg
             , "userPhone"=> $userPhone
+            , "msgType"=>$msgType
+            , "MainNumber"=>$ResNumber
+            , "msgInfo"=>$msgInfo
             , "btn_ResContent"=> $btn_ResContent
             , "btn_ResSearch"=> $btn_ResSearch
             , "btn_ResChange"=> $btn_ResChange
             , "btn_ResGPS"=> $btn_ResGPS
-            , "btn_ResCustomer"=> $btn_ResCustomer
+            , "btn_ResPoint"=> $btn_ResPoint
             , "btn_Notice"=> $btn_Notice
             , "smsOnly"=>"N"
-            , "PROD_NAME"=>"서핑버스 정류장변경"
-            , "PROD_URL"=>$shopSeq
+            , "PROD_NAME"=>"서핑버스"
+            , "PROD_URL"=>$shopseq
             , "PROD_TYPE"=>"bus"
             , "RES_CONFIRM"=>"3"
         );
@@ -190,7 +204,7 @@ if($count == 1){
 		);
 		sendMail($arrMail); //메일 발송
 
-	}else{	//서핑샵, 바베큐
+	}else{	//서핑샵
 		$res_confirm = 8;
 		$surfshopMsg .= "";
 		$ressubseq = "";
@@ -244,40 +258,24 @@ if($count == 1){
 	
 			}else if($rowSub['sub_title'] == "pkg"){
 				$ResOptInfo = '      - '.$optinfo.'\n';
-			}else if($rowSub['sub_title'] == "bbq"){
-				$ResOptInfo = '      - '.str_replace('<br>', '\n      - ', $optinfo).'\n';
 			}
 			$surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$rowSub['res_date'].'\n'.$ResOptStay.$ResNum.'\n'.$ResOptInfo;	
 		}
 		$ressubseq .= '0';
-        
-		if($etc != ''){
-			$etcMsg = ' ▶ 요청사항\n      '.$etc.'\n';
-		}
-		
-		$msgTitle = '액트립 '.$shopname.' 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$shopname.' 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n ▶ 신청목록\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약하신건은 예약확정 후 이용가능합니다.\n      - 예약건 매진으로 인하여 취소 될 수 있으니 참고부탁드립니다.\n\n ▶ 문의\n      - 010.3308.6080\n      - http://pf.kakao.com/_HxmtMxl';
 
-		$navilink = "surflocation?seq=".$shopSeq;
-		if($shopSeq == 13){
-			$navilink = "bbq_yy?view=1";
-		}else if($shopSeq == 15){
-			$navilink = "bbq_dh?view=1";
-		}
-
+		$msgTitle = '액트립 예약안내';
 		$arrKakao = array(
 			"gubun"=> $code
 			, "admin"=> "N"
+			, "tempName"=> "at_surf_step1"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_surf_step1"
-			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
+			, "MainNumber"=>$ResNumber
+            , "msgInfo"=>$surfshopMsgg
 			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
 			, "link2"=>"surflocation?seq=".$shopseq //위치안내
 			, "link3"=>"event" //공지사항
-			, "link4"=>""
-			, "link5"=>""
 			, "smsOnly"=>"N"
 			, "PROD_NAME"=>$shopname
 			, "PROD_URL"=>$shopseq
@@ -291,42 +289,6 @@ if($count == 1){
 		$select_query = kakaoDebug($arrKakao, $arrRtn);            
 		$result_set = mysqli_query($conn, $select_query);
 
-		//카카오톡 업체 발송
-		$select_query = 'SELECT * FROM AT_PROD_MAIN WHERE seq = '.$shopSeq;
-		$result_setlist = mysqli_query($conn, $select_query);
-		$rowshop = mysqli_fetch_array($result_setlist);
-
-		$admin_tel = $rowshop["tel_kakao"];
-		// $admin_tel = "010-4437-0009";
-
-		$msgTitle = '액트립 ['.$userName.']님 예약안내';
-		$kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 '.$shopname.' 예약건 안내입니다.\n\n액트립 예약정보 [입금완료]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$surfshopMsg.$etcMsg.'---------------------------------\n ▶ 안내사항\n      - 예약내역 확인 후 승인처리 부탁드립니다.\n      - 예약이 불가할 경우 취소 상태로 변경해주시면 됩니다.\n\n';
-
-		$arrKakao = array(
-			"gubun"=> $code
-			, "admin"=> "N"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "tempName"=> "at_shop_step1"
-			, "kakaoMsg"=>$kakaoMsg
-			, "userPhone"=> $admin_tel
-			, "link1"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$shopSeq)) //전체 예약목록
-			, "link2"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$ResNumber.'|'.$shopSeq)) //현재 예약건 보기
-			, "link3"=>""
-			, "link4"=>""
-			, "link5"=>""
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=>$shopname
-			, "PROD_URL"=>$shopseq
-			, "PROD_TYPE"=>"surf_shop"
-			, "RES_CONFIRM"=>$res_confirm
-		);
-		
-		$arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);            
-		$result_set = mysqli_query($conn, $select_query);
 
 		$info1_title = "신청목록";
         $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));

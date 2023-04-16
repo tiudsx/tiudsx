@@ -28,29 +28,16 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 
     //==========================카카오 메시지 발송 ==========================
 	$msgTitle = '솔게스트하우스&솔서프 예약안내';
-	$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
-		.'\n예약하신 정보를 안내드립니다.'
-		.'\n\n예약정보'
-		.'\n ▶ 예약자 : '.$userName
-		.'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
-		.'\n---------------------------------'
-		.'\n ▶ 안내사항'
-		.'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
-		.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
-
 	$arrKakao = array(
 		"gubun"=> $code
 		, "admin"=> "N"
+		, "tempName"=> "at_surf_step3"
 		, "smsTitle"=> $msgTitle
 		, "userName"=> $userName
-		, "tempName"=> "at_surf_step3"
-		, "kakaoMsg"=>$kakaoMsg
 		, "userPhone"=> $userPhone
 		, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
 		, "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
-		, "link3"=>"event_cafe" //이벤트
-		, "link4"=>""
-		, "link5"=>""
+		, "link3"=>"sol_location?seq=".urlencode(encrypt($resseq)) //이벤트
 		, "smsOnly"=>"N"
 		, "PROD_NAME"=>"솔게하"
 		, "PROD_URL"=>""
@@ -96,39 +83,26 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	
 		//==========================카카오 메시지 발송 ==========================
 		$msgTitle = '솔게스트하우스&솔서프 예약안내';
-		$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
-			.'\n예약하신 정보를 안내드립니다.'
-			.'\n\n예약정보'
-			.'\n ▶ 예약자 : '.$userName
-			.'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
-			.'\n---------------------------------'
-			.'\n ▶ 안내사항'
-			.'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
-			.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
-
 		$arrKakao = array(
 			"gubun"=> $code
 			, "admin"=> "N"
+			, "tempName"=> "at_surf_step3"
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
-			, "tempName"=> "at_surf_step3"
-			, "kakaoMsg"=>$kakaoMsg
 			, "userPhone"=> $userPhone
 			, "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
 			, "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
-			, "link3"=>"event_cafe" //공지사항
-			, "link4"=>""
-			, "link5"=>""
+			, "link3"=>"sol_location?seq=".urlencode(encrypt($resseq)) //이벤트
 			, "smsOnly"=>"N"
 			, "PROD_NAME"=>"솔게하"
 			, "PROD_URL"=>""
-			, "PROD_TYPE"=>"sol_standby"
+			, "PROD_TYPE"=>"sol_complete"
 			, "RES_CONFIRM"=>"-1"
 		);
 
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-	//------- 알림톡 디버깅 -----
+		//------- 알림톡 디버깅 -----
 		$data = json_decode($arrRtn[0], true);
 		$kakao_code = $data[0]["code"];
 		$kakao_type = $data[0]["data"]["type"];
@@ -362,36 +336,18 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		
 			//==========================카카오 메시지 발송 ==========================
 			$msgTitle = '솔게스트하우스&솔서프 예약안내';
-			$kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
-				.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
-				.'\n예약이 확정되어 안내드립니다.'
-				.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
-				.'\n\n예약정보'
-				.'\n ▶ 예약자 : '.$userName
-				.'\n ▶ 예약항목 : '.$kakaoRes
-				.'\n---------------------------------'
-				.'\n ▶ 안내사항'
-				.'\n    - 주말에 개인차량으로 이동하실 경우 예상시간보다 많이 걸릴 수 있으니 참고부탁드려요~'
-				.'\n    - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
-				.'\n    - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
-		
 			$arrKakao = array(
 				"gubun"=> $code
 				, "admin"=> "N"
+				, "tempName"=> "at_res_step4" //이용안내
 				, "smsTitle"=> $msgTitle
 				, "userName"=> $userName
-				, "tempName"=> "at_res_step4" //이용안내
-				, "kakaoMsg"=>$kakaoMsg
 				, "userPhone"=> $userPhone
-				, "link1"=>""
-				, "link2"=>""
-				, "link3"=>""
-				, "link4"=>""
-				, "link5"=>""
+				, "kakaoRes"=> $kakaoRes
 				, "smsOnly"=>"N"
 				, "PROD_NAME"=>"솔게하"
 				, "PROD_URL"=>""
-				, "PROD_TYPE"=>"sol_complete"
+				, "PROD_TYPE"=>"sol_standby"
 				, "RES_CONFIRM"=>"-1"
 			);
 		

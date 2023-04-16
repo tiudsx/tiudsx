@@ -30,26 +30,137 @@ function sendKakao($arrKakao){
 	return array($response, $err);
 }
 
+function kakaoContent($arrKakao){
+	if($arrKakao["tempName"] == "at_surf_step3"){ //솔게하 알림톡 발송
+		$kakaoMsg = $arrKakao["smsTitle"]
+			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+			.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
+			.'\n예약하신 정보를 안내드립니다.'
+			.'\n\n예약정보'
+			.'\n ▶ 예약자 : '.$arrKakao["userName"]
+			.'\n\n하단에 있는 <[필독]예약 상세안내> 버튼을 클릭하시고 내용을 꼭 확인해주세요'
+			.'\n---------------------------------'
+			.'\n ▶ 안내사항'
+			.'\n    - 6월~8월 주말은 예상시간보다 많이 걸릴 수 있으니 일찍 출발부탁드려요~'
+			.'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
+			.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
+
+	}else if($arrKakao["tempName"] == "at_res_step4"){
+		if($arrKakao["PROD_TYPE"] == "sol_standby"){ //솔게하 예약안내
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
+				.'\n예약이 확정되어 안내드립니다.'
+				.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
+				.'\n\n예약정보'
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n ▶ 예약항목 : '.$arrKakao["kakaoRes"]
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n    - 6월~8월 주말은 예상시간보다 많이 걸릴 수 있으니 일찍 출발부탁드려요~'
+				.'\n    - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
+				.'\n    - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
+		}else if($arrKakao["PROD_TYPE"] == "bus_cancel" || $arrKakao["PROD_TYPE"] == "surf_cancel"){ //자동취소 안내
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n예약건에 대해 입금처리가 안되어서 취소되었습니다.'
+				.'\n\n예약정보 [자동취소]'
+				.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n      - 입금마감시간이 지나서 자동취소가 되었습니다.'
+				.'\n이용을 원하실 경우 다시 예약해주세요.';
+		}
+
+	}else if($arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 입금대기
+		$kakaoMsg = $arrKakao["smsTitle"]
+			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+			.'\n서핑버스를 예약해주셔서 감사합니다.'
+			.'\n\n예약정보 [입금대기]'
+			.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
+			.'\n ▶ 예약자 : '.$arrKakao["userName"]
+			.'\n'.$arrKakao["msgInfo"]
+			.'---------------------------------'
+			.'\n ▶ 안내사항'
+			.'\n      - 1시간 이내 미입금시 자동취소됩니다.'
+			.'\n\n ▶ 입금계좌'
+			.'\n      - 우리은행 / 1002-845-467316 / 이승철';
+
+	}else if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
+		$kakaoMsg = $arrKakao["smsTitle"]
+			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+			.'\n서핑버스를 예약해주셔서 감사합니다.'
+			.'\n\n예약정보 [예약확정]'
+			.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
+			.'\n ▶ 예약자 : '.$arrKakao["userName"]
+			.'\n'.$arrKakao["msgInfo"]
+			.'---------------------------------'
+			.'\n ▶ 안내사항'
+			.'\n      - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
+			.'\n      - 이용일, 탑승시간, 탑승위치 꼭 확인 부탁드립니다.'
+			.'\n      - 탑승시간 10분전에는 도착해주세요~';
+
+	}else if($arrKakao["tempName"] == "at_surf_step1"){ //서핑샵 예약확정
+		$kakaoMsg = $arrKakao["smsTitle"]
+			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+			.'\n액트립을 이용해주셔서 감사합니다.'
+			.'\n\n'.$arrKakao["PROD_NAME"].' 예약정보 [입금완료]'
+			.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
+			.'\n ▶ 예약자 : '.$arrKakao["userName"]
+			.'\n ▶ 신청목록'
+			.'\n'.$arrKakao["msgInfo"]
+			.'---------------------------------'
+			.'\n ▶ 안내사항'
+			.'\n      - 예약하신건은 예약확정 후 이용가능합니다.'
+			.'\n      - 예약건 매진으로 인하여 취소 될 수 있으니 참고부탁드립니다.';
+
+	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채널 알림톡발송
+		$kakaoMsg = $arrKakao["smsTitle"]
+			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+			.'\n액트립 셔틀버스를 예약해주셔서 감사합니다.'
+			.'\n셔틀버스 좌석/정류장 예약관련 안내드립니다.'
+			.'\n\n액트립 셔틀버스 예약정보'
+			.'\n ▶ 예약번호 : -'
+			.'\n ▶ 예약자 : '.$arrKakao["userName"]
+			.'\n ▶ 예약가능 좌석'.$arrKakao["msgInfo"]
+			.'\n---------------------------------'
+			.'\n ▶ 안내사항'
+			.'\n      - [예약하기] 버튼을 클릭해서 좌석/정류장을 예약해주세요.'
+			.'\n      - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~';
+
+	}
+
+	return $kakaoMsg;
+}
+
 function kakaoMsg($arrKakao){
 	$Url = "https://actrip.co.kr/";
 
-	$btn_ResSearch = '{"type":"WL","name":"예약조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearchFrip"].'"}';
-	$btn_ResChange= '{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResChange"].'"}';
+	$btn_ResSearch = '{"type":"WL","name":"예약조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearch"].'"}';
+	$btn_ResChange = '{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResChange"].'"}';
 	$btn_ResPoint = '{"type":"WL","name":"탑승시간/위치 안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResPoint"].'"}';
-	$btn_ResGPS= '{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResGPS"].'"}';
+	$btn_ResGPS = '{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResGPS"].'"}';
 
     if($arrKakao["tempName"] == "at_surf_step3"){ //솔게하 알림톡 발송
         $btnList = '"button1":{"type":"WL","name":"[필독]예약 상세안내","url_mobile":"'.$Url.$arrKakao["link1"].'"},'
 			.'"button2":{"type":"WL","name":"위치안내","url_mobile":"'.$Url.$arrKakao["link2"].'"},'
 			.'"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"'.$Url.$arrKakao["link3"].'"},';
+
 	}else if($arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 입금대기
         $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',';
+
 	}else if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
         $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',"button4":'.$btn_ResGPS.',';
+
 	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채녈 셔틀버스 예약안내
 		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
-		$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 예약하기 : https://actrip.co.kr/'.$arrKakao["link1"];
 	}
+	
+    $arrKakao["kakaoMsg"] = kakaoContent($arrKakao); //카카오 메시지 내용
+
+	$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
 
 	$arryKakao = '';
     $arryKakao .= '['.$arryKakao.'{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$msgSmsBtn.'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
@@ -75,12 +186,32 @@ function kakaoDebug($arrKakao, $arrRtn){
 	$PROD_TYPE = $arrKakao["PROD_TYPE"];
 	$KAKAO_DATE = $datetime;
 	$RES_CONFIRM = $arrKakao["RES_CONFIRM"];
-	$KAKAO_CONTENT = $arrKakao["kakaoMsg"];
-	$KAKAO_BTN1 = $arrKakao["link1"];
-	$KAKAO_BTN2 = $arrKakao["link2"];
-	$KAKAO_BTN3 = $arrKakao["link3"];
-	$KAKAO_BTN4 = $arrKakao["link4"];
-	$KAKAO_BTN5 = $arrKakao["link5"];
+	$KAKAO_CONTENT = kakaoContent($arrKakao); //카카오 메시지 내용
+	
+	$KAKAO_BTN1 = "";
+	$KAKAO_BTN2 = "";
+	$KAKAO_BTN3 = "";
+	$KAKAO_BTN4 = "";
+	$KAKAO_BTN5 = "";
+
+	if($arrKakao["tempName"] == "at_surf_step3"){ //솔게하 알림톡 발송
+		$KAKAO_BTN1 = $arrKakao["link1"];
+		$KAKAO_BTN2 = $arrKakao["link2"];
+		$KAKAO_BTN3 = $arrKakao["link3"];
+
+	}else if($arrKakao["tempName"] == "frip_bus02" || $arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 예약확정, 입금대기
+		$KAKAO_BTN1 = $arrKakao["btn_ResSearch"];
+		$KAKAO_BTN2 = $arrKakao["btn_ResChange"];
+		$KAKAO_BTN3 = $arrKakao["btn_ResPoint"];
+
+	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채녈 셔틀버스 예약안내
+		$KAKAO_BTN1 = $arrKakao["link1"];
+
+	}
+
+	if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
+		$KAKAO_BTN4 = $arrKakao["btn_ResGPS"];
+	}
 
 	return "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";
 }

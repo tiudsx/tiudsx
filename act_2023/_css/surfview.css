@@ -1002,3 +1002,18 @@
     display: table-cell;
     vertical-align: middle;
 }
+
+
+#gpe_divpop1 {
+    position: absolute;
+    z-index: 49;
+}
+
+#gpe_divpop1 .pop_area_out {
+    border: 1px solid #b6b6b6;
+}
+
+#gpe_divpop1 .pop_area_in {
+    border: 2px solid #f6f6f6;
+    background-color: #fff;
+}

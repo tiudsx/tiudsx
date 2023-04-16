@@ -60,43 +60,36 @@
                 </tr>
                 <tr>
                     <th>신도림</th>
-                    <td>홈플러스 신도림점 앞<br>
-                        <font color="red">06시 20분</font>
+                    <td><?=fnBusPointArr("YSa_신도림", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YSa_신도림", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 1, '신도림', this);"></td>
                 </tr>
                 <tr>
                     <th>대림역</th>
-                    <td>대림역 2번출구 앞<br>
-                        <font color="red">06시 30분</font>
+                    <td><?=fnBusPointArr("YSa_대림역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YSa_대림역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 2, 1, '대림역', this);"></td>
                 </tr>
                 <tr>
-                    <th>봉천역</th>
-                    <td>봉천역 1번출구 앞<br>
-                        <font color="red">06시 40분</font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 3, 1, '봉천역', this);"></td>
-                </tr>
-                <tr>
                     <th>사당역</th>
-                    <td>사당역 6번출구 방향 참약사 장수약국 앞<br>
-                        <font color="red">06시 50분</font>
+                    <td><?=fnBusPointArr("YSa_사당역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YSa_사당역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 4, 1, '사당역', this);"></td>
                 </tr>
                 <tr>
                     <th>강남역</th>
-                    <td>강남역 1번출구 버스정류장<br>
-                        <font color="red">07시 05분</font>
+                    <td><?=fnBusPointArr("YSa_강남역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YSa_강남역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 5, 1, '강남역', this);"></td>
                 </tr>
                 <tr>
                     <th>종합운동장역</th>
-                    <td>종합운동장역 4번출구 방향 버스정류장 뒤쪽<br>
-                        <font color="red">07시 20분</font>
+                    <td><?=fnBusPointArr("YSa_종합운동장역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YSa_종합운동장역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 6, 1, '종합운동장역', this);"></td>
                 </tr>
@@ -119,7 +112,7 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [양양행] 종로선 출발 셔틀버스</b></td>
+                    <td colspan="3" height="28"><b>★ [동해행] 종로선 출발 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
@@ -127,44 +120,30 @@
                     <th style="text-align:center;">위치</th>
                 </tr>
                 <tr>
-                    <th>당산역</th>
-                    <td>당산역 13출구 방향 버거킹 앞<br>
-                        <font color="red">06시 05분</font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 2, '당산역', this);"></td>
-                </tr>
-                <tr>
                     <th>합정역</th>
-                    <td>합정역 3번출구 앞<br>
-                        <font color="red">06시 10분</font>
+                    <td><?=fnBusPointArr("YJo_합정역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YJo_합정역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 2, 2, '합정역', this);"></td>
                 </tr>
                 <tr>
                     <th>종로3가역</th>
-                    <td>종로3가역 12번출구 새마을금고 앞<br>
-                        <font color="red">06시 35분</font>
+                    <td><?=fnBusPointArr("YJo_종로3가역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YJo_종로3가역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 3, 2, '종로3가역', this);"></td>
                 </tr>
                 <tr>
-                    <th>왕십리역</th>
-                    <td>왕십리역 11번출구 우리은행 앞<br>
-                        <font color="red">06시 50분</font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 4, 2, '왕십리역', this);"></td>
-                </tr>
-                <tr>
                     <th>건대입구</th>
-                    <td>건대입구역 롯데백화점 스타시티점 입구<br>
-                        <font color="red">07시 05분</font>
+                    <td><?=fnBusPointArr("YJo_건대입구", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YJo_건대입구", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 5, 2, '건대입구', this);"></td>
                 </tr>
                 <tr>
                     <th>종합운동장역</th>
-                    <td>종합운동장역 4번출구 방향 버스정류장 뒤쪽<br>
-                        <font color="red">07시 20분</font>
+                    <td><?=fnBusPointArr("YJo_종합운동장역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("YJo_종합운동장역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 6, 1, '종합운동장역', this);"></td>
                 </tr>
@@ -195,25 +174,25 @@
                     <th style="text-align:center;">위치</th>
                 </tr>
                 <tr>
-                    <th>솔.동해점</th>
-                    <td>솔.동해점 입구<br>
-                        <font color="red">14시 00분 / 17시 00분</font>
+                    <th>금진해변</th>
+                    <td><?=fnBusPointArr("AE2_금진해변", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("AE2_금진해변", 2)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 1, 1, '솔.동해점', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
                 </tr>
                 <tr>
-                    <th>대진항</th>
-                    <td>대진항 입구<br>
-                        <font color="red">14시 05분 / 17시 05분</font>
+                    <th>대진해변</th>
+                    <td><?=fnBusPointArr("AE2_대진해변", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("AE2_대진해변", 2)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 2, 1, '대진해변', this);"></td>
                 </tr>
                 <tr>
-                    <th>금진해변</th>
-                    <td>금진해변 공영주차장 입구<br>
-                        <font color="red">14시 20분 / 17시 20분</font>
+                    <th>솔.동해점</th>
+                    <td><?=fnBusPointArr("AE2_솔.동해점", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("AE2_솔.동해점", 2)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 1, 1, '솔.동해점', this);"></td>
                 </tr>
             </tbody>
         </table>
@@ -221,7 +200,7 @@
         <table view="tbBus3" class="et_vars" style="display: none;">
             <tbody>
                 <tr>
-                    <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;">잠실역 > 강남역 > 사당역</span></b></td>
+                    <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;"><?=fnBusPointList('busPoint_End')?></span></b></td>
                 </tr>
             </tbody>
         </table>

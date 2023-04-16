@@ -17,6 +17,8 @@ $select_query = "DELETE FROM AT_CALL_TIMEOVER WHERE TIMESTAMPDIFF(DAY, insdate, 
 $result_set = mysqli_query($conn, $select_query);
 
 
+$query_log .= "호출URL : https://actrip.co.kr/act_2023/callback/timeover.php?username=$user_name&weeknum=$weeknum&timenum=$timenum&timestart=$timestart&timeend=$timeend";
+
 $select_query = "INSERT INTO AT_CALL_TIMEOVER(`user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`, `sqlquery`) VALUES ('$user_name', $weeknum, $timenum, now(), 'OK', $timestart, $timeend, '')";
 $result_set = mysqli_query($conn, $select_query);
 $seq = mysqli_insert_id($conn);
@@ -38,7 +40,8 @@ $select_query = 'SELECT a.user_name, a.user_tel, a.etc, b.*
                     WHERE b.res_confirm = 0
                         AND TIMESTAMPDIFF(MINUTE, b.insdate, now()) > 60
                     ORDER BY b.resnum, b.res_date, b.ressubseq';
-$query_log .= '조회 AT_RES_SUB : '.$select_query;
+$query_log .= '
+                조회 AT_RES_SUB : '.$select_query;
 
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
@@ -47,44 +50,26 @@ $k = 0;
 if($count > 0){
 	$x = 0;
 	$PreMainNumber = "";
-	$arrSeatInfo = array();
 	while ($rowTime = mysqli_fetch_assoc($result_setlist)){
 		$MainNumber = $rowTime['resnum'];
 
 //============================ 실행 단계 ============================
-		if($MainNumber != $PreMainNumber && $x > 0){
-			if($code == "bus"){
-                foreach($arrSeatInfo as $bus) {
-                    $busSeatInfo .= $bus;
-                }
-        
-                $resList =' ▶ 좌석안내\n'.$busSeatInfo;
-                $subtitlename = '액트립';
-            }else{
-                $resList =' ▶ 신청목록\n'.$surfshopMsg;
-                $subtitlename = $shopname;
-            }
-        
-            $msgTitle = '액트립 '.$shopname.' 자동취소 안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$subtitlename.' 예약정보 [자동취소]\n ▶ 예약번호 : '.$PreMainNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-        
+		if($MainNumber != $PreMainNumber && $x > 0){        
+            $msgTitle = '액트립 자동취소 안내';        
             $arrKakao = array(
                 "gubun"=> $code
                 , "admin"=> "N"
+                , "tempName"=> "at_res_step4"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_step3"
                 , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"event" //공지사항
-                , "link2"=>""
-                , "link3"=>""
-                , "link4"=>""
-                , "link5"=>""
+                , "shopname"=> $shopname
+                , "MainNumber"=> $MainNumber
                 , "smsOnly"=>"N"
                 , "PROD_NAME"=>"자동취소"
                 , "PROD_URL"=>$shopseq
-                , "PROD_TYPE"=>$code
+                , "PROD_TYPE"=> $code."_cancel"
                 , "RES_CONFIRM"=>"7"
             );
             $arrRtn = sendKakao($arrKakao); //알림톡 발송
@@ -94,14 +79,9 @@ if($count > 0){
             $result_set = mysqli_query($conn, $select_query);
             // 카카오 알림톡 DB 저장 END
 
-            $surfshopMsg = "";
-			$busSeatInfo = "";
-			$arrSeatInfo = array();
-
-			$k++;
+            $k++;
 		}
 //============================ 실행 단계 ============================
-        
 		$code = $rowTime['code'];
 		$userName = $rowTime['user_name'];
 		$userPhone = $rowTime['user_tel'];
@@ -109,28 +89,6 @@ if($count > 0){
         $shopname = $rowTime['shopname'];
         $optname = $rowTime["optname"];
         $shopseq = $rowTime["seq"];
-
-        if($code == "bus"){
-            if(array_key_exists($sDate.$rowTime['res_bus'], $arrSeatInfo)){
-                $arrSeatInfo[$sDate.$rowTime['res_bus']] .= '     - '.$rowTime['res_seat'].'번\n';
-            }else{
-                $arrSeatInfo[$sDate.$rowTime['res_bus']] = '    ['.$sDate.'] '.fnBusNum($rowTime['res_bus']).'\n     - '.$rowTime['res_seat'].'번\n';
-            }
-        }else{
-            $ResNum = "      - 인원 : ";
-            if($rowTime['res_m'] > 0){
-                $ResNum .= "남:".$rowTime['res_m'].'명';
-            }
-            if($rowTime['res_m'] > 0 && $rowTime['res_w'] > 0){
-                $ResNum .= ",";
-            }
-            if($rowTime['res_w'] > 0){
-                $ResNum .= "여:".$rowTime['res_w'].'명';
-            }
-            $ResNum .= '\n';
-
-            $surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$sDate.'\n'.$ResNum.'\n';
-        }
 
         $x++;
 
@@ -140,38 +98,21 @@ if($count > 0){
 	$ressubseq .= '0';
 
 //============================ 실행 단계 ============================
-    if($code == "bus"){
-        foreach($arrSeatInfo as $bus) {
-            $busSeatInfo .= $bus;
-        }
-
-        $resList =' ▶ 좌석안내\n'.$busSeatInfo;
-        $subtitlename = '액트립';
-    }else{
-        $resList =' ▶ 신청목록\n'.$surfshopMsg;
-        $subtitlename = $shopname;
-    }
-
-    $msgTitle = '액트립 '.$shopname.' 자동취소 안내';
-    $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$subtitlename.' 예약정보 [자동취소]\n ▶ 예약번호 : '.$MainNumber.'\n ▶ 예약자 : '.$userName.'\n'.$resList.'---------------------------------\n ▶ 안내사항\n      - 입금마감시간이 지나서 자동취소가 되었습니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-
+    $msgTitle = '액트립 자동취소 안내';        
     $arrKakao = array(
         "gubun"=> $code
         , "admin"=> "N"
+        , "tempName"=> "at_res_step4"
         , "smsTitle"=> $msgTitle
         , "userName"=> $userName
-        , "tempName"=> "at_res_step3"
         , "kakaoMsg"=>$kakaoMsg
         , "userPhone"=> $userPhone
-        , "link1"=>"event" //공지사항
-        , "link2"=>""
-        , "link3"=>""
-        , "link4"=>""
-        , "link5"=>""
+        , "shopname"=> $shopname
+        , "MainNumber"=> $MainNumber
         , "smsOnly"=>"N"
         , "PROD_NAME"=>"자동취소"
         , "PROD_URL"=>$shopseq
-        , "PROD_TYPE"=>$code
+        , "PROD_TYPE"=> $code."_cancel"
         , "RES_CONFIRM"=>"7"
     );
     $arrRtn = sendKakao($arrKakao); //알림톡 발송
@@ -238,31 +179,22 @@ if(date("H") >= 9 && $count == 0){
             $select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $resseq ORDER BY ressubseq";
             $resultSite = mysqli_query($conn, $select_query_sub);
     
-            $msgTitle = '솔게스트하우스&솔서프 예약안내';
-            $kakaoMsg = $msgTitle.'\n\n안녕하세요. '.$userName.'님'
-                .'\n예약하신 정보를 안내드립니다.'
-                .'\n\n예약정보'
-                .'\n ▶ 예약자 : '.$userName
-                .'\n\n하단에 있는 [필독]예약 상세안내 버튼을 클릭하시고 내용을 꼭 확인해주세요'
-                .'\n---------------------------------'
-                .'\n ▶ 안내사항'
-                .'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
-                .'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
-
+			$msgTitle = '솔게스트하우스&솔서프 예약안내';
             $arrKakao = array(
                 "gubun"=> $code
                 , "admin"=> "N"
-                , "smsTitle"=> $msgTitle
-                , "userName"=> $userName
                 , "tempName"=> "at_surf_step3"
-                , "kakaoMsg"=>$kakaoMsg
+				, "smsTitle"=> $msgTitle
+                , "userName"=> $userName
                 , "userPhone"=> $userPhone
                 , "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
                 , "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
-                , "link3"=>"event_cafe" //이벤트
-                , "link4"=>""
-                , "link5"=>""
+                , "link3"=>"sol_location?seq=".urlencode(encrypt($resseq)) //이벤트
                 , "smsOnly"=>"N"
+                , "PROD_NAME"=>"솔게하"
+                , "PROD_URL"=>""
+                , "PROD_TYPE"=>"sol_complete"
+                , "RES_CONFIRM"=>"-1"
             );
     
             $arrRtn = sendKakao($arrKakao); //알림톡 발송

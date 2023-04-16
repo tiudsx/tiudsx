@@ -123,7 +123,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>액트립 서핑버스 예약정보 변경</h1>
+                <h1>액트립 서핑버스 내좌석 보기</h1>
                 <a class="reviewlink">
                     <span class="reviewcnt">예약번호 : <?=$res_num?></span>
                 </a>
@@ -136,7 +136,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on"><a>좌석 및 정류장 변경</a></li>
+                            <li class="on"><a>내좌석 보기</a></li>
                         </ul>
                     </div>
                 </div>
@@ -279,7 +279,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </table>
                         </div>
                     </ul>
-                    <ul class="selectStop" style="padding:0 4px;">
+                    <ul class="selectStop" style="padding:0 4px;display:none;">
                         <li style="display:none;"><img src="/act_2023/images/button/<?if($bustype0 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
                         <li>
                             <div id="selBus<?=$bustype0?>" class="bd" style="padding-top:2px;">
@@ -302,8 +302,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             }else{
                                 echo '<input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="돌아가기" onclick="history.back();" />';
                             }?>
-                            &nbsp;&nbsp;
-                            <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약 변경하기" onclick="fnBusSave();" />
                         </div>
                     </div>
                 </div>
@@ -329,7 +327,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script>
     var businit = 0;
-    var busrestype = "change";
+    var busrestype = "seatview";
     var busDateinit = "<?=$sbusDate?>";
     var busData = {};
     var busResData = {};
@@ -365,4 +363,23 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <?}?>
 
     fnBusChangeNext();
+
+    // for (key in busResData) {
+    //     var arrVlu = busResData[key].split("/");
+
+    //     var seatvlu = 0;
+    //     if(vlu == 1){
+    //         if (!(arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A")) { //양양,동해행
+    //             seatvlu = arrVlu[1];
+    //         }
+    //     }else{
+    //         if (arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A") { //서울행
+    //             seatvlu = arrVlu[1];
+    //         }
+    //     }
+        
+    //     if(seatvlu > 0){
+    //         $j("#tbSeat .busSeatList[busSeat=" + seatvlu + "]").removeClass("busSeatListN").addClass("busSeatListC");
+    //     }
+    // }
 </script>
