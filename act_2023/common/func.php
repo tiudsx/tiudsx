@@ -77,7 +77,7 @@ function fnBusPoint($vlu, $busNumber){
 	$busNumber = substr($busNumber, 0, 3);
 
 	if($busNumber == "ESa"){
-		$busNumber = "YJa";
+		$busNumber = "YSa";
 	}else if($busNumber == "EJo"){
 		$busNumber = "YJo";
 	}
@@ -121,14 +121,14 @@ function fnBusPoint($vlu, $busNumber){
 		$busData["Yend_죽도해변"] = "End";
 		$busData["Yend_인구해변"] = "End";
 		$busData["Yend_남애3리"] = "End";
-		
-		$busData["Eend_금진해변"] = "End";
-		$busData["Eend_대진해변"] = "End";
-		$busData["Eend_솔.동해점"] = "End";
 
 		$busData["Send_잠실역"] = "End";
 		$busData["Send_강남역"] = "End";
 		$busData["Send_사당역"] = "End";
+		
+		$busData["Eend_금진해변"] = "End";
+		$busData["Eend_대진해변"] = "End";
+		$busData["Eend_솔.동해점"] = "End";
 
 		return $busData;
 	}else{

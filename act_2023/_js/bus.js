@@ -649,17 +649,10 @@ function fnSeatSelected(obj) {
                     defaultCntE = 0;
 
                 //기본 양양행 왕복
-                var btntextS = "양양행",
+                var btntextS = ((busTypeY == "Y") ? "양양행" : "동해행"),
                     btntextE = "서울행";
-                var selCntS = $j("#selBusY tr[trseat]").length + 1;
-                var selCntE = $j("#selBusS tr[trseat]").length + 1;
-
-                if ($j("#busgubun").val() == "E") { //동해행 왕복
-                    btntextS = "동해행";
-                    btntextE = "서울행";
-                    selCntS = $j("#selBusE tr[trseat]").length + 1;
-                    selCntE = $j("#selBusA tr[trseat]").length + 1;
-                }
+                var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length + 1;
+                var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length + 1;
 
                 for (key in busResData) {
                     var arrVlu = busResData[key].split("/");
@@ -689,17 +682,17 @@ function fnSeatSelected(obj) {
                 }
             }
         } else if (busrestype == "channel") { //타채널 예약건
-            var selCntS = $j("#selBusY tr[trseat]").length + 1;
-            var selCntE = $j("#selBusS tr[trseat]").length + 1;
-
+            var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length + 1;
+            var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length + 1;
+            
             if (busType == "E" || busType == "Y") {
                 if (resbusseat1 < selCntS) {
-                    alert("양양행은 " + resbusseat1 + "좌석 예약 가능합니다.");
+                    alert(((busTypeY == "Y") ? "양양행" : "동해행") + "은 " + resbusseat1 + "좌석까지 예약 가능합니다.");
                     return;
                 }
             } else {
                 if (resbusseat2 < selCntE) {
-                    alert("서울행은 " + resbusseat2 + "좌석 예약 가능합니다.");
+                    alert("서울행은 " + resbusseat2 + "좌석까지 예약 가능합니다.");
                     return;
                 }
             }
@@ -1012,17 +1005,10 @@ function fnBusSave() {
                 defaultCntE = 0;
 
             //기본 양양행 왕복
-            var btntextS = "양양행",
+            var btntextS = ((busTypeY == "Y") ? "양양행" : "동해행"),
                 btntextE = "서울행";
-            var selCntS = $j("#selBusY tr[trseat]").length;
-            var selCntE = $j("#selBusS tr[trseat]").length;
-
-            if ($j("#busgubun").val() == "E") { //동해행 왕복
-                btntextS = "동해행";
-                btntextE = "서울행";
-                selCntS = $j("#selBusE tr[trseat]").length;
-                selCntE = $j("#selBusA tr[trseat]").length;
-            }
+            var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length;
+            var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length;
 
             for (key in busResData) {
                 var arrVlu = busResData[key].split("/");
@@ -1051,11 +1037,11 @@ function fnBusSave() {
         }
     } else {
         if (busrestype == "channel") {
-            var selCntS = $j("#selBusY tr[trseat]").length;
-            var selCntE = $j("#selBusS tr[trseat]").length;
+            var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length;
+            var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length;
 
             if (resbusseat1 > 0 && resbusseat1 != selCntS) {
-                alert("양양행은 " + resbusseat1 + "좌석 예약해주세요~");
+                alert(((busTypeY == "Y") ? "양양행" : "동해행") + "은 " + resbusseat1 + "좌석 예약해주세요~");
                 return;
             }
 
@@ -1109,6 +1095,9 @@ function fnCouponCheck(obj) {
 
         if (cp <= 100) { //퍼센트 할인
             $j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 " + cp + "% 할인");
+            if(cp == 100){
+                $j("#coupondis").closest("tr").hide();
+            }
         } else { //금액할인
             $j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 " + commify(cp) + "원 할인");
         }

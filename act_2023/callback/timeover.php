@@ -62,7 +62,6 @@ if($count > 0){
                 , "tempName"=> "at_res_step4"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
                 , "shopname"=> $shopname
                 , "MainNumber"=> $MainNumber
@@ -105,7 +104,6 @@ if($count > 0){
         , "tempName"=> "at_res_step4"
         , "smsTitle"=> $msgTitle
         , "userName"=> $userName
-        , "kakaoMsg"=>$kakaoMsg
         , "userPhone"=> $userPhone
         , "shopname"=> $shopname
         , "MainNumber"=> $MainNumber

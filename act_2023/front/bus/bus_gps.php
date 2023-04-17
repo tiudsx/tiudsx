@@ -99,7 +99,7 @@ function fnBusGPSPoint(obj) {
     var params = "resparam=mappoint&busgubun=" + busnum;
     $j.ajax({
         type: "POST",
-        url: "/act/surfbus/json_gps.php?",
+        url: "/act_2023/front/bus/bus_gps_json.php",
         data: params,
         success: function (data) {
             $j("input[btnpoint='point']").css("background", "").css("color", "");
@@ -121,7 +121,7 @@ function fnBusGPSPoint(obj) {
                 
                 MARKER_SPRITE_POSITION2 = eval(data);
                 
-                $j("#ifrmBusMap").css("display", "block").attr("src", "/act/surfbus/surfgpsmap.html");
+                $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/view_bus_map.html");
             }
         }
     });
@@ -143,14 +143,14 @@ function fnBusGPSPoint(obj) {
                         </strong>
                     </th>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="text-align:center;line-height:3;" colspan="2">
                         <h1 style='font-size:12px;height:80px;padding-top:5px;'>
                             ※사당선 1,3호차와 종로선 2,4호차는 같은 위치로 조회됩니다.<br>
                             ※서울행 1,2호차는 같은 위치로 조회됩니다.
                         </h1>
                     </td>
-                </tr>
+                </tr> -->
 
             <?if($count == 0){?>
                 <tr>
@@ -217,8 +217,6 @@ function fnBusGPSPoint(obj) {
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
 
 <script>    
-    var busDateinit = "2020-04-01";
-
     $j(document).ready(function() {
         setTimeout('$j("input[type=button]").eq(0).click();', 500);
     });

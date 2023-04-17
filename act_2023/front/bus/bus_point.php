@@ -64,8 +64,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
 
 <script>
-    var busDateinit = "2020-04-01";
-
     $j(document).ready(function() {
         setTimeout('$j("input[type=button]").eq(0).click();', 500);
     });

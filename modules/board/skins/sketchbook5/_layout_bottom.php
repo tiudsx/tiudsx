@@ -41,8 +41,8 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
-<script type="text/javascript" src="/act/js/gnbscript.js"></script>
+<script type="text/javascript" src="/act_2023/_js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act_2023/_js/gnbscript.js"></script>
 
 <!-- Swiper JS -->
-<script src="/act/js/swiper.min.js"></script>
+<script src="/act_2023/_js/swiper.min.js"></script>

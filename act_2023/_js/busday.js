@@ -5,7 +5,8 @@ busPoint.sPointSY = []; //양양 > 서울행
 
 busPoint.ePointYend = []; //서울 > 양양 도착
 busPoint.ePointEend = []; //서울 > 동해 도착
-busPoint.ePointSend = []; //양양,동해 > 서울 도착
+busPoint.ePointSend = []; //양양 > 서울 도착
+busPoint.ePointAend = busPoint.ePointSend; //동해 > 서울 도착
 
 busPoint.sPointES = busPoint.sPointYS; //서울 > 동해행 (사당선)
 busPoint.sPointEJ = busPoint.sPointYJ; //서울 > 동해행 (종로선)
@@ -167,8 +168,15 @@ function fnBusTime(obj, busnum, num) {
     // }else{ //오후 차량 및 기타
     //     var strbustime = arrData.time1;
     // }
+
+    busnum = busnum.substring(0, 3)
+    if(busnum == "ESa"){
+		busnum = "YSa";
+	}else if(busnum == "EJo"){
+		busnum = "YJo";
+	}
     
-    var params = "gubun=point&res_spointname=" + obj.value + "&res_bus=" + busnum.substring(0, 3);
+    var params = "gubun=point&res_spointname=" + obj.value + "&res_bus=" + busnum;
     $j.ajax({
         type: "POST",
         url: "/act_2023/front/bus/view_bus_point.php",

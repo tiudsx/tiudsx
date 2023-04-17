@@ -41,6 +41,45 @@ function fnBusDel(obj){
     }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
+//셔틀버스 데이터 완전 삭제
+function fnBusDataDel(){
+    if (!confirm("등록내역을 완전 삭제하시겠습니까?")) {
+        return;
+    }
+
+    var calObj = $j("calBox[sel=yes]");
+    var formData = { "resparam": "busDatadel", "resnum": $j("#resnum").val() };
+    $j.post("/act_2023/admin/bus/list_save.php", formData,
+    function(data, textStatus, jqXHR) {
+        if (data == 0) {
+            alert("정상적으로 삭제되었습니다.");
+
+            if (calObj.attr("value") == null) {
+                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
+            } else {
+                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
+            }
+
+            if ($j("input[name=buspoint]").length > 0) {
+                if ($j("input[name=buspoint]").filter(".buson").length > 0) {
+                    $j("input[name=buspoint]").filter(".buson").click();
+                }
+            }
+
+            fnSearchAdmin('bus/list_search.php');
+            fnBlockClose();
+            fnBusPopupReset();
+        } else {
+            var arrRtn = data.split('|');
+            if (arrRtn[0] == "err") {
+                alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+            } else {
+                alert(arrRtn[1] + "호 " + arrRtn[2] + "번 좌석은 예약되어있습니다.\n\n다른 호차 및 좌석을 선택해주세요~");
+            }
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
 //타채널 알림톡 발송
 function fnResKakaoAdmin(){
     if($j("#username").val() == ""){
@@ -76,12 +115,12 @@ function fnResKakaoAdmin(){
 }
 
 //타채널 예약건 독촉 발송
-function fnBusChannelKakao(username, usertel){
+function fnBusChannelKakao(kakao_msgid){
     if(!confirm("독촉 발송 하시겠습니까?")){
         return;
     }
 
-    var params = "resparam=reskakaode2&user_name=" + username + "&user_tel=" + usertel;
+    var params = "resparam=reskakaode2&kakao_msgid=" + kakao_msgid;
     $j.ajax({
         type: "POST",
         url: "/act_2023/admin/bus/list_save.php",
@@ -159,8 +198,9 @@ function fnBusPointSel2(obj, objVlu, sname, ename, num) {
     var sPoint = "";
     var ePoint = "";
 
-    var arrObjs = eval("busPoint.sPoint" + objVlu);
-    var arrObje = eval("busPoint.ePoint" + objVlu.substring(0, 1));
+
+    var arrObjs = eval("busPoint.sPoint" + objVlu.substring(0, 2));
+    var arrObje = eval("busPoint.ePoint" + objVlu.substring(0, 1) + "end");
     arrObjs.forEach(function(el) {
         if (sname == el.code) {
             sPoint += "<option value='" + el.code + "' selected>" + el.codename + "</option>";

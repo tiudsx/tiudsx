@@ -98,45 +98,56 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             </div>
             <div id="view_tab1">
                 <div class="noticeline" id="content_tab1">
-                    <article>
-                        <p class="noticesub">셔틀버스 예약안내</p>
-                        <ul>
-                            <li class="litxt">1시간 이내 미입금시 자동취소됩니다.</li>
-                            <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
-                            <li class="litxt">예약하신 이용일, 탑승정류장, 탑승시간을 꼭 확인해주세요.</li>
-                            <li class="litxt">최소인원(20명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
-                            <li class="litxt">천재지변으로 인하여 셔틀버스 운행이 취소될 경우 전액환불됩니다.</li>
-                            <!-- <li class="litxt">현금영수증 신청은 이용일 이후&nbsp;<label style="color:#059bc0;">[카카오 채널 @액트립]</label> 에서 신청가능합니다.</li> -->
-                        </ul>
-                    </article>
-                    <article>
-                        <p class="noticesub">탑승 및 이용안내</p>
-                        <ul>
-                            <li class="litxt">탑승시간 10분전에 예약하신 정류장으로 도착해주세요.</li>
-                            <li class="litxt">교통상황으로 인해 셔틀버스가 지연 도착할 수 있으니 양해부탁드립니다.</li>
-                            <li class="litxt">사전 신청하지 않는 정류장은 정차 및 하차하지 않습니다.</li>
-                            <li class="litxt">기상악화로 인하여 서핑강습이 취소되어도 셔틀버스는 정상운행되며, 기존 환불정책으로 적용됩니다.</li>
-                        </ul>
-                    </article>
+                    <?if($arrChannel == ""){?>
+                        <article>
+                            <p class="noticesub">셔틀버스 예약안내</p>
+                            <ul>
+                                <li class="litxt">1시간 이내 미입금시 자동취소됩니다.</li>
+                                <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
+                                <!-- <li class="litxt">예약하신 이용일, 탑승정류장, 탑승시간을 꼭 확인해주세요.</li> -->
+                                <li class="litxt">최소인원(20명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
+                                <li class="litxt">천재지변으로 인하여 셔틀버스 운행이 취소될 경우 전액환불됩니다.</li>
+                                <li class="litxt">현금영수증 신청은 이용일 이후&nbsp;<label style="color:#059bc0;">[카카오채널 @액트립]</label> 에서 신청가능합니다.</li>
+                            </ul>
+                        </article>
+                        <article>
+                            <p class="noticesub">탑승 및 이용안내</p>
+                            <ul>
+                                <li class="litxt">탑승시간 10분전에 예약하신 정류장으로 도착해주세요.</li>
+                                <li class="litxt">교통상황으로 인해 셔틀버스가 지연 도착할 수 있으니 양해부탁드립니다.</li>
+                                <li class="litxt">사전 신청하지 않는 정류장은 정차 및 하차하지 않습니다.</li>
+                                <li class="litxt">기상악화로 인하여 서핑강습이 취소되어도 셔틀버스는 정상운행되며, 기존 환불정책으로 적용됩니다.</li>
+                            </ul>
+                        </article>                        
+                    <?}else{?>
+                        <article>
+                            <p class="noticesub">예약안내</p>
+                            <ul>
+                                <li class="litxt">탑승시간 10분전에 예약하신 정류장으로 도착해주세요.</li>
+                                <li class="litxt">교통상황으로 인해 셔틀버스가 지연 도착할 수 있으니 양해부탁드립니다.</li>
+                                <li class="litxt">사전 신청하지 않는 정류장은 정차 및 하차하지 않습니다.</li>
+                            </ul>
+                        </article>
+                        <article>
+                            <p class="noticesub">취소/환불 안내</p>
+                            <ul>
+                                <li class="litxt">잔여석이 없을 경우 예약이 취소 될 수 있으니 유의 부탁드립니다.</li>
+                                <li class="litxt">취소 및 환불은 예약하신 사이트에서 신청가능합니다.</li>
+                            </ul>
+                        </article>
+                    <?}?>
                 </div>
                 <div class="contentimg">
                 <!-- <img src="https://actrip.cdn1.cafe24.com/act_notice/bus_notice.jpg" class="placeholder"> -->
                     <?include 'view_content.php';?>
-                    
-                    <img src="https://shop-phinf.pstatic.net/20230216_250/1676514416430NkOe2_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_1.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_224/16765144423533g2Ic_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_2.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_61/1676514452486wp34G_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_3.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_152/1676537938201jQrgn_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_%EC%84%9C%EC%9A%B8%ED%96%89(%EC%96%91%EC%96%91)_2.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_168/16765144636841QA9a_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_4_2.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_111/16765144950553Ennk_JPEG/%EC%96%91%EC%96%91%ED%96%89_%EC%82%AC%EB%8B%B9%EC%84%A0.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_118/1676514495043mCpJI_JPEG/%EC%96%91%EC%96%91%ED%96%89_%EC%A2%85%EB%A1%9C%EC%84%A0.jpg?type=w860" class="placeholder">
-                    <img src="https://shop-phinf.pstatic.net/20230216_177/1676514508542hxrVx_JPEG/%EC%84%9C%EC%9A%B8%ED%96%89_%EC%96%91%EC%96%91.jpg?type=w860" class="placeholder">
                 </div>
                 <div>
                     <div style="padding:10px 0 5px 0;font-size:12px;">
                         <a href="http://pf.kakao.com/_HxmtMxl" target="_blank" rel="noopener"><img src="/act_2023/images/mainImg/kakaochat.jpg" class="placeholder"></a>
                     </div>
                 </div>
+                
+                <?if($arrChannel == ""){?>
                 <div class="noticeline2" id="cancelinfo">
                     <article>
                         <p class="noticesub">환불 규정안내</p>
@@ -145,6 +156,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                     </article>
                 </div>
+                <?}?>
             </div>
             <div id="view_tab2" style="display: none;min-height: 800px;">
             
@@ -412,7 +424,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>    
     var businit = 0;
     var busrestype = "none";
-    var busDateinit = "<?=$sbusDate?>";
     var busData = {};
     
     var objParam = {
@@ -463,8 +474,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
                 $j("#SurfBusS").val("<?=$resDate1?>");
                 $j("#SurfBusE").val("<?=$resDate2?>");
-
-                $j("#resseatnum").html("양양행 : " + resbusseat1 + "자리 예약가능 / 서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
+                
+                $j("#resseatnum").html(((busTypeY == "Y") ? "양양행" : "동해행") + " : " + resbusseat1 + "자리 예약가능 / 서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
                 
                 fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
                 fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));

@@ -78,6 +78,7 @@ if($count == 0){
 
     $arrChk = explode("|", $userinfo);
     //홍길동|0104437123|2022-01-08|2|2022-01-09|2|fail|L|M107:DeniedSenderNumber|K102:InvalidPhoneNumber
+    //이승철|01044370009|2023-05-07|1|2023-05-07|1|success|AT|K000||WEB20230417134422004880
 
     $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b> (".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";
     $rtnMessage = "<b>".$rtnText."</b>";
@@ -126,7 +127,7 @@ if($count == 0){
                 ?>
             </td>
             <td>
-                <input type="button" class="gg_btn res_btn_color1" style="width:40px; height:25px;" value="독촉" onclick="fnBusChannelKakao('<?=$arrChk[0]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
+                <input type="button" class="gg_btn res_btn_color1" style="width:40px; height:25px;" value="독촉" onclick="fnBusChannelKakao('<?=$arrChk[10]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
                 <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusChannelDel(<?=$row['codeseq']?>);" /></td>
             <td><?=$rtnText?></td>
             <td>

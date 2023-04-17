@@ -28,7 +28,7 @@ $to = "lud1@naver.com,ttenill@naver.com";
 //$to = "lud1@naver.com";
 
 if($bankname == "신한"){
-	//ex : https://actrip.co.kr/act/callback/bank.php?content=[Web발신]@신한 04/09 14:20@389-02-188735@입금 35100@이승철&keyword=신한@입금
+	//ex : https://actrip.co.kr/act_2023/callback/bank.php?content=[Web발신]@신한 04/09 14:20@389-02-188735@입금 35100@이승철&keyword=신한@입금
 	//[Web발신]@신한 04/09 14:20@389-02-188735@입금         34@이승철
 	$banknum = $arrSMS[2];
 
@@ -37,7 +37,7 @@ if($bankname == "신한"){
 
 	$bankuser = $arrSMS[4];
 }else if($bankname == "우리"){
-	//ex : https://actrip.co.kr/act/callback/bank.php?content=[Web발신]@우리 04/05 19:05@*467316@입금 100원@이승철&keyword=우리@입금
+	//ex : https://actrip.co.kr/act_2023/callback/bank.php?content=[Web발신]@우리 04/05 19:05@*467316@입금 100원@이승철&keyword=우리@입금
 	//[Web발신]@우리 06/08 08:58@8900*01@입금 200원@이승철
 	//[Web발신]@우리 04/05 19:05@*467316@입금 100원@이승철
 
@@ -98,13 +98,13 @@ if($count == 1){
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoS)){
 					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}else{
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}
 			}else{
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoE)){
 					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}else{
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}
 			}
 		}
@@ -120,15 +120,15 @@ if($count == 1){
 			$busSeatInfoE .= $x;
 		}
 
-        $busSeatInfoTotal = "";
+        $busSeatInfoTotal = " ▶ 좌석안내\n";
         if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoS;
+            $busSeatInfoTotal .= $busSeatInfoS;
         }
         if($busSeatInfoE != ""){
             if($busSeatInfoS != ""){
                 $busSeatInfoTotal .= "\n";
             }
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
+            $busSeatInfoTotal .= $busSeatInfoE;
         }
 
 		$tempName = "frip_bus02"; //예약확정

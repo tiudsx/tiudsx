@@ -111,13 +111,13 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
 					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}else{
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}
 			}else{
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
 					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}else{
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
 				}
 			}
         }
@@ -132,15 +132,15 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$busSeatInfoE .= $x;
 		}
 
-        $busSeatInfoTotal = "";
+        $busSeatInfoTotal = " ▶ 좌석안내\n";
         if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoS;
+            $busSeatInfoTotal .= $busSeatInfoS;
         }
         if($busSeatInfoE != ""){
             if($busSeatInfoS != ""){
                 $busSeatInfoTotal .= "\n";
             }
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
+            $busSeatInfoTotal .= $busSeatInfoE;
         }
 
         $busSeatInfo = $busSeatInfo;
@@ -228,37 +228,48 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	mysqli_query($conn, "COMMIT");
 	
 }else if($param == "reskakaode2"){ //타채널 예약안내 재발송
-	$user_tel = $_REQUEST['user_tel'];
-	$user_name = $_REQUEST['user_name'];
+	$kakao_msgid = $_REQUEST['kakao_msgid'];
 
-	$msgTitle = '액트립 셔틀버스 예약안내';
-	$btnList = '';
-	$tempName = "at_res_step4";
-	$arryKakao = '';
- 
-	$kakaoMsg = $msgTitle.'\n\n안녕하세요.\n액트립x프립 셔틀버스를 이용해주셔서 감사드립니다.\n카카오톡으로 예약링크를 안내드렸으나 예약이 안되고 있기에 다시 한번 안내드립니다.\n\n예약자 정보 안내\n ▶ 예약자 : '.$user_name.'\n---------------------------------\n ▶ 안내사항\n액트립x프립 셔틀버스는 실시간 예약으로 이루어지고 있습니다.\n예약을 늦게 하셔서 잔여석이 없을 경우 취소 처리 될 수 있으니 이점 참고하셔서 빠른 예약부탁드립니다.\n\n고객님들 모두 불편함 없는 즐거운 주말 여행이 되시길 바랍니다.\n\n감사합니다~';
+	$select_query = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
+	$resultSite = mysqli_query($conn, $select_query_sub);
 
-	$arryKakao .= '{"message_type":"at","phn":"'.$user_tel.'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$tempName.'","msg":"'.$kakaoMsg.'",'.$btnList.'"smsKind":"L","msgSms":"'.$kakaoMsg.'","smsSender":"010-3308-6080","smsLmsTit":"'.$msgTitle.'","smsOnly":"N"}';
-	$rtnMsg = '['.$arryKakao.']';
+	$select_query = "SELECT * FROM `AT_KAKAO_HISTORY` WHERE prod_type = 'bus_channel' AND response LIKE '%$kakao_msgid%'";
+	$result = mysqli_query($conn, $select_query);
+	$rowMain = mysqli_fetch_array($result);
 
-	$curl = curl_init();
+	$userName = $rowMain["USER_NAME"];
+	$userPhone = $rowMain["USER_TEL"];
+	$link1 = $rowMain["KAKAO_BTN1"];
+	// $KAKAO_CONTENT = $rowMain["KAKAO_CONTENT"];
 
-	curl_setopt_array($curl, array(
-	   CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
-	   CURLOPT_RETURNTRANSFER => true,
-	   CURLOPT_ENCODING => "",
-	   CURLOPT_MAXREDIRS => 10,
-	   CURLOPT_TIMEOUT => 30,
-	   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	   CURLOPT_CUSTOMREQUEST => "POST",
-	   CURLOPT_POSTFIELDS => $rtnMsg,
-	   CURLOPT_HTTPHEADER => array(
-	   "content-type: application/json", "userId: surfenjoy"
-	   ),
-	));
+	// $KAKAO_CONTENT = str_replace('서핑버스를 예약해주셔서 감사합니다.', '카카오채널로 예약링크를 안내드렸으나', $KAKAO_CONTENT);
+	// $KAKAO_CONTENT = str_replace('좌석/정류장 예약관련 안내드립니다.', '예약확정이 안되어 다시 한번 안내드립니다.', $KAKAO_CONTENT);
+	
+	// $msgTitle = str_replace("<br />", "", nl2br($KAKAO_CONTENT));
+	
+	$msgTitle = '액트립 서핑버스 예약안내';
+	$arrKakao = array(
+		"gubun"=> "bus"
+		, "admin"=> "N"
+		, "tempName"=> "at_bus_kakao"
+		, "smsTitle"=> $msgTitle
+		, "userName"=> $userName
+		, "userPhone"=> $userPhone
+		, "shopname"=> "액트립 서핑버스"
+		, "link1"=>$link1
+		, "smsOnly"=>"N"
+		, "PROD_NAME"=>"타채널 알림톡 재발송"
+		, "PROD_URL"=>""
+		, "PROD_TYPE"=>"bus_push"
+		, "RES_CONFIRM"=>"-1"
+	);
 
-	$response = curl_exec($curl);
-	$err = curl_error($curl);
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+	// 카카오 알림톡 DB 저장 START
+	$select_query = kakaoDebug($arrKakao, $arrRtn);            
+	$result_set = mysqli_query($conn, $select_query);
+	// 카카오 알림톡 DB 저장 END
 
 	mysqli_query($conn, "COMMIT");
 	
@@ -293,8 +304,10 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
 	if($resbus == "YY"){ //양양행
 		$seatName = "양양행";
+		$seatName2 = "양양";
 	}else{ //동해행
 		$seatName = "동해행";
+		$seatName2 = "동해";
 	}
 
 	$resseatMsg = "";
@@ -306,22 +319,22 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
 	}
 
-	$msgTitle = ' 셔틀버스';
+	$prodTitle = ' 서핑버스';
 	if($reschannel == 11){ //프립
-		$msgTitle = 'x프립버스';
+		$prodTitle = 'x프립버스';
 	}else if($reschannel == 17){ //프립 패키지
-		$msgTitle = 'x프립 서핑패키지';
+		$prodTitle = 'x프립 서핑패키지';
 	}else if($reschannel == 12){ //마이리얼트립
 
 	}else if($reschannel == 14){ //망고서프 패키지
 
 	}else if($reschannel == 15){ //서프엑스
-		$msgTitle = 'x서프엑스';
+		$prodTitle = 'x서프엑스';
 	}else if($reschannel == 16){ //클룩
-		$msgTitle = 'X클룩 셔틀버스';
+		$prodTitle = 'X클룩 셔틀버스';
 	}
 
-	$msgTitle = "액트립$msgTitle 예약안내";
+	$msgTitle = "액트립$prodTitle 예약안내";
 	$arrKakao = array(
 		"gubun"=> "bus"
 		, "admin"=> "N"
@@ -329,6 +342,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		, "smsTitle"=> $msgTitle
 		, "userName"=> $userName
 		, "userPhone"=> $userPhone
+		, "shopname"=> $seatName2." 서핑버스"
 		, "msgInfo"=>$resseatMsg
 		, "link1"=>"surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'))
 		, "smsOnly"=>"N"
@@ -362,6 +376,22 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
    mysqli_query($conn, "COMMIT");
 	
 	// echo $coupon_code." / ";
+}if($param == "busDatadel"){ //데이터 완전삭제
+	$resnum = $_REQUEST["resnum"];
+
+	$select_query = "DELETE FROM AT_RES_MAIN WHERE resnum = '$resnum'";
+	$result_set = mysqli_query($conn, $select_query);
+
+	$errmsg = $select_query;
+	if(!$result_set) goto errGo;
+
+	$select_query = "DELETE FROM AT_RES_SUB WHERE resnum = '$resnum'";
+	$result_set = mysqli_query($conn, $select_query);
+
+	$errmsg = $select_query;
+	if(!$result_set) goto errGo;
+
+	mysqli_query($conn, "COMMIT");
 }
 
 if(!$success){

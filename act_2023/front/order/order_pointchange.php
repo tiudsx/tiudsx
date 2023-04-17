@@ -330,7 +330,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>
     var businit = 0;
     var busrestype = "change";
-    var busDateinit = "<?=$sbusDate?>";
     var busData = {};
     var busResData = {};
     

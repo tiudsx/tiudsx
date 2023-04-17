@@ -161,7 +161,7 @@ if($param == "BusI"){
         }else{
             $weekday = fnWeek($SurfDateBusY[$i]);
 
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '['.$SurfDateBusY[$i].'('.$weekday.')] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
+            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }
 
         $arrData = explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]));
@@ -181,7 +181,7 @@ if($param == "BusI"){
         }else{
             $weekday = fnWeek($SurfDateBusS[$i]);
 
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '['.$SurfDateBusS[$i].'('.$weekday.')] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
+            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
         }
 
         $arrData = explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]));
@@ -212,21 +212,21 @@ if($param == "BusI"){
 			$busSeatInfoE .= $x;
 		}
 
-        $busSeatInfoTotal = "";
+        $busSeatInfoTotal = " ▶ 좌석안내\n";
         if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoS;
+            $busSeatInfoTotal .= $busSeatInfoS;
         }
         if($busSeatInfoE != ""){
             if($busSeatInfoS != ""){
                 $busSeatInfoTotal .= "\n";
             }
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
+            $busSeatInfoTotal .= $busSeatInfoE;
         }
 
         $totalPrice = "\n ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
         
         //신규 로직 : 2022-01-04
-        $gubun_title = $busTitleName.'서핑버스';
+        $gubun_title = $busTitleName.' 서핑버스';
         
         if($coupon == "JOABUS"){
             //$gubun_title = "조아서프 패키지 서핑버스";
@@ -277,6 +277,7 @@ if($param == "BusI"){
             , "userName"=> $userName
             , "userPhone"=> $userPhone
             , "msgType"=>$msgType
+            , "shopname"=>$gubun_title
             , "MainNumber"=>$ResNumber
             , "msgInfo"=>$msgInfo
             , "btn_ResContent"=> $btn_ResContent

@@ -9,7 +9,7 @@ $shopseq = 0;
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 
-<script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act_2023/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
@@ -18,10 +18,6 @@ $shopseq = 0;
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 예약관리</h1>
 </div>
-
-<script>
-    var mobileuse = "";
-</script>
 
 <div class="container" id="contenttop">
 <!-- .tab_container -->
@@ -418,48 +414,46 @@ function fnGetJson() {
     <div class="gg_first" style="margin-top:0px;">액트립 서핑버스</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
-            <col width="6%" />
-            <col width="14%" />
-            <col width="6%" />
-            <col width="14%" />
-            <col width="6%" />
-            <col width="14%" />
-            <col width="6%" />
-            <col width="14%" />
-            <col width="6%" />
-            <col width="14%" />
+            <col width="8%" />
+            <col width="17%" />
+            <col width="8%" />
+            <col width="17%" />
+            <col width="8%" />
+            <col width="17%" />
+            <col width="8%" />
+            <col width="17%" />
         </colgroup>
         <tbody>
 			<tr>
 				<th>예약번호</th>
 				<td><input type="text" id="resnum" name="resnum" size="12" value="" class="itx" readonly="readonly"></td>
-                <th>예약자이름</th>
-                <td><input type="text" id="user_name" name="user_name" size="12" value="" class="itx"></td>
-                <th>연락처</th>
-				<td>
-					<input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx">
-				</td>
+                <th>예약자</th>
+                <td>
+                    <input type="text" id="user_name" name="user_name" size="5" value="" class="itx">
+                    <input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx">
+                    <input type="hidden" id="user_email" name="user_email" value="" class="itx" size="18">
+                </td>
+                <th>결제금액</th>
+                <td>
+                    <input type="text" id="res_price" name="res_price" size="4" value="" class="itx"> 
+                </td>
 				<th>할인쿠폰</th>
 				<td>
                     <input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="6"> / 
                     <input type="text" id="res_coupon" name="res_coupon" value="" class="itx" size="8">
                 </td>
-                <th>결제금액</th>
-                <td>
-                    <input type="text" id="res_price" name="res_price" size="4" value="" class="itx"> 
-                    할인 : <input type="text" id="res_disprice" name="res_disprice" size="4" value="" class="itx">
-                </td>
-				</td>
             </tr>
             <tr>
-                <th>이메일</th>
-                <td><input type="text" id="user_email" name="user_email" value="" class="itx" size="18"></td>
                 <th>신청일</th>
-                <td><input type="text" id="insdate" name="insdate" size="20" value="" class="itx"></td>
+                <td><input type="text" id="insdate" name="insdate" size="16" value="" class="itx"></td>
                 <th>확정일</th>
-                <td><input type="text" id="confirmdate" name="confirmdate" size="20" value="" class="itx"></td>
+                <td><input type="text" id="confirmdate" name="confirmdate" size="16" value="" class="itx"></td>
+                <th>할인금액</th>
+                <td>
+                    <input type="text" id="res_disprice" name="res_disprice" size="4" value="" class="itx">
+                </td>
                 <th>제휴업체</th>
-                <td><input type="text" id="res_cooperate" name="res_cooperate" size="20" value="" class="itx" readonly="readonly"></td>
+                <td><input type="text" id="res_cooperate" name="res_cooperate" size="10" value="" class="itx" readonly="readonly"></td>
 			</tr>
 			<tr>
                 <th>예약정보</th>
@@ -514,30 +508,30 @@ function fnGetJson() {
 								<td>
 									<input type="hidden" id="ressubseq" name="ressubseq[]" >
                                     <select id="res_busnum" name="res_busnum" class="select" onchange="fnBusPointSel2(this, this.value, '', '', 2);" disabled="disabled">
-                                        <option value="Y1">양양행 1호차</option>
-                                        <option value="Y2">양양행 2호차</option>
-                                        <option value="Y3">양양행 3호차</option>
-                                        <option value="Y4">양양행 4호차</option>
-                                        <option value="Y5">양양행 5호차</option>
-                                        <option value="Y6">양양행 6호차</option>
-                                        <option value="S21">(양양)서울행 15시 1호차</option>
-                                        <option value="S23">(양양)서울행 15시 2호차</option>
-                                        <option value="S23">(양양)서울행 15시 3호차</option>
-                                        <option value="S51">(양양)서울행 18시 1호차</option>
-                                        <option value="S52">(양양)서울행 18시 2호차</option>
-                                        <option value="S53">(양양)서울행 18시 3호차</option>
-                                        <option value="E1">동해행 1호차</option>
-                                        <option value="E2">동해행 2호차</option>
-                                        <option value="E3">동해행 3호차</option>
-                                        <option value="E4">동해행 4호차</option>
-                                        <option value="E5">동해행 5호차</option>
-                                        <option value="E6">동해행 6호차</option>
-                                        <option value="A21">(동해)서울행 15시 1호차</option>
-                                        <option value="A22">(동해)서울행 15시 2호차</option>
-                                        <option value="A22">(동해)서울행 15시 3호차</option>
-                                        <option value="A51">(동해)서울행 18시 1호차</option>
-                                        <option value="A52">(동해)서울행 18시 2호차</option>
-                                        <option value="A53">(동해)서울행 18시 3호차</option>
+                                        <option value="YSa1">양양행(사당선) 1호차</option>
+                                        <option value="YSa2">양양행(사당선) 2호차</option>
+                                        <option value="YSa3">양양행(사당선) 3호차</option>
+                                        <option value="YJo1">양양행(종로선) 1호차</option>
+                                        <option value="YJo2">양양행(종로선) 2호차</option>
+                                        <option value="YJo3">양양행(종로선) 3호차</option>
+                                        <option value="SY21">양양>서울행 오후 1호차</option>
+                                        <option value="SY22">양양>서울행 오후 2호차</option>
+                                        <option value="SY23">양양>서울행 오후 3호차</option>
+                                        <option value="SY51">양양>서울행 저녁 1호차</option>
+                                        <option value="SY52">양양>서울행 저녁 2호차</option>
+                                        <option value="SY53">양양>서울행 저녁 3호차</option>
+                                        <option value="ESa1">동해행(사당선) 1호차</option>
+                                        <option value="ESa2">동해행(사당선) 2호차</option>
+                                        <option value="ESa3">동해행(사당선) 3호차</option>
+                                        <option value="EJo1">동해행(종로선) 1호차</option>
+                                        <option value="EJo2">동해행(종로선) 2호차</option>
+                                        <option value="EJo3">동해행(종로선) 3호차</option>
+                                        <option value="AE21">동해>서울행 오후 1호차</option>
+                                        <option value="AE22">동해>서울행 오후 2호차</option>
+                                        <option value="AE23">동해>서울행 오후 3호차</option>
+                                        <option value="AE51">동해>서울행 저녁 1호차</option>
+                                        <option value="AE52">동해>서울행 저녁 2호차</option>
+                                        <option value="AE53">동해>서울행 저녁 3호차</option>
                                     </select>
 								</td>
 								<td style="line-height:2.3em">
@@ -594,11 +588,14 @@ function fnGetJson() {
                 <td colspan="9"><textarea id="memo" name="memo" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
             <tr>
-				<td class="col-02" style="text-align:center;" colspan="10">
+				<td class="col-02" style="text-align:center;" colspan="7">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="changeConfirmNew" class="itx">
                     <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd();" id="SolModify" />&nbsp;
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnBlockClose();fnBusPopupReset();" />
+                </td>
+                <td style="text-align:center;">
+                    <input type="button" class="gg_btn res_btn_color2" style="width:80px; height:40px;" value="삭제" onclick="fnBusDataDel();" />  
                 </td>
             </tr>
         </tbody>

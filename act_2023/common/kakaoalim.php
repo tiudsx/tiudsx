@@ -41,7 +41,7 @@ function kakaoContent($arrKakao){
 			.'\n\n하단에 있는 <[필독]예약 상세안내> 버튼을 클릭하시고 내용을 꼭 확인해주세요'
 			.'\n---------------------------------'
 			.'\n ▶ 안내사항'
-			.'\n    - 6월~8월 주말은 예상시간보다 많이 걸릴 수 있으니 일찍 출발부탁드려요~'
+			.'\n   - 6월~8월 주말은 예상시간보다 많이 걸릴 수 있으니 일찍 출발부탁드려요~'
 			.'\n   - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
 			.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
 
@@ -54,24 +54,40 @@ function kakaoContent($arrKakao){
 				.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
 				.'\n\n예약정보'
 				.'\n ▶ 예약자 : '.$arrKakao["userName"]
-				.'\n ▶ 예약항목 : '.$arrKakao["kakaoRes"]
+				.'\n ▶ 예약상품 : '.$arrKakao["kakaoRes"]
 				.'\n---------------------------------'
 				.'\n ▶ 안내사항'
 				.'\n    - 6월~8월 주말은 예상시간보다 많이 걸릴 수 있으니 일찍 출발부탁드려요~'
 				.'\n    - 서핑강습은 고객님 편의를 위해 제휴된 서핑샵으로 안내하고 있습니다.'
 				.'\n    - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
+
 		}else if($arrKakao["PROD_TYPE"] == "bus_cancel" || $arrKakao["PROD_TYPE"] == "surf_cancel"){ //자동취소 안내
 			$kakaoMsg = $arrKakao["smsTitle"]
 				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
 				.'\n예약건에 대해 입금처리가 안되어서 취소되었습니다.'
 				.'\n\n예약정보 [자동취소]'
+				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
 				.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
 				.'\n ▶ 예약자 : '.$arrKakao["userName"]
-				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
 				.'\n---------------------------------'
 				.'\n ▶ 안내사항'
 				.'\n      - 입금마감시간이 지나서 자동취소가 되었습니다.'
-				.'\n이용을 원하실 경우 다시 예약해주세요.';
+				.'\n      - 이용을 원하실 경우 다시 예약해주세요.';
+
+		}else if($arrKakao["PROD_TYPE"] == "bus_return"){ // 환불안내
+            $kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n신청하신 환불내역 안내입니다.'
+				.'\n\n예약정보 [환불요청]'
+				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
+				.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n'.$arrKakao["msgInfo"]
+				.'---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n      - 환불처리기간은 1~7일정도 소요됩니다.'
+				.'\n      - 계좌번호를 잘못 입력하신 경우 카카오채널로 문의주세요.';
+
 		}
 
 	}else if($arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 입금대기
@@ -79,6 +95,7 @@ function kakaoContent($arrKakao){
 			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
 			.'\n서핑버스를 예약해주셔서 감사합니다.'
 			.'\n\n예약정보 [입금대기]'
+			.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
 			.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
 			.'\n ▶ 예약자 : '.$arrKakao["userName"]
 			.'\n'.$arrKakao["msgInfo"]
@@ -93,6 +110,7 @@ function kakaoContent($arrKakao){
 			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
 			.'\n서핑버스를 예약해주셔서 감사합니다.'
 			.'\n\n예약정보 [예약확정]'
+			.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
 			.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
 			.'\n ▶ 예약자 : '.$arrKakao["userName"]
 			.'\n'.$arrKakao["msgInfo"]
@@ -117,19 +135,36 @@ function kakaoContent($arrKakao){
 			.'\n      - 예약건 매진으로 인하여 취소 될 수 있으니 참고부탁드립니다.';
 
 	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채널 알림톡발송
-		$kakaoMsg = $arrKakao["smsTitle"]
-			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-			.'\n액트립 셔틀버스를 예약해주셔서 감사합니다.'
-			.'\n셔틀버스 좌석/정류장 예약관련 안내드립니다.'
-			.'\n\n액트립 셔틀버스 예약정보'
-			.'\n ▶ 예약번호 : -'
-			.'\n ▶ 예약자 : '.$arrKakao["userName"]
-			.'\n ▶ 예약가능 좌석'.$arrKakao["msgInfo"]
-			.'\n---------------------------------'
-			.'\n ▶ 안내사항'
-			.'\n      - [예약하기] 버튼을 클릭해서 좌석/정류장을 예약해주세요.'
-			.'\n      - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~';
+		if($arrKakao["PROD_TYPE"] == "bus_channel"){ //타채널 알림톡발송
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n서핑버스를 예약해주셔서 감사합니다.'
+				.'\n좌석/정류장 예약관련 안내드립니다.'
+				.'\n\n예약정보 [예약대기]'
+				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
+				.'\n ▶ 예약번호 : -'
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n ▶ 예약좌석'.$arrKakao["msgInfo"]
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n      - [예약하기] 클릭 후 좌석/정류장을 예약해주세요.'
+				.'\n      - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~';
 
+		}else if($arrKakao["PROD_TYPE"] == "bus_push"){ // 타채널 재발송 안내
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n카카오채널로 예약링크를 안내드렸으나 예약확정이 안되어 다시 한번 안내드립니다.'
+				.'\n\n예약정보 [예약대기]'
+				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n      - [예약하기] 클릭 후 좌석/정류장을 예약해주세요.'
+				.'\n      - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~'
+				.'\n\n고객님들 모두 불편함 없는 즐거운 주말 여행이 되시길 바랍니다.'
+				.'\n\n감사합니다~';
+
+		}
 	}
 
 	return $kakaoMsg;
@@ -160,6 +195,7 @@ function kakaoMsg($arrKakao){
 	
     $arrKakao["kakaoMsg"] = kakaoContent($arrKakao); //카카오 메시지 내용
 
+	//문자발송용 변수
 	$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
 
 	$arryKakao = '';

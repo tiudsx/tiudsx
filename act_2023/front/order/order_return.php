@@ -193,7 +193,6 @@ if($param == "RtnPrice"){
         //echo '<script>alert("환불신청 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");</script>';
         echo 'err';
     }else{
-        $rtnText = ' ▶ 환불요청 안내\n       - 결제금액 : '.number_format($TotalPrice).'원\n       - 환불수수료 : '.number_format($TotalFee).'원\n       - 환불금액 : '.number_format($TotalPrice-$TotalFee).'원\n  ▶환불계좌\n       - '.str_replace('|', ' / ', $FullBankText).'\n';
 
         if($ressubseqInfo != ""){
             if($code == "bus"){
@@ -202,35 +201,35 @@ if($param == "RtnPrice"){
                     $msgInfo .= $x;
                 }
 
-                $msgInfo = " ▶ 좌석안내\n".$msgInfo;
+                $rtnText = '\n ▶ 환불요청 안내'
+                    .'\n       - 결제금액 : '.number_format($TotalPrice).'원'
+                    .'\n       - 환불수수료 : '.number_format($TotalFee).'원'
+                    .'\n       - 환불금액 : '.number_format($TotalPrice-$TotalFee).'원'
+                    .'\n  ▶환불계좌\n       - '.str_replace('|', ' / ', $FullBankText).'\n';
+
+                $msgInfo = " ▶ 좌석안내\n".$msgInfo.$rtnText;
                 $mailmsgInfo = $msgInfo;
-                $subtitlename = '액트립';
+                $shopname = '서핑버스';
             }else{
                 $msgInfo = " ▶ 신청목록\n".$surfMsg;
                 $mailmsgInfo = $surfMsg;
-                $subtitlename = $shopname;
             }
 
             $msgTitle = '액트립 '.$shopname.' 환불안내';
-            $kakaoMsg = $msgTitle.'\n안녕하세요. '.$userName.'님\n\n'.$subtitlename.' 예약정보 [환불요청]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.$rtnText.'---------------------------------\n ▶ 안내사항\n      - 환불처리기간은 1~7일정도 소요됩니다.\n\n ▶ 문의\n      - http://pf.kakao.com/_HxmtMxl';
-
             $arrKakao = array(
                 "gubun"=> $code
                 , "admin"=> "N"
+                , "tempName"=> "at_res_step4"
                 , "smsTitle"=> $msgTitle
                 , "userName"=> $userName
-                , "tempName"=> "at_res_step3"
-                , "kakaoMsg"=>$kakaoMsg
                 , "userPhone"=> $userPhone
-                , "link1"=>"event" //공지사항
-                , "link2"=>""
-                , "link3"=>""
-                , "link4"=>""
-                , "link5"=>""
+                , "shopname"=> $shopname
+                , "MainNumber"=> $ResNumber
+                , "msgInfo"=>$msgInfo
                 , "smsOnly"=>"N"
                 , "PROD_NAME"=>"취소/환불요청"
                 , "PROD_URL"=>$shopseq
-                , "PROD_TYPE"=>$code
+                , "PROD_TYPE"=> $code."_return"
                 , "RES_CONFIRM"=>"4"
             );
             $arrRtn = sendKakao($arrKakao); //알림톡 발송
@@ -277,45 +276,6 @@ if($param == "RtnPrice"){
             );
             
             sendMail($arrMail); //메일 발송
-            
-            if($code != "bus"){
-                //카카오톡 업체 발송
-                $select_query = 'SELECT * FROM AT_PROD_MAIN WHERE seq = '.$shopSeq;
-                $result_setlist = mysqli_query($conn, $select_query);
-                $rowshop = mysqli_fetch_array($result_setlist);
-
-                $admin_tel = $rowshop["tel_kakao"];
-                // $admin_tel = "010-4437-0009";
-
-                $msgTitle = '액트립 ['.$userName.']님 예약취소';
-                $kakaoMsg = $msgTitle.'\n안녕하세요. 액트립 예약취소건 안내입니다.\n\n액트립 예약정보 [예약취소]\n ▶ 예약번호 : '.$ResNumber.'\n ▶ 예약자 : '.$userName.'\n'.$msgInfo.'---------------------------------\n ▶ 안내사항\n      - 예약취소내역 확인부탁드립니다.\n\n';
-
-                $arrKakao = array(
-                    "gubun"=> $code
-                    , "admin"=> "N"
-                    , "smsTitle"=> $msgTitle
-                    , "userName"=> $userName
-                    , "tempName"=> "at_shop_step1"
-                    , "kakaoMsg"=>$kakaoMsg
-                    , "userPhone"=> $admin_tel
-                    , "link1"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$shopSeq)) //전체 예약목록
-                    , "link2"=>"surfadminkakao?param=".urlencode(encrypt(date("Y-m-d").'|'.$ResNumber.'|'.$shopSeq)) //현재 예약건 보기
-                    , "link3"=>""
-                    , "link4"=>""
-                    , "link5"=>""
-                    , "smsOnly"=>"N"
-                    , "PROD_NAME"=>"환불요청_업체"
-                    , "PROD_URL"=>$shopseq
-                    , "PROD_TYPE"=>"surf_shop"
-                    , "RES_CONFIRM"=>"4"
-                );
-                $arrRtn = sendKakao($arrKakao); //알림톡 발송
-    
-                // 카카오 알림톡 DB 저장 START
-                $select_query = kakaoDebug($arrKakao, $arrRtn);
-                $result_set = mysqli_query($conn, $select_query);
-                // 카카오 알림톡 DB 저장 END
-            }
         }
         
         mysqli_query($conn, "COMMIT");
@@ -415,7 +375,7 @@ if($param == "RtnPrice"){
         if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
             $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }else{
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
+            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
         }
     }
     
@@ -437,7 +397,7 @@ if($param == "RtnPrice"){
         if(array_key_exists($SurfDateBusS[$i].$busNumS[$i], $arrSeatInfoE)){
             $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
         }else{
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
+            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
         }
     }
     
@@ -477,15 +437,15 @@ if($param == "RtnPrice"){
             $TotalPrice = $rowTime["res_totalprice"];
         }
 
-        $busSeatInfoTotal = "";
+        $busSeatInfoTotal = " ▶ 좌석안내\n";
         if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoS;
+            $busSeatInfoTotal .= $busSeatInfoS;
         }
         if($busSeatInfoE != ""){
             if($busSeatInfoS != ""){
                 $busSeatInfoTotal .= "\n";
             }
-            $busSeatInfoTotal .= " ▶ ".$busSeatInfoE;
+            $busSeatInfoTotal .= $busSeatInfoE;
         }
         
         if($res_confirm == 0){ //입금대기
@@ -514,6 +474,9 @@ if($param == "RtnPrice"){
 
         // 고객 카카오톡 발송
         $msgTitle = '액트립 서핑버스 변경신청 안내';
+
+        
+        $gubun_title = $busTitleName.' 서핑버스';
         $arrKakao = array(
             "gubun"=> "bus"
             , "admin"=> "N"
@@ -521,6 +484,7 @@ if($param == "RtnPrice"){
             , "smsTitle"=> $msgTitle
             , "userName"=> $userName
             , "userPhone"=> $userPhone
+            , "shopname"=>$gubun_title
             , "msgType"=>$msgType
             , "MainNumber"=>$ResNumber
             , "msgInfo"=>$msgInfo

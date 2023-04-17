@@ -9,7 +9,7 @@ include __DIR__.'/../../common/logininfo.php';
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
 <link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
 
-<script type="text/javascript" src="/act/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act_2023/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_sol.js?v=<?=time()?>"></script>
@@ -17,10 +17,6 @@ include __DIR__.'/../../common/logininfo.php';
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>솔게스트하우스 예약관리 </h1>
 </div>
-
-<script>
-    var mobileuse = "";
-</script>
 
 <div class="container" id="contenttop" style="padding-top:35px;">
 
