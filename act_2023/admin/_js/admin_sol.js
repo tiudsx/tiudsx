@@ -374,6 +374,18 @@ function fnSolDataAdd(gubun) {
     }
 
     //$j("#resparam").val(gubun);
+    var res_kakao = $j("#res_kakao").val();
+    var res_kakaoBank = parseInt($j("#res_kakaoBank").val(), 10);
+    var res_kakaoText = "";
+    if(res_kakao == "S"){
+        res_kakaoText = "계좌안내 알림톡도 함께 발송됩니다.";
+
+        if(res_kakaoBank > 0){
+            res_kakaoText += "\n입금금액 : " + commify(res_kakaoBank) + "원";
+        }
+
+        res_kakaoText += "\n\n"
+    }
 
     var text1 = "예약등록을 하시겠습니까?";
     var text2 = "예약등록이 완료되었습니다.";
@@ -384,7 +396,7 @@ function fnSolDataAdd(gubun) {
         $j("#resseq").val("");
     }
 
-    if (!confirm(text1)) {
+    if (!confirm(res_kakaoText + text1)) {
         return;
     }
 
@@ -790,4 +802,12 @@ function fnRentYN(obj, subseq) {
 
 function fnAllChk(obj) {
     $j("input[id=chkresseq]:not(:disabled)").prop("checked", $j(obj).is(':checked'));
+}
+
+function fnKakaoBank(vlu){
+    if(vlu == "S"){
+        $j("#spanBank").show();
+    }else{
+        $j("#spanBank").hide();        
+    }
 }

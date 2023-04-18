@@ -34,7 +34,7 @@ function kakaoContent($arrKakao){
 	if($arrKakao["tempName"] == "at_surf_step3"){ //솔게하 알림톡 발송
 		$kakaoMsg = $arrKakao["smsTitle"]
 			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-			.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
+			.'\n솔게하&솔서프를 예약해주셔서 감사합니다.'
 			.'\n예약하신 정보를 안내드립니다.'
 			.'\n\n예약정보'
 			.'\n ▶ 예약자 : '.$arrKakao["userName"]
@@ -46,10 +46,35 @@ function kakaoContent($arrKakao){
 			.'\n   - 상담 및 문의가 있으신 경우 채팅방을 통해 톡 남겨주시면 빠르게 답변드리겠습니다.';
 
 	}else if($arrKakao["tempName"] == "at_res_step4"){
-		if($arrKakao["PROD_TYPE"] == "sol_standby"){ //솔게하 예약안내
+		if($arrKakao["PROD_TYPE"] == "sol_bank"){ //솔게하 계좌안내
+			if($arrKakao["kakaoprice"] == "0"){ //일반 계좌안내
+				$bankText = "\n이용하실 상품의 입금 계좌번호를 안내드립니다.";
+				$bankPrice = "";
+			}else{ //금액 계좌안내
+				$bankText = "\n이용하실 상품은 안내된 금액으로 입금해주시면 됩니다.";
+				$bankPrice = '\n ▶ 입금금액 : '.number_format($arrKakao["kakaoprice"]).'원';
+			}
+
 			$kakaoMsg = $arrKakao["smsTitle"]
 				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-				.'\n솔게스트하우스&솔서프를 예약해주셔서 감사합니다.'
+				.'\n솔게하&솔서프를 이용해주셔서 감사합니다.'
+				.$bankText
+				.'\n\n예약정보'
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n ▶ 예약상품 : '.$arrKakao["kakaoRes"]
+				.$bankPrice
+				.'\n ▶ 계좌번호 : 농협 / 302-1454-3429-61'
+				.'\n ▶ 예금주명 : 이승철'
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n    - 예약을 원하실 경우 안내된 계좌로 입금부탁드립니다.'
+				.'\n    - 입금이 확인되면 확정 및 이용 가능하니 참고부탁드립니다.'
+				.'\n    - 추가 문의사항은 카카오채널 또는 010-4337-5080으로 연락주세요.';
+
+		}elseif($arrKakao["PROD_TYPE"] == "sol_standby"){ //솔게하 예약안내
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n솔게하&솔서프를 예약해주셔서 감사합니다.'
 				.'\n예약이 확정되어 안내드립니다.'
 				.'\n자세한 이용안내는 이용일 하루전에 발송되니 꼭 확인해주세요~'
 				.'\n\n예약정보'

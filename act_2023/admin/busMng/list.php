@@ -118,6 +118,7 @@ $shopseq = -2;
                             </td>
                             <td style="text-align:center;">
                                 <select id="res_gpsname" name="res_gpsname[]" class="select" sel="">
+                                    <option value="">-------</option>
                                     <option value="양양 1호차">양양 1호차</option>
                                     <option value="양양 2호차">양양 2호차</option>
                                     <option value="양양 3호차">양양 3호차</option>

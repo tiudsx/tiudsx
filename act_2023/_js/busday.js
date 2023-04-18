@@ -20,10 +20,10 @@ var busPoint_4 = "";
 
 var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50;
-var busPointListY1 = {};
-var busPointListY2 = {};
-var busPointListS1 = {}
-var busPointListA1 = {}
+var busPointListYS = {};
+var busPointListYJ = {};
+var busPointListSY = {}
+var busPointListAE = {}
 
 var params = "gubun=pointlist";
 $j.ajax({
@@ -75,8 +75,8 @@ $j.ajax({
                 var Y_OFFSET = MARKER_SPRITE_Y_OFFSET * 3;
 
                 var timeText1 = item.time.split(":");
-                eval("busPointListY1['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
-                //console.log("busPointListY2['" + item.codename + "']  = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
+                eval("busPointListYS['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
+                //console.log("busPointListYS['" + item.codename + "']  = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
             }
             //console.log(key + " / " +  item.codename);
         });
@@ -95,7 +95,7 @@ $j.ajax({
                 var Y_OFFSET = MARKER_SPRITE_Y_OFFSET * 3;
 
                 var timeText1 = item.time.split(":");
-                eval("busPointListY2['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
+                eval("busPointListYJ['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
             }
         });
 
@@ -114,7 +114,7 @@ $j.ajax({
 
                 var timeText1 = item.time.split(":");
                 var timeText2 = item.time2.split(":");
-                eval("busPointListS1['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분 / " + timeText2[0] + "시 " + timeText2[1] + "분</font>', " + num + "]");
+                eval("busPointListSY['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분 / " + timeText2[0] + "시 " + timeText2[1] + "분</font>', " + num + "]");
             }
         });
 
@@ -133,7 +133,7 @@ $j.ajax({
 
                 var timeText1 = item.time.split(":");
                 var timeText2 = item.time2.split(":");
-                eval("busPointListA1['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분 / " + timeText2[0] + "시 " + timeText2[1] + "분</font>', " + num + "]");
+                eval("busPointListAE['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분 / " + timeText2[0] + "시 " + timeText2[1] + "분</font>', " + num + "]");
             }
         });
     }

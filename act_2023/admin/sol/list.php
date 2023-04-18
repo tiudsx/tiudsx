@@ -36,12 +36,16 @@ include __DIR__.'/../../common/logininfo.php';
 	</div>
     <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
         <colgroup>
-            <col width="10%" />
-            <col width="23%" />
-            <col width="10%" />
-            <col width="23%" />
-            <col width="10%" />
-            <col width="24%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
+            <col width="8%" />
+            <col width="12%" />
         </colgroup>
         <tbody>
 			<tr>
@@ -53,14 +57,12 @@ include __DIR__.'/../../common/logininfo.php';
                         <option value='정태일'>정태일</option>
                     </select>
 				</td>
-                <th>예약자이름</th>
-                <td><input type="text" id="user_name" name="user_name" size="15" value="" class="itx"></td>
+                <th>예약자</th>
+                <td><input type="text" id="user_name" name="user_name" size="8" value="" class="itx"></td>
                 <th>연락처</th>
 				<td>
-					<input type="text" id="user_tel" name="user_tel" size="15" value="" class="itx">
+					<input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx">
 				</td>
-			</tr>
-			<tr>
 				<th>예약처</th>
 				<td>
 					<select id="res_company" name="res_company" class="select">
@@ -84,17 +86,24 @@ include __DIR__.'/../../common/logininfo.php';
 						<option value='취소'>취소</option>
                     </select>
 				</td>
+			</tr>
+			<tr>
                 <th>알림톡</th>
-				<td>
-					<select id="res_kakao" name="res_kakao" class="select">
-						<option value='Y'>발송</option>				
+				<td colspan="3">
+					<select id="res_kakao" name="res_kakao" class="select" onchange="fnKakaoBank(this.value);">
+						<option value='Y'>발송</option>
 						<option value='N'>미발송</option>
+						<option value='S'>계좌안내</option>
 					</select> (등록일 경우만 발송)
+				</td>
+                <th>입금금액</th>
+				<td>
+					<span id="spanBank" style="display:none;"><input type="text" id="res_kakaoBank" name="res_kakaoBank" size="12" value="0" class="itx">원</span>
 				</td>
 			</tr>
 			<tr>
                 <th>숙박</th>
-                <td colspan="6">
+                <td colspan="10">
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
 							<col width="*" />
@@ -173,7 +182,7 @@ include __DIR__.'/../../common/logininfo.php';
 			</tr>
             <tr>
                 <th>서핑강습</th>
-                <td colspan="6">
+                <td colspan="10">
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
 							<col width="*" />
@@ -269,21 +278,21 @@ include __DIR__.'/../../common/logininfo.php';
             </tr>
             <tr style="display:none;">
                 <th>요청사항</th>
-                <td colspan="5"><textarea id="memo" name="memo" rows="5" style="width: 60%; resize:none;"></textarea></td>
+                <td colspan="10"><textarea id="memo" name="memo" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
 			<tr>
                 <th>직원메모</th>
-                <td colspan="5"><textarea id="memo2" name="memo2" rows="5" style="width: 60%; resize:none;"></textarea></td>
+                <td colspan="10"><textarea id="memo2" name="memo2" rows="5" style="width: 60%; resize:none;"></textarea></td>
 			</tr>
             <tr>
-				<td class="col-02" style="text-align:center;" colspan="5">
+				<td class="col-02" style="text-align:center;" colspan="8">
                     <input type="hidden" id="resparam" name="resparam" size="10" value="soladd" class="itx">
                     <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="등록" onclick="fnSolDataAdd('soladd');" id="SolAdd"/>
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;display:none;" value="수정" onclick="fnSolDataAdd('modify');" id="SolModify" />&nbsp;
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnSolInsert();fnSolpopupReset();" />
                 </td>
-				<td style="text-align:center;">
+				<td style="text-align:center;" colspan="2">
 					<input type="button" class="btnsurfadd" style="width:120px; height:40px;display:none;" id="SolDel" value="삭제" onclick="fnSolDel();" />
 				</td>
             </tr>

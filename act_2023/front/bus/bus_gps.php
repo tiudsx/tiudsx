@@ -1,5 +1,6 @@
 <?
 include __DIR__.'/../../common/db.php';
+include __DIR__.'/../../common/func.php';
 
 // 과거 수집 데이터 삭제
 mysqli_query($conn, "SET AUTOCOMMIT=0");
@@ -48,41 +49,44 @@ $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
 $count = 1;
-if($nowTime > 0500 && $nowTime < 1300){
+if($nowTime > 0500 && $nowTime < 1200){
     $busList = "'Y','E'";
-}else if($nowTime >= 1300 && $nowTime < 2300){
-    $busList = "'S','A'";
+}else if($nowTime >= 1200 && $nowTime < 2300){
+    $busList = "'Y','E', 'S','A'";
 }else{
     $count = 0;
 }
 
 if($count == 1){
     $arrMapList = array();
-    $select_query = 'SELECT * FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS b
+    $select_query = "SELECT a.lat, a.lng, b.bus_gubun, b.bus_num, b.bus_gubun, b.bus_num,
+                            concat(b.bus_gubun, '', b.bus_num) AS busName,
+                            CASE 
+                                WHEN LEFT(b.bus_num, 2) = 'Sa' THEN 1
+                                WHEN LEFT(b.bus_num, 2) = 'Jo' THEN 2
+                                WHEN LEFT(b.bus_num, 2) = 'Y2' THEN 3
+                                WHEN LEFT(b.bus_num, 2) = 'Y5' THEN 4
+                                WHEN LEFT(b.bus_num, 2) = 'E2' THEN 5
+                                WHEN LEFT(b.bus_num, 2) = 'E5' THEN 6
+                            END AS ordernum
+                        FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS_DAY b
                         ON a.user_name = b.gpsname
-                            AND a.gpsdate = b.busdate
-                        WHERE b.busgubun IN ('.$busList.')
-                            AND b.use_yn = "Y"
-                            AND b.seq IN (7,14)
-                        ORDER BY b.busgubun DESC, b.busnum';
+                            AND a.gpsdate = b.bus_date
+                        WHERE b.bus_gubun IN ($busList)
+                            AND b.useYN = 'Y'
+                        ORDER BY b.bus_gubun, ordernum, b.bus_num";
     $result_setlist = mysqli_query($conn, $select_query);
     $count = mysqli_num_rows($result_setlist);
 
     while ($row = mysqli_fetch_assoc($result_setlist)){
-        $busNum = $row['busgubun'].$row['busnum'];
-        $busgubun = $row["busgubun"];
-        $busName = $row['busname'];
-        if($busNum == "Y1"){
-            $busName = "사당선 1, 3호차";
-        }else if($busNum == "Y2"){
-            $busName = "종로선 2, 4호차";
-        }
+        $busNum = $row['busName'];
+        $busgubun = $row["bus_gubun"];
+        $busName = explode(" ", fnBusNum($busNum));
+        $busName = $busName[0]." ".$busName[1].(($busName[1] == "오후" || $busName[1] == "저녁") ? " 출발" : "");
 
-        $user_name = $row['user_name'];
         $lat = $row['lat'];
         $lng = $row['lng'];
-        $insdate = $row['insdate'];
-        $arrMapList[$row['busgubun']] .= '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus="'.$busNum.'" onclick="fnBusGPSPoint(this);">&nbsp;';
+        $arrMapList[$row['bus_gubun']] .= '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus="'.$busNum.'" onclick="fnBusGPSPoint(this);">&nbsp;';
     }
 }
 ?>
@@ -118,10 +122,21 @@ function fnBusGPSPoint(obj) {
                 }else{
                     MARKER_ZOOM = 17;
                 }
-                
+
                 MARKER_SPRITE_POSITION2 = eval(data);
+
+                // var busPoint = getBusNum(busnum, 2);
+                // $j.each(eval("busPointList" + busPoint), function(key, item) {
+                //     //console.log(key + " / " + item);
+                //     MARKER_SPRITE_POSITION2[key] = item;
+                // });
+
+                // $j.each(eval(data), function(key, item) {
+                //     //console.log(key + " / " + item);
+                //     MARKER_SPRITE_POSITION2[key] = item;
+                // });
                 
-                $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/view_bus_map.html");
+                $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/bus_gps_map.html");
             }
         }
     });

@@ -318,6 +318,12 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	}
 
 	//알림톡 발송 (확정, 등록일경우)
+	$kakaoRes = $kaka_stay.$kaka_bbq.$kaka_surf.$kaka_rent;
+
+	if($kakaoRes != ""){
+		$kakaoRes = substr($kakaoRes, 0, strlen($kakaoRes) - 1);
+	}
+
 	if($res_kakao == "Y" && $res_confirm == "확정"){
 		$select_query = "SELECT user_name, user_tel, res_kakaoinfo FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq";
 		$result = mysqli_query($conn, $select_query);
@@ -328,11 +334,6 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		$res_kakaoinfo = $rowMain["res_kakaoinfo"];
 
 		if($res_kakaoinfo == "N"){
-			$kakaoRes = $kaka_stay.$kaka_bbq.$kaka_surf.$kaka_rent;
-
-			if($kakaoRes != ""){
-				$kakaoRes = substr($kakaoRes, 0, strlen($kakaoRes) - 1);
-			}
 		
 			//==========================카카오 메시지 발송 ==========================
 			$msgTitle = '솔게스트하우스&솔서프 예약안내';
@@ -371,6 +372,33 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 			$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', userinfo = '".$userinfo."' WHERE resseq = $seq";
 			$result_set = mysqli_query($conn, $select_query);
 		}
+	}else if($res_kakao == "S"){
+		$res_kakaoBank = $_REQUEST["res_kakaoBank"];
+
+		//==========================카카오 메시지 발송 ==========================
+		$msgTitle = '솔게스트하우스&솔서프 계좌안내';
+		$arrKakao = array(
+			"gubun"=> $code
+			, "admin"=> "N"
+			, "tempName"=> "at_res_step4" //이용안내
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $user_name
+			, "userPhone"=> $user_tel
+			, "kakaoRes"=> $kakaoRes
+			, "kakaoprice"=> $res_kakaoBank
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=>"솔게하"
+			, "PROD_URL"=>""
+			, "PROD_TYPE"=>"sol_bank"
+			, "RES_CONFIRM"=>"-1"
+		);
+
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
 	}
 		
 	mysqli_query($conn, "COMMIT");
