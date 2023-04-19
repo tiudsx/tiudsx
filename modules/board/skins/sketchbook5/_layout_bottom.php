@@ -13,13 +13,13 @@
 		<div class="gpe_utilMenu">
 			<ul>
 				<li>
-					<a href="/act/clause/service.html">서비스이용약관</a>
+					<a href="/act_2023/_clause/service.html">서비스이용약관</a>
 				</li>
 				<li>
-					<a href="/act/clause/privacy.html">개인정보취급방침</a>
+					<a href="/act_2023/_clause/privacy.html">개인정보취급방침</a>
 				</li>
 				<li>
-					<a href="/act/clause/youth.html">청소년보호정책</a>
+					<a href="/act_2023/_clause/youth.html">청소년보호정책</a>
 				</li>
 			</ul>
 		</div>

@@ -113,6 +113,7 @@ if($count == 0){
                 <th rowspan="2">이름/연락처</th>
                 <th colspan="6">예약항목</th>
                 <th rowspan="2">승인처리</th>
+                <th rowspan="2">정류장변경</th>
                 <th rowspan="2">결제금액</th>
                 <th rowspan="2">환불금액</th>
                 <th rowspan="2">요청사항</th>
@@ -126,7 +127,7 @@ if($count == 0){
                 <th>환불</th>
             </tr>
             <tr>
-                <td colspan="13" style="text-align:center;height:50px;">
+                <td colspan="14" style="text-align:center;height:50px;">
                     <b>[<?=$listText?>] 건으로 조회된 데이터가 없습니다.</b>
                 </td>
             </tr>

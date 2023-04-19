@@ -233,6 +233,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
 
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;display:none;">
+                    <!-- <ul style="display: ;">
+                        <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선선택</li>
+                    </ul> -->
                     <ul class="busLineTab" style="display: block;">
                     </ul>
                 </div>
@@ -462,15 +465,49 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
             resbusseat1 = <?=$resbusseat1?>;
             resbusseat2 = <?=$resbusseat2?>;
+                
+            $j("#userName").val("<?=$resusername?>");
+            $j("#userPhone1").val("<?=$resusertel1?>");
+            $j("#userPhone2").val("<?=$resusertel2?>");
+            $j("#userPhone3").val("<?=$resusertel3?>");
 
             <?if($daytype == 0){?>
                 $j('#ulDaytype li').eq(1).click();
+                $j('#ulDaytype li').eq(1).removeAttr("onclick");
+                $j('#ulDaytype li').eq(2).removeAttr("onclick").css("display", "none");
+
+                <?if($resbusseat1 > 0){ //양양행 ?>
+                    $j("#ulroute li:eq(1)").click();
+                    $j("#ulroute li:eq(1)").removeAttr("onclick");
+                    $j("#ulroute li:eq(2)").css("display", "none");
+                    $j("#resseatnum").html(((busTypeY == "Y") ? "양양행" : "동해행") + " : " + resbusseat1 + "자리 예약가능<br><br>");
+
+                    $j("#SurfBus").val("<?=$resDate1?>");
+                <?}?>
+
+                <?if($resbusseat2 > 0){ //서울행  ?>
+                    $j("#ulroute li:eq(2)").click();
+                    $j("#ulroute li:eq(2)").removeAttr("onclick");
+                    $j("#ulroute li:eq(1)").css("display", "none");
+                    $j("#resseatnum").html("서울행 : " + resbusseat2 + "자리 예약가능<br><br>");
+
+                    $j("#SurfBus").val("<?=$resDate2?>");
+                <?}?>
+                
+                $j("#SurfBus").datepicker('option', 'disabled', true);
+
+                fnBusSearchDate($j("#SurfBus").val(), $j("#busgubun").val(), $j("#SurfBus").attr("id"));
+                
+                var arrDataS = busData[$j("#busgubun").val() + $j("#SurfBus").val().substring(5).replace('-', '')];
+                if(arrDataS.length == 1){
+                    $j("li[busnum=" + arrDataS[0].busnum + "]").click();
+                }
+
+                if(arrDataS.length == 1){
+                    fnBusNext();
+                }
             <?}else{?>
                 $j('#ulDaytype li').eq(2).click();
-                $j("#userName").val("<?=$resusername?>");
-                $j("#userPhone1").val("<?=$resusertel1?>");
-                $j("#userPhone2").val("<?=$resusertel2?>");
-                $j("#userPhone3").val("<?=$resusertel3?>");
 
                 $j("#SurfBusS").val("<?=$resDate1?>");
                 $j("#SurfBusE").val("<?=$resDate2?>");
@@ -483,8 +520,26 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 $j("#SurfBusS").datepicker('option', 'disabled', true);
                 $j("#SurfBusE").datepicker('option', 'disabled', true);
 
-                $j('#ulDaytype li').eq(1).removeAttr("onclick");
+                $j('#ulDaytype li').eq(1).removeAttr("onclick").css("display", "none");
                 $j('#ulDaytype li').eq(2).removeAttr("onclick");
+
+                //양양행 1대일경우
+                var gubun = fnBusDateGubun($j("#SurfBusS").attr("gubun"), "SurfBusS");
+                var arrDataS = busData[gubun + $j("#SurfBusS").val().substring(5).replace('-', '')];
+                if(arrDataS.length == 1){
+                    $j("li[busnum=" + arrDataS[0].busnum + "]").click();
+                }
+
+                //서울행 1대일경우
+                var gubun = fnBusDateGubun($j("#SurfBusE").attr("gubun"), "SurfBusE");
+                var arrDataE = busData[gubun + $j("#SurfBusE").val().substring(5).replace('-', '')];
+                if(arrDataE.length == 1){
+                    $j("li[busnum=" + arrDataE[0].busnum + "]").click();
+                }
+
+                if(arrDataS.length == 1 && arrDataE.length == 1){
+                    fnBusNext();
+                }
             <?}?>
         }
         <?}?>

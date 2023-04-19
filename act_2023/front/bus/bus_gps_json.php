@@ -41,7 +41,7 @@ if($param == "mappoint"){ //상세정보
     $arrBusPoint = substr($busgubun, 1, 2);
     $arrBusData = array();
     foreach($busDataJson as $key => $value){
-        if($arrBusGubun == substr($key, 0, 3)){
+        if($arrBusPoint == substr($key, 1, 2)){
             $arrBusData[explode("_", $key)[1]] = $value;
         }    
     }

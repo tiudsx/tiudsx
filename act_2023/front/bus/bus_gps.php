@@ -52,10 +52,11 @@ $count = 1;
 if($nowTime > 0500 && $nowTime < 1200){
     $busList = "'Y','E'";
 }else if($nowTime >= 1200 && $nowTime < 2300){
-    $busList = "'Y','E', 'S','A'";
+    $busList = "'S','A'";
 }else{
     $count = 0;
 }
+$busList = "'Y','E', 'S','A'";
 
 if($count == 1){
     $arrMapList = array();

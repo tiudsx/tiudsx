@@ -478,3 +478,185 @@ function fnDayList(vlu, obj, folderName){
 		});
 	}
 }
+
+//클룩, 프립 데이터 맵핑
+function fnChannel(obj){
+    $j("#resbus option").show();
+    if(obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "16"){
+        $j("#fripMapping").show();
+    }else{
+        $j("#fripMapping").hide();
+    }
+
+    if(obj.value == "17" || obj.value == "20"){
+        $j("#resbus option").eq(1).hide();
+        $j("#resbus").val("YY");
+    }else if(obj.value == "21"){
+        $j("#resbus option").eq(0).hide();
+        $j("#resbus").val("DH");
+    }
+}
+
+//클룩, 프립 데이터 맵핑
+function fnGetJson(obj){
+    var vlu = $j("#reschannel").val();
+    if($j("#html_1").val() == ""){
+        alert("데이터 맵핑 자료를 넣으세요.");
+        return;
+    }
+
+    if(vlu == "11" || vlu == "17" || vlu == "20" || vlu == "21"){
+        fnMakeJsonFrip(); //프립
+    }else if(vlu == "16"){
+        fnMakeJsonKlook(); //클룩
+    }
+}
+
+//프립 데이터 맵핑
+function fnMakeJsonFrip() {
+    //복사된 html을 가공 table[class='el-table__body']
+    var strHtml = $j("#html_1").val().replace(/<!---->/gi,"");
+    $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
+    //$j("#divCopy").html($j("#divCopy").find("table[class='el-table__body']").html());
+
+    //Json 인스턴스
+    var objList = new Array();
+    var objValue = new Object();
+
+    //html 생성
+    var addHtml = '<table width="100%" border="1" id="td_select">';
+    $j("#divCopy .el-table__row").each(function(){
+
+        objValue = new Object();
+
+        addHtml += '<tr name="' + $j(this).find("td").eq(3).find(".cell").text() + '">';
+        
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(1).find(".cell").text(); //이름
+        addHtml += '</td>';
+        objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(2).find(".cell").text(); //성별
+        addHtml += '</td>';
+        objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(3).find(".cell").text(); //연락처
+        addHtml += '</td>';
+        objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(4).find(".cell").text(); //아이템명
+        addHtml += '</td>';
+        objValue.item = $j(this).find("td").eq(4).find(".cell").text(); //아이템명
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(5).find(".cell").text(); //추가정보
+        addHtml += '</td>';
+        objValue.addinfo = $j(this).find("td").eq(5).find(".cell").text(); //추가정보
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += $j(this).find("td").eq(6).find(".cell").text(); //예약상태
+        addHtml += '</td>';
+        objValue.state = $j(this).find("td").eq(6).find(".cell").text(); //예약상태
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        
+        if ($j(this).find("button").length > 0) {
+            addHtml += $j(this).find("button").text(); //액션
+            objValue.btn = $j(this).find("button").text(); //액션
+        }
+        else{
+            addHtml += 'none'; //액션
+            objValue.btn = 'none'; //액션
+        }
+        
+        addHtml += '</td>';
+
+        addHtml += '<td style="mso-data-placement:same-cell;">';
+        addHtml += '1';
+        addHtml += '</td>';
+        addHtml += '</tr>';
+
+        objList.push(objValue);
+    });
+    addHtml += '</table>';
+    
+    $j("#divSet").html(addHtml);
+
+    $j("#html_2").val(JSON.stringify(objList));
+}
+
+//클룩 데이터 맵핑
+function fnMakeJsonKlook() {
+    $j("#divCopy").html($j("#html_1").val());
+    $j("#divCopy").html($j("#divCopy").find(".booking-list-result").html());
+
+    var $state = "";    //예약 상태영역
+    var $info = "";     //예약 상세영역
+
+    //Json 인스턴스
+    var objList = new Array();
+    var objValue = new Object();
+    var colKey = "";
+    var colValue = "";
+    
+    var colNameTitle = {
+        "상품명":"prod_name",
+        "패키지명":"prod_pkg",
+        "단위":"ea",
+        "이용시간":"bus_date",
+        "전화번호":"user_tel_sub",
+        "전화번호_2":"user_tel",
+        "성":"user_name1",
+        "이름":"user_name2",
+        "성명":"user_fullname"
+    }
+
+    $j("#divCopy").find(".booking-item").each(function(){
+
+        var objValue = new Object();
+
+        //#region 예약 상태정보
+        $state = $j(this).find(".boooking-general-info-operation");
+
+        //예약확인ID
+        objValue.res_id = $state.find(".info-item").eq(0).find("span").eq(1).text();
+        //예약시간
+        //objValue.res_time = $state.find(".info-item").eq(1).text().split(":")[1].trim().substring(0,10);
+        //예약상태
+        objValue.state = $state.find(".info-item").eq(2).find(".ant-tag").eq(0).text();;
+
+        //#regionend
+
+        /******************************************************************************/
+
+        //#region 예약 상세정보
+        $info = $j(this).find(".booking-info");
+
+        $info.find("ul").each(function(){
+            $j(this).find("li").each(function(){
+
+                colKey = $j(this).find("p").eq(0).text().replace(":","").replace(/ /g, ''); //json Text
+                colValue = $j(this).find("p").eq(1).text(); //json Value
+
+                if (objValue.user_tel_sub != undefined && colKey == "전화번호") {
+                    colKey = "전화번호_2";
+                }
+
+                if (colNameTitle[colKey] != undefined) {
+                    objValue[colNameTitle[colKey]] = colValue;
+                }
+                
+            });
+        });
+
+        //#regionend
+
+        objList.push(objValue);
+
+    });
+
+    $j("#html_2").val(JSON.stringify(objList));
+}

@@ -174,7 +174,7 @@ function fnCoupon(type, gubun, coupon) {
     var params = "type=" + type + "&gubun=" + gubun + "&coupon=" + coupon;
     var rtn = $j.ajax({
         type: "POST",
-        url: "/act/coupon/coupon_load.php",
+        url: "/act_2023/front/coupon/coupon_load.php",
         data: params,
         success: function(data) {
             return data;

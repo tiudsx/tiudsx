@@ -3,11 +3,10 @@ include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/logininfo.php';
 $shopseq = 0;
 ?>
-
-<link rel="stylesheet" type="text/css" href="/act/css/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" href="/act/css/surfview.css">
-<link rel="stylesheet" type="text/css" href="/act/css/admin/admin_surf.css">
-<link rel="stylesheet" type="text/css" href="/act/css/admin/admin_common.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_bus.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_common.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/_css/surfview.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/_css/jquery-ui.css" />
 
 <script type="text/javascript" src="/act_2023/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/_js/common.js?v=<?=time()?>"></script>
@@ -168,6 +167,14 @@ $shopseq = 0;
                 <div id="tab4" class="tab_content" style="display:none;">
                     <form name="frmResKakao" id="frmResKakao" autocomplete="off">
                     <table class='et_vars exForm bd_tb'>
+                        <colgroup>
+                            <col style="width:10%">
+                            <col style="width:*;">
+                            <col style="width:14%">
+                            <col style="width:18%">
+                            <col style="width:20%">
+                            <col style="width:20%">
+                        </colgroup>
                         <tr>
                             <td colspan="6">
                                 알림톡 발송 번호
@@ -182,16 +189,12 @@ $shopseq = 0;
                             <th>이용일 (서울복귀)</th>
                         </tr>
                         <tr>
-                        <td>
-                                <select id="resbus">
-                                    <option value="YY">양양</option>
-                                    <option value="DH">동해</option>
-                                </select>
-                            </td>
                             <td>
-                                <select id="reschannel">
+                                <select id="reschannel" onchange="fnChannel(this);">
                                     <option value="11">프립</option>
-                                    <option value="17">프립 패키지</option>
+                                    <option value="17" kakaoUrl="https://open.kakao.com/o/goYwKe5e">프립-마린</option>
+                                    <option value="20" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">프립-인구</option>
+                                    <option value="21" kakaoUrl="https://open.kakao.com/o/g58J34ff">프립-서팩 동해</option>
                                     <option value="16">클룩</option>
                                     <option value="7">네이버쇼핑</option>
                                     <option value="10">네이버예약</option>
@@ -199,8 +202,14 @@ $shopseq = 0;
                                     <option value="15">서프엑스</option>
                                 </select>
                             </td>
+                            <td style="text-align:center;">
+                                <select id="resbus">
+                                    <option value="YY">-- 양양 --</option>
+                                    <option value="DH">-- 동해 --</option>
+                                </select>
+                            </td>
                             <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
-                            <td><input type="text" id="userphone" name="userphone" style="width:150px;" value="" class="itx2" maxlength="12"></td>
+                            <td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="12"></td>
                             <td>
                                 <input type="text" id="resDate1" name="resDate1" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
                                 <select id="resbusseat1">
@@ -219,169 +228,14 @@ $shopseq = 0;
                             </td>
                         </tr>
                         <tr id="fripMapping" style="display:;">
-                            <td colspan="2">json 데이터 맵핑</td>
-                            <td colspan="4">
+                            <td>데이터 맵핑</td>
+                            <td colspan="5">
                                 <textarea id="html_1" cols="40" rows="7"></textarea>
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="프립" onclick="fnMakeTable();" />
-                                
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="클룩" onclick="fnGetJson();" />
+                                <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:20px;" value="맵핑" onclick="fnGetJson();" />
 
                                 <textarea id="html_2" cols="40" rows="7" style="display: ;"></textarea>
                                 <div id="divCopy" style="display: none;"></div>
                                 <div style="width: 500px;" id="divSet"></div>
-
-<script>
-function fnMakeTable() {
-    //복사된 html을 가공 table[class='el-table__body']
-    var strHtml = $j("#html_1").val().replace(/<!---->/gi,"");
-    $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
-    //$j("#divCopy").html($j("#divCopy").find("table[class='el-table__body']").html());
-
-    //Json 인스턴스
-    var objList = new Array();
-    var objValue = new Object();
-
-    //html 생성
-    var addHtml = '<table width="100%" border="1" id="td_select">';
-    $j("#divCopy .el-table__row").each(function(){
-
-        objValue = new Object();
-
-        addHtml += '<tr name="' + $j(this).find("td").eq(3).find(".cell").text() + '">';
-        
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(1).find(".cell").text(); //이름
-        addHtml += '</td>';
-        objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(2).find(".cell").text(); //성별
-        addHtml += '</td>';
-        objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(3).find(".cell").text(); //연락처
-        addHtml += '</td>';
-        objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(4).find(".cell").text(); //아이템명
-        addHtml += '</td>';
-        objValue.item = $j(this).find("td").eq(4).find(".cell").text(); //아이템명
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(5).find(".cell").text(); //추가정보
-        addHtml += '</td>';
-        objValue.addinfo = $j(this).find("td").eq(5).find(".cell").text(); //추가정보
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(6).find(".cell").text(); //예약상태
-        addHtml += '</td>';
-        objValue.state = $j(this).find("td").eq(6).find(".cell").text(); //예약상태
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        
-        if ($j(this).find("button").length > 0) {
-            addHtml += $j(this).find("button").text(); //액션
-            objValue.btn = $j(this).find("button").text(); //액션
-        }
-        else{
-            addHtml += 'none'; //액션
-            objValue.btn = 'none'; //액션
-        }
-        
-        addHtml += '</td>';
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += '1';
-        addHtml += '</td>';
-        addHtml += '</tr>';
-
-        objList.push(objValue);
-    });
-    addHtml += '</table>';
-    
-    $j("#divSet").html(addHtml);
-
-    $j("#html_2").val(JSON.stringify(objList));
-}
-
-function fnGetJson() {
-            
-    $j("#divCopy").html($j("#html_1").val());
-    $j("#divCopy").html($j("#divCopy").find(".booking-list-result").html());
-
-    var $state = "";    //예약 상태영역
-    var $info = "";     //예약 상세영역
-
-    //Json 인스턴스
-    var objList = new Array();
-    var objValue = new Object();
-    var colKey = "";
-    var colValue = "";
-    
-    var colNameTitle = {
-        "상품명":"prod_name",
-        "패키지명":"prod_pkg",
-        "단위":"ea",
-        "이용시간":"bus_date",
-        "전화번호":"user_tel_sub",
-        "전화번호_2":"user_tel",
-        "성":"user_name1",
-        "이름":"user_name2",
-        "성명":"user_fullname"
-    }
-
-    $j("#divCopy").find(".booking-item").each(function(){
-
-        var objValue = new Object();
-
-        //#region 예약 상태정보
-        $state = $j(this).find(".boooking-general-info-operation");
-
-        //예약확인ID
-        objValue.res_id = $state.find(".info-item").eq(0).find("span").eq(1).text();
-        //예약시간
-        //objValue.res_time = $state.find(".info-item").eq(1).text().split(":")[1].trim().substring(0,10);
-        //예약상태
-        objValue.state = $state.find(".info-item").eq(2).find(".ant-tag").eq(0).text();;
-
-        //#regionend
-
-        /******************************************************************************/
-
-        //#region 예약 상세정보
-        $info = $j(this).find(".booking-info");
-
-        $info.find("ul").each(function(){
-            $j(this).find("li").each(function(){
-
-                colKey = $j(this).find("p").eq(0).text().replace(":","").replace(/ /g, ''); //json Text
-                colValue = $j(this).find("p").eq(1).text(); //json Value
-
-                if (objValue.user_tel_sub != undefined && colKey == "전화번호") {
-                    colKey = "전화번호_2";
-                }
-
-                if (colNameTitle[colKey] != undefined) {
-                    objValue[colNameTitle[colKey]] = colValue;
-                }
-                
-            });
-        });
-
-        //#regionend
-
-        objList.push(objValue);
-
-    });
-
-    $j("#html_2").val(JSON.stringify(objList));
-    //alert(JSON.stringify(objList));
-
-}
-</script>
-
                             </td>
                         </tr>
                         <tr>

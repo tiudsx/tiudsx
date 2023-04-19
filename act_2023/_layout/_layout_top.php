@@ -7,8 +7,8 @@
 <header id="headerWrap">
 	<div class="headerBox">
 		<h1 id="logo">
-			<a href="/"><img src="/act/images/logo140.jpg" alt="액트립 로고"></a>
+			<a href="/"><img src="/act_2023/images/logo140.jpg" alt="액트립 로고"></a>
 		</h1>
-		<div class="shopIcon"><a href="/ordersearch"><img src="/act/images/icon/checkg.svg" alt=""><p>예약조회</p></a></div>
+		<div class="shopIcon"><a href="/ordersearch"><img src="/act_2023/images/icon/checkg.svg" alt=""><p>예약조회</p></a></div>
 	</div>
 </header>

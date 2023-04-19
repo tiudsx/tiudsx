@@ -51,7 +51,7 @@ function fnResView(bool, objid, topCnt, obj) {
 //달력 월 이동
 function fnCalMove(selDate, seq) {
     var nowDate = new Date();
-    $j("#tour_calendar").load("/act/surf/surfview_calendar.php?selDate=" + selDate + "&seq=" + seq + "&t=" + nowDate.getTime());
+    $j("#tour_calendar").load("/act_2023/surf/surfview_calendar.php?selDate=" + selDate + "&seq=" + seq + "&t=" + nowDate.getTime());
 
     $j("#initText").css("display", "");
     $j("#lessonarea").css("display", "none");
@@ -399,8 +399,7 @@ function fnSurfSave() {
 
     $j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
 
-    setTimeout('$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();', 500);
-    //$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
+    setTimeout('$j("#frmRes").attr("action", "/act_2023/surf/surf_save.php").submit();', 500);
 }
 
 // 서핑옵션 신청버튼
@@ -572,7 +571,7 @@ function fnSurfAppend(num, obj, selDate, gubun) {
         '		<span class="resoption">' + opt_info + '</span>' +
         '	</td>' +
         '	<td style="text-align:right;">' + commify(selPrice) + '원</td>' +
-        '	<td style="text-align:center;cursor: pointer;" onclick="fnSurfShopDel(this, \'' + num + '\');"><img src="/act/images/button/close.png" style="width:18px;vertical-align:middle;"></td>' +
+        '	<td style="text-align:center;cursor: pointer;" onclick="fnSurfShopDel(this, \'' + num + '\');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;"></td>' +
         '</tr>';
 
     $j("#surfAdd").append(addText);

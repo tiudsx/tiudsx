@@ -46,7 +46,11 @@ if($reqCode == "busday"){
     */
 
     for ($i=0; $i <= 45; $i++) { 
-        $groupData[] = array("seatnum" => "$i", "seatYN" => "Y");
+        $seatYN = "Y";
+        if(($_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51" || $_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i >= 29){
+            $seatYN = "N";
+        }
+        $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
     }
 
     $select_query = 'SELECT * FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';

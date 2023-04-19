@@ -322,19 +322,32 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$prodTitle = ' 서핑버스';
 	if($reschannel == 11){ //프립
 		$prodTitle = 'x프립버스';
-	}else if($reschannel == 17){ //프립 패키지
+		$seatName2 = $seatName2." 프립버스";
+	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21){ //프립 패키지
 		$prodTitle = 'x프립 서핑패키지';
+		if($reschannel == 17){
+			$seatName2 = $seatName2." 마린서프x프립";
+		}else if($reschannel == 20){
+			$seatName2 = $seatName2." 인구서프x프립";
+		}else if($reschannel == 21){
+			$seatName2 = "서프팩토리 동해점x프립";
+		}
 	}else if($reschannel == 12){ //마이리얼트립
 
 	}else if($reschannel == 14){ //망고서프 패키지
 
 	}else if($reschannel == 15){ //서프엑스
-		$prodTitle = 'x서프엑스';
+		$prodTitle = 'x서프엑스 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x서프엑스";
 	}else if($reschannel == 16){ //클룩
-		$prodTitle = 'X클룩 셔틀버스';
+		$prodTitle = 'X클룩 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x클룩";
+	}else{		
+		$seatName2 = $seatName2." 서핑버스";
 	}
 
 	$msgTitle = "액트립$prodTitle 예약안내";
+	$link1 = "surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'));
 	$arrKakao = array(
 		"gubun"=> "bus"
 		, "admin"=> "N"
@@ -342,9 +355,9 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		, "smsTitle"=> $msgTitle
 		, "userName"=> $userName
 		, "userPhone"=> $userPhone
-		, "shopname"=> $seatName2." 서핑버스"
+		, "shopname"=> $seatName2
 		, "msgInfo"=>$resseatMsg
-		, "link1"=>"surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'))
+		, "link1"=> $link1
 		, "smsOnly"=>"N"
 		, "PROD_NAME"=>"타채널 알림톡발송"
 		, "PROD_URL"=>$reschannel
@@ -362,8 +375,8 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$kakao_message = $data[0]["message"];
 	$kakao_originMessage = $data[0]["originMessage"];
 
-	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
-	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo');";
+	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid|$resbus";
+	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`, `etc`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo', '$link1');";
 	$result_set = mysqli_query($conn, $select_query);
  	if(!$result_set) goto errGo;
 	//------- 쿠폰코드 입력 -----

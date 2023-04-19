@@ -9,7 +9,7 @@ include __DIR__.'/../../common/db.php';
 $select_query = "SELECT A.*, REPLACE(B.name, '서핑버스 ', '') AS name FROM `AT_COUPON_CODE` AS A 
                     INNER JOIN AT_COUPON AS B 
                         ON A.couponseq = B.couponseq                        
-                    WHERE A.couponseq IN (7,10,11,12,14,15,17) AND A.use_yn = 'N'
+                    WHERE A.couponseq IN (7,10,11,12,14,15,16,17,20,21) AND A.use_yn = 'N'
                     ORDER BY A.codeseq DESC";
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
@@ -17,25 +17,23 @@ $count = mysqli_num_rows($result_setlist);
 if($count == 0){
 ?>
 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-<colgroup>
-        <col width="9%"/>
-        <col width="8%"/>
-        <col width="11%"/>
+    <colgroup>
+        <col width="16%"/>
+        <col width="10%"/>
+        <col width="14%"/>
         <col width="15%"/>
         <col width="15%"/>
-        <col width="15%"/>
-        <col width="12%"/>
         <col width="auto"/>
+        <col width="12%"/>
     </colgroup>
     <tbody>
         <tr>
-            <th>채널</th>
+            <th>노선/채널</th>
             <th>이름</th>
             <th>연락처</th>
-            <th>이용일 (서울>양양)</th>
-            <th>이용일 (양양>서울)</th>
+            <th>이용일 (서울 출발)</th>
+            <th>이용일 (서울 복귀)</th>
             <th>예약여부</th>
-            <th>결과</th>
             <th>결과코드</th>
         </tr>
         <tr>
@@ -52,24 +50,22 @@ if($count == 0){
 ?>
 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
     <colgroup>
+        <col width="16%"/>
         <col width="10%"/>
-        <col width="9%"/>
-        <col width="13%"/>
+        <col width="14%"/>
         <col width="15%"/>
         <col width="15%"/>
-        <col width="13%"/>
-        <col width="12%"/>
         <col width="auto"/>
+        <col width="12%"/>
     </colgroup>
     <tbody>
         <tr>
-            <th>채널</th>
+            <th>노선/채널</th>
             <th>이름</th>
             <th>연락처</th>
-            <th>이용일 (서울>양양)</th>
-            <th>이용일 (양양>서울)</th>
+            <th>이용일 (서울 출발)</th>
+            <th>이용일 (서울 복귀)</th>
             <th>예약여부</th>
-            <th>결과</th>
             <th>결과코드</th>
         </tr>
 <?while ($row = mysqli_fetch_assoc($result_setlist)){
@@ -80,13 +76,13 @@ if($count == 0){
     //홍길동|0104437123|2022-01-08|2|2022-01-09|2|fail|L|M107:DeniedSenderNumber|K102:InvalidPhoneNumber
     //이승철|01044370009|2023-05-07|1|2023-05-07|1|success|AT|K000||WEB20230417134422004880
 
-    $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b> (".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";
+    $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b> (".(($arrChk[7] == "AT") ? "알림톡" : "문자").")<br>";
     $rtnMessage = "<b>".$rtnText."</b>";
     $rtnTextCode = "";
    
     if($arrChk[8] != ""){
         $mesCode = substr($arrChk[8], 0, 4);
-        $rtnTextCode .= $mesCode;
+        //$rtnTextCode .= $mesCode;
         //$rtnText .= "_".$arrChk[8];
 
         if($mesCode == "M001"){
@@ -99,37 +95,36 @@ if($count == 0){
     
     if($arrChk[9] != ""){
         $mesOriCode = substr($arrChk[9], 0, 4);
-        $rtnTextCode .= " / ".$mesOriCode;
+        //$rtnTextCode .= " / ".$mesOriCode;
         //$rtnText .= "_".$arrChk[9];
 
         $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesOriCode." : ".fnMessageText($mesOriCode);
     }
 
-    $rtnTextCode = '<span class="kakao_view" seq="'.$row['codeseq'].'">'.$rtnTextCode.'</span><span style="display:none;"><b>'.$row['insdate'].'</b><br><br>'.$rtnMessage.'</span>';
+    $rtnTextCode = '<span class="kakao_view" seq="'.$row['codeseq'].'">'.$rtnText.$rtnTextCode.'</span><span style="display:none;"><b>'.$row['insdate'].'</b><br><br>'.$rtnMessage.'</span>';
 
     ?>
         <tr>
-            <td><?=$row['name']?></td>
+            <td><a href="/<?=$row['etc']?>" target="_blank"><b>[<?=(($arrChk[11] == "YY") ? "양양" : "동해")?>]</b> <?=$row['name']?></a></td>
             <td><?=$arrChk[0]?></td>
             <td><?=$arrChk[1]?></td>
             <td>
                 <?
                 if($arrChk[3] > 0){
-                    echo $arrChk[2]." (".$arrChk[3]."명)";
+                    echo $arrChk[2]." <b>(".$arrChk[3]."명)</b>";
                 }
                 ?>    
             </td>
             <td>
                 <?
                 if($arrChk[5] > 0){
-                    echo $arrChk[4]." (".$arrChk[5]."명)";
+                    echo $arrChk[4]." <b>(".$arrChk[5]."명)</b>";
                 }
                 ?>
             </td>
             <td>
                 <input type="button" class="gg_btn res_btn_color1" style="width:40px; height:25px;" value="독촉" onclick="fnBusChannelKakao('<?=$arrChk[10]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
                 <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusChannelDel(<?=$row['codeseq']?>);" /></td>
-            <td><?=$rtnText?></td>
             <td>
                 <?=$rtnTextCode?>                
             </td>

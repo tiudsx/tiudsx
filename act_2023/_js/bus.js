@@ -535,7 +535,16 @@ function fnBusNext() {
 
     $j(".busLineTab li").eq(0).click();
 
-    $j('#resStep1').block({ message: null });
+    $j('#resStep1').block({ focusInput: false, message: null });
+    // if($j("#resseatnum").text() == ""){
+    //     $j('#resStep1').block({ message: null });
+    // }else{
+    //     $j('#resStep1').block({ 
+    //         message: $j("#resseatnum").html(),
+    //         focusInput: false,
+    //         css: { width: '50%', textAlign: 'center', left: '15%', top: '32%' }
+    //     });        
+    // }
 
     $j(".busOption02").css("display", "");
     $j('#divConfirm').css("display", "");
@@ -1079,7 +1088,6 @@ function fnBusSave() {
     $j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
 
     setTimeout('$j("#frmRes").attr("action", "' + submiturl + '").submit();', 500);
-    //$j("#frmRes").attr("action", "/act/surf/surf_save.php").submit();
 }
 
 function fnUnblock(objId) {
