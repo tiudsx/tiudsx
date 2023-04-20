@@ -231,7 +231,7 @@ if($param == "BusI"){
         if($coupon == "JOABUS"){
             //$gubun_title = "조아서프 패키지 서핑버스";
             //$msgChannelName2 = '\n      - 예약취소는 예약하셨던 조아서프에 문의해주세요.';
-        }else if($coupon == "FRIP" || $couponseq == 11 || $couponseq == 17){
+        }else if($coupon == "FRIP" || $couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21){
             //$gubun_title = "프립 서핑버스";
         }else if($coupon == "MYTRIP"){
             //$gubun_title = "마이리얼트립 서핑버스";
@@ -280,6 +280,7 @@ if($param == "BusI"){
             , "shopname"=>$gubun_title
             , "MainNumber"=>$ResNumber
             , "msgInfo"=>$msgInfo
+            , "couponseq"=>$couponseq
             , "btn_ResContent"=> $btn_ResContent
             , "btn_ResSearch"=> $btn_ResSearch
             , "btn_ResChange"=> $btn_ResChange

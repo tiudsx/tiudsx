@@ -660,3 +660,10 @@ function fnMakeJsonKlook() {
 
     $j("#html_2").val(JSON.stringify(objList));
 }
+
+//서핑버스 정산
+function fnCalMoveAdminCal(selDate, day) {
+    var nowDate = new Date();
+    $j("#tab3").load("/act_2023/admin/bus/list_cal.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
+
+}

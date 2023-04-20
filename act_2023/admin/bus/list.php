@@ -160,7 +160,7 @@ $shopseq = 0;
                 
                 <!-- #tab3 -->
                 <div id="tab3" class="tab_content" style="display:none;">
-                    <?include 'res_bus_cal.php'?>
+                    <?include 'list_cal.php'?>
                 </div>
 
                 <!-- #tab3 -->

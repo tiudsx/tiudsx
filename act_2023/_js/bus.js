@@ -90,7 +90,23 @@ function fnPointList(busnum, busseat, obj) {
 
 function fnBusSeatInit(busnum, busseat, obj, busname) {
     $j(".busLineTab li").removeClass("on");
+    $j(".busLineTab2 li").removeClass("on");
     $j(obj).addClass("on");
+
+    var objClass1 = ".busLineTab";
+    var objClass2 = ".busLineTab2";
+    if($j(obj).parent().attr("class") == "busLineTab2"){
+        objClass1 = ".busLineTab2";
+        objClass2 = ".busLineTab";
+    }
+
+    if($j(objClass1 + " li").eq(0).hasClass("on")){
+        $j(objClass2 + " li").eq(0).addClass("on");
+    }
+
+    if($j(objClass1 + " li").eq(1).hasClass("on")){
+        $j(objClass2 + " li").eq(1).addClass("on");
+    }
 
     var busSeatLast = "";
     if (busseat == 44) {
@@ -191,24 +207,36 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
     }
     var arrData = busData[gubun + selectedDate.substring(5).replace('-', '')];
     arrData.forEach(function(el) {
-        var objParam = {
-            "code": "busseatcnt",
-            "busDate": selectedDate,
-            "busNum": el.busnum
-        }
-        $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
-            function(data, textStatus, jqXHR) {
-                if (data[0].seatcnt == el.busseat) {
-                    if (busrestype == "change" || busrestype == "seatview") {
-                        $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
-                    } else {
-                        $j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + el.busname + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
-                    }
-                } else {
-                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;">' + el.busname + '</li>');
-                }
+        
+        var selVlu = el.busnum.substring(0, 3);
+        var selBool = true;
+        
+        if(buschannel == 17 || buschannel == 20 || buschannel == 21){ //프립 서핑패키지
+            if(selVlu == "SY2" || selVlu == "AE2"){
+                selBool = false;
             }
-        );
+        }
+
+        if(selBool){
+            var objParam = {
+                "code": "busseatcnt",
+                "busDate": selectedDate,
+                "busNum": el.busnum
+            }
+            $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
+                function(data, textStatus, jqXHR) {
+                    if (data[0].seatcnt == el.busseat) {
+                        if (busrestype == "change" || busrestype == "seatview") {
+                            $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
+                        } else {
+                            $j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + el.busname + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.busname + '</li>');
+                        }
+                    } else {
+                        $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(\'' + el.busnum + '\', ' + el.busseat + ', this);" busnum="' + el.busnum + '" style="cursor:pointer;">' + el.busname + '</li>');
+                    }
+                }
+            );
+        }
 
     });
 
@@ -531,6 +559,8 @@ function fnBusNext() {
         btnonclick = $j("ul[class=busLine]:eq(2) li[class=on]").attr("onclick");
         busname = $j("ul[class=busLine]:eq(2) li[class=on]").text();
         $j(".busLineTab").append('<li caldate="' + $j("#SurfBusE").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext1 + $j("ul[class=busLine]:eq(2) li[class=on]").text() + '</li>');
+
+        $j(".busLineTab2").html($j(".busLineTab").html());
     }
 
     $j(".busLineTab li").eq(0).click();
@@ -595,6 +625,8 @@ function fnBusChangeNext() {
         btnonclick = $j("ul[class=busLine]:eq(2) li[class=on]").attr("onclick");
         busname = $j("ul[class=busLine]:eq(2) li[class=on]").text();
         $j(".busLineTab").append('<li caldate="' + $j("#SurfBusE").val() + '" style="cursor:pointer;" onclick="' + btnonclick.replace("fnPointList", "fnBusSeatInit").replace("this", "this, '" + busname + "'") + '">' + btntext1 + $j("ul[class=busLine]:eq(2) li[class=on]").text() + '</li>');
+        
+        $j(".busLineTab2").html($j(".busLineTab").html());
     }
 
     $j(".busLineTab li").eq(0).click();
@@ -716,11 +748,38 @@ function fnSeatSelected(obj) {
         var arrObjs = eval("busPoint.sPoint" + busPointCode);
         var arrObje = eval("busPoint.ePoint" + busType + "end");
 
+        var selVlu = "";
+        if(buschannel == 17){ //마린서프
+            selVlu = "기사문해변";
+        }else if(buschannel == 20){ //인구서프
+            selVlu = "인구해변";
+        }else if(buschannel == 21){ //서프팩토리
+            selVlu = "대진해변";
+        }
+        
         arrObjs.forEach(function(el) {
-            sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            if(busType == "E" || busType == "Y"){
+                sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else{
+                if(selVlu != "" && selVlu == el.code){
+                    sPoint += "<option value='N'>도착</option>";
+                    sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+                }else if(selVlu == ""){
+                    sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+                }
+            }
         });
         arrObje.forEach(function(el) {
-            ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            if(busType == "E" || busType == "Y"){
+                if(selVlu != "" && selVlu == el.code){
+                    ePoint += "<option value='N'>출발</option>";
+                    ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+                }else if(selVlu == ""){
+                    ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
+                }
+            }else{
+                ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
+            }
         });
 
         var tbCnt = $j("#tb" + selDate + '_' + busNum).length;
@@ -787,11 +846,38 @@ function fnSeatChangeSelected(arrVlu) {
     
     var arrObjs = eval("busPoint.sPoint" + returnBusNum.substring(0, 2));
     var arrObje = eval("busPoint.ePoint" + returnBusType + "end");
+    var selVlu = "";
+    if(buschannel == 17){ //마린서프
+        selVlu = "기사문해변";
+    }else if(buschannel == 20){ //인구서프
+        selVlu = "인구해변";
+    }else if(buschannel == 21){ //서프팩토리
+        selVlu = "대진해변";
+    }
+        
     arrObjs.forEach(function(el) {
-        sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+        if(returnBusType == "E" || returnBusType == "Y"){
+            sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+        }else{
+            if(selVlu != "" && selVlu == el.code){
+                sPoint += "<option value='N'>도착</option>";
+                sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else if(selVlu == ""){
+                sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }
+        }
     });
     arrObje.forEach(function(el) {
-        ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+        if(returnBusType == "E" || returnBusType == "Y"){
+            if(selVlu != "" && selVlu == el.code){
+                ePoint += "<option value='N'>출발</option>";
+                ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else if(selVlu == ""){
+                ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
+            }
+        }else{
+            ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
+        }
     });
 
     var tbCnt = $j("#tb" + returnDate + '_' + returnBusNum).length;

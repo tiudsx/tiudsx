@@ -30,7 +30,9 @@ if($param == "surfbus_yy"){ //양양 셔틀버스
 }
 
 //"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
+//2023-04-20|FI3N9|resbus|2023-04-20|2023-04-20|1|1|홍길동|01044370009|YY|
 $arrChannel = $_REQUEST["param"];
+$coupon_seq = 0;
 if($arrChannel != ""){
     $arrChk = explode("|", decrypt($arrChannel));
     $dateChk = $arrChk[0];
@@ -45,6 +47,7 @@ if($arrChannel != ""){
     $resusertel1 = substr($resusertel, 0, 3);
     $resusertel2 = substr($resusertel, 3, 4);
     $resusertel3 = substr($resusertel, 7, 4);
+    $coupon_seq = $arrChk[10];
 
     $daytype = 0;
     if($resbusseat1 > 0 && $resbusseat2 > 0){
@@ -227,7 +230,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                     </div>                
                     <div id="nextbtn" class="busOption01" style="text-align:center;">
-                        <span id="resseatnum"></span>
                         <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusNext();">
                     </div>
                 </div>
@@ -236,6 +238,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <!-- <ul style="display: ;">
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선선택</li>
                     </ul> -->
+                    <span id="resseatnum" style="font-size: medium;width:100%;text-align:center;display: block;"></span>
                     <ul class="busLineTab" style="display: block;">
                     </ul>
                 </div>
@@ -299,6 +302,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </table>
                         </div>
                     </ul>
+                    <ul class="busLineTab2" style="display: block;padding-left: 10px;"></ul>
+
                     <ul class="selectStop" style="padding:0 4px;">
                     <?if($param == "surfbus_yy"){?>
                         <li style="display:none;"><img src="/act_2023/images/button/btn061.png" alt="양양행 서핑버스"></li>
@@ -365,7 +370,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                     <textarea name="etc" id="etc" rows="8" cols="42" style="margin: 0px; width: 97%; height: 100px;resize:none;"></textarea>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="display:<?=(($coupon_seq == 0) ? "" : "none" )?>;">
                                 <th>총 결제금액</th>
                                 <td><span id="lastPrice" style="font-weight:700;color:red;">0원</span><span id="lastcouponprice"></span></td>
                             </tr>
@@ -427,6 +432,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>    
     var businit = 0;
     var busrestype = "none";
+    var buschannel = "<?=$coupon_seq?>";
     var busData = {};
     
     var objParam = {

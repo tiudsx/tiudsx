@@ -328,6 +328,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>
     var businit = 0;
     var busrestype = "seatview";
+    var buschannel = "0";
     var busData = {};
     var busResData = {};
     

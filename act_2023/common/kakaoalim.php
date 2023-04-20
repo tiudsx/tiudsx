@@ -131,14 +131,29 @@ function kakaoContent($arrKakao){
 			.'\n      - 우리은행 / 1002-845-467316 / 이승철';
 
 	}else if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
+		$kakaolink = "";
+		$kakaoInfo = "";
+
+		if($arrKakao["couponseq"] == "17"){ //마린 패키지
+			$kakaoInfo = "\n ▶ 마린서프x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+			$kakaolink = "\n    https://open.kakao.com/o/goYwKe5e\n";
+		}else if($arrKakao["couponseq"] == "20"){ //인구 패키지
+			$kakaoInfo = "\n ▶ 인구서프x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+			$kakaolink = "\n    https://open.kakao.com/o/gf4LMe5e\n";
+		}else if($arrKakao["couponseq"] == "21"){ //서팩 패키지
+			$kakaoInfo = "\n ▶ 서프팩토리x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+			$kakaolink = "\n    https://open.kakao.com/o/g58J34ff\n";
+		}
+
 		$kakaoMsg = $arrKakao["smsTitle"]
 			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
 			.'\n서핑버스를 예약해주셔서 감사합니다.'
 			.'\n\n예약정보 [예약확정]'
 			.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
-			.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
+			//.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
 			.'\n ▶ 예약자 : '.$arrKakao["userName"]
 			.'\n'.$arrKakao["msgInfo"]
+			.$kakaoInfo.$kakaolink
 			.'---------------------------------'
 			.'\n ▶ 안내사항'
 			.'\n      - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
@@ -161,15 +176,30 @@ function kakaoContent($arrKakao){
 
 	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채널 알림톡발송
 		if($arrKakao["PROD_TYPE"] == "bus_channel"){ //타채널 알림톡발송
+
+			$kakaoInfo = "";
+			$kakaolink = "";
+			if($arrKakao["PROD_URL"] == "17"){ //마린 패키지
+				$kakaoInfo = "\n\n ▶ 마린서프x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+				$kakaolink = "\n    https://open.kakao.com/o/goYwKe5e";
+			}else if($arrKakao["PROD_URL"] == "20"){ //인구 패키지
+				$kakaoInfo = "\n\n ▶ 인구서프x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+				$kakaolink = "\n    https://open.kakao.com/o/gf4LMe5e";
+			}else if($arrKakao["PROD_URL"] == "21"){ //서팩 패키지
+				$kakaoInfo = "\n\n ▶ 서프팩토리x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+				$kakaolink = "\n    https://open.kakao.com/o/g58J34ff";
+			}
+
 			$kakaoMsg = $arrKakao["smsTitle"]
 				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-				.'\n서핑버스를 예약해주셔서 감사합니다.'
-				.'\n좌석/정류장 예약관련 안내드립니다.'
+				.'\n액트립을 이용해주셔서 감사합니다.'
+				.'\n서핑버스 좌석/정류장 예약관련 안내드립니다.'
 				.'\n\n예약정보 [예약대기]'
 				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
-				.'\n ▶ 예약번호 : -'
+				//.'\n ▶ 예약번호 : -'
 				.'\n ▶ 예약자 : '.$arrKakao["userName"]
 				.'\n ▶ 예약좌석'.$arrKakao["msgInfo"]
+				.$kakaoInfo.$kakaolink
 				.'\n---------------------------------'
 				.'\n ▶ 안내사항'
 				.'\n      - [예약하기] 클릭 후 좌석/정류장을 예약해주세요.'
@@ -209,10 +239,15 @@ function kakaoMsg($arrKakao){
 			.'"button3":{"type":"WL","name":"이벤트&공지","url_mobile":"'.$Url.$arrKakao["link3"].'"},';
 
 	}else if($arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 입금대기
-        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',';
+        $btnList = '"button1":'.$btn_ResSearch
+			.',"button2":'.$btn_ResChange
+			.',"button3":'.$btn_ResPoint.',';
 
 	}else if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
-        $btnList = '"button1":'.$btn_ResSearch.',"button2":'.$btn_ResChange.',"button3":'.$btn_ResPoint.',"button4":'.$btn_ResGPS.',';
+        $btnList = '"button1":'.$btn_ResSearch
+			.',"button2":'.$btn_ResChange
+			.',"button3":'.$btn_ResPoint
+			.',"button4":'.$btn_ResGPS.',';
 
 	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채녈 셔틀버스 예약안내
 		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';

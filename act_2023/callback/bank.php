@@ -74,7 +74,7 @@ if($count == 1){
 		$etc = $row["etc"];
 		$userPhone = $row["user_tel"];
 		$usermail = $row["user_email"];
-		$shopSeq = $row["shopSeq"];
+		$shopseq = $row["shopSeq"];
 		$code = $row['code'];
 	}
 
@@ -131,6 +131,19 @@ if($count == 1){
             $busSeatInfoTotal .= $busSeatInfoE;
         }
 
+		if($shopseq == 7){
+			$busTypeY = "Y";
+			$busTypeS = "S";
+			$busTitleName = "양양";
+			$resparam = "surfbus_yy";
+		}else{
+			$busTypeY = "E";
+			$busTypeS = "A";    
+			$busTitleName = "동해";    
+			$resparam = "surfbus_dh";	
+		}
+        $gubun_title = $busTitleName.' 서핑버스';
+
 		$tempName = "frip_bus02"; //예약확정
 		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
 		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
@@ -151,6 +164,7 @@ if($count == 1){
             , "userName"=> $userName
             , "userPhone"=> $userPhone
             , "msgType"=>$msgType
+            , "shopname"=>$gubun_title
             , "MainNumber"=>$ResNumber
             , "msgInfo"=>$msgInfo
             , "btn_ResContent"=> $btn_ResContent
@@ -326,7 +340,7 @@ if($count == 1){
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 	
-	$select_query = "INSERT INTO `AT_CALL_BANK_HISTORY`(`smscontent`, `keyword`, `shopSeq`, `goodstype`, `bankprice`, `bankname`, `banknum`, `bankuser`, `MainNumber`, `insdate`) VALUES ('$content', '$keyword', $shopSeq, '$code', '$bankprice', '$bankname', '$banknum', '$bankuser', $ResNumber, now())";
+	$select_query = "INSERT INTO `AT_CALL_BANK_HISTORY`(`smscontent`, `keyword`, `shopSeq`, `goodstype`, `bankprice`, `bankname`, `banknum`, `bankuser`, `MainNumber`, `insdate`) VALUES ('$content', '$keyword', $shopseq, '$code', '$bankprice', '$bankname', '$banknum', '$bankuser', $ResNumber, now())";
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 
@@ -344,11 +358,11 @@ if($count == 1){
 		$etc = $row["etc"];
 		$userPhone = $row["user_tel"];
 		$usermail = $row["user_email"];
-		$shopSeq = $row["shopSeq"];
+		$shopseq = $row["shopSeq"];
 		$shopname = $row["shopname"];
 		$code = $row['code'];
 		
-		$mailcontent .= $shopname.'('.$shopSeq.') / 주문번호 : '.$ResNumber.' / 이름 : '.$bankuser.' / 금액 : '.number_format($bankprice).'원<br>';
+		$mailcontent .= $shopname.'('.$shopseq.') / 주문번호 : '.$ResNumber.' / 이름 : '.$bankuser.' / 금액 : '.number_format($bankprice).'원<br>';
 		$ResNumberList .= $ResNumber."|";
 
 		$select_query = "UPDATE `AT_RES_SUB` 
@@ -360,7 +374,7 @@ if($count == 1){
 		if(!$result_set) goto errGo;
 	}
 
-	$select_query = "UPDATE `AT_CALL_BANK` SET goodstype = '$code', MainNumberList = '$ResNumberList', shopSeq = $shopSeq WHERE seq = ".$seq;
+	$select_query = "UPDATE `AT_CALL_BANK` SET goodstype = '$code', MainNumberList = '$ResNumberList', shopSeq = $shopseq WHERE seq = ".$seq;
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 
@@ -413,9 +427,9 @@ if($count == 1){
 		while ($row = mysqli_fetch_assoc($result_setlist)){
 			$ResNumber = $row['resnum'];
 			$shopname = $row['shopname'];
-			$shopSeq = $row['shopSeq'];
+			$shopseq = $row['shopSeq'];
 			
-			$mailcontent .= $shopname.'('.$shopSeq.') / 주문번호 : '.$ResNumber.'<br>';
+			$mailcontent .= $shopname.'('.$shopseq.') / 주문번호 : '.$ResNumber.'<br>';
 			$ResNumberList .= $ResNumber."|";
 	
 			$select_query = "UPDATE `AT_RES_SUB` 
@@ -470,9 +484,9 @@ if($count == 1){
 			while ($row = mysqli_fetch_assoc($result_setlist)){
 				$ResNumber = $row['resnum'];
 				$shopname = $row['shopname'];
-				$shopSeq = $row['shopSeq'];
+				$shopseq = $row['shopSeq'];
 
-				$mailcontent .= $shopname.'('.$shopSeq.') / 주문번호 : '.$ResNumber.'<br>';
+				$mailcontent .= $shopname.'('.$shopseq.') / 주문번호 : '.$ResNumber.'<br>';
 				$ResNumberList .= $ResNumber."|";
 		
 				$select_query = "UPDATE `AT_RES_SUB` 

@@ -102,7 +102,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
         $resultSite = mysqli_query($conn, $select_query_sub);
 
         while ($rowSub = mysqli_fetch_assoc($resultSite)){
-            $shopSeq = $rowSub['seq'];
+            $shopseq = $rowSub['seq'];
 			$shopname = $rowSub['shopname'];
 			$coupon = $rowSub['res_coupon'];
 			$busGubun = substr($rowSub['res_bus'], 0, 1);
@@ -145,6 +145,19 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
         $busSeatInfo = $busSeatInfo;
 
+		if($shopseq == 7){
+			$busTypeY = "Y";
+			$busTypeS = "S";
+			$busTitleName = "양양";
+			$resparam = "surfbus_yy";
+		}else{
+			$busTypeY = "E";
+			$busTypeS = "A";    
+			$busTitleName = "동해";    
+			$resparam = "surfbus_dh";	
+		}
+        $gubun_title = $busTitleName.' 서핑버스';
+
 		$tempName = "frip_bus02"; //예약확정
 		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
 		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
@@ -165,6 +178,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
             , "userName"=> $userName
             , "userPhone"=> $userPhone
             , "msgType"=>$msgType
+            , "shopname"=>$gubun_title
             , "MainNumber"=>$ResNumber
             , "msgInfo"=>$msgInfo
             , "btn_ResContent"=> $btn_ResContent
@@ -347,7 +361,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	}
 
 	$msgTitle = "액트립$prodTitle 예약안내";
-	$link1 = "surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'));
+	$link1 = "surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'.$reschannel.'|'));
 	$arrKakao = array(
 		"gubun"=> "bus"
 		, "admin"=> "N"
@@ -375,7 +389,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$kakao_message = $data[0]["message"];
 	$kakao_originMessage = $data[0]["originMessage"];
 
-	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid|$resbus";
+	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid|$resbus|$reschannel";
 	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`, `etc`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo', '$link1');";
 	$result_set = mysqli_query($conn, $select_query);
  	if(!$result_set) goto errGo;

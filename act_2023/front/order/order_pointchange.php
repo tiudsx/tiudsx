@@ -7,12 +7,15 @@ $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
 $num = $_REQUEST["num"];
 
 $now = date("Y-m-d");
-$select_query = 'SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
-ON a.resnum = b.resnum 
-where a.resnum = "'.$resNumber.'" AND b.res_confirm IN (0,3,8)
-AND b.res_date >= "'.$now.'"
-ORDER BY a.resnum, b.ressubseq';
-
+$select_query = 'SELECT a.user_name, a.resnum, a.user_tel, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.couponseq 
+                    FROM `AT_RES_MAIN` a INNER JOIN `AT_RES_SUB` as b 
+                        ON a.resnum = b.resnum 
+                    LEFT JOIN AT_COUPON_CODE as c
+                        ON b.res_coupon = c.coupon_code
+                    WHERE a.resnum = "'.$resNumber.'" 
+                        AND b.res_confirm IN (0,3,8)
+                        AND b.res_date >= "'.$now.'"
+                        ORDER BY a.resnum, b.ressubseq';
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -32,6 +35,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $res_num = $row["resnum"];
         $user_tel = $row["user_tel"];
         $shopseq = $row["seq"];
+        $couponseq = $row["couponseq"];
     }
     
     $gubun = substr($row["res_bus"], 0, 1);
@@ -279,6 +283,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </table>
                         </div>
                     </ul>
+                    <ul class="busLineTab2" style="display: block;padding-left: 10px;"></ul>
                     <ul class="selectStop" style="padding:0 4px;">
                         <li style="display:none;"><img src="/act_2023/images/button/<?if($bustype0 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
                         <li>
@@ -330,6 +335,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>
     var businit = 0;
     var busrestype = "change";
+    var buschannel = "<?=$couponseq?>";
     var busData = {};
     var busResData = {};
     
