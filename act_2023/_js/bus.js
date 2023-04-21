@@ -211,7 +211,7 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
         var selVlu = el.busnum.substring(0, 3);
         var selBool = true;
         
-        if(buschannel == 17 || buschannel == 20 || buschannel == 21){ //프립 서핑패키지
+        if(buschannel == 17 || buschannel == 20 || buschannel == 21 || buschannel == 22){ //프립 서핑패키지
             if(selVlu == "SY2" || selVlu == "AE2"){
                 selBool = false;
             }
@@ -755,6 +755,8 @@ function fnSeatSelected(obj) {
             selVlu = "인구해변";
         }else if(buschannel == 21){ //서프팩토리
             selVlu = "대진해변";
+        }else if(buschannel == 22){ //솔게하
+            selVlu = "솔.동해점";
         }
         
         arrObjs.forEach(function(el) {
@@ -853,6 +855,8 @@ function fnSeatChangeSelected(arrVlu) {
         selVlu = "인구해변";
     }else if(buschannel == 21){ //서프팩토리
         selVlu = "대진해변";
+    }else if(buschannel == 22){ //솔게하
+        selVlu = "솔.동해점";
     }
         
     arrObjs.forEach(function(el) {

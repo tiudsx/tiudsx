@@ -482,7 +482,7 @@ function fnDayList(vlu, obj, folderName){
 //클룩, 프립 데이터 맵핑
 function fnChannel(obj){
     $j("#resbus option").show();
-    if(obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "16"){
+    if(obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "22" || obj.value == "16"){
         $j("#fripMapping").show();
     }else{
         $j("#fripMapping").hide();
@@ -491,7 +491,7 @@ function fnChannel(obj){
     if(obj.value == "17" || obj.value == "20"){
         $j("#resbus option").eq(1).hide();
         $j("#resbus").val("YY");
-    }else if(obj.value == "21"){
+    }else if(obj.value == "21" || obj.value == "22"){
         $j("#resbus option").eq(0).hide();
         $j("#resbus").val("DH");
     }
@@ -505,7 +505,7 @@ function fnGetJson(obj){
         return;
     }
 
-    if(vlu == "11" || vlu == "17" || vlu == "20" || vlu == "21"){
+    if(vlu == "11" || vlu == "17" || vlu == "20" || vlu == "21" || vlu == "22"){
         fnMakeJsonFrip(); //프립
     }else if(vlu == "16"){
         fnMakeJsonKlook(); //클룩
@@ -516,76 +516,66 @@ function fnGetJson(obj){
 function fnMakeJsonFrip() {
     //복사된 html을 가공 table[class='el-table__body']
     var strHtml = $j("#html_1").val().replace(/<!---->/gi,"");
-    $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
     //$j("#divCopy").html($j("#divCopy").find("table[class='el-table__body']").html());
 
     //Json 인스턴스
     var objList = new Array();
+    var objTitle = "";
     var objValue = new Object();
 
+    var strTitle = strHtml.substring(strHtml.indexOf('mx-4 text-sm') + 14, strHtml.lastIndexOf('row-padding'));
+    $j("#divCopy").html(strTitle.substring(0, strTitle.lastIndexOf('</div>') + 6));
+    //상품명
+    $j("#divCopy .row-padding").each(function(){
+        if($j(this).find(".col-md-2").text() == "상품"){
+            objTitle = $j(this).find(".col-md-2").next().text();
+        }
+    });
+
+    $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
     //html 생성
-    var addHtml = '<table width="100%" border="1" id="td_select">';
     $j("#divCopy .el-table__row").each(function(){
 
         objValue = new Object();
 
-        addHtml += '<tr name="' + $j(this).find("td").eq(3).find(".cell").text() + '">';
-        
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(1).find(".cell").text(); //이름
-        addHtml += '</td>';
+        objValue.title = objTitle;
         objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(2).find(".cell").text(); //성별
-        addHtml += '</td>';
         objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(3).find(".cell").text(); //연락처
-        addHtml += '</td>';
         objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(4).find(".cell").text(); //아이템명
-        addHtml += '</td>';
         objValue.item = $j(this).find("td").eq(4).find(".cell").text(); //아이템명
 
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(5).find(".cell").text(); //추가정보
-        addHtml += '</td>';
-        objValue.addinfo = $j(this).find("td").eq(5).find(".cell").text(); //추가정보
+        var objinfo = $j(this).find("td").eq(5).find(".cell span"); //추가정보    
+        var addinfo = "";
+        for (i = 0; i < objinfo.length; i++) {
+            addinfo += objinfo[i].innerText + "|";
+            
+        }
+        objValue.addinfo = addinfo;
 
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += $j(this).find("td").eq(6).find(".cell").text(); //예약상태
-        addHtml += '</td>';
         objValue.state = $j(this).find("td").eq(6).find(".cell").text(); //예약상태
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
         
         if ($j(this).find("button").length > 0) {
-            addHtml += $j(this).find("button").text(); //액션
             objValue.btn = $j(this).find("button").text(); //액션
         }
         else{
-            addHtml += 'none'; //액션
             objValue.btn = 'none'; //액션
         }
-        
-        addHtml += '</td>';
-
-        addHtml += '<td style="mso-data-placement:same-cell;">';
-        addHtml += '1';
-        addHtml += '</td>';
-        addHtml += '</tr>';
 
         objList.push(objValue);
     });
-    addHtml += '</table>';
-    
-    $j("#divSet").html(addHtml);
 
     $j("#html_2").val(JSON.stringify(objList));
+
+    //당일치기
+    //[{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"망두1004","genser":" - ","tel":"01033657826","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"Nietzsche","genser":" 여성 ","tel":"01042077240","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"박선영","genser":" 여성 ","tel":"01033749239","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "}]
+
+
+    //힐링 캠프
+    //[{"title":"[동해] 힐링 서핑캠프 #동거동락 #서핑트립 #1박2일 #MT","name":"욤희","genser":" - ","tel":"01037479816","item":"[얼리버드] 남/여|서핑강습(1회)+숙박+바베큐+왕복교통","addinfo":"이름을 입력해주세요 . : 한나영|성별이 어떻게 되시나요? : 여성|일요일 서핑강습 여부 : 미참여 (자유일정)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 힐링 서핑캠프 #동거동락 #서핑트립 #1박2일 #MT","name":"영숙22","genser":" 여성 ","tel":"01027768162","item":"[얼리버드] 남/여|서핑강습(1회)+숙박+바베큐+왕복교통","addinfo":"이름을 입력해주세요 . : 허아현|성별이 어떻게 되시나요? : 여성|일요일 서핑강습 여부 : 미참여 (자유일정)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 힐링 서핑캠프 #동거동락 #서핑트립 #1박2일 #MT","name":"권가은","genser":" 여성 ","tel":"01090281451","item":"[얼리버드] 남/여|서핑강습(1회)+숙박+바베큐+왕복교통","addinfo":"성별이 어떻게 되시나요? : 여성|일요일 서핑강습 여부 : 미참여|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 힐링 서핑캠프 #동거동락 #서핑트립 #1박2일 #MT","name":"연이2","genser":" 여성 ","tel":"01075539495","item":"[얼리버드] 남/여|서핑강습(1회)+숙박+바베큐+왕복교통","addinfo":"성별이 어떻게 되시나요? : 여성|일요일 서핑강습 여부 : 미참여|","state":"예약 대기","btn":" 예약건 취소 처리 "}]
+
+    //셔틀버스
+    //[{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"프립대원","genser":" 남성 ","tel":"01099850475","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"프립대원","genser":" 남성 ","tel":"01099850475","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"별님❤","genser":" 여성 ","tel":"01092942064","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"별님❤","genser":" 여성 ","tel":"01092942064","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"김윤희","genser":" 여성 ","tel":"01047495581","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"김윤희","genser":" 여성 ","tel":"01047495581","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"슈붕슈붕","genser":" 여성 ","tel":"01022481787","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"슈붕슈붕","genser":" 여성 ","tel":"01022481787","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"}]
+    console.log(objList);
 }
 
 //클룩 데이터 맵핑
@@ -659,6 +649,12 @@ function fnMakeJsonKlook() {
     });
 
     $j("#html_2").val(JSON.stringify(objList));
+
+    // [{"res_id":"HCA813310","state":"확정됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"서울 사당 - 양양 (편도/ 토요일, 일요일) ","ea":"인원 x 1","bus_date":"2023-06-10","user_fullname":"한별 이","user_tel_sub":"82-01089199342","user_name1":"이","user_name2":"한별","user_tel":"+82-01089199342"}
+    //,{"res_id":"ZMF207384","state":"취소됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"서울 사당 - 양양 (편도/ 토요일, 일요일) ","ea":"인원 x 2","bus_date":"2023-05-05","user_fullname":"박 세린","user_tel_sub":"***","user_name1":"박","user_name2":"세린","user_tel":"+82-01033836382"}
+    //,{"res_id":"MAW511856","state":"취소됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"[17시] 양양 - 서울 (편도/ 토요일, 일요일)","ea":"인원수 x 2","bus_date":"2023-05-07","user_fullname":"박 세린","user_tel_sub":"***","user_name1":"박","user_name2":"세린","user_tel":"+82-01033836382"}
+    //,{"res_id":"PRN058505","state":"확정됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"서울 사당 - 양양 (편도/ 토요일, 일요일) ","ea":"인원 x 2","bus_date":"2023-05-27","user_fullname":"-","user_tel_sub":"82-01049310092","user_tel":"+82-01049310092"}]
+    console.log(objList);
 }
 
 //서핑버스 정산

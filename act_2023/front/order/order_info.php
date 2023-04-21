@@ -88,7 +88,7 @@ if($count == 0){
 					$sitename = "[네이버쇼핑]"; 
 				}else if($res_coupon == "NABUSB" || $couponseq == 10){
 					$sitename = "[네이버예약]"; 
-				}else if($res_coupon == "FRIP" || $couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21){ 
+				}else if($res_coupon == "FRIP" || $couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){ 
 					$sitename = "[프립]";
 				}else if($res_coupon == "KLOOK"){ 
 					$sitename = "[KLOOK]";

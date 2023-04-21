@@ -337,7 +337,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	if($reschannel == 11){ //프립
 		$prodTitle = 'x프립버스';
 		$seatName2 = $seatName2." 프립버스";
-	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21){ //프립 패키지
+	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21 || $reschannel == 22){ //프립 패키지
 		$prodTitle = 'x프립 서핑패키지';
 		if($reschannel == 17){
 			$seatName2 = $seatName2." 마린서프x프립";
@@ -345,6 +345,8 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$seatName2 = $seatName2." 인구서프x프립";
 		}else if($reschannel == 21){
 			$seatName2 = "서프팩토리 동해점x프립";
+		}else if($reschannel == 22){
+			$seatName2 = "힐링 서핑캠프x프립";
 		}
 	}else if($reschannel == 12){ //마이리얼트립
 

@@ -195,6 +195,7 @@ $shopseq = 0;
                                     <option value="17" kakaoUrl="https://open.kakao.com/o/goYwKe5e">프립-마린</option>
                                     <option value="20" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">프립-인구</option>
                                     <option value="21" kakaoUrl="https://open.kakao.com/o/g58J34ff">프립-서팩 동해</option>
+                                    <option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
                                     <option value="16">클룩</option>
                                     <option value="7">네이버쇼핑</option>
                                     <option value="10">네이버예약</option>

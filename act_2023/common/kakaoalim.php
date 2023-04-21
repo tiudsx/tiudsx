@@ -143,6 +143,9 @@ function kakaoContent($arrKakao){
 		}else if($arrKakao["couponseq"] == "21"){ //서팩 패키지
 			$kakaoInfo = "\n ▶ 서프팩토리x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
 			$kakaolink = "\n    https://open.kakao.com/o/g58J34ff\n";
+		}else if($arrKakao["couponseq"] == "22"){ //솔게하 패키지
+			$kakaoInfo = "\n\n ▶ 힐링 서핑캠프x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+			$kakaolink = "\n    https://open.kakao.com/o/g4UVz4ff\n";
 		}
 
 		$kakaoMsg = $arrKakao["smsTitle"]
@@ -188,6 +191,9 @@ function kakaoContent($arrKakao){
 			}else if($arrKakao["PROD_URL"] == "21"){ //서팩 패키지
 				$kakaoInfo = "\n\n ▶ 서프팩토리x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
 				$kakaolink = "\n    https://open.kakao.com/o/g58J34ff";
+			}else if($arrKakao["PROD_URL"] == "22"){ //솔게하 패키지
+				$kakaoInfo = "\n\n ▶ 힐링 서핑캠프x프립 오픈톡에 꼭 참여해주세요.\n    이용안내 및 문의가 가능합니다 :)";
+				$kakaolink = "\n    https://open.kakao.com/o/g4UVz4ff";
 			}
 
 			$kakaoMsg = $arrKakao["smsTitle"]

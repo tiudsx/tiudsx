@@ -33,7 +33,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$cancelChk = "";
 	}
 
-	if($res_coupon == "NAVERA" || $res_coupon == "NABUSA" || $res_coupon == "NABUSB" || $res_coupon == "NABUSC" || $couponseq == 7 || $couponseq == 10 || $couponseq == 11 || $couponseq == 17 || $couponseq == 15 || $couponseq == 20 || $couponseq == 21 || $res_coupon == "KLOOK" || $res_coupon == "FRIP"){
+	if($res_coupon == "NAVERA" || $res_coupon == "NABUSA" || $res_coupon == "NABUSB" || $res_coupon == "NABUSC" || $couponseq == 7 || $couponseq == 10 || $couponseq == 11 || $couponseq == 17 || $couponseq == 15 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22 || $res_coupon == "KLOOK" || $res_coupon == "FRIP"){
 		$chkView = 0;
 		$chkViewPrice = 0;
 		$cancelChk = "coupon";
