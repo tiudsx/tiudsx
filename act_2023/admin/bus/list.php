@@ -236,7 +236,6 @@ $shopseq = 0;
 
                                 <textarea id="html_2" cols="40" rows="7" style="display: ;"></textarea>
                                 <div id="divCopy" style="display: none;"></div>
-                                <div style="width: 500px;" id="divSet"></div>
                             </td>
                         </tr>
                         <tr>

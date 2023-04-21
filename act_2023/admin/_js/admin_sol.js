@@ -811,3 +811,14 @@ function fnKakaoBank(vlu){
         $j("#spanBank").hide();        
     }
 }
+
+//솔예약건 검색
+function fnSearchAdminSol(url, objid) {
+    var formData = $j("#" + objid).prev().serializeArray();
+    $j.post("/act_2023/admin/" + url, formData,
+        function(data, textStatus, jqXHR) {
+            $j("#" + objid).html(data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+
+    });
+}

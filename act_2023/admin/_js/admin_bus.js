@@ -539,6 +539,24 @@ function fnMakeJsonFrip() {
         objValue = new Object();
 
         objValue.title = objTitle;
+        if(objTitle.indexOf("서프팩토리") > 0){ // 서프팩토리
+
+        }else if(objTitle.indexOf("마린서프") > 0){ // 마린서프
+
+        }else if(objTitle.indexOf("인구서프") > 0){ // 인구서프
+
+        }else if(objTitle.indexOf("1박2일") > 0){ // 힐링서프
+
+        }else if(objTitle.indexOf("서울→양양") > 0){ // 서울>양양
+
+        }else if(objTitle.indexOf("양양→서울") > 0){ // 양양>서울
+
+        }else if(objTitle.indexOf("서울→동해(금진,대진)") > 0){ // 서울>동해
+
+        }else if(objTitle.indexOf("동해(금진,대진)→서울") > 0){ // 동해>서울
+
+        }
+
         objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
         objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
         objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
@@ -636,6 +654,16 @@ function fnMakeJsonKlook() {
                 }
 
                 if (colNameTitle[colKey] != undefined) {
+                    if(colNameTitle[colKey]  == "prod_name"){
+                        if(colValue == "서울 - 양양 편도 or 왕복 서핑버스 (서피비치)"){
+                            
+                        }else if(colValue == "강원도 양양 셔틀버스 + 서핑 강습"){
+                            
+                        }else if(colValue == "양양 서핑 셔틀버스 + 강습"){
+                            
+                        }
+                    }
+
                     objValue[colNameTitle[colKey]] = colValue;
                 }
                 

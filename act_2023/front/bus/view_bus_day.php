@@ -47,7 +47,8 @@ if($reqCode == "busday"){
 
     for ($i=0; $i <= 45; $i++) { 
         $seatYN = "Y";
-        if(($_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51" || $_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i >= 29){
+        //$_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51" || 
+        if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i >= 29){
             $seatYN = "N";
         }
         $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);

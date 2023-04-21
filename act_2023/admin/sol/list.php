@@ -388,26 +388,33 @@ include __DIR__.'/../../common/logininfo.php';
 				<form name="frmSearch" id="frmSearch" autocomplete="off">
 				<div class="gg_first" style="margin-top:0px;">예약관리 검색</div>
 				<table class='et_vars exForm bd_tb' style="width:100%">
-					<colgroup>
+					<!-- <colgroup>
 						<col style="width:65px;">
 						<col style="width:*;">
 						<col style="width:100px;">
-					</colgroup>
+					</colgroup> -->
 					<tr>
 						<th>구분</th>
 						<td>
-							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="0" checked="checked" style="vertical-align:-3px;" />대기</label>
-							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="1" checked="checked" style="vertical-align:-3px;" />확정</label>
-							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="3" style="vertical-align:-3px;" />환불</label>
-							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="4" style="vertical-align:-3px;" />취소</label>
+							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="대기" checked="checked" style="vertical-align:-3px;" />대기</label>
+							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="확정" checked="checked" style="vertical-align:-3px;" />확정</label>
+							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="환불" style="vertical-align:-3px;" />환불</label>
+							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="취소" style="vertical-align:-3px;" />취소</label>
+						</td>
+						<th>검색기간</th>
+						<td colspan="5">
+							<input type="hidden" id="hidsearch" name="hidsearch" value="init">
+							<input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >&nbsp;~
+							<input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+							<input type="button" class="bd_btn" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="전체" onclick="fnDateReset();" />
 						</td>
 					</tr>
 					<tr>
 						<th>검색어</th>
-						<td><input type="text" id="schText" name="schText" value="" class="itx2" style="width:140px;"></td>
+						<td colspan="3"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:140px;"></td>
 					</tr>
 					<tr>
-						<td colspan="2" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdminSol('sol/res_sollist_search.php', 'mngSearch');" /></td>
+						<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdminSol('sol/list_search_res.php', 'mngSearch');" /></td>
 					</tr>
 				</table>
 				</form>
