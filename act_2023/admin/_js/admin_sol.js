@@ -37,6 +37,7 @@ function fnSolRes(){
 function fnSolpopupReset() {
     $j("#frmModify")[0].reset();
     $j("#resseq").val("");
+    $j("#res_bankchk").text("");
     $j("#SolAdd").css("display", "");
     $j("#SolModify").css("display", "none");
     $j("#SolDel").css("display", "none");
@@ -230,7 +231,17 @@ function fnSolModify(resseq, num) {
                     $j("#user_tel" + num).val(data[i].user_tel);
                     $j("#res_company" + num).val(data[i].res_company);
                     $j("#res_confirm" + num).val(data[i].res_confirm);
+                    fnConfirm(data[i].res_confirm);
+                    $j("#res_kakao").val("N");
                     $j("#memo2" + num).val(data[i].memo2);
+
+                    if(data[i].res_bankchk == "N"){
+                        $j("#res_bankchk" + num).text("");
+                    }else if(data[i].res_bankchk == "0"){
+                        $j("#res_bankchk" + num).text("일반 계좌안내");
+                    }else{
+                        $j("#res_bankchk" + num).text(commify(data[i].res_bankchk) + "원 안내");
+                    }
                 }
 
                 if (data[i].res_type == "stay") { //숙박&바베큐
@@ -821,4 +832,18 @@ function fnSearchAdminSol(url, objid) {
         }).fail(function(jqXHR, textStatus, errorThrown) {
 
     });
+}
+
+function fnConfirm(vlu){
+    $j("#res_kakao option").show();  
+    if(vlu == "확정"){
+        $j("#res_kakao").val("Y");
+        $j("#res_kakao option[value=S]").hide();   
+    }else if(vlu == "대기"){
+        $j("#res_kakao").val("N");
+        $j("#res_kakao option[value=Y]").hide();   
+    }else{
+        $j("#res_kakao").val("N");
+        $j("#res_kakao option").not('[value=N]').hide();
+    }
 }

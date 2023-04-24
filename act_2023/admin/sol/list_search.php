@@ -25,7 +25,7 @@ $select_query = "
     SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
         b.ressubseq, b.res_type, b.prod_name, b.sdate, b.edate, '' as resdate, b.staysex, b.stayM, b.stayroom, b.staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo 
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk 
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                 ON a.resseq = b.resseq 
                 WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
@@ -38,7 +38,7 @@ $select_query = "
             b.ressubseq, b.res_type, 
             CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
             '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-            DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo 
+            DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk 
                 FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
                     WHERE b.resdate = '$selDate'                    
@@ -254,6 +254,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $surfrentW = $row['surfrentW'];
     $bbq = $row['bbq'];
     $eDay = $row['eDay'];
+    $res_bankchk = $row['res_bankchk'];
 
     $memoYN = "";
     if($memo != "" || $memo2 != ""){
@@ -338,7 +339,16 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }
 
     $fontcolor = "";
+    $bankchk = "";
     if($res_confirm == "대기"){
+        if($res_bankchk == "N"){
+            $bankchk = "미발송";
+        }else if($res_bankchk == "0"){
+            $bankchk = "일반계좌";
+        }else{
+            $bankchk = number_format($res_bankchk)."원";            
+        }
+        $bankchk = "<br><span style='color:black;'><b>".$bankchk."</b></span>";
         $fontcolor = "color:#c0c0c0;";
     }else if($res_confirm == "취소"){
         //$fontcolor = "color:#c0c0c0;";
@@ -422,6 +432,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             <?if($res_confirm == "확정"){?>
             <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>);" />
             <?}?>
+            <?=$bankchk?>
         </td>
         <td style="<?=$fontcolor?>"><?=$res_company?></td>
     </tr>

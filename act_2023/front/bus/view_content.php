@@ -14,8 +14,8 @@
         <img src="https://shop-phinf.pstatic.net/20230216_168/16765144636841QA9a_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_4_2.jpg?type=w860" class="placeholder">
         <?}?>
         
-        <img src="https://shop-phinf.pstatic.net/20230216_111/16765144950553Ennk_JPEG/%EC%96%91%EC%96%91%ED%96%89_%EC%82%AC%EB%8B%B9%EC%84%A0.jpg?type=w860" class="placeholder">
-        <img src="https://shop-phinf.pstatic.net/20230216_118/1676514495043mCpJI_JPEG/%EC%96%91%EC%96%91%ED%96%89_%EC%A2%85%EB%A1%9C%EC%84%A0.jpg?type=w860" class="placeholder">
+        <img src="https://shop-phinf.pstatic.net/20230424_83/1682301226431RFaR7_JPEG/%EC%96%91%EC%96%91%ED%96%89_%EC%82%AC%EB%8B%B9%EC%84%A0.jpg?type=w860" class="placeholder">
+        <img src="https://shop-phinf.pstatic.net/20230424_101/1682301231763AGHoC_JPEG/%EC%96%91%EC%96%91%ED%96%89_%EC%A2%85%EB%A1%9C%EC%84%A0.jpg?type=w860" class="placeholder">
         <img src="https://shop-phinf.pstatic.net/20230216_177/1676514508542hxrVx_JPEG/%EC%84%9C%EC%9A%B8%ED%96%89_%EC%96%91%EC%96%91.jpg?type=w860" class="placeholder">
     <?}else{ //동해 셔틀버스?>
         <img src="https://shop-phinf.pstatic.net/20230216_199/1676537114198JevGo_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_2.jpg?type=w860" class="placeholder">
@@ -26,7 +26,7 @@
         <img src="https://shop-phinf.pstatic.net/20230228_243/1677547536255EyYac_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_4_%EC%88%98%EC%A0%95.jpg?type=w860" class="placeholder">
         <?}?>
 
-        <img src="https://shop-phinf.pstatic.net/20230216_105/1676514744415zgolj_JPEG/%EB%8F%99%ED%95%B4%ED%96%89_%EC%82%AC%EB%8B%B9%EC%84%A0.jpg?type=w860" class="placeholder">
-        <img src="https://shop-phinf.pstatic.net/20230216_45/16765147444123TMe1_JPEG/%EB%8F%99%ED%95%B4%ED%96%89_%EC%A2%85%EB%A1%9C%EC%84%A0.jpg?type=w860" class="placeholder">
+        <img src="https://shop-phinf.pstatic.net/20230424_131/1682301367923hJin8_JPEG/%EB%8F%99%ED%95%B4%ED%96%89_%EC%82%AC%EB%8B%B9%EC%84%A0.jpg?type=w860" class="placeholder">
+        <img src="https://shop-phinf.pstatic.net/20230424_85/16823013729218flhf_JPEG/%EB%8F%99%ED%95%B4%ED%96%89_%EC%A2%85%EB%A1%9C%EC%84%A0.jpg?type=w860" class="placeholder">
         <img src="https://shop-phinf.pstatic.net/20230228_232/16775476794415IFpd_JPEG/%EC%84%9C%EC%9A%B8%ED%96%89_%EB%8F%99%ED%95%B4(%EC%8B%9C%EA%B0%84%ED%86%B5%ED%95%A9).jpg?type=w860" class="placeholder">
     <?}?>

@@ -68,12 +68,14 @@ jQuery(function() {
     $j(window).scroll(function() {
         var docScrollY = $j(document).scrollTop();
 
-        if ((docScrollY + 47) > (topBar.top + 0)) {
-            $j("#tabnavi").addClass("vip-tabwrap-fixed");
-            $j(".vip-tabwrap").addClass("vip-tabwrap-top");
-        } else {
-            $j("#tabnavi").removeClass("vip-tabwrap-fixed");
-            $j(".vip-tabwrap").removeClass("vip-tabwrap-top");
+        if(topBar != null){
+            if ((docScrollY + 47) > (topBar.top + 0)) {
+                $j("#tabnavi").addClass("vip-tabwrap-fixed");
+                $j(".vip-tabwrap").addClass("vip-tabwrap-top");
+            } else {
+                $j("#tabnavi").removeClass("vip-tabwrap-fixed");
+                $j(".vip-tabwrap").removeClass("vip-tabwrap-top");
+            }
         }
         // if ($j('.contentimg').length > 0) {
         //     if (checkVisible($j('.contentimg')) && !isVisible) {

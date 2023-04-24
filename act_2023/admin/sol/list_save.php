@@ -399,6 +399,9 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 		$select_query = kakaoDebug($arrKakao, $arrRtn);            
 		$result_set = mysqli_query($conn, $select_query);
 		// 카카오 알림톡 DB 저장 END
+			
+		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_bankchk = '$res_kakaoBank' WHERE resseq = $seq";
+		$result_set = mysqli_query($conn, $select_query);
 	}
 		
 	mysqli_query($conn, "COMMIT");

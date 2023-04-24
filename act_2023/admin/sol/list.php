@@ -76,29 +76,33 @@ include __DIR__.'/../../common/logininfo.php';
 						<option value='야놀자'>야놀자</option>
 					</select>
 				</td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
 				<th>예약상태</th>
 				<td>
-					<select id="res_confirm" name="res_confirm" class="select">
+					<select id="res_confirm" name="res_confirm" class="select" onchange="fnConfirm(this.value);">
                         <option value='확정'>확정</option>
                         <option value='대기'>대기</option>
 						<option value='환불'>환불</option>
 						<option value='취소'>취소</option>
                     </select>
 				</td>
-			</tr>
-			<tr>
                 <th>알림톡</th>
-				<td colspan="3">
+				<td>
 					<select id="res_kakao" name="res_kakao" class="select" onchange="fnKakaoBank(this.value);">
 						<option value='Y'>발송</option>
 						<option value='N'>미발송</option>
-						<option value='S'>계좌안내</option>
-					</select> (등록일 경우만 발송)
+						<option value='S' style="display:none;">계좌안내</option>
+					</select>
 				</td>
                 <th>입금금액</th>
 				<td>
 					<span id="spanBank" style="display:none;"><input type="text" id="res_kakaoBank" name="res_kakaoBank" size="12" value="0" class="itx">원</span>
 				</td>
+                <th>계좌안내</th>
+				<td id="res_bankchk"></td>
 			</tr>
 			<tr>
                 <th>숙박</th>
@@ -118,12 +122,8 @@ include __DIR__.'/../../common/logininfo.php';
                                 <th rowspan="2"><input type="button" class="btnsurfadd" style="width:40px;" value="추가" data-gubun="trstay"></th>
                             </tr>
                             <tr>
-                                <th>
-									숙소명
-								</th>
-                                <th>
-									이용일
-								</th>
+                                <th>숙소명</th>
+                                <th>이용일</th>
                                 <th>고객정보</th>
                                 <th>성별</th>
 								<th>
@@ -451,12 +451,22 @@ include __DIR__.'/../../common/logininfo.php';
 				<td><input type="text" id="user_tel_2" size="15"  class="itx" readonly></td>
 				<th>예약처</th>
 				<td><input type="text" id="res_company_2" size="10" class="itx" readonly></td>
+				<th></th>
+				<td></td>
+			</tr>
+			<tr>
 				<th>예약상태</th>
 				<td><input type="text" id="res_confirm_2" size="10" class="itx" readonly></td>
+                <th>계좌안내</th>
+				<td id="res_bankchk_2"></td>
+                <th></th>
+				<td></td>
+                <th></th>
+				<td></td>
 			</tr>
 			<tr>
                 <th>숙박</th>
-                <td colspan="9">
+                <td colspan="10">
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
 							<col width="*" />
