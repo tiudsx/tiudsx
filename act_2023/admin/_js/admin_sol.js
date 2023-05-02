@@ -477,34 +477,46 @@ function fnRoomNum(obj, val) {
     //alert(sdate + " / " + edate + " / " + $j(obj).val() + " / " + $j(obj).attr("sel") + " / " + objNext.attr("sel"))
 
     var roomnum = 0;
+    var coldnum = 0;
     switch ($j(obj).val()) {
         case "201":
             roomnum = 8;
+            coldnum = 6;
             break;
         case "202":
             roomnum = 10;
+            coldnum = 2;
             break;
         case "203":
             roomnum = 6;
+            coldnum = 4;
             break;
         case "204":
             roomnum = 8;
+            coldnum = 6;
             break;
         case "301":
             roomnum = 6;
+            coldnum = 2;
             //roomnum = 12;
             break;
         case "302":
             roomnum = 8;
+            coldnum = 2;
             break;
         case "303":
             roomnum = 10;
+            coldnum = 8;
             break;
     }
 
     objNext.append("<option value=''>-------</optoin>");
     if (roomnum == 0) {} else {
         for (var i = 1; i <= roomnum; i++) {
+            var coldbad = "";
+            if(coldnum == i){
+                coldbad = ":에어컨";
+            }
             var roombad = "번 (2층)";
             if ((i % 2) == 1) {
                 roombad = "번 (1층)";
@@ -517,7 +529,7 @@ function fnRoomNum(obj, val) {
                 //roombad += " - 기존"
             }
 
-            objNext.append("<option value='" + i + "' " + sel + ">" + i + roombad + "</optoin>");
+            objNext.append("<option value='" + i + "' " + sel + ">" + i + roombad + coldbad + "</optoin>");
         }
     }
 
