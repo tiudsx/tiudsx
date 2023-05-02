@@ -174,11 +174,11 @@
                     <th style="text-align:center;">위치</th>
                 </tr>
                 <tr>
-                    <th>금진해변</th>
-                    <td><?=fnBusPointArr("AE2_금진해변", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_금진해변", 2)?></font>
+                    <th>솔.동해점</th>
+                    <td><?=fnBusPointArr("AE2_솔.동해점", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("AE2_솔.동해점", 2)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 1, 1, '솔.동해점', this);"></td>
                 </tr>
                 <tr>
                     <th>대진해변</th>
@@ -188,11 +188,11 @@
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 2, 1, '대진해변', this);"></td>
                 </tr>
                 <tr>
-                    <th>솔.동해점</th>
-                    <td><?=fnBusPointArr("AE2_솔.동해점", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_솔.동해점", 2)?></font>
+                    <th>금진해변</th>
+                    <td><?=fnBusPointArr("AE2_금진해변", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("AE2_금진해변", 2)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 1, 1, '솔.동해점', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
                 </tr>
             </tbody>
         </table>

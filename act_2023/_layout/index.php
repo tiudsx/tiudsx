@@ -9,7 +9,7 @@
 		<div id="mainBox">
 			<section id="staticBnr">
 				<!-- <img src="/act_2023/images/banner/levelup.jpg?v=1" alt="" class="placeholder"> -->
-				<a class="visual" href="https://naver.me/xuIOjuKs" target="_blank"><img src=/act_2023/images/banner/event_sol_main.jpg></a>
+				<!-- <a class="visual" href="https://naver.me/xuIOjuKs" target="_blank"><img src=/act_2023/images/banner/event_sol_main.jpg></a> -->
 			</section>
 			<section id="staticBnr">
 				<a class="visual" href="/surfbus"><img src=/act_2023/images/banner/bnrBus.jpg></a>

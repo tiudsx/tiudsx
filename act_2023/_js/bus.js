@@ -1007,8 +1007,8 @@ function fnBusPoint(obj) {
         tbBus = 3;
         gubun = "A";
         busnum = 1;
-        pointname = "금진해변";
-        imgnum = 3;
+        pointname = "솔.동해점";
+        imgnum = 1;
     } else {
         mapviewid = 9;
         tbBus = 3;
