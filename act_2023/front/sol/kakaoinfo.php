@@ -338,8 +338,8 @@ if($count_sub == 0){
 
             <!-- 리뷰이벤트 안내 -->
             <div tabid="viewtab" id="view_tab6" style="min-height: 600px;display:none;">
-                <img src="/act_2023/images/alim/event_sol_review.jpg" class="placeholder">
-                <!-- <img src="/act_2023/images/alim/review.jpg" class="placeholder"> -->
+                <!-- <img src="/act_2023/images/alim/event_sol_review.jpg" class="placeholder"> -->
+                <img src="/act_2023/images/alim/review.jpg" class="placeholder">
             </div>
 
             <div style="padding:10px 0 5px 0;font-size:12px;">

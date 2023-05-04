@@ -108,7 +108,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                                 <li class="litxt">1시간 이내 미입금시 자동취소됩니다.</li>
                                 <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
                                 <!-- <li class="litxt">예약하신 이용일, 탑승정류장, 탑승시간을 꼭 확인해주세요.</li> -->
-                                <li class="litxt">최소인원(15명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
+                                <li class="litxt">최소인원(20명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
                                 <li class="litxt">천재지변으로 인하여 셔틀버스 운행이 취소될 경우 전액환불됩니다.</li>
                                 <li class="litxt">현금영수증 신청은 이용일 이후&nbsp;<label style="color:#059bc0;">[카카오채널 @액트립]</label> 에서 신청가능합니다.</li>
                             </ul>

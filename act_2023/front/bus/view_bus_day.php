@@ -48,15 +48,25 @@ if($reqCode == "busday"){
     for ($i=0; $i <= 45; $i++) { 
         $seatYN = "Y";
         //$_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51" ||         
-        // if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i >= 29){
-        //     $seatYN = "N";
-        // }
-
-        if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i <= 20){
+        if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i >= 29){
             $seatYN = "N";
         }
 
-        if(($_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51") && $i >= 21){
+        // if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i <= 20){
+        //     $seatYN = "N";
+        // }
+
+        // if(($_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51") && $i >= 29){
+        //     $seatYN = "N";
+        // }
+
+        //양양행 - 프립
+        if(($_REQUEST["busNum"] == "YSa1" ) && $i >= 29 && $_REQUEST["busDate"] == "2023-05-27"){
+            $seatYN = "N";
+        }
+
+        //서울행 - 프립
+        if(($_REQUEST["busNum"] == "SY51") && $i >= 29 && $_REQUEST["busDate"] == "2023-05-28"){
             $seatYN = "N";
         }
         $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
