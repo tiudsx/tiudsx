@@ -21,9 +21,10 @@ include __DIR__.'/../../common/logininfo.php';
 
 	<div id="containerTab">
 		<ul class="tabs">
-			<li class="active" rel="tab1">예약현황</li>
-			<li rel="tab2">예약검색</li>
-			<li id="click" onclick="fnSolRes()" style="background:#ff6666;color:white;">예약등록</li>
+			<li class="active" rel="tab1" onclick="fnSolChef(this);">예약현황</li>
+			<li rel="tab2" onclick="fnSolChef(this);">예약검색</li>
+			<li id="click" onclick="fnSolRes();" style="background:#ff6666;color:white;">예약등록</li>
+			<li rel="tab3" onclick="fnSolChef(this);" style="background:#e6e600;">솔쉐프</li>
 		</ul>
 		
 		<div class="tab_container">
@@ -427,6 +428,47 @@ include __DIR__.'/../../common/logininfo.php';
 				</form>
 				<div id="mngSearch"></div>
 			</div>
+
+			<div id="tab3" class="tab_content" style="display:none;">
+				<section>
+					<aside id="right_article3" class="left_article5">
+						<table class='et_vars exForm bd_tb' style="width:99%">
+							<!-- <colgroup>
+								<col style="width:10%">
+								<col style="width:*;">
+								<col style="width:14%">
+								<col style="width:18%">
+								<col style="width:20%">
+								<col style="width:20%">
+							</colgroup> -->
+							<tr>
+								<td colspan="6">
+									알림톡 발송 번호
+								</td>
+							</tr>
+							<tr>
+								<th>예약자</th>
+								<td><input type="text" id="solchef_user_name" name="solchef_user_name" size="8" value="" class="itx"></td>
+							</tr>
+							<tr>
+								<th>연락처</th>
+								<td><input type="text" id="solchef_user_tel" name="solchef_user_tel" size="12" value="" class="itx"></td>
+							</tr>
+							<tr>
+								<th>입금금액</th>
+								<td><input type="text" id="solchef_Bank" name="solchef_Bank" size="12" value="0" class="itx">원</td>
+							</tr>
+							<tr>
+								<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnSolkChefKakao();" /></td>
+							</tr>
+						</table>
+					</aside>
+					<article class="right_article5">
+						<div class="gg_first" style="margin-top:0px;">솔쉐프 예약안내 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnSearchAdmin('sol/list_search_solchef.php', '#mngSolChefSearch', 'N');" /></div>
+						<div id="mngSolChefSearch"></div>
+					</article>
+				</section>
+			</div>
 		</div>
 
 	</div>
@@ -578,5 +620,7 @@ include __DIR__.'/../../common/logininfo.php';
 <script>
 $j(document).ready(function(){
 	fnSearchAdminListSol("");
+
+	fnSearchAdmin('sol/list_search_solchef.php', '#mngSolChefSearch', 'N');
 });
 </script>

@@ -859,3 +859,53 @@ function fnConfirm(vlu){
         $j("#res_kakao option").not('[value=N]').hide();
     }
 }
+
+function fnSolChef(obj){
+    if($j(obj).attr("rel") == "tab1"){
+        $j("#click").show();
+    }else{
+        $j("#click").hide();
+    
+        $j('#res_modify').hide();
+    }
+}
+
+//솔쉐프 알림톡 발송
+function fnSolkChefKakao(){
+    if($j("#solchef_user_name").val() == ""){
+        alert("이름을 입력하세요.");
+        return;
+    }
+    
+    if($j("#solchef_user_tel").val() == ""){
+        alert("연락처를 입력하세요.");
+        return;
+    }
+    
+    if($j("#solchef_Bank").val() == ""){
+        alert("입금금액을 입력하세요.");
+        return;
+    }
+
+    if(!confirm("알림톡 발송을 하시겠습니까?")){
+        return;
+    }
+
+    var params = "resparam=solchef&solchef_user_name=" + $j("#solchef_user_name").val() + "&solchef_user_tel=" + $j("#solchef_user_tel").val() + "&solchef_Bank=" + $j("#solchef_Bank").val();
+    $j.ajax({
+        type: "POST",
+        url: "/act_2023/admin/sol/list_save.php",
+        data: params,
+        success: function (data) {
+            if(data == "err"){
+                alert("오류가 발생하였습니다.");
+            }else{
+                $j("#solchef_user_name").val("");
+                $j("#solchef_user_tel").val("");
+                $j("#solchef_Bank").val("");
+
+                fnSearchAdmin('sol/list_search_solchef.php', '#mngSolChefSearch', 'N');
+            }
+        }
+    });
+}
