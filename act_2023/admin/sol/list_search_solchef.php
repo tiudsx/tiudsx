@@ -85,8 +85,7 @@ if($count == 0){
             <td><?=$arrChk[1]?></td>
             <td></td>
             <td>
-                <input type="button" class="gg_btn res_btn_color1" style="width:40px; height:25px;" value="독촉" onclick="fnBusChannelKakao('<?=$arrChk[10]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
-                <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusChannelDel(<?=$row['codeseq']?>);" />
+                <!-- <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnSolChefDel(<?=$row['codeseq']?>);" /> -->
             </td>
             <td>
                 <?=$rtnTextCode?>                

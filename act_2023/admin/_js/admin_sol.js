@@ -871,7 +871,7 @@ function fnSolChef(obj){
 }
 
 //솔쉐프 알림톡 발송
-function fnSolkChefKakao(){
+function fnSolChefKakao(){
     if($j("#solchef_user_name").val() == ""){
         alert("이름을 입력하세요.");
         return;
@@ -904,6 +904,26 @@ function fnSolkChefKakao(){
                 $j("#solchef_user_tel").val("");
                 $j("#solchef_Bank").val("");
 
+                fnSearchAdmin('sol/list_search_solchef.php', '#mngSolChefSearch', 'N');
+            }
+        }
+    });
+}
+
+function fnSolChefDel(seq){
+    if(!confirm("삭제 하시겠습니까?")){
+        return;
+    }
+
+    var params = "resparam=solchefdel&codeseq=" + seq;
+    $j.ajax({
+        type: "POST",
+        url: "/act_2023/admin/sol/list_save.php",
+        data: params,
+        success: function (data) {
+            if(data == "err"){
+                alert("오류가 발생하였습니다.");
+            }else{
                 fnSearchAdmin('sol/list_search_solchef.php', '#mngSolChefSearch', 'N');
             }
         }

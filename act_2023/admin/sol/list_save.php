@@ -405,6 +405,133 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	}
 		
 	mysqli_query($conn, "COMMIT");
+}else if($param == "solchef"){ //버스 예약안내 카톡 : 타채널예약건
+    $resbus = $_REQUEST["resbus"];
+    $userName = $_REQUEST["username"];
+    $userPhone = $_REQUEST["userphone"];
+    $reschannel = $_REQUEST["reschannel"];
+	
+    $resDate1 = $_REQUEST["resDate1"];
+    $resDate2 = $_REQUEST["resDate2"];
+    $resbusseat1 = $_REQUEST["resbusseat1"];
+    $resbusseat2 = $_REQUEST["resbusseat2"];
+
+	//7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
+	//16:클룩
+	//18:프립-니지모리  19:프립-제천
+	function RandString($len){
+		$return_str = "";
+	
+		for ( $i = 0; $i < $len; $i++ ) {
+			mt_srand((double)microtime()*1000000);
+			$return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
+		}
+	
+		return $return_str;
+	}
+
+	$coupon_code = RandString(5);
+	$user_ip = $_SERVER['REMOTE_ADDR'];
+    $add_date = date("Y-m-d");
+
+	if($resbus == "YY"){ //양양행
+		$seatName = "양양행";
+		$seatName2 = "양양";
+	}else{ //동해행
+		$seatName = "동해행";
+		$seatName2 = "동해";
+	}
+
+	$resseatMsg = "";
+	if($resbusseat1 > 0){ //양양행,동해행 좌석예약
+		$resseatMsg = "\n    [$seatName] ".$resDate1." / ".$resbusseat1."자리";
+	}
+
+	if($resbusseat2 > 0){ //서울행 좌석예약
+		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
+	}
+
+	$prodTitle = ' 서핑버스';
+	if($reschannel == 11){ //프립
+		$prodTitle = 'x프립버스';
+		$seatName2 = $seatName2." 프립버스";
+	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21 || $reschannel == 22){ //프립 패키지
+		$prodTitle = 'x프립 서핑패키지';
+		if($reschannel == 17){
+			$seatName2 = $seatName2." 마린서프x프립";
+		}else if($reschannel == 20){
+			$seatName2 = $seatName2." 인구서프x프립";
+		}else if($reschannel == 21){
+			$seatName2 = "서프팩토리 동해점x프립";
+		}else if($reschannel == 22){
+			$seatName2 = "힐링 서핑캠프x프립";
+		}
+	}else if($reschannel == 12){ //마이리얼트립
+
+	}else if($reschannel == 14){ //망고서프 패키지
+
+	}else if($reschannel == 15){ //서프엑스
+		$prodTitle = 'x서프엑스 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x서프엑스";
+	}else if($reschannel == 16){ //클룩
+		$prodTitle = 'X클룩 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x클룩";
+	}else{		
+		$seatName2 = $seatName2." 서핑버스";
+	}
+
+	$msgTitle = "액트립$prodTitle 예약안내";
+	$link1 = "surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'.$reschannel.'|'));
+	$arrKakao = array(
+		"gubun"=> "bus"
+		, "admin"=> "N"
+		, "tempName"=> "at_bus_kakao"
+		, "smsTitle"=> $msgTitle
+		, "userName"=> $userName
+		, "userPhone"=> $userPhone
+		, "shopname"=> $seatName2
+		, "msgInfo"=>$resseatMsg
+		, "link1"=> $link1
+		, "smsOnly"=>"N"
+		, "PROD_NAME"=>"타채널 알림톡발송"
+		, "PROD_URL"=>$reschannel
+		, "PROD_TYPE"=>"bus_channel"
+		, "RES_CONFIRM"=>"-1"
+	);
+
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+	//------- 쿠폰코드 입력 -----
+	$data = json_decode($arrRtn[0], true);
+	$kakao_code = $data[0]["code"];
+	$kakao_type = $data[0]["data"]["type"];
+	$kakao_msgid = $data[0]["data"]["msgid"];
+	$kakao_message = $data[0]["message"];
+	$kakao_originMessage = $data[0]["originMessage"];
+
+	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid|$resbus|$reschannel";
+	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`, `etc`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo', '$link1');";
+	$result_set = mysqli_query($conn, $select_query);
+ 	if(!$result_set) goto errGo;
+	//------- 쿠폰코드 입력 -----
+
+	// 카카오 알림톡 DB 저장 START
+	$select_query = kakaoDebug($arrKakao, $arrRtn);            
+	$result_set = mysqli_query($conn, $select_query);
+	// 카카오 알림톡 DB 저장 END
+
+   mysqli_query($conn, "COMMIT");
+	
+	// echo $coupon_code." / ";
+}else if($param == "solchefdel"){
+    $codeseq = $_REQUEST["codeseq"];
+
+	$select_query = "DELETE FROM AT_COUPON_CODE WHERE codeseq = $codeseq";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
+	
+	mysqli_query($conn, "COMMIT");
+	
 }
 
 if(!$success){

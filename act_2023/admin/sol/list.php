@@ -458,9 +458,9 @@ include __DIR__.'/../../common/logininfo.php';
 								<th>입금금액</th>
 								<td><input type="text" id="solchef_Bank" name="solchef_Bank" size="12" value="0" class="itx">원</td>
 							</tr>
-							<tr>
-								<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnSolkChefKakao();" /></td>
-							</tr>
+							<!-- <tr>
+								<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnSolChefKakao();" /></td>
+							</tr> -->
 						</table>
 					</aside>
 					<article class="right_article5">

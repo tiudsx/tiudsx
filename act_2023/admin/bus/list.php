@@ -209,8 +209,8 @@ $shopseq = 0;
                                     <option value="DH">-- 동해 --</option>
                                 </select>
                             </td>
-                            <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="7" ></td>
-                            <td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="12"></td>
+                            <td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="20" ></td>
+                            <td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="20"></td>
                             <td>
                                 <input type="text" id="resDate1" name="resDate1" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
                                 <select id="resbusseat1">
