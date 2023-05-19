@@ -107,17 +107,22 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$coupon = $rowSub['res_coupon'];
 			$busGubun = substr($rowSub['res_bus'], 0, 1);
 
+			//$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));
+			//$RtnBank = "탑승시간 : ".$arrPoint[0]." (".$arrPoint[1].")";
+
+			$pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
+
 			if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}else{
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}
 			}else{
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}else{
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}
 			}
         }
@@ -358,6 +363,9 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	}else if($reschannel == 16){ //클룩
 		$prodTitle = 'X클룩 서핑버스';
 		$seatName2 = $seatName2." 서핑버스x클룩";
+	}else if($reschannel == 23){ //금진 브라보
+		$prodTitle = 'x브라보서프 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x브라보서프";
 	}else{		
 		$seatName2 = $seatName2." 서핑버스";
 	}

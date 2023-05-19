@@ -136,7 +136,7 @@ if($param == "BusI"){
     //예약채널 사이트 쿠폰 코드가 있으면 예약확정
      //7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17,20,21,22:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
     $coupon_array = array("NAVER12");
-    if(in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15, 17, 20, 21, 22)))
+    if(in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15, 17, 20, 21, 22, 23)))
     {
         $res_confirm = 3; //확정
         $InsUserID = $coupon;
@@ -156,12 +156,19 @@ if($param == "BusI"){
         //echo $select_query.'<br>';
         if(!$result_set) goto errGo;
     
+        
+        if($msgType == 2){ //입금대기
+            $pointTime = ' -> '.$endLocationY[$i];
+        }else{
+            $pointTime = ' / '.explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]))[0];
+        }
+
         if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
+            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].$pointTime.')\n';
         }else{
             $weekday = fnWeek($SurfDateBusY[$i]);
 
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
+            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].$pointTime.')\n';
         }
 
         $arrData = explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]));
@@ -176,12 +183,19 @@ if($param == "BusI"){
         //echo $select_query.'<br>';
         if(!$result_set) goto errGo;
 
+        
+        if($msgType == 2){ //입금대기
+            $pointTime = ' -> '.$endLocationS[$i];
+        }else{
+            $pointTime = ' / '.explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]))[0];
+        }
+
         if(array_key_exists($SurfDateBusS[$i].$busNumS[$i], $arrSeatInfoE)){
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
+            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].$pointTime.')\n';
         }else{
             $weekday = fnWeek($SurfDateBusS[$i]);
 
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
+            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].$pointTime.')\n';
         }
 
         $arrData = explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]));

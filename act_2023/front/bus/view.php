@@ -235,10 +235,10 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
 
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;display:none;">
-                    <!-- <ul style="display: ;">
-                        <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선선택</li>
-                    </ul> -->
                     <span id="resseatnum" style="font-size: medium;width:100%;text-align:center;display: block;"></span>
+                    <ul style="display: ;">
+                        <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선선택</li>
+                    </ul>
                     <ul class="busLineTab" style="display: block;">
                     </ul>
                 </div>

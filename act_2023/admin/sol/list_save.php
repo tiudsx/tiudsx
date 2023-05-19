@@ -476,6 +476,9 @@ if($param == "solkakao1"){ //카톡 단일건 발송
 	}else if($reschannel == 16){ //클룩
 		$prodTitle = 'X클룩 서핑버스';
 		$seatName2 = $seatName2." 서핑버스x클룩";
+	}else if($reschannel == 23){ //금진 브라보
+		$prodTitle = 'x브라보서프 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x브라보서프";
 	}else{		
 		$seatName2 = $seatName2." 서핑버스";
 	}

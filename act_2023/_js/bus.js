@@ -757,6 +757,8 @@ function fnSeatSelected(obj) {
             selVlu = "대진해변";
         }else if(buschannel == 22){ //솔게하
             selVlu = "솔.동해점";
+        }else if(buschannel == 23){ //브라보서프
+            selVlu = "금진해변";
         }
         
         arrObjs.forEach(function(el) {
@@ -764,7 +766,7 @@ function fnSeatSelected(obj) {
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else{
                 if(selVlu != "" && selVlu == el.code){
-                    sPoint += "<option value='N'>도착</option>";
+                    sPoint += "<option value='N'>출발</option>";
                     sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }else if(selVlu == ""){
                     sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
@@ -774,7 +776,7 @@ function fnSeatSelected(obj) {
         arrObje.forEach(function(el) {
             if(busType == "E" || busType == "Y"){
                 if(selVlu != "" && selVlu == el.code){
-                    ePoint += "<option value='N'>출발</option>";
+                    ePoint += "<option value='N'>도착</option>";
                     ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }else if(selVlu == ""){
                     ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
@@ -857,6 +859,8 @@ function fnSeatChangeSelected(arrVlu) {
         selVlu = "대진해변";
     }else if(buschannel == 22){ //솔게하
         selVlu = "솔.동해점";
+    }else if(buschannel == 23){ //브라보서프
+        selVlu = "금진해변";
     }
         
     arrObjs.forEach(function(el) {
@@ -864,7 +868,7 @@ function fnSeatChangeSelected(arrVlu) {
             sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
         }else{
             if(selVlu != "" && selVlu == el.code){
-                sPoint += "<option value='N'>도착</option>";
+                sPoint += "<option value='N'>출발</option>";
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else if(selVlu == ""){
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
@@ -874,7 +878,7 @@ function fnSeatChangeSelected(arrVlu) {
     arrObje.forEach(function(el) {
         if(returnBusType == "E" || returnBusType == "Y"){
             if(selVlu != "" && selVlu == el.code){
-                ePoint += "<option value='N'>출발</option>";
+                ePoint += "<option value='N'>도착</option>";
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else if(selVlu == ""){
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    

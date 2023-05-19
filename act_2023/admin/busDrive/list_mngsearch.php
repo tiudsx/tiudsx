@@ -114,7 +114,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
 					?>
 						<tr>
-							<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b><br>(<?=$value?> 명)</b></td>
+							<td style="padding:4px;text-align:left;">&nbsp;<?=$key?>&nbsp;&nbsp;<b>(<?=$value?> 명)</b></td>
 							<td style="padding:4px;text-align:center;"><?=$pointname[0]?></td>
 							<td style="padding:4px;text-align:left;">&nbsp;<?=$pointname[1]?></td>
 						</tr>

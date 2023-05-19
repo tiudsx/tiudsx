@@ -201,6 +201,7 @@ $shopseq = 0;
                                     <option value="10">네이버예약</option>
                                     <option value="12">마이리얼트립</option>
                                     <option value="15">서프엑스</option>
+                                    <option value="23">금진 브라보</option>
                                 </select>
                             </td>
                             <td style="text-align:center;">

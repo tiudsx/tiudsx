@@ -94,17 +94,19 @@ if($count == 1){
 			$ressubseq .= $rowSub['ressubseq'].',';
 			$busGubun = substr($rowSub['res_bus'], 0, 1);
 
+			$pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
+
 			if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoS)){
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}else{
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}
 			}else{
 				if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoE)){
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}else{
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' -> '.$rowSub['res_epointname'].')\n';
+					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
 				}
 			}
 		}

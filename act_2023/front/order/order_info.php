@@ -98,6 +98,8 @@ if($count == 0){
 					$sitename = "[망고]"; 
 				}else if($couponseq == 15){
 					$sitename = "[서프존]"; 
+				}else if($couponseq == 23){
+					$sitename = "[브라보서프]"; 
 				}
 				
 			if($gubun != 3){
@@ -167,7 +169,9 @@ if($count == 0){
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="메인으로" onclick="location.href=\'/\';" />';
 						}else if($num == 2){
 							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />';
-							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="history.back();" />';
+							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="history.back();" />';
+							
+							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="메인으로" onclick="location.href=\'/\';" />';
 						}else{
 							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />';
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="location.href=\'/ordersearch\';" />';

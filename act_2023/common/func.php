@@ -145,13 +145,15 @@ function fnBusPointArr($vlu, $gubun){
 	}else if($gubun == 1){ //탑승시간
 		$rtnData = explode(":", $arrDataList[0]);
 		return $rtnData[0]."시 ".$rtnData[1]. "분";
-	}
-	else if($gubun == 2){ //서울행 탑승시간
+	}else if($gubun == 2){ //서울행 탑승시간
 		$rtnData = explode(":", $arrDataList[0]);
 		$rtnData1 = $rtnData[0]."시 ".$rtnData[1]. "분 / ";
 		
 		$rtnData = explode(":", $arrDataList[4]);
 		return $rtnData1.$rtnData[0]."시 ".$rtnData[1]. "분";
+	}else if($gubun == 3){ //서울행 오후/저녁 탑승시간
+		$rtnData = explode(":", $arrDataList[0]);
+		return $rtnData[0]."시 ".$rtnData[1]. "분";
 	}
 }
 

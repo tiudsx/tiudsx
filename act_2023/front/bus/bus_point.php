@@ -2,14 +2,55 @@
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/func.php';
 
-$param = ($_REQUEST["resparam"] == "") ? "surfbus_yy" : $_REQUEST["resparam"];
+$param = ($_REQUEST["resparam"] == "") ? "none" : $_REQUEST["resparam"];
+$resNumber = ($_REQUEST["resNumber"] == "") ? "none" : $_REQUEST["resNumber"];
 
-if($param == "surfbus_yy"){ //양양 셔틀버스
-    $shopseq = 7;
-    $pointurl = "_view_tab3_yy.php";
-}else{ //동해 셔틀버스
-    $shopseq = 14;
-    $pointurl = "_view_tab3_dh.php";
+$shopseq = 7;
+
+$arrSa = array(); //사당선
+$arrJo = array(); //종로선
+$arrS2 = array(); //서울행 오후
+$arrS5 = array(); //서울행 저녁
+
+if($param == "none"){
+    if($resNumber != "none"){
+        $select_query = "SELECT * FROM AT_RES_SUB WHERE resnum = $resNumber";
+        $result_setlist = mysqli_query($conn, $select_query);
+
+        while ($row = mysqli_fetch_assoc($result_setlist)){
+            //echo "<br>".$row["seq"]." / ".$row["res_bus"]." / ".$row["res_spoint"];
+            $busGubun = $row["res_bus"];
+            $arrdate = explode(" ",fnBusNum($busGubun));
+            //echo "<br>".$arrdate[0]." / ".$arrdate[1]." / ".$row["res_spoint"];
+    
+            if($arrdate[1] == "사당선"){
+                $arrSa[$row["res_spoint"]] = true;
+            }else if($arrdate[1] == "종로선"){
+                $arrJo[$row["res_spoint"]] = true;
+            }else if($arrdate[1] == "오후"){
+                $arrS2[$row["res_spoint"]] = true;
+            }else if($arrdate[1] == "저녁"){
+                $arrS5[$row["res_spoint"]] = true;
+            }
+
+            $shopseq = $row["seq"];
+        }
+        
+    }
+
+    if($shopseq == 7){ //양양 셔틀버스
+        $pointurl = "_view_point_yy.php";
+    }else{ //동해 셔틀버스
+        $pointurl = "_view_point_dh.php";
+    }
+}else{
+    if($param == "surfbus_yy"){ //양양 셔틀버스
+        
+        $pointurl = "_view_tab3_yy.php";
+    }else{ //동해 셔틀버스
+        $shopseq = 14;
+        $pointurl = "_view_tab3_dh.php";
+    }
 }
 
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";

@@ -206,12 +206,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         echo "[프립]";
                     }else if($couponseq == 17){
                         echo "[프립-마린]"; 
-                    }else if($reschannel == 20){
+                    }else if($couponseq == 20){
                         echo "[프립-인구]"; 
-                    }else if($reschannel == 21){
+                    }else if($couponseq == 21){
                         echo "[프립-서팩]"; 
-                    }else if($reschannel == 22){
+                    }else if($couponseq == 22){
                         echo "[프립-힐링캠프]"; 
+                    }else if($couponseq == 23){
+                        echo "[브라보서프]"; 
                     }else if($res_coupon == "MYTRIP"){ 
                         echo "[마이리얼]"; 
                     }else if($couponseq == 14){
@@ -500,12 +502,14 @@ if(($i % 2) == 0 && $i > 0){
                         echo "[프립]";
                     }else if($couponseq == 17){
                         echo "[프립-마린]"; 
-                    }else if($reschannel == 20){
+                    }else if($couponseq == 20){
                         echo "[프립-인구]"; 
-                    }else if($reschannel == 21){
+                    }else if($couponseq == 21){
                         echo "[프립-서팩]"; 
-                    }else if($reschannel == 22){
+                    }else if($couponseq == 22){
                         echo "[프립-힐링캠프]"; 
+                    }else if($couponseq == 23){
+                        echo "[브라보서프]"; 
                     }else if($res_coupon == "MYTRIP"){ 
                         echo "[마이리얼]"; 
                     }else if($couponseq == 14){

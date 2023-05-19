@@ -372,10 +372,17 @@ if($param == "RtnPrice"){
         $result_set = mysqli_query($conn, $select_query);
         if(!$result_set) goto errGo;
     
-        if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
+        if($res_confirm == 0){ //입금대기
+            //$pointTime = ' -> '.$endLocationY[$i];
+            $pointTime = ' / '.explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]))[0];
         }else{
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].' -> '.$endLocationY[$i].')\n';
+            $pointTime = ' / '.explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]))[0];
+        }
+
+        if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
+            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].$pointTime.')\n';
+        }else{
+            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].$pointTime.')\n';
         }
     }
     
@@ -394,10 +401,17 @@ if($param == "RtnPrice"){
         $result_set = mysqli_query($conn, $select_query);
         if(!$result_set) goto errGo;
 
-        if(array_key_exists($SurfDateBusS[$i].$busNumS[$i], $arrSeatInfoE)){
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
+        if($res_confirm == 0){ //입금대기
+            //$pointTime = ' -> '.$endLocationS[$i];
+            $pointTime = ' / '.explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]))[0];
         }else{
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].' -> '.$endLocationS[$i].')\n';
+            $pointTime = ' / '.explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]))[0];
+        }
+
+        if(array_key_exists($SurfDateBusS[$i].$busNumS[$i], $arrSeatInfoE)){
+            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].$pointTime.')\n';
+        }else{
+            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].$pointTime.')\n';
         }
     }
     
