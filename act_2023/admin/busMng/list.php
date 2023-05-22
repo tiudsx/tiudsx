@@ -49,6 +49,7 @@ $shopseq = -2;
                             <col style="width:150px;">
                             <col style="width:80px;">
                             <col style="width:80px;">
+                            <col style="width:80px;">
                         </colgroup>
                         <tr>
                             <th>운행일</th>
@@ -57,6 +58,7 @@ $shopseq = -2;
                             <th>좌석수</th>
                             <th>GPS</th>
                             <th>사용여부</th>
+                            <th>예약가능</th>
                             <th><input type="button" class="btnsurfadd" style="width:40px;" value="추가" data-gubun="trbus"></th>
                         </tr>
                         <tr id="trbus" style="display:none;">
@@ -130,10 +132,16 @@ $shopseq = -2;
                                     <option value="N">N</option>
                                 </select>
                             </td>
+                            <td style="text-align:center;">
+                                <select id="res_channel" name="res_channel[]" class="select">
+                                    <option value="N">전체</option>
+                                    <option value="Y">타채널</option>
+                                </select>
+                            </td>
                             <td style="text-align:center;"><input type="button" class="btnsurfdel" style="width:40px;" value="삭제" onclick="fnBusDel(this);" ></td>
                         </tr>
                         <tr>
-                            <td class="col-02" style="text-align:center;" colspan="7">
+                            <td class="col-02" style="text-align:center;" colspan="8">
                                 <input type="hidden" id="resparam" name="resparam" size="10" value="busMngadd" class="itx">
                                 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="등록" onclick="fnBusMngDataAdd('add');" id="Add"/>
                                 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;display:none;" value="수정" onclick="fnBusMngDataAdd('modify');" id="Modify" />&nbsp;

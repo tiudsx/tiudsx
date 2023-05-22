@@ -413,7 +413,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
    mysqli_query($conn, "COMMIT");
 	
 	// echo $coupon_code." / ";
-}if($param == "busDatadel"){ //데이터 완전삭제
+}else if($param == "busDatadel"){ //데이터 완전삭제
 	$resnum = $_REQUEST["resnum"];
 
 	$select_query = "DELETE FROM AT_RES_MAIN WHERE resnum = '$resnum'";
@@ -427,6 +427,61 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
 	$errmsg = $select_query;
 	if(!$result_set) goto errGo;
+
+	mysqli_query($conn, "COMMIT");
+}else if($param == "busCancel"){ //버스 취소 안내
+	$user_name = $_REQUEST["user_name"]; //이름
+	$user_tel = $_REQUEST["user_tel"]; //전화번호
+	$user_channel = $_REQUEST["user_channel"]; //예약채널
+	$html_1 = $_REQUEST["html_1"]; //상단안내
+	$html_2 = $_REQUEST["html_2"]; //안내내용
+
+	$msgTitle = '액트립 서핑버스 취소안내';
+	$arryKakao = array();
+	for($i = 1; $i < count($user_name); $i++){
+		$userName = $user_name[$i];
+		$userPhone = $user_tel[$i];
+		$userchannel = $user_channel[$i];
+		
+		$channelText = "";
+		if($userchannel == "프립"){
+			$channelText = "  - 예약건은 프립에서 취소 및 전액환불됩니다.";
+		}else if($userchannel == "액트립"){
+			$channelText = "  - 예약자명, 환불계좌를 카카오채널로 보내주시면, 전액환불 진행됩니다.";
+		}else if($userchannel == "클룩"){
+			$channelText = "  - 예약건은 클룩에서 취소 및 전액환불됩니다.";
+		}
+
+		$arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "tempName"=> "at_res_step4"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "userPhone"=> $userPhone
+			, "shopname"=> $html_1
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=> $html_2
+			, "PROD_URL"=> $channelText
+			, "PROD_TYPE"=>"bus_cancelinfo"
+			, "RES_CONFIRM"=>"-1"
+		);
+
+		$arryKakao[($i - 1)] = $arrKakao;
+	}
+
+	
+	$arrKakao = array(
+		"arryData"=> $arryKakao
+		, "array"=> "true"
+	);
+
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+	// 카카오 알림톡 DB 저장 START
+	$select_query = kakaoDebug($arrKakao, $arrRtn);            
+	$result_set = mysqli_query($conn, $select_query);
+	// 카카오 알림톡 DB 저장 END
 
 	mysqli_query($conn, "COMMIT");
 }

@@ -41,6 +41,11 @@ function fnBusDel(obj){
     }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
+function fnBusCancelDel(obj){
+    $j(obj).parent().parent().remove();
+    return;
+}
+
 //셔틀버스 데이터 완전 삭제
 function fnBusDataDel(){
     if (!confirm("등록내역을 완전 삭제하시겠습니까?")) {
@@ -165,6 +170,12 @@ function fnChkBusAll(obj, gubun) {
 
 function fnBusPopupReset() {
     $j("#frmModify")[0].reset();
+
+    $j("tr[rowadd=1]").remove();
+}
+
+function fnBusCancelReset() {
+    $j("#frmCancel")[0].reset();
 
     $j("tr[rowadd=1]").remove();
 }
@@ -446,6 +457,27 @@ function fnBusMngDataAdd(gubun) {
                 fnBusMngList(calObj.attr("value"));
                 fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
                 fnBlockClose();
+            } else {
+                var arrRtn = data.split('|');
+                if (arrRtn[0] == "err") {
+                    alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+                }
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
+function fnBusCancel() {
+    if (!confirm("취소안내를 발송 하시겠습니까?")) {
+        return;
+    }
+
+    var formData = $j("#frmCancel").serializeArray();
+    $j.post("/act_2023/admin/bus/list_save.php", formData,
+        function(data, textStatus, jqXHR) {
+            if (data == 0) {
+                alert("정상적으로 발송되었습니다.");
+                
+                fnBusCancelReset();
             } else {
                 var arrRtn = data.split('|');
                 if (arrRtn[0] == "err") {

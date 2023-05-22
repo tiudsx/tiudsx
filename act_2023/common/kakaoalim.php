@@ -6,7 +6,7 @@ header('Expires: 0'); // Proxies.
 function sendKakao($arrKakao){
 	$curl = curl_init();
 
-    $rtnMsg = kakaoMsg($arrKakao);
+	$rtnMsg = kakaoMsg($arrKakao);
     
 	curl_setopt_array($curl, array(
 	  CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
@@ -112,6 +112,19 @@ function kakaoContent($arrKakao){
 				.'\n ▶ 안내사항'
 				.'\n      - 환불처리기간은 1~7일정도 소요됩니다.'
 				.'\n      - 계좌번호를 잘못 입력하신 경우 카카오채널로 문의주세요.';
+
+		}else if($arrKakao["PROD_TYPE"] == "bus_cancelinfo"){ // 셔틀버스 취소 안내
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n'.$arrKakao["shopname"]
+				.'\n\n서핑버스 취소차량 정보'
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n'.$arrKakao["PROD_NAME"]
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n'.$arrKakao["PROD_URL"]
+				.'\n  - 왕복으로 예약하셔서 모두 취소 원하실 경우 알려주시면 같이 취소 진행하겠습니다.'
+				.'\n  - 이용에 불편드려 죄송합니다.';
 
 		}
 
@@ -263,14 +276,31 @@ function kakaoMsg($arrKakao){
 	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채녈 셔틀버스 예약안내
 		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
 	}
-	
-    $arrKakao["kakaoMsg"] = kakaoContent($arrKakao); //카카오 메시지 내용
-
-	//문자발송용 변수
-	$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
 
 	$arryKakao = '';
-    $arryKakao .= '['.$arryKakao.'{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$msgSmsBtn.'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
+	if($arrKakao["array"] == "true"){
+		foreach($arrKakao["arryData"] as $item) {
+			$arrKakao["kakaoMsg"] = kakaoContent($item); //카카오 메시지 내용
+		
+			//문자발송용 변수
+			$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
+
+			$arryKakao .= '{"message_type":"at","phn":"82'.substr(str_replace('-', '',$item["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$item["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'", "smsKind":"L","msgSms":"'.$msgSmsBtn.'","smsSender":"'.str_replace('-', '',$item["userPhone"]).'","smsLmsTit":"'.$item["smsTitle"].'","smsOnly":"'.$item["smsOnly"].'"}';
+
+			if( next( $arrKakao["arryData"] ) ) {
+				$arryKakao .= ",";
+			}
+		}
+
+		$arryKakao = '['.$arryKakao.']';
+	}else{
+		$arrKakao["kakaoMsg"] = kakaoContent($arrKakao); //카카오 메시지 내용
+	
+		//문자발송용 변수
+		$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
+
+		$arryKakao = '[{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$msgSmsBtn.'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
+	}
     
     return $arryKakao;
 }

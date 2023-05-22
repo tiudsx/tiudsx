@@ -33,6 +33,7 @@ if($param == "busMngdel"){
 	$res_seat = $_REQUEST["res_seat"]; //좌석수
 	$res_gpsname = $_REQUEST["res_gpsname"]; //GPS 이름
 	$res_useYN = $_REQUEST["res_useYN"]; //사용여부
+	$res_channel = $_REQUEST["res_channel"]; //예약형태
 
 	//$select_query = "DELETE FROM AT_PROD_BUS_DAY WHERE bus_date = '$bus_date'";
 	//$result_set = mysqli_query($conn, $select_query);
@@ -52,9 +53,10 @@ if($param == "busMngdel"){
 		$seat = $res_seat[$i];
 		$gpsname = $res_gpsname[$i];
 		$useYN = $res_useYN[$i];
+		$channel = $res_channel[$i];
 
 		if($dayseq == ""){
-			$select_query = "INSERT INTO `AT_PROD_BUS_DAY`(`bus_date`, `code`, `bus_gubun`, `bus_name`, `bus_num`, `gpsname`, `seat`, `useYN`) VALUES ('$bus_date', '$code', '$bus_gubun', '$bus_name', '$bus_num', '$gpsname', $seat, '$useYN')";
+			$select_query = "INSERT INTO `AT_PROD_BUS_DAY`(`bus_date`, `code`, `bus_gubun`, `bus_name`, `bus_num`, `gpsname`, `seat`, `useYN`, `channel`) VALUES ('$bus_date', '$code', '$bus_gubun', '$bus_name', '$bus_num', '$gpsname', $seat, '$useYN', '$channel')";
 		}else{
 			$select_query = "UPDATE `AT_PROD_BUS_DAY` SET 
 				`bus_date`='$bus_date'
@@ -65,6 +67,7 @@ if($param == "busMngdel"){
 				,`gpsname`='$gpsname'
 				,`seat`=$seat
 				,`useYN`='$useYN'
+				,`channel`='$channel'
 			WHERE dayseq = $dayseq";
 		}
 

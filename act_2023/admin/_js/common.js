@@ -116,6 +116,7 @@ function fnBusMngList(selDate){
                     objTr.find("#res_seat").val(data[i].seat);
                     objTr.find("#res_gpsname").val(data[i].gpsname);
                     objTr.find("#res_useYN").val(data[i].useYN);
+                    objTr.find("#res_channel").val(data[i].channel);
                 }
                 console.log(data);
             }

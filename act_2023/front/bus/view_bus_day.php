@@ -61,12 +61,12 @@ if($reqCode == "busday"){
         // }
 
         //양양행 - 프립
-        if(($_REQUEST["busNum"] == "YSa1" ) && $i >= 29 && $_REQUEST["busDate"] == "2023-05-27"){
+        if(($_REQUEST["busNum"] == "YSa1" ) && $i >= 33 && $_REQUEST["busDate"] == "2023-05-27"){
             $seatYN = "N";
         }
 
         //서울행 - 프립
-        if(($_REQUEST["busNum"] == "SY51") && $i >= 29 && $_REQUEST["busDate"] == "2023-05-28"){
+        if(($_REQUEST["busNum"] == "SY51") && $i >= 33 && $_REQUEST["busDate"] == "2023-05-28"){
             $seatYN = "N";
         }
         $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
@@ -78,10 +78,22 @@ if($reqCode == "busday"){
         $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
     }
 }else if($reqCode == "busseatcnt"){
-    $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';
-    $result_setlist = mysqli_query($conn, $select_query);
-    while ($row = mysqli_fetch_assoc($result_setlist)){
-        $groupData[] = array("seatcnt" => $row['cnt']);
+    $select_query = "SELECT * FROM AT_PROD_BUS_DAY WHERE bus_date = '".$_REQUEST["busDate"]."' AND concat(bus_gubun, '', bus_num) = '".$_REQUEST["busNum"]."'";
+    $result = mysqli_query($conn, $select_query);
+    $rowMain = mysqli_fetch_array($result);
+
+    $seat = $rowMain["seat"];
+    $channel = $rowMain["channel"];
+    $channel = "N";
+    
+    if($channel == "Y"){
+        $groupData[] = array("seatcnt" => $seat);
+    }else{
+        $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';
+        $result_setlist = mysqli_query($conn, $select_query);
+        while ($row = mysqli_fetch_assoc($result_setlist)){
+            $groupData[] = array("seatcnt" => $row['cnt']);
+        }
     }
 }else if($reqCode == "frip_seatcnt"){
     $seq = $_REQUEST["seq"];
