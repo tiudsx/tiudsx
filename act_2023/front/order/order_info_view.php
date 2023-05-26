@@ -278,7 +278,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		?>
 				</td>
 			</tr>
-			<?if($chkViewPrice == 1){?>
+			<?if($chkViewPrice == 1 && $res_totalprice > 0){?>
 			<tr>
                 <th scope="row">결제금액</th>
                 <td><b style="font-weight:700;color:red;"><?=number_format($res_totalprice)?>원</b> (<?=number_format($totalPrice)?>원 - 할인쿠폰:<?=number_format($totalPrice - $res_totalprice)?>원)</td>

@@ -129,9 +129,14 @@ function fnBusSeatInit(busnum, busseat, obj, busname) {
     busNum = busnum;
     busType = busnum.substring(0, 1);
     busNumName = busname;
+    
+    if (typeof dayCode === 'undefined') {
+        dayCode = "busseat";
+    }
+
     var seatjson = [];
     var objParam = {
-        "code": "busseat",
+        "code": dayCode,
         "busDate": selDate,
         "busNum": busnum
     }
@@ -751,13 +756,13 @@ function fnSeatSelected(obj) {
         var selVlu = "";
         if(buschannel == 17){ //마린서프
             selVlu = "기사문해변";
-        }else if(buschannel == 20){ //인구서프
+        }else if(buschannel == 20 || buschannel == 24){ //인구서프, 엉클 프립
             selVlu = "인구해변";
         }else if(buschannel == 21){ //서프팩토리
             selVlu = "대진해변";
         }else if(buschannel == 22){ //솔게하
             selVlu = "솔.동해점";
-        }else if(buschannel == 23){ //브라보서프
+        }else if(buschannel == 23 || buschannel == 25){ //브라보서프, 금진 프립
             selVlu = "금진해변";
         }
         

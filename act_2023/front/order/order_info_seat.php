@@ -32,6 +32,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         $res_num = $row["resnum"];
         $user_tel = $row["user_tel"];
         $shopseq = $row["seq"];
+        $couponcode = $row["res_coupon"];
+
+        $dayCode = "busseat";
+        if($couponcode == "FRIPYY" || $couponcode == "FRIPDH"){
+            $dayCode = "frip_busseat";            
+        }
     }
     
     $gubun = substr($row["res_bus"], 0, 1);
@@ -326,6 +332,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script>
+    var dayCode = "<?=$dayCode?>";
     var businit = 0;
     var busrestype = "seatview";
     var buschannel = "0";

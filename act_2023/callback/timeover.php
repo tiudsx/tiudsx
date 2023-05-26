@@ -141,6 +141,11 @@ if($count > 0){
     $countChk .= "@".$code."|".$k;   
 }
 
+//==== 서핑버스 예약건 알림톡 발송 시작 ====
+
+//==== 서핑버스 예약건 알림톡 발송 종료 ====
+
+
 //==== 솔게하 예약건 알림톡 발송 시작 ====
 $select_querySol = "SELECT * FROM `AT_CALL_TIMEOVER` WHERE user_name = '솔알림톡' AND sqlquery = DATE_FORMAT(NOW(), '%Y-%m-%d')";
 $result_setlist = mysqli_query($conn, $select_querySol);

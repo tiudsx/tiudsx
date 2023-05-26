@@ -3,9 +3,11 @@
 <img src="https://actrip.cdn1.cafe24.com/act_content/res_step.jpg" class="placeholder">
 <?}?>
 
+<?if($arrChannel != "Y"){?>
 <img src="https://shop-phinf.pstatic.net/20230216_250/1676514416430NkOe2_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_1.jpg?type=w860" class="placeholder">
+<?}?>
 
-    <?if($param == "surfbus_yy"){ //양양 셔틀버스?>
+    <?if($param == "surfbus_yy" || $param == "surfbus_yy_frip"){ //양양 셔틀버스?>
         <img src="https://shop-phinf.pstatic.net/20230216_224/16765144423533g2Ic_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_2.jpg?type=w860" class="placeholder">
         <img src="https://shop-phinf.pstatic.net/20230216_61/1676514452486wp34G_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_3.jpg?type=w860" class="placeholder">
         <img src="https://shop-phinf.pstatic.net/20230216_152/1676537938201jQrgn_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_%EC%84%9C%EC%9A%B8%ED%96%89(%EC%96%91%EC%96%91)_2.jpg?type=w860" class="placeholder">
@@ -20,7 +22,7 @@
     <?}else{ //동해 셔틀버스?>
         <img src="https://shop-phinf.pstatic.net/20230216_199/1676537114198JevGo_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_2.jpg?type=w860" class="placeholder">
         <img src="https://shop-phinf.pstatic.net/20230216_130/1676537121294WBWK7_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_3.jpg?type=w860" class="placeholder">
-        <img src="https://shop-phinf.pstatic.net/20230228_247/1677547636537OJc3q_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_%EC%84%9C%EC%9A%B8%ED%96%89(%EB%8F%99%ED%95%B4)_2_%EC%88%98%EC%A0%95.jpg?type=w860" class="placeholder">
+        <img src="https://shop-phinf.pstatic.net/20230502_147/168299195755656nGa_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8.jpg?type=w860" class="placeholder">
 
         <?if($arrChannel == ""){?>
         <img src="https://shop-phinf.pstatic.net/20230228_243/1677547536255EyYac_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_4_%EC%88%98%EC%A0%95.jpg?type=w860" class="placeholder">

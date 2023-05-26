@@ -103,8 +103,12 @@ if($param == "BusI"){
     // 할인 쿠폰적용
     $coupon = $_REQUEST["couponcode"];
     $res_price_coupon = 0;
-    $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.use_yn = 'N' AND a.seq = 'BUS'";
-  
+
+    if($coupon == "FRIPYY" || $coupon == "FRIPDH"){
+        $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.seq = 'BUS'";
+    }else{
+        $select_query = "SELECT a.*, b.dis_price, b.dis_type, b.sdate, b.edate, b.issue_type FROM AT_COUPON_CODE a INNER JOIN AT_COUPON b ON a.couponseq = b.couponseq WHERE a.coupon_code = '$coupon' AND a.use_yn = 'N' AND a.seq = 'BUS'";
+    }
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
     $chkCnt = mysqli_num_rows($result); //체크 개수
@@ -136,7 +140,7 @@ if($param == "BusI"){
     //예약채널 사이트 쿠폰 코드가 있으면 예약확정
      //7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17,20,21,22:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
     $coupon_array = array("NAVER12");
-    if(in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15, 17, 20, 21, 22, 23)))
+    if(in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15, 17, 20, 21, 22, 23, 24, 25)))
     {
         $res_confirm = 3; //확정
         $InsUserID = $coupon;

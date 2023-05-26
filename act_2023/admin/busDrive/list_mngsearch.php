@@ -64,10 +64,10 @@ $select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_spoint, c.ordernum FROM `AT_
 $resultSite3 = mysqli_query($conn, $select_query_sub3);
 $i = 0;
 while ($row = mysqli_fetch_assoc($resultSite3)){
-	if(array_key_exists($row['ordernum'].'.'.$row['res_spoint'], $arrSeatInfo1)){
-		$arrSeatInfo1[$row['ordernum'].'.'.$row['res_spoint']] += $row['Cnt'];
+	if(array_key_exists($row['ordernum'].'_'.$row['res_spoint'], $arrSeatInfo1)){
+		$arrSeatInfo1[$row['ordernum'].'_'.$row['res_spoint']] += $row['Cnt'];
 	}else{
-		$arrSeatInfo1[$row['ordernum'].'.'.$row['res_spoint']] = $row['Cnt'];
+		$arrSeatInfo1[$row['ordernum'].'_'.$row['res_spoint']] = $row['Cnt'];
 	}
 	$i += $row['Cnt'];
 }
@@ -80,10 +80,10 @@ $select_query_sub3 = "SELECT COUNT(*) AS Cnt, b.res_epoint, c.ordernum FROM `AT_
 // echo $select_query_sub3;
 $resultSite3 = mysqli_query($conn, $select_query_sub3);
 while ($row = mysqli_fetch_assoc($resultSite3)){
-	if(array_key_exists($row['ordernum'].'.'.$row['res_epoint'], $arrSeatInfo2)){
-		$arrSeatInfo2[$row['ordernum'].'.'.$row['res_epoint']] += $row['Cnt'];
+	if(array_key_exists($row['ordernum'].'_'.$row['res_epoint'], $arrSeatInfo2)){
+		$arrSeatInfo2[$row['ordernum'].'_'.$row['res_epoint']] += $row['Cnt'];
 	}else{
-		$arrSeatInfo2[$row['ordernum'].'.'.$row['res_epoint']] = $row['Cnt'];
+		$arrSeatInfo2[$row['ordernum'].'_'.$row['res_epoint']] = $row['Cnt'];
 	}
 }
 ?>
@@ -110,7 +110,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						</tr>
 					<?
 					foreach($arrSeatInfo1 as $key=>$value) {
-						$arrData = explode(".",$key);
+						$arrData = explode("_",$key);
 						$pointname = explode("|", fnBusPoint($arrData[1], $busNum));
 					?>
 						<tr>
@@ -130,7 +130,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 							<th style="padding:4px;text-align:center;" colspan="2">도착 정류장</th>
 						</tr>
 						<?foreach($arrSeatInfo2 as $key=>$value) {
-							$arrData = explode(".",$key);
+							$arrData = explode("_",$key);
 							$pointname = explode("|", fnBusPoint($arrData[1], $busEType));
 						?>
 						<tr>

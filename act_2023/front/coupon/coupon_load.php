@@ -26,6 +26,8 @@ if($gubun == "load"){
     if($chkCnt > 0){
         if($rowMain["use_yn"] == "N"){
             echo $rowMain["dis_price"];
+        }else if($rowMain["couponseq"] == "24" || $rowMain["couponseq"] == "25"){
+            echo $rowMain["dis_price"];
         }else{
             echo "yes";
         }

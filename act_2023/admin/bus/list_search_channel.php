@@ -50,7 +50,8 @@ if($count == 0){
 ?>
 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
     <colgroup>
-        <col width="16%"/>
+        <col width="6%"/>
+        <col width="10%"/>
         <col width="10%"/>
         <col width="14%"/>
         <col width="15%"/>
@@ -60,7 +61,8 @@ if($count == 0){
     </colgroup>
     <tbody>
         <tr>
-            <th>노선/채널</th>
+            <th>노선</th>
+            <th>채널</th>
             <th>이름</th>
             <th>연락처</th>
             <th>이용일 (서울 출발)</th>
@@ -105,7 +107,8 @@ if($count == 0){
 
     ?>
         <tr>
-            <td><a href="/<?=$row['etc']?>" target="_blank"><b>[<?=(($arrChk[11] == "YY") ? "양양" : "동해")?>]</b> <?=$row['name']?></a></td>
+            <td><a href="/<?=$row['etc']?>" target="_blank"><b>[<?=(($arrChk[11] == "YY") ? "양양" : "동해")?>]</b></a></td>
+            <td><a href="/<?=$row['etc']?>" target="_blank"><?=$row['name']?></a></td>
             <td><?=$arrChk[0]?></td>
             <td><?=$arrChk[1]?></td>
             <td>

@@ -100,7 +100,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 		<th>동해-서울행</th>
 		<td>
 			<?foreach($arrBusA as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this);" />
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this, 'bus');" />
 			<?}?>
 		</td>
 	</tr>

@@ -176,10 +176,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align: center;" <?=$rowspan?>>
                     <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
                 </td>
-                <td <?=$rowspan?>><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
+                <td <?=$rowspan?>>                    
+                    <?if($TotalDisPrice > 0){?>
+                    <b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
                     <?if(($TotalPrice-$TotalDisPrice) > 0){?>
                     <br>(할인:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)
-                    <?}?>
+                    <?}
+                    }?>
                 </td>
                 <td <?=$rowspan?>>
                     <?if($RtnTotalPrice > 0){?>
@@ -220,6 +223,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         echo "[망고]"; 
                     }else if($couponseq == 15){
                         echo "[서프존]"; 
+                    }else if($couponseq == 24 || $couponseq == 25){
+                        echo "[프립-셔틀]"; 
                     }else if($res_coupon != ""){
                         echo "[할인]"; 
                     }?>
@@ -472,10 +477,13 @@ if(($i % 2) == 0 && $i > 0){
                 <td style="text-align: center;" <?=$rowspan?>>
                     <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
                 </td>
-                <td <?=$rowspan?>><b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
+                <td <?=$rowspan?>>
+                    <?if($TotalDisPrice > 0){?>
+                    <b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
                     <?if(($TotalPrice-$TotalDisPrice) > 0){?>
                     <br>(할인:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)
-                    <?}?>
+                    <?}
+                    }?>
                 </td>
                 <td <?=$rowspan?>>
                     <?if($RtnTotalPrice > 0){?>
@@ -516,6 +524,8 @@ if(($i % 2) == 0 && $i > 0){
                         echo "[망고]"; 
                     }else if($couponseq == 15){
                         echo "[서프존]"; 
+                    }else if($couponseq == 24 || $couponseq == 25){
+                        echo "[프립-셔틀]"; 
                     }else if($res_coupon != ""){
                         echo "[할인]"; 
                     }?>

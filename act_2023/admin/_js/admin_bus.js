@@ -514,7 +514,7 @@ function fnDayList(vlu, obj, folderName){
 //클룩, 프립 데이터 맵핑
 function fnChannel(obj){
     $j("#resbus option").show();
-    if(obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "22" || obj.value == "16" ){
+    if(obj.value == "11" || obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "22" || obj.value == "16" ){
         $j("#fripMapping").show();
     }else{
         $j("#fripMapping").hide();

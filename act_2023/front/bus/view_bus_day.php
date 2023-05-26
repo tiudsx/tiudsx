@@ -103,7 +103,6 @@ if($reqCode == "busday"){
         $groupData[] = array("seatcnt" => $row['cnt']);
     }
 }else if($reqCode == "frip_busseat"){
-    $seq = $_REQUEST["seq"];
 
     /*
     예약상태
@@ -119,12 +118,28 @@ if($reqCode == "busday"){
     */
 
     for ($i=0; $i <= 45; $i++) { 
-        $groupData[] = array("seatnum" => "$i", "seatYN" => "Y");
+        $seatYN = "Y";
+
+        //동해행 - 프립
+        if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i < 21){
+            //$seatYN = "N";
+        }
+
+        //양양행 - 프립
+        if(($_REQUEST["busNum"] == "YSa1" ) && $i < 33 && $_REQUEST["busDate"] == "2023-05-27"){
+            $seatYN = "N";
+        }
+
+        //서울행 - 프립
+        if(($_REQUEST["busNum"] == "SY51") && $i < 33 && $_REQUEST["busDate"] == "2023-05-28"){
+            $seatYN = "N";
+        }
+        $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
     }
 
-    $select_query = 'SELECT * FROM `AT_RES_FRIP_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'" AND seq = '.$seq;
+    $select_query = 'SELECT * FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';
     $result_setlist = mysqli_query($conn, $select_query);
-    while ($row = mysqli_fetch_assoc($result_setlist)){
+    while ($row = mysqli_fetch_assoc($result_setlist)){        
         $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
     }
 }
