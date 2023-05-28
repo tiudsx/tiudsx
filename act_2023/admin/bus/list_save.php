@@ -479,9 +479,148 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
 	// 카카오 알림톡 DB 저장 START
-	$select_query = kakaoDebug($arrKakao, $arrRtn);            
+	$select_query = kakaoDebug($arryKakao[0], $arrRtn);
 	$result_set = mysqli_query($conn, $select_query);
 	// 카카오 알림톡 DB 저장 END
+
+	mysqli_query($conn, "COMMIT");
+}else if($param == "busKakaoInfo"){ //버스 카톡 안내
+	$kakao_sDate = $_REQUEST["kakao_sDate"]; //시작일
+	$kakao_eDate = $_REQUEST["kakao_eDate"]; //종료일
+	$chkbusNum = $_REQUEST["chkbusNum_Kakao"]; //예약채널
+	$html_1 = $_REQUEST["kakao_1"]; //상단안내
+	$html_2 = $_REQUEST["kakao_2"]; //안내내용
+	$html_3 = $_REQUEST["kakao_3"]; //안내내용
+
+	$inResType = "";
+    for($b = 0; $b < count($chkbusNum); $b++){
+		if($chkbusNum[$b] == "테스트"){
+        	$inResType = "테스트";
+			break;
+		}else{
+			$inResType .= '"'.$chkbusNum[$b].'",';
+		}
+    }
+
+	$msgTitle = '액트립 서핑버스 탑승안내';
+	$arryKakao = array();
+
+	if($inResType == "테스트"){
+		$userName = "테스트";
+		$userPhone = "010-4437-0009";
+		
+		$arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "tempName"=> "at_res_step4"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> $userName
+			, "userPhone"=> $userPhone
+			, "shopname"=> $html_1
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=> $html_2
+			, "PROD_URL"=> $html_3
+			, "PROD_TYPE"=>"bus_kakaoinfo"
+			, "RES_CONFIRM"=>"-1"
+		);
+
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arrKakao, $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
+	}else{
+		$inResType .= '"99"';
+
+		$select_query_sub = "SELECT a.user_tel, a.user_name FROM AT_RES_MAIN a 
+			INNER JOIN AT_RES_SUB b 
+				on a.resnum = b.resnum 
+			WHERE b.res_confirm = 3 
+				AND (res_date BETWEEN CAST('".$kakao_sDate."' AS DATE) AND CAST('".$kakao_eDate."' AS DATE)) 
+				AND b.res_busnum IN (".$inResType.")
+			GROUP by user_tel";
+		$resultSite = mysqli_query($conn, $select_query_sub);
+		$count = mysqli_num_rows($resultSite);
+
+		// echo "<br><br>쿼리 : ".$select_query_sub;
+		// return;
+		if($count == 0){
+			return;
+		}
+
+		$i = 0;
+		// while ($row = mysqli_fetch_assoc($resultSite)){
+		// 	$userName = $row['user_name'];
+		// 	$userPhone = $row['user_tel'];
+	
+		// 	$arrKakao = array(
+		// 		"gubun"=> "bus"
+		// 		, "admin"=> "N"
+		// 		, "tempName"=> "at_res_step4"
+		// 		, "smsTitle"=> $msgTitle
+		// 		, "userName"=> $userName
+		// 		, "userPhone"=> $userPhone
+		// 		, "shopname"=> $html_1
+		// 		, "smsOnly"=>"N"
+		// 		, "PROD_NAME"=> $html_2
+		// 		, "PROD_URL"=> $html_3
+		// 		, "PROD_TYPE"=>"bus_kakaoinfo"
+		// 		, "RES_CONFIRM"=>"-1"
+		// 	);
+	
+		// 	$arryKakao[$i] = $arrKakao;
+		// 	$i++;
+		// }
+
+		//마지막 테스트 계정
+		$arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "tempName"=> "at_res_step4"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> "테스트"
+			, "userPhone"=> "010-4437-0009"
+			, "shopname"=> $html_1
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=> $html_2
+			, "PROD_URL"=> $html_3
+			, "PROD_TYPE"=>"bus_kakaoinfo"
+			, "RES_CONFIRM"=>"-1"
+		);
+		$arryKakao[$i] = $arrKakao;
+		$i++;
+
+		//마지막 테스트 계정
+		$arrKakao = array(
+			"gubun"=> "bus"
+			, "admin"=> "N"
+			, "tempName"=> "at_res_step4"
+			, "smsTitle"=> $msgTitle
+			, "userName"=> "테스트"
+			, "userPhone"=> "010-4437-0009"
+			, "shopname"=> $html_1
+			, "smsOnly"=>"N"
+			, "PROD_NAME"=> $html_2
+			, "PROD_URL"=> $html_3
+			, "PROD_TYPE"=>"bus_kakaoinfo"
+			, "RES_CONFIRM"=>"-1"
+		);
+		$arryKakao[$i] = $arrKakao;
+	
+		//배열 발송
+		$arrKakao = array(
+			"arryData"=> $arryKakao
+			, "array"=> "true"
+		);
+	
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+		
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug($arryKakao[$i], $arrRtn);            
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
+	}
 
 	mysqli_query($conn, "COMMIT");
 }

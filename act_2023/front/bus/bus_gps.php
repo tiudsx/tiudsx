@@ -49,14 +49,14 @@ $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
 $count = 1;
-if($nowTime > 0500 && $nowTime < 1200){
+if($nowTime > 0500 && $nowTime < 1300){
     $busList = "'Y','E'";
-}else if($nowTime >= 1200 && $nowTime < 2300){
+}else if($nowTime >= 1300 && $nowTime < 2300){
     $busList = "'S','A'";
 }else{
     $count = 0;
 }
-$busList = "'Y','E', 'S','A'";
+//$busList = "'Y','E', 'S','A'";
 
 if($count == 1){
     $arrMapList = array();

@@ -168,6 +168,10 @@ function fnChkBusAll(obj, gubun) {
     $j('input[id=chkbusNum' + gubun + ']').prop('checked', $j(obj).is(":checked"));
 }
 
+function fnChkBusAll_Kakao(obj, gubun) {
+    $j('input[id=chkbusKakaoNum' + gubun + ']').prop('checked', $j(obj).is(":checked"));
+}
+
 function fnBusPopupReset() {
     $j("#frmModify")[0].reset();
 
@@ -472,6 +476,37 @@ function fnBusCancel() {
     }
 
     var formData = $j("#frmCancel").serializeArray();
+    $j.post("/act_2023/admin/bus/list_save.php", formData,
+        function(data, textStatus, jqXHR) {
+            if (data == 0) {
+                alert("정상적으로 발송되었습니다.");
+                
+                fnBusCancelReset();
+            } else {
+                var arrRtn = data.split('|');
+                if (arrRtn[0] == "err") {
+                    alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+                }
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
+function fnKakaoInfo() {
+    if($j("#kakao_sDate").val() == ""){
+        alert("시작 날짜를 선택하세요.");
+        return;
+    }
+    
+    if($j("#kakao_eDate").val() == ""){
+        alert("시작 날짜를 선택하세요.");
+        return;
+    }
+
+    if (!confirm("카카오톡 안내를 발송 하시겠습니까?")) {
+        return;
+    }
+
+    var formData = $j("#frmKakaoInfo").serializeArray();
     $j.post("/act_2023/admin/bus/list_save.php", formData,
         function(data, textStatus, jqXHR) {
             if (data == 0) {

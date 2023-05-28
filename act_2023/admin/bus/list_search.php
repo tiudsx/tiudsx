@@ -142,6 +142,7 @@ if($count == 0){
 $i = 0;
 $b = 0;
 $c = 0;
+$userCount = 0;
 $PreMainNumber = "";
 $RtnTotalPrice = 0;
 $TotalPrice = 0;
@@ -540,6 +541,7 @@ if(($i % 2) == 0 && $i > 0){
 		<input type="hidden" id="changeConfirm" name="changeConfirm" size="10" value="1" class="itx">
 	</span>
 </form>
+<div>총 개수 : <?=$count?>개 / 총 인원 : <?=$i?>명</div>
 
 <form name="frmConfirmSel" id="frmConfirmSel" style="display:none;"></form>
 </div>

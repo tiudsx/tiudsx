@@ -126,6 +126,17 @@ function kakaoContent($arrKakao){
 				.'\n  - 왕복으로 예약하셔서 모두 취소 원하실 경우 알려주시면 같이 취소 진행하겠습니다.'
 				.'\n  - 이용에 불편드려 죄송합니다.';
 
+		}else if($arrKakao["PROD_TYPE"] == "bus_kakaoinfo"){ // 셔틀버스 이용 안내
+			$kakaoMsg = $arrKakao["smsTitle"]
+				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
+				.'\n'.$arrKakao["shopname"]
+				.'\n\n서핑버스 이용안내'
+				.'\n ▶ 예약자 : '.$arrKakao["userName"]
+				.'\n'.$arrKakao["PROD_NAME"]
+				.'\n---------------------------------'
+				.'\n ▶ 안내사항'
+				.'\n'.$arrKakao["PROD_URL"];
+
 		}
 
 	}else if($arrKakao["tempName"] == "frip_bus03"){ //셔틀버스 입금대기
@@ -348,6 +359,14 @@ function kakaoDebug($arrKakao, $arrRtn){
 
 	if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
 		$KAKAO_BTN4 = $arrKakao["btn_ResGPS"];
+	}
+
+	if($PROD_TYPE == "bus_kakaoinfo"){
+		$PROD_URL = "";
+		$PROD_NAME = "서핑버스 안내발송";
+	}else if($PROD_TYPE == "bus_cancelinfo"){
+		$PROD_URL = "";
+		$PROD_NAME = "서핑버스 취소안내";
 	}
 
 	return "INSERT INTO `AT_KAKAO_HISTORY`(`PROD_NAME`, `PROD_URL`, `USER_NAME`, `USER_TEL`, `PROD_TYPE`, `KAKAO_DATE`, `RES_CONFIRM`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`) VALUES ('$PROD_NAME','$PROD_URL','$USER_NAME','$USER_TEL','$PROD_TYPE','$KAKAO_DATE',$RES_CONFIRM,'$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$arrRtn[0]', '$arrRtn[1]');";

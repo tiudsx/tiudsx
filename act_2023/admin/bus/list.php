@@ -31,7 +31,7 @@ $shopseq = 0;
                 <li rel="tab2">예약관리</li>
                 <li rel="tab3">정산관리</li>
                 <li rel="tab4">타채널예약</li>
-                <li rel="tab5">취소안내</li>
+                <li rel="tab5">카톡안내</li>
             </ul>
 
             <!-- #container -->
