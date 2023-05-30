@@ -200,8 +200,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         echo "[조아]"; 
                     }else if($res_coupon == "NAVER"){ 
                         echo "[NAVER]"; 
-                    }else if($res_coupon == "KLOOK"){ 
-                        echo "[KLOOK]";
+                    }else if($res_coupon == "KLOOK" || $couponseq == 16){ 
+                        echo "[클룩]";
                     }else if($res_coupon == "NABUSA" || $couponseq == 7){
                         echo "[쇼핑]"; 
                     }else if($res_coupon == "NABUSB" || $couponseq == 10){
@@ -272,12 +272,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <col width="7%" />
                     <col width="11%" />
                     <col width="5%" />
-                    <col width="12%" />
+                    <col width="13%" />
                     <col width="5%" />
                     <col width="4%" />
                     <col width="6%" />
                     <col width="6%" />
-                    <col width="8%" />
+                    <col width="7%" />
                     <col width="6%" />
                     <col width="5%" />
                 </colgroup>
@@ -501,8 +501,8 @@ if(($i % 2) == 0 && $i > 0){
                         echo "[조아]"; 
                     }else if($res_coupon == "NAVER"){ 
                         echo "[NAVER]"; 
-                    }else if($res_coupon == "KLOOK"){ 
-                        echo "[KLOOK]";
+                    }else if($res_coupon == "KLOOK" || $couponseq == 16){ 
+                        echo "[클룩]";
                     }else if($res_coupon == "NABUSA" || $couponseq == 7){
                         echo "[쇼핑]"; 
                     }else if($res_coupon == "NABUSB" || $couponseq == 10){
