@@ -275,26 +275,9 @@ function fnBusModify(resseq) {
                     $j("#etc").val(data[i].etc);
                     $j("#memo").val(data[i].memo);
                     $j("#user_email").val(data[i].user_email);
-                    var res_cooperate = "";
-                    if (data[i].res_coupon == "JOABUS") {
-                        res_cooperate = "조아서프";
-                    } else if (data[i].res_coupon == "NAVER") {
-                        res_cooperate = "네이버";
-                    } else if (data[i].res_coupon == "KLOOK") {
-                        res_cooperate = "KLOOK";
-                    } else if (data[i].res_coupon == "NABUSB") {
-                        res_cooperate = "예약";
-                    } else if (data[i].res_coupon == "FRIP") {
-                        res_cooperate = "프립";
-                    } else if (data[i].res_coupon == "MYTRIP") {
-                        res_cooperate = "마이리얼트립";
-                    } else if (data[i].couponseq == 14) {
-                        res_cooperate = "망고서프";
-                    } else if (data[i].res_coupon != "") {
-                        res_cooperate = "일반할인";
-                    }
 
-                    $j("#res_cooperate").val(res_cooperate);
+                    //쿠폰채널
+                    $j("#res_cooperate").val(data[i].res_couponname);
                 }
 
                 fnBusAdd('trbus');
@@ -572,6 +555,10 @@ function fnGetJson(obj){
         return;
     }
 
+    if(!confirm("맵핑 후 알림톡 전송을 하시겠습니까?")){
+        return;
+    }
+
     if(vlu == "11" || vlu == "17" || vlu == "20" || vlu == "21" || vlu == "22"){
         fnMakeJsonFrip(); //프립
     }else if(vlu == "16"){
@@ -701,8 +688,10 @@ function fnMakeJsonKlook() {
         //예약시간
         //objValue.res_time = $state.find(".info-item").eq(1).text().split(":")[1].trim().substring(0,10);
         //예약상태
-        objValue.state = $state.find(".info-item").eq(2).find(".ant-tag").eq(0).text();;
+        objValue.state = $state.find(".info-item").eq(2).find(".ant-tag").eq(0).text();
 
+        //예약색상
+        objValue.rgb = $state.find(".booking-color-tag").css("background-color");
         //#regionend
 
         /******************************************************************************/
@@ -744,6 +733,86 @@ function fnMakeJsonKlook() {
     });
 
     $j("#html_2").val(JSON.stringify(objList));
+
+    var i = 1;
+    $j("#tbCopyList").html($j("#tbCopyList2").html());
+    objList.forEach(function(el) {
+        var busGubun = "";
+        var prod_pkg = $j.trim(el.prod_pkg)
+
+        var resDate1 = "";
+        var resDate2 = "";
+        var resbusseat1 = "0";
+        var resbusseat2 = "0";
+
+        if(prod_pkg == "서울 사당 - 양양 (편도/ 토요일, 일요일)"){
+            busGubun = "양양행(사당선)";
+            resDate1 = el.bus_date;
+            resbusseat1 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
+        }else if(prod_pkg == "서울 종로 - 양양 (편도/토요일) "){
+            busGubun = "양양행(종로선)";
+            resDate1 = el.bus_date;
+            resbusseat1 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
+        }else if(prod_pkg == "[15시] 양양 - 서울  (편도) "){
+            busGubun = "[15시] 양양>서울";
+            resDate2 = el.bus_date;
+            resbusseat2 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
+        }else if(prod_pkg == "[17시] 양양 - 서울 (편도/ 토요일, 일요일)"){
+            busGubun = "[17] 양양>서울";
+            resDate2 = el.bus_date;
+            resbusseat2 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
+        }
+
+        var user_name = el.user_name1 + el.user_name2;
+
+        var tel = el.user_tel.replace("+82-", "");
+        if(tel.substring(0, 1) != "0"){
+            if(tel.length == 8){
+                tel = "010" + tel;
+            }else{
+                tel = "0" + tel;
+            }
+        } 
+        //tel = "01044370009";
+
+        if(el.rgb == "rgb(255, 255, 255)"){
+            var tbHtml = "<tr>"
+                        + " <td>" + i + "</td>"
+                        + " <td>" + busGubun + "</td>"
+                        + " <td>" + user_name + "</td>"
+                        + " <td>" + tel + "</td>"
+                        + " <td>" + el.bus_date + " (" + el.ea.replace("인원 x ", "").replace("인원수 x ", "") + "명)</td>"
+                        + " <td></td>"
+                        + "</tr>";
+            $j("#tbCopyList").append(tbHtml);
+    
+            i++;
+
+            var resbus = "YY";
+            var reschannel = "16";
+            var params = "resparam=reskakao&username=" + user_name + "&resbus=" + resbus + "&userphone=" + tel + "&reschannel=" + reschannel + "&resDate1=" + resDate1 + "&resDate2=" + resDate2 + "&resbusseat1=" + resbusseat1 + "&resbusseat2=" + resbusseat2;
+            $j.ajax({
+                type: "POST",
+                url: "/act_2023/admin/bus/list_save.php",
+                data: params,
+                success: function (data) {
+                    if(data == "err"){
+                        alert("오류가 발생하였습니다.");
+                    }
+                }
+            });
+        }
+    });
+
+    alert("처리 완료");
+
+    fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');
+
+    // const result = objList.reduce((acc, v) => {
+    //     return acc.includes(v) ? acc : [...acc, v];
+    //   }, []);
+
+    // console.log(result);
 
     // [{"res_id":"HCA813310","state":"확정됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"서울 사당 - 양양 (편도/ 토요일, 일요일) ","ea":"인원 x 1","bus_date":"2023-06-10","user_fullname":"한별 이","user_tel_sub":"82-01089199342","user_name1":"이","user_name2":"한별","user_tel":"+82-01089199342"}
     //,{"res_id":"ZMF207384","state":"취소됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"서울 사당 - 양양 (편도/ 토요일, 일요일) ","ea":"인원 x 2","bus_date":"2023-05-05","user_fullname":"박 세린","user_tel_sub":"***","user_name1":"박","user_name2":"세린","user_tel":"+82-01033836382"}

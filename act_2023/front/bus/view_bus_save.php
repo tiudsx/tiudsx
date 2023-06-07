@@ -246,23 +246,6 @@ if($param == "BusI"){
         //신규 로직 : 2022-01-04
         $gubun_title = $busTitleName.' 서핑버스';
         
-        if($coupon == "JOABUS"){
-            //$gubun_title = "조아서프 패키지 서핑버스";
-            //$msgChannelName2 = '\n      - 예약취소는 예약하셨던 조아서프에 문의해주세요.';
-        }else if($coupon == "FRIP" || $couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){
-            //$gubun_title = "프립 서핑버스";
-        }else if($coupon == "MYTRIP"){
-            //$gubun_title = "마이리얼트립 서핑버스";
-        }else if($coupon == "KLOOK"){
-            //$gubun_title = "클룩 서핑버스";
-        }else if($coupon == "SURFX" || $couponseq == 15){
-            //$gubun_title = "SURFX 서핑버스";
-        }else if($coupon == "NAVER" || $couponseq == 9 || $couponseq == 10){
-            
-        }else{
-
-        }        
-
         if($msgType == 2){ //입금대기
             $tempName = "frip_bus03"; //입금대기
             $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소

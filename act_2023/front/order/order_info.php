@@ -81,41 +81,22 @@ if($count == 0){
 					</div>';
 				}
 
-				$sitename = "";
-				if($res_coupon == "JOABUS"){ 
-					echo "[조아서프 서핑샵]"; 
-				}else if($res_coupon == "NABUSA" || $couponseq == 7){
-					$sitename = "[네이버쇼핑]"; 
-				}else if($res_coupon == "NABUSB" || $couponseq == 10){
-					$sitename = "[네이버예약]"; 
-				}else if($res_coupon == "FRIP" || $couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){ 
-					$sitename = "[프립]";
-				}else if($res_coupon == "KLOOK"){ 
-					$sitename = "[KLOOK]";
-				}else if($res_coupon == "MYTRIP"){ 
-					$sitename = "[마이리얼트립]"; 
-				}else if($couponseq == 14){
-					$sitename = "[망고]"; 
-				}else if($couponseq == 15){
-					$sitename = "[서프존]"; 
-				}else if($couponseq == 23){
-					$sitename = "[브라보서프]"; 
-				}
+				$sitename = coupontype("", $couponseq);
 				
-			if($gubun != 3){
-				if($cancelChk == "coupon"){
-					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
-					※ 취소/환불은 예약하신 '.$sitename.'으로 문의해주세요~
-					</div>';
-				}else{
-				?>
-				<div class="write_table" style="padding-top:2px;padding-bottom:15px;">
-				※ 이용 1일전에는 취소/환불이 안됩니다.<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 예약확정 후 2시간 이내에는 취소/환불이 가능합니다.
-				</div>
-				<?
+				if($gubun != 3){
+					if($cancelChk == "coupon"){
+						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
+						※ 취소/환불은 예약하신 '.$sitename.'으로 문의해주세요~
+						</div>';
+					}else{
+					?>
+					<div class="write_table" style="padding-top:2px;padding-bottom:15px;">
+					※ 이용 1일전에는 취소/환불이 안됩니다.<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 예약확정 후 2시간 이내에는 취소/환불이 가능합니다.
+					</div>
+					<?
+					}
 				}
-			}
 				?>
 
 				<span id="returnBank" style="display:none;">

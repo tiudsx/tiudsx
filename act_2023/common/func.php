@@ -236,4 +236,50 @@ function decrypt($plaintext){
 
 	return $plaintext_dec;
 }
+
+function coupontype($type, $couponseq, $res_coupon){
+	$sitename = ""; 
+	$couponbool = false;
+	if($couponseq == 7){
+		$sitename = "[네이버쇼핑]"; 
+	}else if($couponseq == 10){
+		$sitename = "[네이버예약]"; 
+	}else if($couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){
+		$sitename = "[프립]"; 
+	}else if($couponseq == 16){
+		$sitename = "[클룩]"; 
+	}else if($couponseq == 12){
+		$sitename = "[마이리얼트립]"; 
+	}else if($couponseq == 15){
+		$sitename = "[서프존]"; 
+	}else if($couponseq == 23){
+		$sitename = "[브라보서프]"; 
+	}
+
+	if($type == "admin"){
+		if($couponseq == 17){
+			$sitename = "[프립-마린]"; 
+		}else if($couponseq == 20){
+			$sitename = "[프립-인구]"; 
+		}else if($couponseq == 21){
+			$sitename = "[프립-서팩]"; 
+		}else if($couponseq == 22){
+			$sitename = "[프립-힐링캠프]"; 
+		}else if($res_coupon != "" && $sitename == ""){
+			$sitename = "[할인]"; 
+		}
+	}
+
+	if($type == "bool"){
+		if($sitename == ""){
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return $sitename;
+	}
+}
+
+
 ?>

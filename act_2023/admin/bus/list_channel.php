@@ -15,8 +15,8 @@
 		</td>
 	</tr>
 	<tr>
-		<th>노선</th>
 		<th>채널</th>
+		<th>노선</th>
 		<th>이름</th>
 		<th>연락처</th>
 		<th>이용일 (서울출발)</th>
@@ -71,6 +71,30 @@
 
 			<textarea id="html_2" cols="40" rows="7" style="display: ;"></textarea>
 			<div id="divCopy" style="display: none;"></div>
+			<div id="divCopyList" style="display:;">
+
+<table class='et_vars exForm bd_tb' id="tbCopyList">
+</table>
+
+<table class='et_vars exForm bd_tb' id="tbCopyList2" style="display:none;">
+	<colgroup>
+		<col style="width:10%">
+		<col style="width:*;">
+		<col style="width:18%">
+		<col style="width:18%">
+		<col style="width:20%">
+		<col style="width:10%">
+	</colgroup>
+	<tr>
+		<th>번호</th>
+		<th>노선</th>
+		<th>이름</th>
+		<th>연락처</th>
+		<th>이용일 (인원)</th>
+		<th>처리</th>
+	</tr>
+</table>
+			</div>
 		</td>
 	</tr>
 	<tr>
