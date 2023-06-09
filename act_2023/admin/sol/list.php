@@ -190,13 +190,13 @@ include __DIR__.'/../../common/logininfo.php';
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
 							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
+							<col width="140" />
+							<col width="164" />
+							<col width="113" />
+							<col width="113" />
+							<col width="164" />
+							<col width="113" />
+							<col width="113" />
 							<col width="70" />
 						</colgroup>
                         <tbody>
