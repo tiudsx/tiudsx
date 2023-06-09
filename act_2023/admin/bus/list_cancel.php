@@ -52,13 +52,12 @@
 		<td class="col-02" style="text-align:center;" colspan="2">
 			<textarea id="html_2" name="html_2" cols="40" rows="7">
  ▶ 운행가능 차량
-  - 27일 : 서울 > 양양행
-  - 28일 : 양양 > 서울행
+  - 일 : 서울 > 양양행
+  - 일 : 양양 > 서울행
 
  ▶ 운행취소 차량
-  - 27일 : 양양 > 서울행
-  - 28일 : 서울 > 양양행
-  - 29일 : 서울 <> 양양</textarea>
+  - 일 : 양양 > 서울행
+  - 일 : 서울 > 양양행</textarea>
 		</td>
 	</tr>
 	<tr>

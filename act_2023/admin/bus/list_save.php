@@ -450,6 +450,8 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$channelText = "  - 예약자명, 환불계좌를 카카오채널로 보내주시면, 전액환불 진행됩니다.";
 		}else if($userchannel == "클룩"){
 			$channelText = "  - 예약건은 클룩에서 취소 및 전액환불됩니다.";
+		}else if($userchannel == "네이버쇼핑"){
+			$channelText = "  - 예약건은 네이버쇼핑에서 취소 및 전액환불됩니다.";
 		}
 
 		$arrKakao = array(

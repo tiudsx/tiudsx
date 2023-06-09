@@ -4,12 +4,51 @@ $j(function() {
         var $self = $j(this);
         var id = $self.data("gubun");
 
-        if(id == "trbbq"){
+        if(id == "btnbbq"){
             if($j("input[calid=res_bbqdate]").eq(1).val() == null || $j("input[calid=res_bbqdate]").eq(1).val() == ""){
                 alert("첫번째열 바베큐 이용날짜를 선택하세요.");
                 return;
             }
 
+            $j("input[calid=res_bbqdate]").val($j("input[calid=res_bbqdate]").eq(1).val());
+            $j("input[calid=res_bbqdate]").eq(0).val("");
+            return;
+        }else if(id == "btnstay"){
+            $j("input[calid=res_staysdate]").val($j("input[calid=res_staysdate]").eq(1).val());
+            $j("input[calid=res_stayedate]").val($j("input[calid=res_stayedate]").eq(1).val());
+            $j("input[calid=res_staysdate]").eq(0).val("");
+            $j("input[calid=res_stayedate]").eq(0).val("");
+            return;
+        }else if(id == "btnAll"){
+            //숙소
+            $j("input[id=res_stayshop]").val($j("input[id=res_stayshop]").eq(1).val());
+            $j("input[id=res_stayshop]").eq(0).val("N");
+
+            if($j("input[id=res_stayshop]").eq(1).val() == "N"){
+                $j("input[id=res_stayshopChk]").prop("checked", true);
+            }else{
+                $j("input[id=res_stayshopChk1]").prop("checked", true);
+            }
+            $j("input[id=res_stayshopChk]").eq(0).prop("checked", true);
+
+            //숙박일
+            $j("input[calid=res_staysdate]").val($j("input[calid=res_staysdate]").eq(1).val());
+            $j("input[calid=res_stayedate]").val($j("input[calid=res_stayedate]").eq(1).val());
+            $j("input[calid=res_staysdate]").eq(0).val("");
+            $j("input[calid=res_stayedate]").eq(0).val("");
+
+            //성별
+            $j("input[id=res_staysex]").val($j("input[id=res_staysex]").eq(1).val());
+            $j("input[id=res_staysex]").eq(0).val("남");
+
+            if($j("input[id=res_staysex]").eq(1).val() == "남"){
+                $j("input[id=res_staysexChk]").prop("checked", true);
+            }else{
+                $j("input[id=res_staysexChk1]").prop("checked", true);
+            }
+            $j("input[id=res_staysexChk]").eq(0).prop("checked", true);
+
+            //바베큐일
             $j("input[calid=res_bbqdate]").val($j("input[calid=res_bbqdate]").eq(1).val());
             $j("input[calid=res_bbqdate]").eq(0).val("");
             return;

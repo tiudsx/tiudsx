@@ -110,26 +110,30 @@ include __DIR__.'/../../common/logininfo.php';
                 <td colspan="10">
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
+							<col width="190" />
+							<col width="270" />
 							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
+							<col width="150" />
+							<col width="170" />
 							<col width="70" />
 						</colgroup>
 						<tbody>
 							<tr>
-                                <th colspan="5">숙박정보</th>
+                                <th colspan="5">숙박정보 
+									<input type="button" class="btnsurfadd" style="width:90px; height:22px;" value="전체 일괄적용" data-gubun="btnAll"></th>
                                 <th rowspan="2"><input type="button" class="btnsurfadd" style="width:40px;" value="추가" data-gubun="trstay"></th>
                             </tr>
                             <tr>
                                 <th>숙소명</th>
-                                <th>이용일</th>
+                                <th>
+									이용일
+									<input type="button" class="btnsurfadd" style="width:60px; height:22px;" value="일괄적용" data-gubun="btnstay">
+								</th>
                                 <th>고객정보</th>
                                 <th>성별</th>
 								<th>
 									바베큐
-									<input type="button" class="btnsurfadd" style="width:60px; height:22px;" value="일괄적용" data-gubun="trbbq">
+									<input type="button" class="btnsurfadd" style="width:60px; height:22px;" value="일괄적용" data-gubun="btnbbq">
 								</th>
 							</tr>
 							<tr id="trstay" style="display:none;">
