@@ -669,8 +669,8 @@ function fnMakeJsonKlook() {
         "패키지명":"prod_pkg",
         "단위":"ea",
         "이용시간":"bus_date",
-        "전화번호":"user_tel_sub",
-        "전화번호_2":"user_tel",
+        "전화번호":"user_tel",
+        //"전화번호_2":"user_tel",
         "성":"user_name1",
         "이름":"user_name2",
         "성명":"user_fullname"
@@ -705,9 +705,9 @@ function fnMakeJsonKlook() {
                 colKey = $j(this).find("p").eq(0).text().replace(":","").replace(/ /g, ''); //json Text
                 colValue = $j(this).find("p").eq(1).text(); //json Value
 
-                if (objValue.user_tel_sub != undefined && colKey == "전화번호") {
-                    colKey = "전화번호_2";
-                }
+                // if (objValue.user_tel_sub != undefined && colKey == "전화번호") {
+                //     colKey = "전화번호_2";
+                // }
 
                 if (colNameTitle[colKey] != undefined) {
                     if(colNameTitle[colKey]  == "prod_name"){
@@ -720,7 +720,9 @@ function fnMakeJsonKlook() {
                         }
                     }
 
-                    objValue[colNameTitle[colKey]] = colValue;
+                    if(objValue[colNameTitle[colKey]] == null){
+                        objValue[colNameTitle[colKey]] = colValue;
+                    }
                 }
                 
             });
@@ -763,9 +765,9 @@ function fnMakeJsonKlook() {
             resbusseat2 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
         }
 
-        var user_name = el.user_name1 + el.user_name2;
+        var user_name = el.user_fullname.replace(/ /gi, "");
 
-        var tel = el.user_tel.replace("+82-", "");
+        var tel = el.user_tel.replace("+82-", "").replace("82-", "");
         if(tel.substring(0, 1) != "0"){
             if(tel.length == 8){
                 tel = "010" + tel;
@@ -791,16 +793,16 @@ function fnMakeJsonKlook() {
             var resbus = "YY";
             var reschannel = "16";
             var params = "resparam=reskakao&username=" + user_name + "&resbus=" + resbus + "&userphone=" + tel + "&reschannel=" + reschannel + "&resDate1=" + resDate1 + "&resDate2=" + resDate2 + "&resbusseat1=" + resbusseat1 + "&resbusseat2=" + resbusseat2;
-            $j.ajax({
-                type: "POST",
-                url: "/act_2023/admin/bus/list_save.php",
-                data: params,
-                success: function (data) {
-                    if(data == "err"){
-                        alert("오류가 발생하였습니다.");
-                    }
-                }
-            });
+            // $j.ajax({
+            //     type: "POST",
+            //     url: "/act_2023/admin/bus/list_save.php",
+            //     data: params,
+            //     success: function (data) {
+            //         if(data == "err"){
+            //             alert("오류가 발생하였습니다.");
+            //         }
+            //     }
+            // });
         }
     });
 
