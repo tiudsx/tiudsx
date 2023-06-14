@@ -78,12 +78,14 @@
 
 <table class='et_vars exForm bd_tb' id="tbCopyList2" style="display:none;">
 	<colgroup>
-		<col style="width:10%">
+		<col style="width:8%">
 		<col style="width:*;">
-		<col style="width:18%">
+		<col style="width:10%">
 		<col style="width:18%">
 		<col style="width:20%">
-		<col style="width:10%">
+		<col style="width:8%">
+		<col style="width:8%">
+		<col style="width:8%">
 	</colgroup>
 	<tr>
 		<th>번호</th>
@@ -91,6 +93,8 @@
 		<th>이름</th>
 		<th>연락처</th>
 		<th>이용일 (인원)</th>
+		<th>임시</th>
+		<th>확정</th>
 		<th>처리</th>
 	</tr>
 </table>
