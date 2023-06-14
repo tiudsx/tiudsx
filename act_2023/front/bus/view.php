@@ -24,9 +24,12 @@ if($param_mid == ""){
 if($param == "surfbus_yy"){ //양양 셔틀버스
     $shopseq = 7;
     $pointurl = "_view_tab3_yy.php";
-}else{ //동해 셔틀버스
+}else if($param == "surfbus_dh"){ //동해 셔틀버스
     $shopseq = 14;
     $pointurl = "_view_tab3_dh.php";
+}else{ //양양,동해 셔틀버스
+    $shopseq = 212;
+    $pointurl = "_view_tab3_yd.php";
 }
 
 //"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
@@ -191,9 +194,12 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <?if($param == "surfbus_yy"){?>
                             <li class="toYang on" onclick="fnBusGubun('Y', this);">양양행<i class="fas fa-chevron-right"></i></li>
                             <li class="toYang" onclick="fnBusGubun('S', this);">서울행<i class="fas fa-chevron-right"></i></li>
-                        <?}else{?>
+                        <?}else if($param == "surfbus_dh"){?>
                             <li class="toYang on" onclick="fnBusGubun('E', this);">동해행<i class="fas fa-chevron-right"></i></li>
                             <li class="toYang" onclick="fnBusGubun('A', this);">서울행<i class="fas fa-chevron-right"></i></li>
+                        <?}else{?>
+                            <li class="toYang on" onclick="fnBusGubun('YD_S', this);">양양,동해행<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang" onclick="fnBusGubun('YD_E', this);">서울행<i class="fas fa-chevron-right"></i></li>                            
                         <?}?>
                         </ul>
                     </div>
@@ -314,6 +320,17 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <li style="display:none;"><img src="/act_2023/images/button/btn062.png" alt="서울행 서핑버스"></li>
                         <li>
                             <div id="selBusS" class="bd" style="padding-top:2px;">
+                            </div>
+                        </li>
+                    <?}else if($param == "surfbus_dh"){?>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn064.png" alt="동해행 서핑버스"></li>
+                        <li>
+                            <div id="selBusE" class="bd" style="padding-top:2px;">
+                            </div>
+                        </li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn063.png" alt="서울행 서핑버스"></li>
+                        <li>
+                            <div id="selBusA" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                     <?}else{?>

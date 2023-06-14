@@ -990,6 +990,7 @@ function fnBusPoint(obj) {
     $j("table[view='tbBus1']").css("display", "none");
     $j("table[view='tbBus2']").css("display", "none");
     $j("table[view='tbBus3']").css("display", "none");
+    $j("table[view='tbBus4']").css("display", "none");
 
     var gubun = "Y",
         busnum = 1,
@@ -1018,6 +1019,20 @@ function fnBusPoint(obj) {
         busnum = 1;
         pointname = "솔.동해점";
         imgnum = 1;
+    } else if ($j(obj).val() == "오후차량") {
+        mapviewid = 9;
+        tbBus = 3;
+        gubun = "A";
+        busnum = 1;
+        pointname = "솔.동해점";
+        imgnum = 1;
+    } else if ($j(obj).val() == "저녁차량") {
+        mapviewid = 9;
+        tbBus = 4;
+        gubun = "S";
+        busnum = 1;
+        pointname = "남애3리";
+        imgnum = 2;
     } else {
         mapviewid = 9;
         tbBus = 3;
