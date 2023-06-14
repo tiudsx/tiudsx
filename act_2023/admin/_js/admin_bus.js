@@ -532,7 +532,7 @@ function fnDayList(vlu, obj, folderName){
 //클룩, 프립 데이터 맵핑
 function fnChannel(obj){
     $j("#resbus option").show();
-    if(obj.value == "11" || obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "22" || obj.value == "16" ){
+	if (obj.value == "11" || obj.value == "17" || obj.value == "20" || obj.value == "21" || obj.value == "22" || obj.value == "16" || obj.value == "7" ){
         $j("#fripMapping").show();
     }else{
         $j("#fripMapping").hide();
@@ -559,11 +559,14 @@ function fnGetJson(obj){
         return;
     }
 
-    if(vlu == "11" || vlu == "17" || vlu == "20" || vlu == "21" || vlu == "22"){
+	if (vlu == "11" || vlu == "17" || vlu == "20" || vlu == "21" || vlu == "22"){
         fnMakeJsonFrip(); //프립
     }else if(vlu == "16"){
         fnMakeJsonKlook(); //클룩
-    }
+	} else if (vlu == "7") {
+		fnMakeJsonNaver(); //네이버쇼핑
+	}
+	
 }
 
 //프립 데이터 맵핑
@@ -737,7 +740,8 @@ function fnMakeJsonKlook() {
     $j("#html_2").val(JSON.stringify(objList));
 
     var i = 1;
-    $j("#tbCopyList").html($j("#tbCopyList2").html());
+	$j("#tbCopyList").html($j("#tbCopyList2").html());
+
     objList.forEach(function(el) {
         var busGubun = "";
         var prod_pkg = $j.trim(el.prod_pkg)
@@ -745,17 +749,18 @@ function fnMakeJsonKlook() {
         var resDate1 = "";
         var resDate2 = "";
         var resbusseat1 = "0";
-        var resbusseat2 = "0";
+		var resbusseat2 = "0";
+		
 
         if(prod_pkg == "서울 사당 - 양양 (편도/ 토요일, 일요일)"){
             busGubun = "양양행(사당선)";
             resDate1 = el.bus_date;
             resbusseat1 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
-        }else if(prod_pkg == "서울 종로 - 양양 (편도/토요일) "){
+        }else if(prod_pkg == "서울 종로 - 양양 (편도/토요일)"){
             busGubun = "양양행(종로선)";
             resDate1 = el.bus_date;
             resbusseat1 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
-        }else if(prod_pkg == "[15시] 양양 - 서울  (편도) "){
+        }else if(prod_pkg == "[15시] 양양 - 서울  (편도)"){
             busGubun = "[15시] 양양>서울";
             resDate2 = el.bus_date;
             resbusseat2 = el.ea.replace("인원 x ", "").replace("인원수 x ", "");
@@ -785,6 +790,8 @@ function fnMakeJsonKlook() {
                         + " <td>" + tel + "</td>"
                         + " <td>" + el.bus_date + " (" + el.ea.replace("인원 x ", "").replace("인원수 x ", "") + "명)</td>"
                         + " <td></td>"
+						+ " <td></td>"
+						+ " <td></td>"
                         + "</tr>";
             $j("#tbCopyList").append(tbHtml);
     
@@ -792,7 +799,10 @@ function fnMakeJsonKlook() {
 
             var resbus = "YY";
             var reschannel = "16";
-            var params = "resparam=reskakao&username=" + user_name + "&resbus=" + resbus + "&userphone=" + tel + "&reschannel=" + reschannel + "&resDate1=" + resDate1 + "&resDate2=" + resDate2 + "&resbusseat1=" + resbusseat1 + "&resbusseat2=" + resbusseat2;
+			var params = "resparam=reskakao&username=" + user_name + "&resbus=" + resbus + "&userphone=" + tel + "&reschannel=" + reschannel + "&resDate1=" + resDate1 + "&resDate2=" + resDate2 + "&resbusseat1=" + resbusseat1 + "&resbusseat2=" + resbusseat2;
+
+			/*알림톡 발송*/
+
             // $j.ajax({
             //     type: "POST",
             //     url: "/act_2023/admin/bus/list_save.php",
@@ -821,6 +831,16 @@ function fnMakeJsonKlook() {
     //,{"res_id":"MAW511856","state":"취소됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"[17시] 양양 - 서울 (편도/ 토요일, 일요일)","ea":"인원수 x 2","bus_date":"2023-05-07","user_fullname":"박 세린","user_tel_sub":"***","user_name1":"박","user_name2":"세린","user_tel":"+82-01033836382"}
     //,{"res_id":"PRN058505","state":"확정됨","prod_name":"서울 - 양양 편도 or 왕복 서핑버스 (서피비치)","prod_pkg":"서울 사당 - 양양 (편도/ 토요일, 일요일) ","ea":"인원 x 2","bus_date":"2023-05-27","user_fullname":"-","user_tel_sub":"82-01049310092","user_tel":"+82-01049310092"}]
     console.log(objList);
+}
+
+//네이버쇼핑 맵핑
+function fnMakeJsonNaver() {
+
+	$j("#divCopy").html($j("#html_1").val());
+	$j("#divCopy").html($j("#divCopy").find(".tui-grid-lside-area").html());
+
+    alert("test??");
+
 }
 
 //서핑버스 정산
