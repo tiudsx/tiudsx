@@ -74,7 +74,7 @@ if($count == 0){
 			<form name="frmCancel" id="frmCancel" target="ifrmResize" autocomplete="off">
 				<?
 				include_once($infoUrl);
-				
+
 				if($cancelChk == "none"){
 					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:none;">
 					※ 이용 1일전에는 취소가 불가능합니다.
@@ -83,10 +83,15 @@ if($count == 0){
 
 				$sitename = coupontype("", $couponseq);
 				
+				if($sitename == "" && $res_totalprice == 0){
+					$cancelChk = "coupon";
+					$sitename = "웹사이트 또는 업체";
+				}
+
 				if($gubun != 3){
 					if($cancelChk == "coupon"){
 						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
-						※ 취소/환불은 예약하신 '.$sitename.'으로 문의해주세요~
+						※ 취소/환불은 예약하신 '.$sitename.'(으)로 문의해주세요~
 						</div>';
 					}else{
 					?>
