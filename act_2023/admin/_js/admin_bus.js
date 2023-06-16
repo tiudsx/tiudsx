@@ -731,6 +731,16 @@ function fnMakeJsonKlook() {
             });
         });
 
+        objValue["username"] = "";      //고객명
+        objValue["usertel"] = "";       //고객 연락처
+        objValue["resbusseat2"] = "";      //인원수
+        objValue["usedate"] = "";       //사용일
+        objValue["bustypetext"] = "";   //버스상품명
+        objValue["bustypevalue"] = "";  //버스상품타입  1:출발,2:복귀
+        objValue["etc1"] = "";          //임시데이터 유무
+        objValue["etc2"] = "";          //확정데이터 유무
+        objValue["etc3"] = "";          //처리
+
         //#regionend
 
         objList.push(objValue);
@@ -741,6 +751,11 @@ function fnMakeJsonKlook() {
 
     var i = 1;
 	$j("#tbCopyList").html($j("#tbCopyList2").html());
+
+
+    //예약 중복체크, 명단표 생성 로직
+    fnChkRev(objList);
+    return;
 
     objList.forEach(function(el) {
         var busGubun = "";
