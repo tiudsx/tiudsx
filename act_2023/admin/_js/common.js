@@ -162,3 +162,8 @@ function fnChkAll(obj, objid) {
         $j('input[id=' + objid + ']').prop('checked', false);
     }
 }
+
+function spacetrim(obj){
+    var trim = $j.trim($j(obj).val()).replace(/ /g, '');
+    $j(obj).val(trim);
+}

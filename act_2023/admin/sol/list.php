@@ -52,16 +52,17 @@ include __DIR__.'/../../common/logininfo.php';
 				<th>등록관리자</th>
 				<td>
 					<select id="res_adminname" name="res_adminname" class="select">
-                        <option value='정태원'>정태원</option>
+                        <option value='이지윤'>이지윤</option>
                         <option value='이승철'>이승철</option>
                         <option value='정태일'>정태일</option>
+                        <option value='정태원'>정태원</option>
                     </select>
 				</td>
                 <th>예약자</th>
-                <td><input type="text" id="user_name" name="user_name" size="8" value="" class="itx"></td>
+                <td><input type="text" id="user_name" name="user_name" size="8" value="" class="itx" onkeyup="spacetrim(this);"></td>
                 <th>연락처</th>
 				<td>
-					<input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx">
+					<input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx" onkeyup="spacetrim(this);">
 				</td>
 				<th>예약처</th>
 				<td>
@@ -378,7 +379,7 @@ include __DIR__.'/../../common/logininfo.php';
 											<td><?=$i?>번(<?=(($i % 2) == 1) ? "1" : "2"?>층)<?=$cold?></td>
 											<td room="302" id="302<?=$i?>"></td>
 										<?}?>
-											<?$cold = "";if($i == 8){$cold = "<br>에어컨";}?>
+											<?$cold = "";if($i == 10){$cold = "<br>에어컨";}?>
 											<td><?=$i?>번(<?=(($i % 2) == 1) ? "1" : "2"?>층)<?=$cold?></td>
 											<td room="303" id="303<?=$i?>"></td>
 									</tr>	

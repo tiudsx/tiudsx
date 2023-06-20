@@ -545,7 +545,7 @@ function fnRoomNum(obj, val) {
             break;
         case "303":
             roomnum = 10;
-            coldnum = 8;
+            coldnum = 10;
             break;
     }
 
