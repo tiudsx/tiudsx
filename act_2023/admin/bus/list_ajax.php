@@ -6,35 +6,7 @@
 
 	//임시 테이블정보
 	SELECT userinfo, use_yn, couponseq FROM `AT_COUPON_CODE` where userinfo is not null and couponseq = 16 AND userinfo like '%테스트%'
-
-
-	// 확정 테이블정보
-	SELECT 
-		* 
-	FROM AT_RES_MAIN A
-		INNER JOIN AT_RES_SUB B
-			ON A.resnum = B.resnum
-
-	$select_query = "SELECT userinfo, use_yn, couponseq FROM `AT_COUPON_CODE` where userinfo is not null and couponseq = 16 AND userinfo like '%테스트%'";
-
-	$result = mysqli_query($conn, $select_query);
-	$count_sub = mysqli_num_rows($result);
-
-	if($count_sub == 0){
-		echo "err";
-	}else{
-		
-		$dbdata;
-        while ( $row = $result->fetch_assoc()){
-            $dbdata = $row;
-        }
-
-	}
-
-	*/	
-
-	$rev_data = $_POST['data'];
-	//header('Content-Type: application/json');
+	*/
 
 	/*
 	{
@@ -56,23 +28,55 @@
 		,etc2:""		//확정데이터 유무
 		,etc3:""		//처리
 	}
-	
-
-	노선
-	이름
-	연락처
-	이용일(인원)
-
-	임시
-	확정
-	처리
 
 	*/
+
+	header('Content-Type: application/json');
+
+	$rev_data = $_POST['data'];
 	
+	$i = 0;
 	foreach ($rev_data as $row) {
-        //print $row['키값'];
+        
+		$data1 = $rev_data[$i]['usertel'];
+		$data2 = $rev_data[$i]['bus_date'];
+		$data3 = $rev_data[$i]['bustypevalue'];
+
+		$select_query = "SELECT 
+				A.resnum,
+				A.user_id,
+				A.user_name,
+				A.user_tel,
+				B.res_date,
+				B.res_bus
+			FROM AT_RES_MAIN A
+				INNER JOIN AT_RES_SUB B
+					ON A.resnum = B.resnum
+		WHERE REPLACE(A.user_tel,'-','') = '$data1'
+		AND B.res_date = '$data2'
+		AND SUBSTRING(B.res_bus,1,1) = '$data3'";
+
+		$result = mysqli_query($conn, $select_query);
+		$count_sub = mysqli_num_rows($result);
+
+		//while ( $row = $result->fetch_assoc()){}
+
+		if ($count_sub == $rev_data[$i]["resbusseat2"]) {
+			$rev_data[$i]["etc2"] = "O";
+		}
+		else {
+			$rev_data[$i]["etc2"] = "";
+		}
+
+		//$rev_data[$i]["etc1"] = $rev_data[$i]["bustypevalue"];
+		//$rev_data[$i]["etc3"] = $data1.'/'.$data2.'/'.$data3.'/'.$rev_data[$i]["resbusseat2"];
+		$i++;
+
     }
 
 	echo(json_encode($rev_data));
+
+	// $output = json_encode($dbdata, JSON_UNESCAPED_UNICODE);
+    // echo urldecode($output);
 
 ?>
