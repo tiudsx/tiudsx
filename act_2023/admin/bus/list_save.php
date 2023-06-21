@@ -12,7 +12,7 @@ $InsUserID = $_REQUEST["userid"];
 $intseq = "";
 $intseq3 = "";
 //$to = "lud1@naver.com";
-$to = "lud1@naver.com,ttenill@naver.com";
+$to = "lud1@naver.com";
 
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
@@ -429,14 +429,17 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	if(!$result_set) goto errGo;
 
 	mysqli_query($conn, "COMMIT");
+
 }else if($param == "busCancel"){ //버스 취소 안내
 	$user_name = $_REQUEST["user_name"]; //이름
 	$user_tel = $_REQUEST["user_tel"]; //전화번호
 	$user_channel = $_REQUEST["user_channel"]; //예약채널
-	$html_1 = $_REQUEST["html_1"]; //상단안내
-	$html_2 = $_REQUEST["html_2"]; //안내내용
+	$html_1 = $_REQUEST["html_1"]; //상단타이틀
+	$html_2 = $_REQUEST["html_2"]; //상단안내
+	$html_3 = $_REQUEST["html_3"]; //안내내용
+	$html_4 = $_REQUEST["html_4"]; //안내사항
 
-	$msgTitle = '액트립 서핑버스 취소안내';
+	$msgTitle = $html_1;
 	$arryKakao = array();
 	for($i = 1; $i < count($user_name); $i++){
 		$userName = $user_name[$i];
@@ -444,14 +447,21 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$userchannel = $user_channel[$i];
 		
 		$channelText = "";
-		if($userchannel == "프립"){
-			$channelText = "  - 예약건은 프립에서 취소 및 전액환불됩니다.";
-		}else if($userchannel == "액트립"){
-			$channelText = "  - 예약자명, 환불계좌를 카카오채널로 보내주시면, 전액환불 진행됩니다.";
-		}else if($userchannel == "클룩"){
-			$channelText = "  - 예약건은 클룩에서 취소 및 전액환불됩니다.";
-		}else if($userchannel == "네이버쇼핑"){
-			$channelText = "  - 예약건은 네이버쇼핑에서 취소 및 전액환불됩니다.";
+		if($userchannel == "안내공지"){
+			$channelText = $html_4;
+		}else{
+			if($userchannel == "프립"){
+				$channelText = "  - 예약건은 프립에서 취소 및 전액환불됩니다.";
+			}else if($userchannel == "액트립"){
+				$channelText = "  - 예약자명, 환불계좌를 카카오채널로 보내주시면, 전액환불 진행됩니다.";
+			}else if($userchannel == "클룩"){
+				$channelText = "  - 예약건은 클룩에서 취소 및 전액환불됩니다.";
+			}else if($userchannel == "네이버쇼핑"){
+				$channelText = "  - 예약건은 네이버쇼핑에서 취소 및 전액환불됩니다.";
+			}
+
+			$channelText .= '\n  - 왕복으로 예약하셔서 모두 취소 원하실 경우 알려주시면 같이 취소 진행하겠습니다.'
+						.'\n  - 이용에 불편드려 죄송합니다.';
 		}
 
 		$arrKakao = array(
@@ -461,9 +471,9 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			, "smsTitle"=> $msgTitle
 			, "userName"=> $userName
 			, "userPhone"=> $userPhone
-			, "shopname"=> $html_1
+			, "shopname"=> $html_2
 			, "smsOnly"=>"N"
-			, "PROD_NAME"=> $html_2
+			, "PROD_NAME"=> $html_3
 			, "PROD_URL"=> $channelText
 			, "PROD_TYPE"=>"bus_cancelinfo"
 			, "RES_CONFIRM"=>"-1"

@@ -354,7 +354,7 @@ if($param == "BusI"){
 		mysqli_query($conn, "COMMIT");
 
         // 이메일 발송
-		//$to = "lud1@naver.com,ttenill@naver.com";
+		//$to = "lud1@naver.com";
         $to = "lud1@naver.com";
         if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
@@ -1002,7 +1002,7 @@ if($param == "BusI"){
         mysqli_query($conn, "COMMIT");
         //==================== 이메일 발송 Start ====================
         // 이메일 발송
-        $to = "lud1@naver.com,ttenill@naver.com";
+        $to = "lud1@naver.com";
         if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
             //$to = $usermail;

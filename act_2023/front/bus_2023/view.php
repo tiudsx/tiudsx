@@ -21,6 +21,8 @@ if($param_mid == ""){
 	$param = $param_mid;
 }
 
+$param = str_replace("_2023", "", $param);
+
 if($param == "surfbus_yy"){ //양양 셔틀버스
     $shopseq = 7;
     $pointurl = "_view_tab3_yy.php";
@@ -32,8 +34,6 @@ if($param == "surfbus_yy"){ //양양 셔틀버스
     $pointurl = "_view_tab3_yd.php";
 }
 
-//"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
-//2023-04-20|FI3N9|resbus|2023-04-20|2023-04-20|1|1|홍길동|01044370009|YY|
 $arrChannel = $_REQUEST["param"];
 $coupon_seq = 0;
 if($arrChannel != ""){
@@ -441,8 +441,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 </script>
 
 <script type="text/javascript" src="/act_2023/front/_js/jquery-ui.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>
 
 <!-- Swiper JS -->
 <script type="text/javascript" src="/act_2023/front/_js/swiper.min.js"></script>

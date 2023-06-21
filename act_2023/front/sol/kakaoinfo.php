@@ -109,7 +109,7 @@ if($count_sub == 0){
 <div id="wrap">
     <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
 
-    <link rel="stylesheet" href="/act_2023/_css/surfview.css">
+    <link rel="stylesheet" href="/act_2023/front/_css/surfview.css">
 
     <div class="top_area_zone bd">
         <section class="shoptitle">
@@ -351,8 +351,8 @@ if($count_sub == 0){
 
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
 
-<script src="/act_2023/_js/common.js?v=<?=time()?>"></script>
-<script src="/act_2023/_js/sol.js?v=<?=time()?>"></script>
+<script src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
+<script src="/act_2023/front/_js/sol.js?v=<?=time()?>"></script>
 
 <style>
     .SolLayer {

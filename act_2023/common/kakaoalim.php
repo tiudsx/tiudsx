@@ -117,14 +117,12 @@ function kakaoContent($arrKakao){
 			$kakaoMsg = $arrKakao["smsTitle"]
 				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
 				.'\n'.$arrKakao["shopname"]
-				.'\n\n서핑버스 취소차량 정보'
+				.'\n\n서핑버스 안내'
 				.'\n ▶ 예약자 : '.$arrKakao["userName"]
 				.'\n'.$arrKakao["PROD_NAME"]
 				.'\n---------------------------------'
 				.'\n ▶ 안내사항'
-				.'\n'.$arrKakao["PROD_URL"]
-				.'\n  - 왕복으로 예약하셔서 모두 취소 원하실 경우 알려주시면 같이 취소 진행하겠습니다.'
-				.'\n  - 이용에 불편드려 죄송합니다.';
+				.'\n'.$arrKakao["PROD_URL"];
 
 		}else if($arrKakao["PROD_TYPE"] == "bus_kakaoinfo"){ // 셔틀버스 이용 안내
 			$kakaoMsg = $arrKakao["smsTitle"]

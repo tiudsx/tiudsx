@@ -464,7 +464,7 @@ function fnBusCancel() {
             if (data == 0) {
                 alert("정상적으로 발송되었습니다.");
                 
-                fnBusCancelReset();
+                //fnBusCancelReset();
             } else {
                 var arrRtn = data.split('|');
                 if (arrRtn[0] == "err") {

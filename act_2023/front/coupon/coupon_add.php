@@ -71,7 +71,7 @@ if(1 == 1){
 }
 ?>
 
-<script src="/act_2023/_js/popup.js"></script>
+<script src="/act_2023/front/_js/popup.js"></script>
 
 <script>
     gpe_setCookie1("act_pop2", "<?=$coupon_code?>|<?=$arrdate[2]?>", 1);

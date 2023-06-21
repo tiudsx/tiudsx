@@ -15,9 +15,9 @@ mysqli_query($conn, "COMMIT");
 <div id="wrap">
     <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
 
-    <link rel="stylesheet" type="text/css" href="/act_2023/_css/surfview.css">
-    <link rel="stylesheet" type="text/css" href="/act_2023/_css/bus.css">
-    <link rel="stylesheet" type="text/css" href="/act_2023/_css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
+    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
+    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
     <div class="top_area_zone">
         <section class="shoptitle">
@@ -238,6 +238,6 @@ function fnBusGPSPoint(obj) {
     });
 </script>
 
-<script type="text/javascript" src="/act_2023/_js/jquery-ui.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/jquery-ui.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>

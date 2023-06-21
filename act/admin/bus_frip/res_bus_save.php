@@ -12,7 +12,7 @@ $InsUserID = $_REQUEST["userid"];
 $intseq = "";
 $intseq3 = "";
 //$to = "lud1@naver.com";
-$to = "lud1@naver.com,ttenill@naver.com";
+$to = "lud1@naver.com";
 
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");

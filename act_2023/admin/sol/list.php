@@ -5,11 +5,11 @@ include __DIR__.'/../../common/logininfo.php';
 ?>
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_bus.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_common.css">
-<link rel="stylesheet" type="text/css" href="/act_2023/_css/surfview.css">
-<link rel="stylesheet" type="text/css" href="/act_2023/_css/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
-<script type="text/javascript" src="/act_2023/_js/jquery.blockUI.js"></script>
-<script type="text/javascript" src="/act_2023/_js/common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_sol.js?v=<?=time()?>"></script>
 

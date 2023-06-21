@@ -24,7 +24,7 @@ $arrSMS = explode("@", $content);
 $bankname = explode("@", $keyword)[0];
 
 //관리자 이메일 주소
-$to = "lud1@naver.com,ttenill@naver.com";
+$to = "lud1@naver.com";
 //$to = "lud1@naver.com";
 
 if($bankname == "신한"){
@@ -189,7 +189,7 @@ if($count == 1){
 		$result_set = mysqli_query($conn, $select_query);
 
 		// 이메일 발송
-		//$to = "lud1@naver.com,ttenill@naver.com";
+		//$to = "lud1@naver.com";
 		if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
 		}
@@ -381,7 +381,7 @@ if($count == 1){
 	if(!$result_set) goto errGo;
 
 	// 이메일 발송
-	//$to = "lud1@naver.com,ttenill@naver.com";
+	//$to = "lud1@naver.com";
 	
 	$info1_title = "";
 	$info1 = "";
@@ -444,7 +444,7 @@ if($count == 1){
 		}
 
 		// 이메일 발송
-		//$to = "lud1@naver.com,ttenill@naver.com";
+		//$to = "lud1@naver.com";
 
 		$info1_title = "";
 		$info1 = "";
@@ -501,7 +501,7 @@ if($count == 1){
 			}
 			
 			// 이메일 발송
-			//$to = "lud1@naver.com,ttenill@naver.com";
+			//$to = "lud1@naver.com";
 			
 			$info1_title = "";
 			$info1 = "";
@@ -535,7 +535,7 @@ if($count == 1){
 	// 금액, 이름동일 정보 하나도 없음
 	if($noChk == 0){
 		// 이메일 발송
-		//$to = "lud1@naver.com,ttenill@naver.com";
+		//$to = "lud1@naver.com";
 		
 		$info1_title = "";
 		$info1 = "";

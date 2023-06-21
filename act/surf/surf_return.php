@@ -6,7 +6,7 @@ include __DIR__.'/../common/func.php';
 $param = $_REQUEST["resparam"];
 $gubun = $_REQUEST["gubun"];
 $num = $_REQUEST["num"];
-$to = "lud1@naver.com,ttenill@naver.com";
+$to = "lud1@naver.com";
 
 /*
 예약상태

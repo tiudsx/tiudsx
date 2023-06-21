@@ -3,6 +3,10 @@ busPoint.sPointYS = []; //서울 > 양양행 (사당선)
 busPoint.sPointYJ = []; //서울 > 양양행 (종로선)
 busPoint.sPointSY = []; //양양 > 서울행
 
+busPoint.sPointYD_S_S = []; //서울 > 양양,동해행 (사당선)
+busPoint.sPointYD_S_J = []; //서울 > 양양,동해행 (종로선)
+busPoint.sPointYD_E_E = []; //양양,동해 > 서울행
+
 busPoint.ePointYend = []; //서울 > 양양 도착
 busPoint.ePointEend = []; //서울 > 동해 도착
 busPoint.ePointSend = []; //양양 > 서울 도착
@@ -43,13 +47,20 @@ $j.ajax({
             var itemlng = arrItem[3];
             var itemTime2 = arrItem[4];
 
-            if(keyCode == "SY5" || keyCode == "AE5"){
+            if(keyCode == "SY5" || keyCode == "AE5" || keyCode == "YD-E-E5"){
+                //저녁차량 제외
+
             }else{
                 if(item == "End"){
                     keyCode = "busPoint.ePoint" + keyCode;
                     var endText = "도착";
                 }else{
-                    keyCode = "busPoint.sPoint" + keyCode.substring(0, 2);
+                    if(keyCode.substring(0, 2) == "YD"){ //양양,동해
+                        keyCode = "busPoint.sPoint" + keyCode.substring(0, 6).replace(/-/g, "_");
+                    }else{ //기타
+                        keyCode = "busPoint.sPoint" + keyCode.substring(0, 2);
+                    }
+
                     var endText = "출발";
                 }
 

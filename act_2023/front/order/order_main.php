@@ -14,12 +14,12 @@ $j(document).ready(function(){
 });
 </script>
 
-<script type="text/javascript" src="/act_2023/_js/ordersearch.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/ordersearch.js?v=<?=time()?>"></script>
 
 <div id="wrap">
     <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
 
-    <link rel="stylesheet" type="text/css" href="/act_2023/_css/surfview.css">
+    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
 
     <div class="top_area_zone">
         <section class="shoptitle">

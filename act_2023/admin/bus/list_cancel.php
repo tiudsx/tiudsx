@@ -31,26 +31,40 @@
 				<option value="브라보서프">브라보</option>
 				<option value="엑스크루">엑스크루</option>
 				<option value="솜씨당">솜씨당</option>
+				<option value="안내공지">안내공지</option>
 			</select>
 		</td>
 		<td style="text-align:center;"><input type="button" class="btnsurfdel" style="width:40px;" value="삭제" onclick="fnBusCancelDel(this);" ></td>
 	</tr>
 	<tr>
 		<th class="col-02" style="text-align:center;" colspan="2">
-			상단 안내
+			상단 타이틀
 		</th>
 		<th class="col-02" style="text-align:center;" colspan="2">
-			안내내용
+			상단 안내
 		</th>
 	</tr>
 	<tr>
 		<td class="col-02" style="text-align:center;" colspan="2">
-			<textarea id="html_1" name="html_1" cols="40" rows="7">
-이번주에 운행 예정이었던 서핑버스가 최소인원 미달로 인해 일부 운행 취소되어 죄송한 말씀 드립니다.
-취소된 차량 안내드리며, 예약건은 취소 및 전액 환불 예정이니 양해부탁드립니다.</textarea>
+			<textarea id="html_1" name="html_1" cols="40" rows="5">액트립 서핑버스 변경안내</textarea>
 		</td>
 		<td class="col-02" style="text-align:center;" colspan="2">
-			<textarea id="html_2" name="html_2" cols="40" rows="7">
+			<textarea id="html_2" name="html_2" cols="40" rows="5">
+7/2 양양>서울행(저녁) 일정으로 운행 예정이었던 서핑버스가 내부사정으로 운행 변경되었습니다.
+변경된 차량 안내드리며, 예약건은 취소(전액 환불) 또는 좌석예약 링크 발송 예정이니 양해부탁드립니다.</textarea>
+		</td>
+	</tr>
+	<tr>
+		<th class="col-02" style="text-align:center;" colspan="2">
+			안내내용
+		</th>
+		<th class="col-02" style="text-align:center;" colspan="2">
+			안내사항
+		</th>
+	</tr>
+	<tr>
+		<td class="col-02" style="text-align:center;" colspan="2">
+			<textarea id="html_3" name="html_3" cols="40" rows="7">
  ▶ 운행가능 차량
   - 일 : 서울 > 양양행
   - 일 : 양양 > 서울행
@@ -58,6 +72,11 @@
  ▶ 운행취소 차량
   - 일 : 양양 > 서울행
   - 일 : 서울 > 양양행</textarea>
+		</td>
+		<td class="col-02" style="text-align:center;" colspan="2">
+			<textarea id="html_4" name="html_4" cols="40" rows="7">
+  - 취소를 원하실 경우 상담톡으로 연락주시면 처리진행하겠습니다.
+  - 이용에 불편드려 죄송합니다.</textarea>
 		</td>
 	</tr>
 	<tr>

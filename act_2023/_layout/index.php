@@ -1,6 +1,6 @@
 <? include __DIR__.'/../common/db.php'; ?>
 
-<link rel="stylesheet" type="text/css" href="/act_2023/_css/main.css?v=<?=time()?>">
+<link rel="stylesheet" type="text/css" href="/act_2023/front/_css/main.css?v=<?=time()?>">
 <div id="wrap">
 
 <? include '_layout_top.php'; ?>

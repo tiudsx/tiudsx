@@ -13,7 +13,7 @@ $j(document).ready(function(){
 <div id="wrap">
 <? include __DIR__.'/../_layout/_layout_top.php'; ?>
 
-    <link rel="stylesheet" type="text/css" href="/act_2023/_css/bus.css">
+    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
 
     <div class="top_area_zone">
         <section id="bus">
