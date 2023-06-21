@@ -733,7 +733,7 @@ function fnMakeJsonKlook() {
 
         objValue["username"] = "";      //고객명
         objValue["usertel"] = "";       //고객 연락처
-        objValue["resbusseat2"] = "";      //인원수
+        objValue["resbusseat2"] = "";   //인원수
         objValue["usedate"] = "";       //사용일
         objValue["bustypetext"] = "";   //버스상품명
         objValue["bustypevalue"] = "";  //버스상품타입  1:출발,2:복귀
