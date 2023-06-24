@@ -105,6 +105,7 @@
 			<input type="text" id="kakao_sDate" name="kakao_sDate" cal="sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >&nbsp;~
 			<input type="text" id="kakao_eDate" name="kakao_eDate" cal="edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
 			<label><input type="checkbox" id="chkbusKakaoNumY1" name="chkbusNum_Kakao[]" value="테스트" style="vertical-align:-3px;" />테스트</label>
+			<label><input type="checkbox" id="chkResInfo" name="chkResInfo" value="확정" style="vertical-align:-3px;" />확정안내</label>
 		</td>
 	</tr>
 	<tr>
