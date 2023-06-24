@@ -500,6 +500,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$kakao_sDate = $_REQUEST["kakao_sDate"]; //시작일
 	$kakao_eDate = $_REQUEST["kakao_eDate"]; //종료일
 	$chkbusNum = $_REQUEST["chkbusNum_Kakao"]; //예약채널
+	$chkResInfo = $_REQUEST["chkResInfo"]; //확정안내
 	$html_1 = $_REQUEST["kakao_1"]; //상단안내
 	$html_2 = $_REQUEST["kakao_2"]; //안내내용
 	$html_3 = $_REQUEST["kakao_3"]; //안내내용
@@ -514,7 +515,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		}
     }
 
-	$msgTitle = '액트립 서핑버스 탑승안내';
+	$msgTitle = '액트립 서핑버스 공지사항';
 	$arryKakao = array();
 
 	if($inResType == "테스트"){
@@ -562,63 +563,45 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		}
 
 		$i = 0;
-		// while ($row = mysqli_fetch_assoc($resultSite)){
-		// 	$userName = $row['user_name'];
-		// 	$userPhone = $row['user_tel'];
+		while ($row = mysqli_fetch_assoc($resultSite)){
+			$userName = $row['user_name'];
+			$userPhone = $row['user_tel'];
 	
-		// 	$arrKakao = array(
-		// 		"gubun"=> "bus"
-		// 		, "admin"=> "N"
-		// 		, "tempName"=> "at_res_step4"
-		// 		, "smsTitle"=> $msgTitle
-		// 		, "userName"=> $userName
-		// 		, "userPhone"=> $userPhone
-		// 		, "shopname"=> $html_1
-		// 		, "smsOnly"=>"N"
-		// 		, "PROD_NAME"=> $html_2
-		// 		, "PROD_URL"=> $html_3
-		// 		, "PROD_TYPE"=>"bus_kakaoinfo"
-		// 		, "RES_CONFIRM"=>"-1"
-		// 	);
+			$arrKakao = array(
+				"gubun"=> "bus"
+				, "admin"=> "N"
+				, "tempName"=> "at_res_step4"
+				, "smsTitle"=> $msgTitle
+				, "userName"=> $userName
+				, "userPhone"=> $userPhone
+				, "shopname"=> $html_1
+				, "smsOnly"=>"N"
+				, "PROD_NAME"=> $html_2
+				, "PROD_URL"=> $html_3
+				, "PROD_TYPE"=>"bus_kakaoinfo"
+				, "RES_CONFIRM"=>"-1"
+			);
 	
-		// 	$arryKakao[$i] = $arrKakao;
-		// 	$i++;
-		// }
+			$arryKakao[$i] = $arrKakao;
+			$i++;
+		}
 
-		//마지막 테스트 계정
-		$arrKakao = array(
-			"gubun"=> "bus"
-			, "admin"=> "N"
-			, "tempName"=> "at_res_step4"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> "테스트"
-			, "userPhone"=> "010-4437-0009"
-			, "shopname"=> $html_1
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=> $html_2
-			, "PROD_URL"=> $html_3
-			, "PROD_TYPE"=>"bus_kakaoinfo"
-			, "RES_CONFIRM"=>"-1"
-		);
-		$arryKakao[$i] = $arrKakao;
-		$i++;
-
-		//마지막 테스트 계정
-		$arrKakao = array(
-			"gubun"=> "bus"
-			, "admin"=> "N"
-			, "tempName"=> "at_res_step4"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> "테스트"
-			, "userPhone"=> "010-4437-0009"
-			, "shopname"=> $html_1
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=> $html_2
-			, "PROD_URL"=> $html_3
-			, "PROD_TYPE"=>"bus_kakaoinfo"
-			, "RES_CONFIRM"=>"-1"
-		);
-		$arryKakao[$i] = $arrKakao;
+		// //마지막 테스트 계정
+		// $arrKakao = array(
+		// 	"gubun"=> "bus"
+		// 	, "admin"=> "N"
+		// 	, "tempName"=> "at_res_step4"
+		// 	, "smsTitle"=> $msgTitle
+		// 	, "userName"=> "테스트"
+		// 	, "userPhone"=> "010-4437-0009"
+		// 	, "shopname"=> $html_1
+		// 	, "smsOnly"=>"N"
+		// 	, "PROD_NAME"=> $html_2
+		// 	, "PROD_URL"=> $html_3
+		// 	, "PROD_TYPE"=>"bus_kakaoinfo"
+		// 	, "RES_CONFIRM"=>"-1"
+		// );
+		// $arryKakao[$i] = $arrKakao;
 	
 		//배열 발송
 		$arrKakao = array(
