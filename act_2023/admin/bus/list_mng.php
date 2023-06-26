@@ -8,10 +8,11 @@ $select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS 
 						WHERE code = 'bus'
 							AND res_date = '$selDate' 
 							AND res_confirm = 3 
-						GROUP BY seq, shopname, LEFT(res_busnum, 1) DESC, 
+						GROUP BY seq, shopname, 
 							(CASE WHEN LEFT(res_busnum, 1) = 'Y'  OR LEFT(res_busnum, 1) = 'E' 
-								THEN RIGHT(res_busnum, 1) 
-								ELSE RIGHT(res_busnum, 2) END), res_confirm";
+								THEN RIGHT(res_busnum, 3) 
+								ELSE RIGHT(res_busnum, 2) END), res_confirm
+						ORDER BY LEFT(res_busnum, 1) DESC";
 $result_bus = mysqli_query($conn, $select_query_bus);
 $count = mysqli_num_rows($result_bus);
 
