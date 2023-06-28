@@ -754,13 +754,13 @@ function fnSeatSelected(obj) {
         var arrObje = eval("busPoint.ePoint" + busType + "end");
 
         var selVlu = "";
-        if(buschannel == 17){ //마린서프
+        if(buschannel == 17 || buschannel == 26){ //마린서프
             selVlu = "기사문해변";
-        }else if(buschannel == 20 || buschannel == 24){ //인구서프, 엉클 프립
+        }else if(buschannel == 20 || buschannel == 24 || buschannel == 27){ //인구서프, 엉클 프립
             selVlu = "인구해변";
-        }else if(buschannel == 21){ //서프팩토리
+        }else if(buschannel == 21 || buschannel == 28){ //서프팩토리
             selVlu = "대진해변";
-        }else if(buschannel == 22){ //솔게하
+        }else if(buschannel == 22 || buschannel == 29){ //솔게하
             selVlu = "솔.동해점";
         }else if(buschannel == 23 || buschannel == 25){ //브라보서프, 금진 프립
             selVlu = "금진해변";
@@ -856,13 +856,13 @@ function fnSeatChangeSelected(arrVlu) {
     var arrObjs = eval("busPoint.sPoint" + returnBusNum.substring(0, 2));
     var arrObje = eval("busPoint.ePoint" + returnBusType + "end");
     var selVlu = "";
-    if(buschannel == 17){ //마린서프
+    if(buschannel == 17 || buschannel == 26){ //마린서프
         selVlu = "기사문해변";
-    }else if(buschannel == 20){ //인구서프
+    }else if(buschannel == 20 || buschannel == 27){ //인구서프
         selVlu = "인구해변";
-    }else if(buschannel == 21){ //서프팩토리
+    }else if(buschannel == 21 || buschannel == 28){ //서프팩토리
         selVlu = "대진해변";
-    }else if(buschannel == 22){ //솔게하
+    }else if(buschannel == 22 || buschannel == 29){ //솔게하
         selVlu = "솔.동해점";
     }else if(buschannel == 23){ //브라보서프
         selVlu = "금진해변";

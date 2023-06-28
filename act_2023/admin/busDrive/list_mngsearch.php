@@ -98,7 +98,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 						<colgroup>
 							<col style="width:33%;">
 							<col style="width:12%;">
-							<col style="width:*;">
+							<col style="width:auto;">
 						</colgroup>
 						<tr>
 							<th style="padding:4px;text-align:center;" colspan="4">출발 정류장</th>
@@ -124,7 +124,7 @@ while ($row = mysqli_fetch_assoc($resultSite3)){
 					<table width="100%" style="margin-top:10px;">
 						<colgroup>
 							<col style="width:35%;">
-							<col style="width:*;">
+							<col style="width:auto;">
 						</colgroup>
 						<tr>
 							<th style="padding:4px;text-align:center;" colspan="2">도착 정류장</th>

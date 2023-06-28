@@ -403,7 +403,7 @@ include __DIR__.'/../../common/logininfo.php';
 				<table class='et_vars exForm bd_tb' style="width:100%">
 					<!-- <colgroup>
 						<col style="width:65px;">
-						<col style="width:*;">
+						<col style="width:auto;">
 						<col style="width:100px;">
 					</colgroup> -->
 					<tr>
@@ -440,7 +440,7 @@ include __DIR__.'/../../common/logininfo.php';
 						<table class='et_vars exForm bd_tb' style="width:99%">
 							<!-- <colgroup>
 								<col style="width:10%">
-								<col style="width:*;">
+								<col style="width:auto;">
 								<col style="width:14%">
 								<col style="width:18%">
 								<col style="width:20%">

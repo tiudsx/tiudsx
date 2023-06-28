@@ -140,7 +140,7 @@ if($param == "BusI"){
     //예약채널 사이트 쿠폰 코드가 있으면 예약확정
      //7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17,20,21,22:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
     $coupon_array = array("NAVER12");
-    if($res_totalprice == 0 || in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15, 16, 17, 20, 21, 22, 23, 24, 25)))
+    if($res_totalprice == 0 || in_array($coupon, $coupon_array) || in_array($couponseq, array(7, 10, 11, 12, 14, 15, 16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29)))
     {
         $res_confirm = 3; //확정
         $InsUserID = $coupon;

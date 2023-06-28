@@ -3,7 +3,7 @@
 <table class='et_vars exForm bd_tb'>
 	<colgroup>
 		<col style="width:10%">
-		<col style="width:*;">
+		<col style="width:auto;">
 		<col style="width:14%">
 		<col style="width:18%">
 		<col style="width:20%">
@@ -32,9 +32,13 @@
 				<option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
 				<option value="16">클룩</option>
 				<option value="7">네이버쇼핑</option>
+				<option value="15">서프존</option>
 				<option value="10">네이버예약</option>
 				<option value="12">마이리얼트립</option>
-				<option value="15">서프존</option>
+				<option value="26" kakaoUrl="https://open.kakao.com/o/goYwKe5e">네이버-마린</option>
+				<option value="27" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">네이버-인구</option>
+				<option value="28" kakaoUrl="https://open.kakao.com/o/g58J34ff">네이버-서팩 동해</option>
+				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
 				<option value="23">금진 브라보</option>
 			</select>
 		</td>
@@ -79,7 +83,7 @@
 <table class='et_vars exForm bd_tb' id="tbCopyList2" style="display:none;">
 	<colgroup>
 		<col style="width:8%">
-		<col style="width:*;">
+		<col style="width:auto;">
 		<col style="width:10%">
 		<col style="width:18%">
 		<col style="width:20%">

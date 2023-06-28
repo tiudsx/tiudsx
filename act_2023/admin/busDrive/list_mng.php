@@ -67,7 +67,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 <table class='et_vars exForm bd_tb' style="width:100%;display:;">
 	<colgroup>
 		<col style="width:15%;">
-		<col style="width:*;">
+		<col style="width:auto;">
 	</colgroup>
 	<tr>
 		<th rowspan="2">서울 <> 양양</th>

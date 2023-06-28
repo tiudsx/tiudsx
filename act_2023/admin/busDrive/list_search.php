@@ -140,7 +140,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <colgroup>
                             <col style="width:80px;">
-                            <col style="width:*;">
+                            <col style="width:auto;">
                             <col style="width:90px;">
                         </colgroup>
                         <tbody>
@@ -414,7 +414,7 @@ $reslist .= "
                     <table class="et_vars exForm bd_tb" style="width:100%">
                         <colgroup>
                             <col style="width:80px;">
-                            <col style="width:*;">
+                            <col style="width:auto;">
                             <col style="width:90px;">
                         </colgroup>
                         <tbody>

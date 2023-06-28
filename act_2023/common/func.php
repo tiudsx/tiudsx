@@ -297,7 +297,7 @@ function decrypt($plaintext){
 function coupontype($type, $couponseq, $res_coupon){
 	$sitename = ""; 
 	$couponbool = false;
-	if($couponseq == 7){
+	if($couponseq == 7 || $couponseq == 26 || $couponseq == 27 || $couponseq == 28 || $couponseq == 29){
 		$sitename = "[네이버쇼핑]"; 
 	}else if($couponseq == 10){
 		$sitename = "[네이버예약]"; 
@@ -322,6 +322,18 @@ function coupontype($type, $couponseq, $res_coupon){
 			$sitename = "[프립-서팩]"; 
 		}else if($couponseq == 22){
 			$sitename = "[프립-힐링캠프]"; 
+
+		}else if($couponseq == 26){
+			$sitename = "[네이버-마린]"; 
+		}else if($couponseq == 27){
+			$sitename = "[네이버-인구]"; 
+		}else if($couponseq == 28){
+			$sitename = "[네이버-서팩]"; 
+		}else if($couponseq == 29){
+			$sitename = "[네이버-힐링캠프]"; 
+			
+		}else if($res_coupon == "MONS"){
+			$sitename = "[몬스터]"; 
 		}else if($res_coupon != "" && $sitename == ""){
 			$sitename = "[할인]"; 
 		}

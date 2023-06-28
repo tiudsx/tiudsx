@@ -81,7 +81,7 @@ if($count == 0){
 					</div>';
 				}
 
-				$sitename = coupontype("", $couponseq);
+				$sitename = coupontype("", $couponseq, "");
 				
 				if($sitename == "" && $res_totalprice == 0){
 					$cancelChk = "coupon";

@@ -2,7 +2,7 @@
 <table class='et_vars exForm bd_tb' style="width:60%">
 	<colgroup>
 		<col style="width:100px;">
-		<col style="width:*;">
+		<col style="width:auto;">
 		<col style="width:150px;">
 		<col style="width:100px;">
 	</colgroup>
@@ -94,10 +94,10 @@
 	<colgroup>
 		<col style="width:100px;">
 		<col style="width:80px;">
-		<col style="width:*;">
+		<col style="width:auto;">
 		<col style="width:100px;">
 		<col style="width:80px;">
-		<col style="width:*;">
+		<col style="width:auto;">
 	</colgroup>
 	<tr>
 		<th>이용일</th>

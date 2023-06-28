@@ -33,7 +33,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$cancelChk = "";
 	}
 
-	if(coupontype("bool", $couponseq)){
+	if(coupontype("bool", $couponseq, "")){
 		$chkView = 0;
 		$chkViewPrice = 0;
 		$cancelChk = "coupon";

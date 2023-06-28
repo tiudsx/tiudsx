@@ -9,7 +9,7 @@ include __DIR__.'/../../common/db.php';
 $select_query = "SELECT A.*, REPLACE(B.name, '서핑버스 ', '') AS name FROM `AT_COUPON_CODE` AS A 
                     INNER JOIN AT_COUPON AS B 
                         ON A.couponseq = B.couponseq                        
-                    WHERE A.couponseq IN (7,10,11,12,14,15,16,17,20,21,22,23) AND A.use_yn = 'N'
+                    WHERE A.couponseq IN (7,10,11,12,14,15,16,17,20,21,22,23,26,27,28,29) AND A.use_yn = 'N'
                     ORDER BY A.codeseq DESC";
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);

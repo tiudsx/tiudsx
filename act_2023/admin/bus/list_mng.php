@@ -69,7 +69,7 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 	<colgroup>
 		<col style="width:10%;">
 		<col style="width:10%;">
-		<col style="width:*;">
+		<col style="width:auto;">
 	</colgroup>
 	<tr>
 		<th rowspan="2">양양행</th>

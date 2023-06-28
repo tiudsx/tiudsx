@@ -342,16 +342,16 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	if($reschannel == 11){ //프립
 		$prodTitle = 'x프립버스';
 		$seatName2 = $seatName2." 프립버스";
-	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21 || $reschannel == 22){ //프립 패키지
-		$prodTitle = 'x프립 서핑패키지';
-		if($reschannel == 17){
-			$seatName2 = $seatName2." 마린서프x프립";
-		}else if($reschannel == 20){
-			$seatName2 = $seatName2." 인구서프x프립";
-		}else if($reschannel == 21){
-			$seatName2 = "서프팩토리 동해점x프립";
-		}else if($reschannel == 22){
-			$seatName2 = "힐링 서핑캠프x프립";
+	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21 || $reschannel == 22 || $reschannel == 26 || $reschannel == 27 || $reschannel == 28 || $reschannel == 29){ //당일 패키지
+		$prodTitle = ' 서핑패키지';
+		if($reschannel == 17 || $reschannel == 26){
+			$seatName2 = $seatName2." 마린서프";
+		}else if($reschannel == 20 || $reschannel == 27){
+			$seatName2 = $seatName2." 인구서프";
+		}else if($reschannel == 21 || $reschannel == 28){
+			$seatName2 = "서프팩토리 동해점";
+		}else if($reschannel == 22 || $reschannel == 29){
+			$seatName2 = "힐링 서핑캠프";
 		}
 	}else if($reschannel == 12){ //마이리얼트립
 
@@ -506,19 +506,24 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$html_3 = $_REQUEST["kakao_3"]; //안내내용
 
 	$inResType = "";
+	$TestChk = "";
     for($b = 0; $b < count($chkbusNum); $b++){
-		if($chkbusNum[$b] == "테스트"){
-        	$inResType = "테스트";
+		if($chkbusNum[$b] == "테스트" && $chkResInfo == ""){
+        	$TestChk = "테스트";
 			break;
 		}else{
-			$inResType .= '"'.$chkbusNum[$b].'",';
+			if($chkbusNum[$b] == "테스트" && $chkResInfo == "확정"){
+				$TestChk = "테스트";
+			}else{
+				$inResType .= '"'.$chkbusNum[$b].'",';
+			}
 		}
     }
 
 	$msgTitle = '액트립 서핑버스 공지사항';
 	$arryKakao = array();
 
-	if($inResType == "테스트"){
+	if($TestChk == "테스트" && $chkResInfo == ""){
 		$userName = "테스트";
 		$userPhone = "010-4437-0009";
 		
@@ -546,17 +551,22 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	}else{
 		$inResType .= '"99"';
 
-		$select_query_sub = "SELECT a.user_tel, a.user_name FROM AT_RES_MAIN a 
+		$view_column = "a.user_tel, a.user_name";
+		if($chkResInfo == "확정"){
+			$view_column = "a.user_tel, a.user_name, a.resnum";
+		}
+
+		$select_query_sub = "SELECT ".$view_column." FROM AT_RES_MAIN a 
 			INNER JOIN AT_RES_SUB b 
 				on a.resnum = b.resnum 
 			WHERE b.res_confirm = 3 
 				AND (res_date BETWEEN CAST('".$kakao_sDate."' AS DATE) AND CAST('".$kakao_eDate."' AS DATE)) 
 				AND b.res_busnum IN (".$inResType.")
-			GROUP by user_tel";
+			GROUP by ".$view_column;
 		$resultSite = mysqli_query($conn, $select_query_sub);
 		$count = mysqli_num_rows($resultSite);
 
-		// echo "<br><br>쿼리 : ".$select_query_sub;
+		//echo "<br><br>쿼리 : ".$select_query_sub;
 		// return;
 		if($count == 0){
 			return;
@@ -566,24 +576,142 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		while ($row = mysqli_fetch_assoc($resultSite)){
 			$userName = $row['user_name'];
 			$userPhone = $row['user_tel'];
+			
+			//확정안내 카톡 발송
+			if($chkResInfo == "확정"){
+				$ResNumber = $row['resnum']; //예약번호
+
+				if($TestChk == "테스트"){
+					$userPhone = "010-4437-0009";
+				}
+				
+				$select_query_list = "SELECT * FROM AT_RES_SUB WHERE resnum = $ResNumber ORDER BY res_date, ressubseq";
+				$resultSite_list = mysqli_query($conn, $select_query_list);
+
+				//echo "<br><br>쿼리 : ".$select_query_list;
+				while ($rowSub = mysqli_fetch_assoc($resultSite_list)){
+					$shopseq = $rowSub['seq'];
+					$shopname = $rowSub['shopname'];
+					$coupon = $rowSub['res_coupon'];
+					$busGubun = substr($rowSub['res_bus'], 0, 1);
+
+					$pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
+
+					if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
+						if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
+							$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+						}else{
+							$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+						}
+					}else{
+						if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
+							$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+						}else{
+							$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+						}
+					}
+				}
+				
+				// 예약좌석 정보 : 양양행
+				foreach($arrSeatInfoS as $x) {
+					$busSeatInfoS .= $x;
+				}
+
+				// 예약좌석 정보 : 서울행
+				foreach($arrSeatInfoE as $x) {
+					$busSeatInfoE .= $x;
+				}
+
+				$busSeatInfoTotal = " ▶ 좌석안내\n";
+				if($busSeatInfoS != ""){
+					$busSeatInfoTotal .= $busSeatInfoS;
+				}
+				if($busSeatInfoE != ""){
+					if($busSeatInfoS != ""){
+						$busSeatInfoTotal .= "\n";
+					}
+					$busSeatInfoTotal .= $busSeatInfoE;
+				}
+
+				$busSeatInfo = $busSeatInfo;
+
+				if($shopseq == 7){
+					$busTypeY = "Y";
+					$busTypeS = "S";
+					$busTitleName = "양양";
+					$resparam = "surfbus_yy";
+				}else{
+					$busTypeY = "E";
+					$busTypeS = "A";    
+					$busTitleName = "동해";    
+					$resparam = "surfbus_dh";	
+				}
+				$gubun_title = $busTitleName.' 서핑버스';
 	
-			$arrKakao = array(
-				"gubun"=> "bus"
-				, "admin"=> "N"
-				, "tempName"=> "at_res_step4"
-				, "smsTitle"=> $msgTitle
-				, "userName"=> $userName
-				, "userPhone"=> $userPhone
-				, "shopname"=> $html_1
-				, "smsOnly"=>"N"
-				, "PROD_NAME"=> $html_2
-				, "PROD_URL"=> $html_3
-				, "PROD_TYPE"=>"bus_kakaoinfo"
-				, "RES_CONFIRM"=>"-1"
-			);
-	
-			$arryKakao[$i] = $arrKakao;
-			$i++;
+				$tempName = "frip_bus02"; //예약확정
+				$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
+				$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
+				$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
+				$btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
+				$btn_Notice = "";
+				$btn_ResContent = ""; //예약 상세안내
+
+				$msgInfo = $busSeatInfoTotal;
+
+				// 고객 카카오톡 발송
+				$msgTitle = '액트립 서핑버스 예약안내';
+				$arrKakao = array(
+					"gubun"=> "bus"
+					, "admin"=> "N"
+					, "tempName"=> $tempName
+					, "smsTitle"=> $msgTitle
+					, "userName"=> $userName
+					, "userPhone"=> $userPhone
+					, "msgType"=>$msgType
+					, "shopname"=>$gubun_title
+					, "MainNumber"=>$ResNumber
+					, "msgInfo"=>$msgInfo
+					, "btn_ResContent"=> $btn_ResContent
+					, "btn_ResSearch"=> $btn_ResSearch
+					, "btn_ResChange"=> $btn_ResChange
+					, "btn_ResGPS"=> $btn_ResGPS
+					, "btn_ResPoint"=> $btn_ResPoint
+					, "btn_Notice"=> $btn_Notice
+					, "smsOnly"=>"N"
+					, "PROD_NAME"=>"서핑버스"
+					, "PROD_URL"=>$shopseq
+					, "PROD_TYPE"=>"bus_kakaoconfirm"
+					, "RES_CONFIRM"=>"3"
+				);
+
+				$arryKakao[$i] = $arrKakao;
+				
+				if($TestChk == "테스트"){
+					break;
+				}
+				$i++;
+
+			}else{
+		
+				//일반 공지 안내
+				$arrKakao = array(
+					"gubun"=> "bus"
+					, "admin"=> "N"
+					, "tempName"=> "at_res_step4"
+					, "smsTitle"=> $msgTitle
+					, "userName"=> $userName
+					, "userPhone"=> $userPhone
+					, "shopname"=> $html_1
+					, "smsOnly"=>"N"
+					, "PROD_NAME"=> $html_2
+					, "PROD_URL"=> $html_3
+					, "PROD_TYPE"=>"bus_kakaoinfo"
+					, "RES_CONFIRM"=>"-1"
+				);
+		
+				$arryKakao[$i] = $arrKakao;
+				$i++;
+			}
 		}
 
 		// //마지막 테스트 계정
@@ -608,7 +736,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			"arryData"=> $arryKakao
 			, "array"=> "true"
 		);
-	
+
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 		
 		// 카카오 알림톡 DB 저장 START

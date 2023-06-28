@@ -44,10 +44,10 @@ $shopseq = 0;
                         <colgroup>
                             <col style="width:100px;">
                             <col style="width:80px;">
-                            <col style="width:*;">
+                            <col style="width:auto;">
                             <col style="width:100px;">
                             <col style="width:80px;">
-                            <col style="width:*;">
+                            <col style="width:auto;">
                         </colgroup>
                         <tr>
                             <th><label><input type="checkbox" id="chkGubun" onclick="fnChkAll(this, 'chkResConfirm')">구분</label></th>
