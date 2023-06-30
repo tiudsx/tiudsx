@@ -616,7 +616,7 @@ function fnMakeJsonFrip() {
 
         objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
         objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
-        objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
+        objValue.usertel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
         objValue.item = $j(this).find("td").eq(4).find(".cell").text(); //아이템명
 
         var objinfo = $j(this).find("td").eq(5).find(".cell span"); //추가정보    
@@ -636,11 +636,23 @@ function fnMakeJsonFrip() {
             objValue.btn = 'none'; //액션
         }
 
+        objValue["bus_date"] = "";              //이용일
+        objValue["username"] = objValue.name;   //고객명
+        objValue["usertel"] = "";               //고객 연락처
+        objValue["resbusseat2"] = "";       //인원수
+        objValue["usedate"] = "";           //사용일
+        objValue["bustypetext"] = "";       //버스상품명
+        objValue["bustypevalue"] = "";      //버스상품타입  1:출발,2:복귀
+        objValue["etc1"] = "";              //임시데이터 유무
+        objValue["etc2"] = "";              //확정데이터 유무
+        objValue["etc3"] = "";              //처리
+
         objList.push(objValue);
     });
 
     $j("#html_2").val(JSON.stringify(objList));
 
+    /*
     //당일치기
     //[{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"망두1004","genser":" - ","tel":"01033657826","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"Nietzsche","genser":" 여성 ","tel":"01042077240","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"박선영","genser":" 여성 ","tel":"01033749239","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "}]
 
@@ -650,7 +662,14 @@ function fnMakeJsonFrip() {
 
     //셔틀버스
     //[{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"프립대원","genser":" 남성 ","tel":"01099850475","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"프립대원","genser":" 남성 ","tel":"01099850475","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"별님❤","genser":" 여성 ","tel":"01092942064","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"별님❤","genser":" 여성 ","tel":"01092942064","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"김윤희","genser":" 여성 ","tel":"01047495581","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"김윤희","genser":" 여성 ","tel":"01047495581","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"슈붕슈붕","genser":" 여성 ","tel":"01022481787","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"슈붕슈붕","genser":" 여성 ","tel":"01022481787","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"}]
+    */
+
     console.log(objList);
+
+    //예약 중복체크, 명단표 생성 로직
+    $j("#tbCopyList").html($j("#tbCopyList2").html());
+    fnChkRev("Frip",objList);
+
 }
 
 //클룩 데이터 맵핑
@@ -754,7 +773,7 @@ function fnMakeJsonKlook() {
 
 
     //예약 중복체크, 명단표 생성 로직
-    fnChkRev(objList);
+    fnChkRev("Klook",objList);
     return;
 
     objList.forEach(function(el) {
