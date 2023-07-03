@@ -13,7 +13,19 @@ function fnChkRev(type, objList) {
 }
 
 function fnChkRev_Frip(objList) {	
-	fnMakeRevTable("Frip",objList);
+	//fnMakeRevTable("Frip",objList);
+
+	$j.ajax({
+		type: "POST",
+		url: "/act_2023/admin/bus/list_ajax.php",
+		data: {data:objList},
+		dataType:"json",
+		success: function (data) {
+			console.log(data);
+			fnMakeRevTable("Frip",data);
+		}
+	});
+
 }
 
 function fnChkRev_Klook(objList){
@@ -84,21 +96,19 @@ function fnMakeRevTable(type,revList) {
 
 	if (type == "Frip") {
 		revList.forEach(function(el){
-			//클룩 확정 인원
-			if(el.btn != "none"){
-				tbHtml = "<tr>"
-				tbHtml += " <td>" + i + "</td>"
-				tbHtml += " <td>" + el.bustypetext + "</td>"
-				tbHtml += " <td>" + el.username + "</td>"
-				tbHtml += " <td>" + el.usertel + "</td>"
-				tbHtml += " <td>" + el.usedate + " (" + el.resbusseat2 + "명)</td>"
-				tbHtml += " <td>" + el.etc1 + "</td>"
-				tbHtml += " <td>" + el.etc2 + "</td>"
-				tbHtml += " <td>" + el.etc3 + "</td>"
-				tbHtml += "</tr>";
-				$j("#tbCopyList").append(tbHtml);
-				i++;
-			}
+			//프립 확정 인원
+			tbHtml = "<tr>"
+			tbHtml += " <td>" + i + "/" + el.bus_date.substring(5) + "</td>"
+			tbHtml += " <td>" + el.bustypetext + "</td>"
+			tbHtml += " <td>" + el.username + "</td>"
+			tbHtml += " <td>" + el.usertel + "</td>"
+			tbHtml += " <td>" + el.usedate + " (" + el.resbusseat2 + "명)</td>"
+			tbHtml += " <td>" + el.etc1 + "</td>"
+			tbHtml += " <td>" + el.etc2 + "</td>"
+			tbHtml += " <td>" + el.etc3 + "</td>"
+			tbHtml += "</tr>";
+			$j("#tbCopyList").append(tbHtml);
+			i++;
 		});	
 		
 	}
