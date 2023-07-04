@@ -589,6 +589,11 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 				$resultSite_list = mysqli_query($conn, $select_query_list);
 
 				//echo "<br><br>쿼리 : ".$select_query_list;
+				
+				$busSeatInfoS = "";
+				$busSeatInfoE = "";
+				$arrSeatInfoS = array();
+				$arrSeatInfoE = array();
 				while ($rowSub = mysqli_fetch_assoc($resultSite_list)){
 					$shopseq = $rowSub['seq'];
 					$shopname = $rowSub['shopname'];
@@ -611,7 +616,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 						}
 					}
 				}
-				
+
 				// 예약좌석 정보 : 양양행
 				foreach($arrSeatInfoS as $x) {
 					$busSeatInfoS .= $x;

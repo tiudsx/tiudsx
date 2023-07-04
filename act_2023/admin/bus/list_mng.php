@@ -4,7 +4,16 @@ include __DIR__.'/../../common/func.php';
 
 $selDate = $_REQUEST["selDate"];
 
-$select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS CntBus FROM `AT_RES_SUB` 
+$select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS CntBus,
+						(CASE WHEN LEFT(res_busnum, 3) = 'YSa'
+									THEN '10' + RIGHT(res_busnum, 1)
+								WHEN LEFT(res_busnum, 3) = 'YJo'
+									THEN '20' + RIGHT(res_busnum, 1)
+								WHEN LEFT(res_busnum, 3) = 'SY2'
+									THEN '30' + RIGHT(res_busnum, 1)
+								WHEN LEFT(res_busnum, 3) = 'SY5'
+									THEN '40' + RIGHT(res_busnum, 1)
+								ELSE res_busnum END) AS orderby FROM `AT_RES_SUB` 
 						WHERE code = 'bus'
 							AND res_date = '$selDate' 
 							AND res_confirm = 3 
@@ -12,7 +21,7 @@ $select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS 
 							(CASE WHEN LEFT(res_busnum, 1) = 'Y'  OR LEFT(res_busnum, 1) = 'E' 
 								THEN RIGHT(res_busnum, 3) 
 								ELSE RIGHT(res_busnum, 2) END), res_confirm
-						ORDER BY LEFT(res_busnum, 1) DESC";
+						ORDER BY orderby ASC";
 $result_bus = mysqli_query($conn, $select_query_bus);
 $count = mysqli_num_rows($result_bus);
 

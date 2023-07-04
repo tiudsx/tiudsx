@@ -90,9 +90,8 @@ if($count == 0){
 
 				if($gubun != 3){
 					if($cancelChk == "coupon"){
-						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">
-						※ 취소/환불은 예약하신 '.$sitename.'(으)로 문의해주세요~
-						</div>';
+						$sitename = "※ 취소/환불은 카카오채널 [액트립]으로 문의해주세요~";
+						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">'.$sitename.'</div>';
 					}else{
 					?>
 					<div class="write_table" style="padding-top:2px;padding-bottom:15px;">

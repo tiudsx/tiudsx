@@ -144,7 +144,7 @@ $j.ajax({
 
                 var timeText1 = item.time.split(":");
                 var timeText2 = item.time2.split(":");
-                eval("busPointListA1['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분 / " + timeText2[0] + "시 " + timeText2[1] + "분</font>', " + num + "]");
+                eval("busPointListA1['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
             }
         });
     }
@@ -181,12 +181,6 @@ function fnBusTime(obj, busnum, num) {
     // }
 
     busnum = busnum.substring(0, 3)
-    if(busnum == "ESa"){
-		busnum = "YSa";
-	}else if(busnum == "EJo"){
-		busnum = "YJo";
-	}
-    
     var params = "gubun=point&res_spointname=" + obj.value + "&res_bus=" + busnum;
     $j.ajax({
         type: "POST",
@@ -215,11 +209,6 @@ function getBusNum(strbusnum, type){
         rtnVlu = strbusnum.substring(0, 2);
     }else if(type == "3"){
         rtnVlu = strbusnum.substring(0, 3);
-        if(strbusnum == "ESa"){
-            rtnVlu = "YJa";
-        }else if(strbusnum == "EJo"){
-            rtnVlu = "YJo";
-        }
     }
     
     return rtnVlu;

@@ -1013,7 +1013,7 @@ function fnBusPoint(obj) {
         pointname = "합정역";
         imgnum = 2;
     } else if ($j(obj).val() == "동해 서울행") {
-        mapviewid = 9;
+        mapviewid = 3;
         tbBus = 3;
         gubun = "A";
         busnum = 1;
