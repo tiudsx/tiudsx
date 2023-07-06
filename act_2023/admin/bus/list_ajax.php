@@ -23,7 +23,7 @@
 		,usertel		//고객 연락처
 		,usedate		//사용일
 		,bustypetext	//버스상품명
-		,bustypevalue	//버스상품타입 1:출발,2:복귀
+		,bustypevalue	//버스상품타입 Y:양양행,S:동해행
 		,etc1:""		//임시데이터 유무
 		,etc2:""		//확정데이터 유무
 		,etc3:""		//처리
@@ -69,6 +69,7 @@
 		}
 
 		//$rev_data[$i]["etc1"] = $rev_data[$i]["bustypevalue"];
+		//$rev_data[$i]["etc1"] = $count_sub;
 		//$rev_data[$i]["etc3"] = $data1.'/'.$data2.'/'.$data3.'/'.$rev_data[$i]["resbusseat2"];
 		$i++;
 

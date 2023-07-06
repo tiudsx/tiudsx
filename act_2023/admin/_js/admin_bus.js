@@ -577,46 +577,68 @@ function fnMakeJsonFrip() {
 
     //Json 인스턴스
     var objList = new Array();
-    var objTitle = "";
     var objValue = new Object();
+
+    var objTitle = "";          //상품명
+    var objDate = "";           //일정
+    var objbustypetext = ""     //버스상품명
+    var objBustypevalue = ""    //버스상품타입 Y:양양행,S:동해행
 
     var strTitle = strHtml.substring(strHtml.indexOf('mx-4 text-sm') + 14, strHtml.lastIndexOf('row-padding'));
     $j("#divCopy").html(strTitle.substring(0, strTitle.lastIndexOf('</div>') + 6));
-    //상품명
+    
+    //일정 상세정보 : 일정, 상품
     $j("#divCopy .row-padding").each(function(){
         if($j(this).find(".col-md-2").text() == "상품"){
             objTitle = $j(this).find(".col-md-2").next().text();
         }
+        if($j(this).find(".col-md-2").text() == "일정"){
+            objDate = $j(this).find(".col-md-2").next().find("span").find("span").eq(0).text().substring(0,10);
+        }
     });
-
+    
     $j("#divCopy").html(strHtml.substring(strHtml.indexOf('<table'), strHtml.lastIndexOf('</table>') + 8));
+
     //html 생성
+    var objResbusseat2 = 1 //인원수
     $j("#divCopy .el-table__row").each(function(){
 
         objValue = new Object();
 
         objValue.title = objTitle;
         if(objTitle.indexOf("서프팩토리") > 0){ // 서프팩토리
-
+            objbustypetext = "동해행(서팩)"
+            objBustypevalue = "D"
         }else if(objTitle.indexOf("마린서프") > 0){ // 마린서프
+            objbustypetext = "양양행(마린)"
+            objBustypevalue = "Y"
 
         }else if(objTitle.indexOf("인구서프") > 0){ // 인구서프
+            objbustypetext = "양양행(인구)"
+            objBustypevalue = "Y"
 
         }else if(objTitle.indexOf("1박2일") > 0){ // 힐링서프
-
+            objbustypetext = "동해행(힐링서프)"
+            objBustypevalue = "D"
         }else if(objTitle.indexOf("서울→양양") > 0){ // 서울>양양
-
+            objbustypetext = "서울>양양"
+            objBustypevalue = "Y"
+            objBustypevalue = "D"
         }else if(objTitle.indexOf("양양→서울") > 0){ // 양양>서울
-
+            objbustypetext = "양양>서울"
+            objBustypevalue = "S"
+            objBustypevalue = "D"
         }else if(objTitle.indexOf("서울→동해(금진,대진)") > 0){ // 서울>동해
-
+            objbustypetext = "서울>동해"
+            objBustypevalue = "D"
         }else if(objTitle.indexOf("동해(금진,대진)→서울") > 0){ // 동해>서울
-
+            objbustypetext = "동해>서울행"
+            objBustypevalue = "S"
         }
 
         objValue.name = $j(this).find("td").eq(1).find(".cell").text(); //이름
         objValue.genser = $j(this).find("td").eq(2).find(".cell").text(); //성별
-        objValue.tel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
+        objValue.usertel = $j(this).find("td").eq(3).find(".cell").text(); //연락처
         objValue.item = $j(this).find("td").eq(4).find(".cell").text(); //아이템명
 
         var objinfo = $j(this).find("td").eq(5).find(".cell span"); //추가정보    
@@ -629,18 +651,48 @@ function fnMakeJsonFrip() {
 
         objValue.state = $j(this).find("td").eq(6).find(".cell").text(); //예약상태
         
+        objValue["bus_date"] = objDate;             //이용일
+        objValue["username"] = objValue.name;       //고객명
+        objValue["usertel"] = objValue.usertel;     //고객 연락처
+        objValue["usedate"] = objDate;              //사용일
+        objValue["bustypetext"] = objbustypetext;   //버스상품명
+        objValue["bustypevalue"] = objBustypevalue; //버스상품타입 Y:양양행,S:서울행,D:동해행
+        objValue["etc1"] = "";                      //임시데이터 유무
+        objValue["etc2"] = "";                      //확정데이터 유무
+        objValue["etc3"] = "";                      //처리
+
         if ($j(this).find("button").length > 0) {
             objValue.btn = $j(this).find("button").text(); //액션
+
+            if (objList.length <= 0) {
+                objValue["resbusseat2"] = 1;                //인원수
+                objList.push(objValue);
+            }
+            else{
+                //alert(objList[objList.length-1].usertel);
+
+                //인원수 병합
+                if (objList[objList.length-1].usertel == objValue.usertel) {
+                    objList[objList.length-1].resbusseat2 = Number(objList[objList.length-1].resbusseat2) + 1;
+                }
+                else{
+                    objValue["resbusseat2"] = 1;                //인원수
+                    objList.push(objValue);
+                }
+
+            }
         }
         else{
             objValue.btn = 'none'; //액션
         }
-
-        objList.push(objValue);
+        
     });
+
+    
 
     $j("#html_2").val(JSON.stringify(objList));
 
+    /*
     //당일치기
     //[{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"망두1004","genser":" - ","tel":"01033657826","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"Nietzsche","genser":" 여성 ","tel":"01042077240","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[동해] 에메랄드빛 바다에서 당일치기 서핑해요! #서프팩토리","name":"박선영","genser":" 여성 ","tel":"01033749239","item":"[얼리버드] (여) 강습(보드+슈트) + 왕복셔틀","addinfo":"셔틀버스 노선 : 사당선 (셔틀버스 추가 배차될 경우 종로선 운행합니다)|","state":"예약 대기","btn":" 예약건 취소 처리 "}]
 
@@ -650,7 +702,19 @@ function fnMakeJsonFrip() {
 
     //셔틀버스
     //[{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"프립대원","genser":" 남성 ","tel":"01099850475","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"프립대원","genser":" 남성 ","tel":"01099850475","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"별님❤","genser":" 여성 ","tel":"01092942064","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"별님❤","genser":" 여성 ","tel":"01092942064","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"예약 대기","btn":" 예약건 취소 처리 "},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"김윤희","genser":" 여성 ","tel":"01047495581","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"김윤희","genser":" 여성 ","tel":"01047495581","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"슈붕슈붕","genser":" 여성 ","tel":"01022481787","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"},{"title":"[프립셔틀ㅣ서울→양양] 프립셔틀 타고 양양 놀러갈사람?!","name":"슈붕슈붕","genser":" 여성 ","tel":"01022481787","item":"서울 > 양양","addinfo":"해당 상품은 버스만 제공되는 셔틀버스입니다. : 네! 확인했습니다.|좌석/정류장 안내 카카오톡은 이용일 3~4일 전에 카카오톡으로 발송됩니다. : 네! 확인했습니다.|","state":"취소 완료","btn":"none"}]
+    */
+
     console.log(objList);
+
+    //예약 중복체크, 명단표 생성 로직
+
+
+    if ($j("#tbCopyList tr").length == 0) {
+        $j("#tbCopyList").html($j("#tbCopyList2").html());  //맵핑 표 초기화
+    }
+    
+    fnChkRev("Frip",objList);
+
 }
 
 //클룩 데이터 맵핑
@@ -736,7 +800,7 @@ function fnMakeJsonKlook() {
         objValue["resbusseat2"] = "";   //인원수
         objValue["usedate"] = "";       //사용일
         objValue["bustypetext"] = "";   //버스상품명
-        objValue["bustypevalue"] = "";  //버스상품타입  1:출발,2:복귀
+        objValue["bustypevalue"] = "";  //버스상품타입 Y:양양행,S:동해행
         objValue["etc1"] = "";          //임시데이터 유무
         objValue["etc2"] = "";          //확정데이터 유무
         objValue["etc3"] = "";          //처리
@@ -754,7 +818,7 @@ function fnMakeJsonKlook() {
 
 
     //예약 중복체크, 명단표 생성 로직
-    fnChkRev(objList);
+    fnChkRev("Klook",objList);
     return;
 
     objList.forEach(function(el) {

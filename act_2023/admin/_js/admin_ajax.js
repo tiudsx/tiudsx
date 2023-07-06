@@ -3,7 +3,32 @@ $j(function () {
 });
 
 //예약 중복체크, 명단표 생성 로직
-function fnChkRev(objList) {
+function fnChkRev(type, objList) {
+
+	switch (type) {
+		case "Frip": fnChkRev_Frip(objList);break;
+		case "Klook": fnChkRev_Klook(objList);break;
+	}
+
+}
+
+function fnChkRev_Frip(objList) {	
+	//fnMakeRevTable("Frip",objList);
+
+	$j.ajax({
+		type: "POST",
+		url: "/act_2023/admin/bus/list_ajax.php",
+		data: {data:objList},
+		dataType:"json",
+		success: function (data) {
+			console.log(data);
+			fnMakeRevTable("Frip",data);
+		}
+	});
+
+}
+
+function fnChkRev_Klook(objList){
 
 	//번호, 노선, 이름, 연락처, 이용일(인원), 임시, 확정, 처리
 
@@ -57,24 +82,23 @@ function fnChkRev(objList) {
 		dataType:"json",
 		success: function (data) {
 			console.log(data);
-			fnMakeRevTable(data);
+			fnMakeRevTable("Klook",data);
 		}
 	});
 
 }
 
 //채널별 예약목록 html 테이블생성
-function fnMakeRevTable(revList) {
+function fnMakeRevTable(type,revList) {
 	
 	var tbHtml = "";
 	var i = 1;
 
-	revList.forEach(function(el){
-
-		if(el.rgb == "rgb(255, 255, 255)"){
-
+	if (type == "Frip") {
+		revList.forEach(function(el){
+			//프립 확정 인원
 			tbHtml = "<tr>"
-			tbHtml += " <td>" + i + "</td>"
+			tbHtml += " <td>" + i + "/" + el.bus_date.substring(5) + "</td>"
 			tbHtml += " <td>" + el.bustypetext + "</td>"
 			tbHtml += " <td>" + el.username + "</td>"
 			tbHtml += " <td>" + el.usertel + "</td>"
@@ -85,23 +109,29 @@ function fnMakeRevTable(revList) {
 			tbHtml += "</tr>";
 			$j("#tbCopyList").append(tbHtml);
 			i++;
+		});	
+		
+	}
+	else if (type == "Klook") {
+		revList.forEach(function(el){
+			//클룩 확정 인원
+			if(el.rgb == "rgb(255, 255, 255)"){
+				tbHtml = "<tr>"
+				tbHtml += " <td>" + i + "</td>"
+				tbHtml += " <td>" + el.bustypetext + "</td>"
+				tbHtml += " <td>" + el.username + "</td>"
+				tbHtml += " <td>" + el.usertel + "</td>"
+				tbHtml += " <td>" + el.usedate + " (" + el.resbusseat2 + "명)</td>"
+				tbHtml += " <td>" + el.etc1 + "</td>"
+				tbHtml += " <td>" + el.etc2 + "</td>"
+				tbHtml += " <td>" + el.etc3 + "</td>"
+				tbHtml += "</tr>";
+				$j("#tbCopyList").append(tbHtml);
+				i++;
+			}
+		});		
+	}
 
-		}
-
-		// tbHtml = "<tr>"
-		// tbHtml += " <td>" + i + "</td>"
-		// tbHtml += " <td>" + el.bustypetext + "</td>"
-		// tbHtml += " <td>" + el.username + "</td>"
-		// tbHtml += " <td>" + el.usertel + "</td>"
-		// tbHtml += " <td>" + el.usedate + " (" + el.resbusseat2 + "명)</td>"
-		// tbHtml += " <td>" + el.etc1 + "</td>"
-		// tbHtml += " <td>" + el.etc2 + "</td>"
-		// tbHtml += " <td>" + el.etc3 + "</td>"
-		// tbHtml += "</tr>";
-		// $j("#tbCopyList").append(tbHtml);
-		// i++;
-
-	});
 	
 	
 
