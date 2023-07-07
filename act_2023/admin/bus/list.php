@@ -146,7 +146,15 @@ $shopseq = 0;
                             <td colspan="5"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
                         </tr>
                         <tr>
-                            <td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/list_search.php');" /></td>
+                            <td colspan="6" style="text-align:center;">
+                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/list_search.php');" />
+                                
+                                <a id="kakaotalk-sharing-btn" href="javascript:shareMessage();">
+                                <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+                                    alt="카카오톡 공유 보내기 버튼" />
+                                </a>
+                                
+                            </td>
                         </tr>
                     </table>
                     </form>                
@@ -383,10 +391,46 @@ $shopseq = 0;
     </form>
 </div>
 
+
 <script>
 $j(document).ready(function(){
 	fnSearchAdmin('bus/list_search.php');
-
 	fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');
 });
+
+</script>
+
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
+
+<script>
+    Kakao.init('15043b4ab2fd95556fa77e2c604d421e'); // 사용하려는 앱의 JavaScript 키 입력
+
+    function shareMessage() {
+
+        let strMsg = "공유할 텍스트 정보\n인원 : 10명";
+
+        Kakao.Share.sendDefault({
+            objectType: 'text',
+            text: strMsg,
+            link: {
+            // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+            mobileWebUrl: 'https://developers.kakao.com',
+            webUrl: 'https://developers.kakao.com',
+            },
+            buttons: [
+            {
+                title: '공유하기',
+                link: {
+                mobileWebUrl: 'https://actrip.co.kr/act_2023/admin/bus/test.html',
+                webUrl: 'https://actrip.co.kr/act_2023/admin/bus/test.html',
+                },
+            }
+            ],
+        });
+
+        
+    }
+
+    
+
 </script>
