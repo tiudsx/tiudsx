@@ -40,6 +40,7 @@
 				<option value="28" kakaoUrl="https://open.kakao.com/o/g58J34ff">네이버-서팩 동해</option>
 				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
 				<option value="23">금진 브라보</option>
+				<option value="30">엑스크루</option>
 			</select>
 		</td>
 		<td style="text-align:center;">

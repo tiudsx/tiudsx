@@ -366,6 +366,9 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	}else if($reschannel == 23){ //금진 브라보
 		$prodTitle = 'x브라보서프 서핑버스';
 		$seatName2 = $seatName2." 서핑버스x브라보서프";
+	}else if($reschannel == 30){ //엑스크루
+		$prodTitle = 'x엑스크루 서핑버스';
+		$seatName2 = $seatName2." 서핑버스x엑스크루";
 	}else{		
 		$seatName2 = $seatName2." 서핑버스";
 	}
