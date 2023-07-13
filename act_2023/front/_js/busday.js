@@ -171,15 +171,6 @@ function fnBusTime(obj, busnum, num) {
         return;
     }
 
-    // var arrObjs = eval("busPoint.sPoint" + getBusNum(busnum, "2"));
-    // var arrData = getListFilter(arrObjs, "code", obj.value)[0];
-
-    // if(getBusNum(busnum, "1") == "5"){ //저녁 차량
-    //     var strbustime = arrData.time2;
-    // }else{ //오후 차량 및 기타
-    //     var strbustime = arrData.time1;
-    // }
-
     busnum = busnum.substring(0, 3)
     var params = "gubun=point&res_spointname=" + obj.value + "&res_bus=" + busnum;
     $j.ajax({
@@ -197,19 +188,4 @@ function getListFilter(data, key, value){
     return data.filter(function (object) { 
         return object[key] === value;
     });
-}
-
-function getBusNum(strbusnum, type){
-    var rtnVlu = "";
-    if(type == "1"){
-        //2 : 오후 차량
-        //5 : 저녁 차량
-        rtnVlu = strbusnum.substring(2, 3);
-    }else if(type == "2"){
-        rtnVlu = strbusnum.substring(0, 2);
-    }else if(type == "3"){
-        rtnVlu = strbusnum.substring(0, 3);
-    }
-    
-    return rtnVlu;
 }

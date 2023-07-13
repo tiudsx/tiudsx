@@ -396,7 +396,7 @@
 }
 
 .busOption01 .busLineTab, .busOption02 .busLineTab2 {
-    width: 440px;
+    /* width: 440px; */
 }
 
 .busOption01 .busLineTab li, .busOption02 .busLineTab2 li {

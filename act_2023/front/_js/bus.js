@@ -796,11 +796,12 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
         var selVlu = el.busnum.substring(0, 3);
         var selBool = true;
         
-        if(buschannel == 17 || buschannel == 20 || buschannel == 21 || buschannel == 22){ //프립 서핑패키지
-            if(selVlu == "SY2" || selVlu == "AE2"){
-                selBool = false;
-            }
-        }
+        //프립 서핑패키지 : 오후차 예약불가
+        // if(buschannel == 17 || buschannel == 20 || buschannel == 21 || buschannel == 22){
+        //     if(selVlu == "SY2" || selVlu == "AE2"){
+        //         selBool = false;
+        //     }
+        // }
 
         if(selBool){
             var objParam = {

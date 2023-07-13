@@ -30,7 +30,6 @@ $j.ajax({
             var itemPoint = arrItem[1];
             var itemlat = arrItem[2];
             var itemlng = arrItem[3];
-            var itemTime2 = arrItem[4];
 
             if(item == "End"){
                 if(keyCode == "Send"){
@@ -40,7 +39,7 @@ $j.ajax({
                 }
                 var endText = "도착";
             }else{
-                if(keyCode == "사당" || keyCode == "종료" || keyCode == "동해"){
+                if(keyCode == "사당" || keyCode == "종로" || keyCode == "동해"){
                     keyCode = "busPoint.sPointS";
                 }else{
                     keyCode = "busPoint.ePointS";
@@ -52,7 +51,7 @@ $j.ajax({
                 eval(keyCode + ".push({'code':'N', 'codename':'" + endText + "'})");
             }
 
-            eval(keyCode + ".push({'code':'" + keyName + "', 'codename':'" + keyName + "', 'time':'" + itemTime + "', 'time2':'" + itemTime2 + "', 'point':'" + itemPoint + "', 'lat':'" + itemlat + "', 'lng':'" + itemlng + "'})");
+            eval(keyCode + ".push({'code':'" + keyName + "', 'codename':'" + keyName + "', 'time':'" + itemTime + "', 'point':'" + itemPoint + "', 'lat':'" + itemlat + "', 'lng':'" + itemlng + "'})");
         });
         
         // 서울출발
@@ -84,13 +83,12 @@ $j.ajax({
                     busPoint_E += item.codename + " &gt; ";
                 }
 
-                var num = (key - 1);
+                var num = busPoint.ePointS.length - (key + 1);
                 var X_OFFSET = MARKER_SPRITE_X_OFFSET * num;
                 var Y_OFFSET = MARKER_SPRITE_Y_OFFSET * 3;
 
                 var timeText1 = item.time.split(":");
-                var timeText2 = item.time2.split(":");
-                eval("busPointListE['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분 / " + timeText2[0] + "시 " + timeText2[1] + "분</font>', " + num + "]");
+                eval("busPointListE['" + item.codename + "'] = [" + X_OFFSET + ", " + Y_OFFSET + ", '" + item.lat + "', '" + item.lng + "', '" + item.point + "', '탑승시간 : <font color=\"red\">" + timeText1[0] + "시 " + timeText1[1] + "분</font>', " + num + "]");
             }
         });
     }
@@ -112,30 +110,24 @@ function fnBusTime(obj, busnum, num) {
         return;
     }
 
-    busnum = busnum.substring(0, 3)
-    var params = "gubun=point&res_spointname=" + obj.value + "&res_bus=" + busnum + "&busSeq=" + busSeq;
-    $j.ajax({
-        type: "POST",
-        url: "/act_2023/front/bus_2023/view_bus_point.php",
-        data: params,
-        success: function(data) {
-            objStop.html("탑승시간 : " + data.split("|")[0] + "<br> 탑승위치 : " + data.split("|")[1]);
+    //동해
+    var bustype = busnum.substring(0, 1);
+    var arrObjs;
+    if(busSeq == 14){ //동해 정류장
+        if(bustype == "S"){
+            arrObjs = eval("busPoint.sPointS");
+        }else{
+            arrObjs = eval("busPoint.ePointS");   
         }
-    })
+    }else{ //양양 정류장
+
+    }
+    var arrData = getListFilter(arrObjs, "code", obj.value)[0];
+    objStop.html("탑승시간 : " + arrData.time + "<br> 탑승위치 : " + arrData.point);
 }
 
-
-function getBusNum(strbusnum, type){
-    var rtnVlu = "";
-    if(type == "1"){
-        //2 : 오후 차량
-        //5 : 저녁 차량
-        rtnVlu = strbusnum.substring(2, 3);
-    }else if(type == "2"){
-        rtnVlu = strbusnum.substring(0, 2);
-    }else if(type == "3"){
-        rtnVlu = strbusnum.substring(0, 3);
-    }
-    
-    return rtnVlu;
+function getListFilter(data, key, value){
+    return data.filter(function (object) { 
+        return object[key] === value;
+    });
 }

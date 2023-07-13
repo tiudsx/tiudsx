@@ -44,7 +44,6 @@ jQuery(function() {
                     }
                 }
             }
-            
         }
     });
 
@@ -62,7 +61,6 @@ jQuery(function() {
             }
         },
         onClose: function(selectedDate) {
-
             // 시작일(fromDate) datepicker가 닫힐때
             // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
             if(jQuery(this).val() == ""){
@@ -89,30 +87,9 @@ jQuery(function() {
                 $j(".vip-tabwrap").removeClass("vip-tabwrap-top");
             }
         }
-        // if ($j('.contentimg').length > 0) {
-        //     if (checkVisible($j('.contentimg')) && !isVisible) {
-        //         $j(".vip-tabnavi li").removeClass("on");
-        //         $j(".vip-tabnavi li").eq(0).addClass("on");
-        //     }
-        // }
-
-        // if ($j('#shopmap').length > 0) {
-        //     if (checkVisible($j('#shopmap')) && !isVisible) {
-        //         $j(".vip-tabnavi li").removeClass("on");
-        //         $j(".vip-tabnavi li").eq(1).addClass("on");
-        //     }
-        // }
-        // if ($j('#cancelinfo').length > 0) {
-        //     if (checkVisible($j('#cancelinfo')) && !isVisible) {
-        //         $j(".vip-tabnavi li").removeClass("on");
-        //         $j(".vip-tabnavi li").eq(2).addClass("on");
-        //     }
-        // }
     });
 
     $j('#coupon').bind("keyup", function() {
-        //var regexp = /[^a-z0-9]/gi;
-        //$j(this).val($j(this).val().toUpperCase().replace(regexp,''));
         $j(this).val($j(this).val().toUpperCase());
     });
 });

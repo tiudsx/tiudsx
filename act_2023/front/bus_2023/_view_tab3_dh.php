@@ -24,7 +24,7 @@
                 <tr>
                     <th style="text-align: center;">
                         <strong style="line-height:2;">
-                            ★ 서울 → 금진,동해 / <?=$shopseq?>
+                            ★ 서울 → 금진,동해
                         </strong>
                     </th>
                     <th style="text-align: center;">
@@ -41,6 +41,19 @@
         </table>
     </div>
     <div class="bd" style="padding:10px 0 0px 0;">
+    <?
+    $arrPoint = fnBusPoint2023("", "", $shopseq);
+
+    $sPoint = array();
+    $ePoint = array();
+    foreach($arrPoint as $key=>$value){
+        if(strpos($key, "동해_") !== false){
+            $sPoint[$key] = $value;
+        }else if(strpos($key, "오후_") !== false){
+            $ePoint[$key] = $value;
+        }
+    }
+    ?>
         <table view="tbBus1" class="et_vars">
             <colgroup>
                 <col style="width:90px;">
@@ -49,34 +62,31 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [동해행] 사당선 출발 셔틀버스</b></td>
+                    <td colspan="3" height="28"><b>★ [금진, 동해] 서울출발 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
                     <th style="text-align:center;">탑승장소 및 시간</th>
                     <th style="text-align:center;">위치</th>
                 </tr>
+            <?
+            $i = 0;
+            foreach($sPoint as $key=>$value){
+
+            $pointName = explode("_",$key)[1];
+            $pointInfo = explode("|",$value);
+
+            $pointInfoTime = explode(":", $pointInfo[0]);
+            $i++;
+            ?>
                 <tr>
-                    <th>신도림</th>
-                    <td><?=fnBusPointArr2023("신도림역", 0, 14)?><br>
-                        <font color="red"><?=fnBusPointArr2023("신도림역", 1, 14)?></font>
+                    <th><?=$pointName?></th>
+                    <td><?=$pointInfo[1]?><br>
+                        <font color="red"><?=$pointInfoTime[0]."시 ".$pointInfoTime[1]. "분"?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 1, 1, '신도림역', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', <?=$i?>, 1, '<?=$pointName?>', this);"></td>
                 </tr>
-                <tr>
-                    <th>사당역</th>
-                    <td><?=fnBusPointArr2023("ESa_사당역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("ESa_사당역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 4, 1, '사당역', this);"></td>
-                </tr>
-                <tr>
-                    <th>올림픽공원역</th>
-                    <td><?=fnBusPointArr2023("ESa_올림픽공원역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("ESa_올림픽공원역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 6, 1, '올림픽공원역', this);"></td>
-                </tr>
+            <?}?>
             </tbody>
         </table>
 
@@ -88,7 +98,7 @@
             </tbody>
         </table>
 
-        <table view="tbBus3" class="et_vars" style="display: none;">
+        <table view="tbBus2" class="et_vars" style="display: none;">
             <colgroup>
                 <col style="width:90px;">
                 <col style="width:auto;">
@@ -96,52 +106,35 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [서울행] 서울행 출발 셔틀버스</b></td>
+                    <td colspan="3" height="28"><b>★ [금진, 동해] 서울복귀 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
                     <th style="text-align:center;">탑승장소 및 시간</th>
                     <th style="text-align:center;">위치</th>
                 </tr>
+            <?
+            $i = 0;
+            foreach(array_reverse($ePoint) as $key=>$value){
+
+            $pointName = explode("_",$key)[1];
+            $pointInfo = explode("|",$value);
+
+            $pointInfoTime = explode(":", $pointInfo[0]);
+            $i++;
+            ?>
                 <tr>
-                    <th>솔.동해점</th>
-                    <td><?=fnBusPointArr("AE2_솔.동해점", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_솔.동해점", 3)?></font>
+                    <th><?=$pointName?></th>
+                    <td><?=$pointInfo[1]?><br>
+                        <font color="red"><?=$pointInfoTime[0]."시 ".$pointInfoTime[1]. "분"?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 1, 1, '솔.동해점', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', <?=$i?>, 1, '<?=$pointName?>', this);"></td>
                 </tr>
-                <tr>
-                    <th>대진해변</th>
-                    <td><?=fnBusPointArr("AE2_대진해변", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_대진해변", 3)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 2, 1, '대진해변', this);"></td>
-                </tr>
-                <tr>
-                    <th>나인비치</th>
-                    <td><?=fnBusPointArr("AE2_나인비치", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_나인비치", 3)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '나인비치', this);"></td>
-                </tr>
-                <tr>
-                    <th>금진해변</th>
-                    <td><?=fnBusPointArr("AE2_금진해변", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_금진해변", 3)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
-                </tr>
-                <tr>
-                    <th>브라보서프</th>
-                    <td><?=fnBusPointArr("AE2_브라보서프", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_브라보서프", 3)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '브라보서프', this);"></td>
-                </tr>
+            <?}?>
             </tbody>
         </table>
 
-        <table view="tbBus3" class="et_vars" style="display: none;">
+        <table view="tbBus2" class="et_vars" style="display: none;">
             <tbody>
                 <tr>
                     <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;"><?=fnBusPointList('busPoint_End2')?></span></b></td>

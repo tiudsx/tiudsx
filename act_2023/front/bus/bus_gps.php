@@ -124,17 +124,6 @@ function fnBusGPSPoint(obj) {
                 }
 
                 MARKER_SPRITE_POSITION2 = eval(data);
-
-                // var busPoint = getBusNum(busnum, 2);
-                // $j.each(eval("busPointList" + busPoint), function(key, item) {
-                //     //console.log(key + " / " + item);
-                //     MARKER_SPRITE_POSITION2[key] = item;
-                // });
-
-                // $j.each(eval(data), function(key, item) {
-                //     //console.log(key + " / " + item);
-                //     MARKER_SPRITE_POSITION2[key] = item;
-                // });
                 
                 $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/bus_gps_map.html");
             }
