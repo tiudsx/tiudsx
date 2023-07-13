@@ -37,5 +37,4 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>

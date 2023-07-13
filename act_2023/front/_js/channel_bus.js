@@ -19,9 +19,18 @@ var holidays = {
     "0213": { type: 0, title: "설날", year: "2021" }
 };
 
-var rtnBusDate = function(day, getDay, json, bus) {
+var rtnBusDate = function(day, getDay, json, objId) {
     var holiday = holidays[$j.datepicker.formatDate("mmdd", day)];
     var thisYear = $j.datepicker.formatDate("yy", day);
+
+    var bus = "S";
+    if(objId == "SurfBus"){
+        bus = $j("#busgubun").val();
+    }else if(objId == "SurfBusS"){
+        bus = "S";
+    }else{
+        bus = "E";
+    }
 
     if (json != "init") {
         var onoffDay = json[bus + ((day.getMonth() + 1) + 100).toString().substring(1, 3) + (day.getDate() + 100).toString().toString().substring(1, 3)];
@@ -63,8 +72,7 @@ var busNumName;
 var busType;
 //노선 클릭시 정류장 및 좌석 바인딩
 function fnPointList(busnum, busseat, obj) {
-    //$j('.busSeat').unblock(); 
-    busnum = busnum.substring(0, 2);
+    busnum = busnum.substring(0, 1).toLowerCase() + "Point";
     if ($j("#daytype").val() == 0) { //편도
         $j("ul[class=busLine]:eq(0) li").removeClass("on");
         $j(obj).addClass("on");
@@ -140,7 +148,7 @@ function fnBusSeatInit(busnum, busseat, obj, busname) {
         "busDate": selDate,
         "busNum": busnum
     }
-    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
+    $j.getJSON("/act_2023/front/bus_2023/view_bus_day.php", objParam,
         function(data, textStatus, jqXHR) {
             seatjson = data;
         }
@@ -194,25 +202,25 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
     //$j("#buspointlist").css("display", "none");
     //$j("#busnotdate").css("display", "none");
     var eqnum = 0;
+    var bus = "";
     if (objid == "SurfBusS") {
         $j("ul[class=busLine]:eq(1) li").remove();
         $j("ul[class=busLine]").eq(1).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>');
         eqnum = 1;
+        bus = "S";
     } else if (objid == "SurfBusE") {
         $j("ul[class=busLine]:eq(2) li").remove();
         $j("ul[class=busLine]").eq(2).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>');
         eqnum = 2;
+        bus = "E";
     } else {
         $j("ul[class=busLine]:eq(0) li").remove();
         $j("ul[class=busLine]").eq(0).css("display", "block").append('<li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선</li>');
+        bus = $j("#busgubun").val();
     }
 
-    if (objid == "SurfBusE") {
-        gubun = fnBusDateGubun(gubun, "SurfBusE");
-    }
-    var arrData = busData[gubun + selectedDate.substring(5).replace('-', '')];
+    var arrData = busData[bus + selectedDate.substring(5).replace('-', '')];
     arrData.forEach(function(el) {
-        
         var selVlu = el.busnum.substring(0, 3);
         var selBool = true;
         
@@ -228,7 +236,7 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
                 "busDate": selectedDate,
                 "busNum": el.busnum
             }
-            $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
+            $j.getJSON("/act_2023/front/bus_2023/view_bus_day.php", objParam,
                 function(data, textStatus, jqXHR) {
                     if (data[0].seatcnt == el.busseat) {
                         if (busrestype == "change" || busrestype == "seatview") {
@@ -248,29 +256,12 @@ function fnBusSearchDate(selectedDate, gubun, objid) {
     //$j(".busLine li").eq(1).click();
 }
 
-function fnBusDateGubun(gubun, objid) {
-    if (objid == "SurfBusE") {
-        if (gubun == "Y") {
-            gubun = "S";
-        } else {
-            gubun = "A";
-        }
-    }
-    return gubun;
-}
-
 jQuery(function() {
     jQuery('input[cal=busdate]').datepicker({
         minDate: new Date((new Date()).getFullYear() + '-01-01'),
         maxDate: new Date((new Date()).getFullYear() + '-12-31'),
-        // onClose: function (selectedDate) {
-        // 	if(selectedDate != ""){
-        // 		fnBusSearchDate(selectedDate, $j(this).attr("gubun"));
-        // 	}
-        // },
         onSelect: function(selectedDate) {
-            fnBusSearchDate(selectedDate, $j(this).attr("gubun"), $j(this).attr("id"));
-
+            fnBusSearchDate(selectedDate, $j("#busgubun").val(), $j(this).attr("id"));
             
             //달력컨트롤 : 출발노선 체크
             if($j("#nextchk").val() == "Y"){
@@ -278,12 +269,8 @@ jQuery(function() {
                 var arrDataE = 0;
                 //편도
                 if($j("#daytype").val() == "0"){
-                    //양양행
-                    if($j("#busgubun").val() == "Y"){
 
-                    }else{ //서울행
-
-                    }
+                    //서울출발
                     var arrDataS = busData[$j("#busgubun").val() + $j("#SurfBus").val().substring(5).replace('-', '')];
                     if(arrDataS.length == 1){
                         $j("li[busnum=" + arrDataS[0].busnum + "]").click();
@@ -296,8 +283,7 @@ jQuery(function() {
 
                     if($j("#SurfBusS").val() != ""){
                         //양양행 1대일경우
-                        var gubun = fnBusDateGubun($j("#SurfBusS").attr("gubun"), "SurfBusS");
-                        arrDataS = busData[gubun + $j("#SurfBusS").val().substring(5).replace('-', '')];
+                        arrDataS = busData["S" + $j("#SurfBusS").val().substring(5).replace('-', '')];
                         if(arrDataS.length == 1){
                             $j("li[busnum=" + arrDataS[0].busnum + "]").click();
                         }
@@ -305,8 +291,7 @@ jQuery(function() {
 
                     if($j("#SurfBusE").val() != ""){
                         //서울행 1대일경우
-                        var gubun = fnBusDateGubun($j("#SurfBusE").attr("gubun"), "SurfBusE");
-                        arrDataE = busData[gubun + $j("#SurfBusE").val().substring(5).replace('-', '')];
+                        arrDataE = busData["E" + $j("#SurfBusE").val().substring(5).replace('-', '')];
                         if(arrDataE.length == 1){
                             $j("li[busnum=" + arrDataE[0].busnum + "]").click();
                         }
@@ -319,8 +304,7 @@ jQuery(function() {
             }
         },
         beforeShowDay: function(date) {
-            var gubun = fnBusDateGubun($j(this).attr("gubun"), $j(this).attr("id"));
-            return rtnBusDate(date, date.getDay(), busData, gubun);
+            return rtnBusDate(date, date.getDay(), busData, $j(this).attr("id"));
         }
     });
 
@@ -469,18 +453,11 @@ function fnBusGubun(gubun, obj, type) {
     $j("ul[id=buspointlist]").css("display", "none");
 
     if (type == "change") { //정류장 변경
-        fnBusSearchDate($j("#SurfBus").val(), $j("#SurfBus").attr("gubun"), $j("#SurfBus").attr("id"));
+        fnBusSearchDate($j("#SurfBus").val(), gubun, $j("#SurfBus").attr("id"));
     } else {
-        $j("#SurfBus").val("").attr("gubun", gubun.substring(0, 1));
+        $j("#SurfBus").val("");
     }
     $j("#busgubun").val(gubun);
-    //$j("#tbSeat .busSeatList").addClass("busSeatListN").removeClass("busSeatListY").removeClass("busSeatListC");
-
-    // if($j("#busnotdate").css("display") == "none"){
-    // 	$j("#busnotdate").css("display", "block");
-    // 	$j(".busLine").css("display", "none");
-    // 	$j("#buspointlist").css("display", "none");
-    // }
 }
 
 function fnBusNext() {
@@ -1069,7 +1046,7 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
     $j(".mapviewid").css("background", "").css("color", "");
     $j(obj).css("background", "#1973e1").css("color", "#fff");
 
-    $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus/view_bus_map.html");
+    $j("#ifrmBusMap").css("display", "block").attr("src", "/act_2023/front/bus_2023/view_bus_map.html");
     // var obj = $j("#ifrmBusMap").get(0);
     // var objDoc = obj.contentWindow || obj.contentDocument;
     // objDoc.mapMove(pointname);
@@ -1120,7 +1097,7 @@ function fnBusSave() {
         return;
     }
 
-    var submiturl = "/act_2023/front/bus/view_bus_save.php";
+    var submiturl = "/act_2023/front/bus_2023/view_bus_save.php";
     if (busrestype == "change") {
         if ($j("#daytype").val() == 0) { //편도
             var defaultCnt = Object.keys(busResData).length;

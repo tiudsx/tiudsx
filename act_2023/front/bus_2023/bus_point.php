@@ -12,6 +12,7 @@ $arrJo = array(); //종로선
 $arrS2 = array(); //서울행 오후
 $arrS5 = array(); //서울행 저녁
 
+$shopseq = 14; //동해
 if($param == "none"){
     if($resNumber != "none"){
         $select_query = "SELECT * FROM AT_RES_SUB WHERE resnum = $resNumber";
@@ -38,19 +39,9 @@ if($param == "none"){
         
     }
 
-    if($shopseq == 7){ //양양 셔틀버스
-        $pointurl = "_view_point_yy.php";
-    }else{ //동해 셔틀버스
-        $pointurl = "_view_point_dh.php";
-    }
+    $pointurl = fnBusUrl($shopseq, "url");
 }else{
-    if($param == "surfbus_yy"){ //양양 셔틀버스
-        
-        $pointurl = "_view_tab3_yy.php";
-    }else{ //동해 셔틀버스
-        $shopseq = 14;
-        $pointurl = "_view_tab3_dh.php";
-    }
+    $pointurl = fnBusUrl($param, "tab");
 }
 
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
@@ -71,7 +62,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
-    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
     <div class="top_area_zone">
         <section class="shoptitle">
@@ -108,8 +98,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     $j(document).ready(function() {
         setTimeout('$j("input[type=button]").eq(0).click();', 500);
     });
+
+	var busSeq = "<?=$shopseq?>";
 </script>
 
-<script type="text/javascript" src="/act_2023/front/_js/jquery-ui.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/channel_bus.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/channel_busday.js?v=<?=time()?>"></script>

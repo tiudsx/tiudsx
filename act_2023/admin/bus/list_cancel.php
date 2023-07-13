@@ -31,6 +31,7 @@
 				<option value="브라보서프">브라보</option>
 				<option value="엑스크루">엑스크루</option>
 				<option value="솜씨당">솜씨당</option>
+				<option value="모행">모행</option>
 				<option value="안내공지">안내공지</option>
 			</select>
 		</td>

@@ -71,7 +71,7 @@ function kakaoContent($arrKakao){
 				.'\n    - 입금이 확인되면 확정 및 이용 가능하니 참고부탁드립니다.'
 				.'\n    - 추가 문의사항은 카카오채널 또는 010-4337-5080으로 연락주세요.';
 
-		}elseif($arrKakao["PROD_TYPE"] == "sol_standby"){ //솔게하 예약안내
+		}else if($arrKakao["PROD_TYPE"] == "sol_standby"){ //솔게하 예약안내
 			$kakaoMsg = $arrKakao["smsTitle"]
 				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
 				.'\n솔게하&솔서프를 예약해주셔서 감사합니다.'

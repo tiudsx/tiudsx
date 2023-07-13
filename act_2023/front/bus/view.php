@@ -21,16 +21,9 @@ if($param_mid == ""){
 	$param = $param_mid;
 }
 
-if($param == "surfbus_yy"){ //양양 셔틀버스
-    $shopseq = 7;
-    $pointurl = "_view_tab3_yy.php";
-}else if($param == "surfbus_dh"){ //동해 셔틀버스
-    $shopseq = 14;
-    $pointurl = "_view_tab3_dh.php";
-}else{ //양양,동해 셔틀버스
-    $shopseq = 212;
-    $pointurl = "_view_tab3_yd.php";
-}
+$shopseq = fnBusUrl($param, "seq");
+$pointurl = fnBusUrl($param, "tab");
+$bus_type = fnBusUrl($param, "type");
 
 //"surfbus_yy?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2))
 //2023-04-20|FI3N9|resbus|2023-04-20|2023-04-20|1|1|홍길동|01044370009|YY|
@@ -76,7 +69,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
-    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
     <div class="top_area_zone">
         <section class="shoptitle">
@@ -440,7 +432,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     }
 </script>
 
-<script type="text/javascript" src="/act_2023/front/_js/jquery-ui.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 

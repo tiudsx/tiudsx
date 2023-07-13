@@ -24,7 +24,7 @@
                 <tr>
                     <th style="text-align: center;">
                         <strong style="line-height:2;">
-                            ★ 서울 → 금진,동해
+                            ★ 서울 → 금진,동해 / <?=$shopseq?>
                         </strong>
                     </th>
                     <th style="text-align: center;">
@@ -34,8 +34,8 @@
                     </th>
                 </tr>
                 <tr>
-                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;background:#1973e1;color:#fff;" value="사당선" onclick="fnBusPoint(this);"></td>
-                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="동해 서울행" onclick="fnBusPoint(this);"></td>
+                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;background:#1973e1;color:#fff;" value="서울 출발" onclick="fnBusPoint(this);"></td>
+                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="서울 복귀" onclick="fnBusPoint(this);"></td>
                 </tr>
             </tbody>
         </table>
@@ -58,22 +58,22 @@
                 </tr>
                 <tr>
                     <th>신도림</th>
-                    <td><?=fnBusPointArr("ESa_신도림", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("ESa_신도림", 1)?></font>
+                    <td><?=fnBusPointArr2023("신도림역", 0, 14)?><br>
+                        <font color="red"><?=fnBusPointArr2023("신도림역", 1, 14)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 1, 1, '신도림', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 1, 1, '신도림역', this);"></td>
                 </tr>
                 <tr>
                     <th>사당역</th>
-                    <td><?=fnBusPointArr("ESa_사당역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("ESa_사당역", 1)?></font>
+                    <td><?=fnBusPointArr2023("ESa_사당역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("ESa_사당역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 4, 1, '사당역', this);"></td>
                 </tr>
                 <tr>
                     <th>올림픽공원역</th>
-                    <td><?=fnBusPointArr("ESa_올림픽공원역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("ESa_올림픽공원역", 1)?></font>
+                    <td><?=fnBusPointArr2023("ESa_올림픽공원역", 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("ESa_올림픽공원역", 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 6, 1, '올림픽공원역', this);"></td>
                 </tr>

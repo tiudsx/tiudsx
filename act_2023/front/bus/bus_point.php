@@ -71,7 +71,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
-    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
     <div class="top_area_zone">
         <section class="shoptitle">
@@ -110,6 +109,5 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     });
 </script>
 
-<script type="text/javascript" src="/act_2023/front/_js/jquery-ui.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
