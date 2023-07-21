@@ -59,10 +59,7 @@ function fnPassengerAdmin(obj, seq) {
         $j('#chkBusD2').prop('checked', true);
         $j('#chkGubun').prop('checked', false);
 
-        var folderName = "bus";
-        if(seq == -3){
-            folderName = "busDrive";
-        }
+        var folderName = "bus_mohaeng";
         $j("#divResList").load("/act_2023/admin/" + folderName + "/list_mng.php?selDate=" + selDate);
         $j("#initText2").css("display", "none");
         var url = folderName + "/list_search.php";

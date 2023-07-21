@@ -276,7 +276,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		, "RES_CONFIRM"=>"-1"
 	);
 
-	$arrRtn = channel_sendKakao($arrKakao); //알림톡 발송
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
 	// 카카오 알림톡 DB 저장 START
 	$select_query = kakaoDebug($arrKakao, $arrRtn);            
@@ -332,26 +332,21 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	}
 
 	if($reschannel == 31){ //모행
-		$msgTitle = "모행 셔틀버스 예약안내";
 		$link1 = "surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'.$reschannel.'|'));
-		$arrKakao = array(
-			"gubun"=> "bus"
-			, "admin"=> "N"
-			, "tempName"=> "at_bus_kakao"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "userPhone"=> $userPhone
-			, "shopname"=> $seatName2
-			, "msgInfo"=>$resseatMsg
-			, "link1"=> $link1
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=>"타채널 알림톡발송"
-			, "PROD_URL"=>$reschannel
-			, "PROD_TYPE"=>"bus_channel"
-			, "RES_CONFIRM"=>"-1"
+		
+		$data = array(
+			'name' => $userName,
+			'shop_name' => '모행 셔틀버스',
+			'reservation_name' => $userName,
+			'receiver_number' => $userPhone,
+			'url' => $link1,
+			'seat' => $resseatMsg
+			// ,'reservation_information' =>"테스트",
+			// 'information' =>"테스트"
 		);
-
-		$arrRtn = channel_sendKakao($arrKakao); //알림톡 발송
+		
+		//echo json_encode(at_config('acrtip_reservation',$data));
+		fnKakaoSend(at_config('acrtip_reservation',$data));
 	}else{
 		if($reschannel == 11){ //프립
 			$prodTitle = 'x프립버스';

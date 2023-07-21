@@ -11,9 +11,27 @@ $result_set = mysqli_query($conn, $select_query);
 
 mysqli_query($conn, "COMMIT");
 
+$param_mid = $_REQUEST["mid"];
+
+if($param_mid == ""){
+	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
+
+	if (!empty(strpos($_SERVER["REQUEST_URI"], '?'))){
+		$param = substr($param, 0, strpos($_SERVER["REQUEST_URI"], '?') - 1);
+	}
+
+	$param = explode('_', $param)[0];
+}else{
+	$param = $param_mid;
+}
+
+$coupon_seq = 2;
+if($param == "surfbusgps_2023"){
+    $coupon_seq = 1;
+}
 ?>
 <div id="wrap">
-    <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
+    <? include __DIR__.'/../../_layout/_channel_layout_top.php'; ?>
 
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
@@ -218,7 +236,7 @@ function fnBusGPSPoint(obj) {
     </div>
 </div>
 
-<? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
+<? include __DIR__.'/../../_layout/_channel_layout_bottom.php'; ?>
 
 <script>    
     $j(document).ready(function() {

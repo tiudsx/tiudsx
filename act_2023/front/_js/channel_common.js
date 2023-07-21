@@ -15,7 +15,7 @@ jQuery(function() {
         beforeShow: function(date) {
             var calObj = jQuery(this).parents("tr").find("[cal=edate]");
             if(calObj.val() == ""){
-
+                jQuery(this).datepicker("option", "maxDate", null);
             }else{
                 var date = calObj.datepicker('getDate');
 
@@ -52,7 +52,7 @@ jQuery(function() {
         minDate: new Date("2020-05-01"),
         beforeShow: function(date) {
             if(jQuery(this).parents("tr").find("[cal=sdate]").val() == ""){
-
+                jQuery(this).datepicker("option", "minDate", null);
             }else{
                 var date = jQuery(this).parents("tr").find("[cal=sdate]").datepicker('getDate');
 
@@ -173,7 +173,7 @@ function fnCoupon(type, gubun, coupon) {
     }).responseText;
 
     if (rtn == "yes") {
-        alert("이미 사용 된 쿠폰입니다.");
+        alert("이미 사용 된 쿠폰입니다.\n\n상담톡으로 문의해주세요~");
         return 0;
     } else if (rtn == "no") {
         alert("사용가능한 쿠폰이 없습니다.");

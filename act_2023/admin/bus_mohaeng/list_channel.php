@@ -33,18 +33,11 @@
 				<input type="hidden" id="reschannel" name="reschannel" value="31">
 			<?}else{?>
 			 &nbsp;
-			<select id="reschannel" onchange="fnChannel(this);">
-				<option value="11">프립</option>
-				<option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
-				<option value="16">클룩</option>
-				<option value="7">네이버쇼핑</option>
-				<option value="15">서프존</option>
-				<option value="10">네이버예약</option>
-				<option value="12">마이리얼트립</option>
-				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
-				<option value="23">금진 브라보</option>
-				<option value="30">엑스크루</option>
+			<select id="reschannel">
 				<option value="31">모행</option>
+				<option value="23">금진 브라보</option>
+				<option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
+				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
 			</select>
 			<?}?>
 		</td>
@@ -54,7 +47,7 @@
 			</select>
 		</td>
 		<td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="20" onkeyup="spacetrim(this);"></td>
-		<td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="20" onkeyup="spacetrim(this);"></td>
+		<td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="20" onkeyup="spacetrim(this);" oninput="this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*)\./g, '$1');"></td>
 		<td>
 			<input type="text" id="resDate1" name="resDate1" cal="sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
 			<select id="resbusseat1" onchange="fnAdminBusGubun(this, 2);">

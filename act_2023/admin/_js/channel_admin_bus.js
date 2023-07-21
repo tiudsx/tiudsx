@@ -28,6 +28,16 @@ function fnAdminResKakao(){
         alert("연락처를 입력하세요.");
         return;
     }
+    
+    if($j("#resDate1").val() == "" || $j("#resDate2").val() == ""){
+        alert("이용일을 선택하세요.");
+        return;
+    }
+    
+    if($j("#resbusseat1").val() == "0" || $j("#resbusseat1").val() == "0"){
+        alert("인원수를 선택하세요.");
+        return;
+    }
 
     if(!confirm("알림톡 발송을 하시겠습니까?")){
         return;

@@ -84,7 +84,7 @@
                     <td><?=$pointInfo[1]?><br>
                         <font color="red"><?=$pointInfoTime[0]."시 ".$pointInfoTime[1]. "분"?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', <?=$i?>, 1, '<?=$pointName?>', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('S', <?=$i?>, 1, '<?=$pointName?>', this);"></td>
                 </tr>
             <?}?>
             </tbody>

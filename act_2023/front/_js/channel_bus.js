@@ -705,7 +705,7 @@ function fnSeatSelected(obj) {
         }else if(buschannel == 22 || buschannel == 29){ //솔게하
             selVlu = "솔.동해점";
         }else if(buschannel == 23 || buschannel == 31){ //브라보서프, 모행
-            selVlu = "브라보서프";
+            selVlu = "서프홀릭";
             selVlu2 = "솔.동해점";
         }else if(buschannel == 25){ //금진 프립
             selVlu = "금진해변";
@@ -805,16 +805,19 @@ function fnSeatChangeSelected(arrVlu) {
     
     var arrObjs = eval("busPoint.sPoint" + returnBusNum.substring(0, 2));
     var arrObje = eval("busPoint.ePoint" + returnBusType + "end");
-    var selVlu = "";
+    var selVlu = "", selVlu2 = "";
     if(buschannel == 17 || buschannel == 26){ //마린서프
         selVlu = "기사문해변";
-    }else if(buschannel == 20 || buschannel == 27){ //인구서프
+    }else if(buschannel == 20 || buschannel == 24 || buschannel == 27){ //인구서프, 엉클 프립
         selVlu = "인구해변";
     }else if(buschannel == 21 || buschannel == 28){ //서프팩토리
         selVlu = "대진해변";
     }else if(buschannel == 22 || buschannel == 29){ //솔게하
         selVlu = "솔.동해점";
-    }else if(buschannel == 23){ //브라보서프
+    }else if(buschannel == 23 || buschannel == 31){ //브라보서프, 모행
+        selVlu = "서프홀릭";
+        selVlu2 = "솔.동해점";
+    }else if(buschannel == 25){ //금진 프립
         selVlu = "금진해변";
     }
         
@@ -954,7 +957,7 @@ function fnBusPoint(obj) {
         gubun = "S";
         busnum = 1;
         pointname = "신도림역";
-        imgnum = 2;
+        imgnum = 1;
     } else if ($j(obj).val() == "서울 복귀") {
         mapviewid = 3;
         tbBus = 2;
@@ -977,8 +980,13 @@ function fnBusMap(gubun, num, busnum, pointname, obj, bool) {
         MARKER_SPRITE_POSITION2 = eval("busPointList" + gubun);
     }
 
+    var busFolder = "yy"
+    if(busTypeTitle == "동해"){
+        busFolder = "dh";
+    }
+
     $j("#mapimg").css("display", "block");
-    $j("#mapimg").attr("src", "https://actrip.cdn1.cafe24.com/act_bus/2022/" + gubun + busnum + "_" + num + ".jpg");
+    $j("#mapimg").attr("src", "https://actrip.cdn1.cafe24.com/act_bus/" + busFolder + "/" + gubun + busnum + "_" + num + ".jpg");
 
     $j(".mapviewid").css("background", "").css("color", "");
     $j(obj).css("background", "#1973e1").css("color", "#fff");
@@ -1072,7 +1080,7 @@ function fnBusSave() {
 
         submiturl = "/act_2023/front/order/order_return.php";
 
-        if (!confirm("액트립 셔틀버스 예약건을 수정하시겠습니까?")) {
+        if (!confirm("셔틀버스 예약건을 수정하시겠습니까?")) {
             return;
         }
     } else {
@@ -1111,7 +1119,7 @@ function fnBusSave() {
             return;
         }
 
-        if (!confirm("액트립 셔틀버스를 예약하시겠습니까?")) {
+        if (!confirm("셔틀버스를 예약하시겠습니까?")) {
             return;
         }
     }

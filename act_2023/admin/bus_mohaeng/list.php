@@ -12,7 +12,6 @@ $shopseq = 0;
 
 <script type="text/javascript" src="/act_2023/front/_js/channel_common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/channel_admin_common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/front/_js/channel_busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/channel_admin_bus.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
@@ -45,12 +44,10 @@ $shopseq = 0;
                             <col style="width:15%;">
                             <col style="width:35%;">
                         </colgroup>
-                        <tr>
+                        <tr style="display:none;">
                             <th><label><input type="checkbox" id="chkGubun" onclick="fnChkAll(this, 'chkResConfirm')">구분</label></th>
                             <td colspan="3">
-                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="1" style="vertical-align:-3px;" />예약대기</label>
                                 <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" checked="checked" value="3" style="vertical-align:-3px;" />확정</label>
-                                <label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="7" style="vertical-align:-3px;" />취소</label>
                             </td>
                         </tr>
                         <tr>
@@ -293,7 +290,6 @@ $shopseq = 0;
 
 <script>
 $j(document).ready(function(){
-	//fnSearchAdmin('bus_mohaeng/list_search.php');
 	fnSearchAdmin('bus_mohaeng/list_search_channel.php', '#mngKakaoSearch', 'N');
 });
 </script>
