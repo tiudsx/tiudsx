@@ -148,6 +148,16 @@
                 </tr>
                 <?}?>
 
+                <?if($arrS2["브라보서프"]){?>
+                <tr>
+                    <th>금진 브라보서프</th>
+                    <td><?=fnBusPointArr2023("오후_브라보서프", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_브라보서프", $shopseq, 1)?></font>
+                    </td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 6, 1, '브라보서프', this);"></td>
+                </tr>
+                <?}?>
+
             <?}else{?>
 
                 <?if($arrS5["솔.동해점"]){?>

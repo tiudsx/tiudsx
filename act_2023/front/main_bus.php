@@ -23,7 +23,7 @@ $j(document).ready(function(){
             <div class="busCatList">
                 <ul>
                     <li class="yybus"><a href="/surfbus_yy"><img src="/act_2023/images/button/yybus.jpg" alt="서울양양셔틀버스"></a></li>
-                    <li class="dhbus"><a href="/surfbus_dh"><img src="/act_2023/images/button/dhbus.jpg" alt="서울동해셔틀버스"></a></li>
+                    <li class="dhbus"><a href="/surfbus_dh_2023"><img src="/act_2023/images/button/dhbus.jpg" alt="서울동해셔틀버스"></a></li>
                 </ul>
             </div>
         </section>

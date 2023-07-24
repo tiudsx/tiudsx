@@ -248,9 +248,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 }else if($param == "reskakaode2"){ //타채널 예약안내 재발송
 	$kakao_msgid = $_REQUEST['kakao_msgid'];
 
-	$select_query = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
-	$resultSite = mysqli_query($conn, $select_query_sub);
-
 	$select_query = "SELECT * FROM `AT_KAKAO_HISTORY` WHERE prod_type = 'bus_channel' AND response LIKE '%$kakao_msgid%'";
 	$result = mysqli_query($conn, $select_query);
 	$rowMain = mysqli_fetch_array($result);
