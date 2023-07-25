@@ -39,7 +39,7 @@ if($_REQUEST["chkResConfirm"] == ""){
 if($sDate == ""){
     $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
-                        WHERE b.seq IN (7)
+                        WHERE b.seq IN (14)
                             AND b.res_confirm IN ('.$res_confirm.')
                             ORDER BY b.resnum, b.ressubseq';
 }else{
@@ -62,6 +62,7 @@ if($sDate == ""){
     $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.* FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
                         WHERE b.res_confirm IN ('.$res_confirm.')
+                            AND b.seq = 14
                             AND res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
                             ORDER BY b.resnum, b.res_date, b.ressubseq';
 }

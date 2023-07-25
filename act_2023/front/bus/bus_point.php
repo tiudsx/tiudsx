@@ -43,6 +43,10 @@ if($param == "none"){
     }else{ //동해 셔틀버스
         $pointurl = "_view_point_dh.php";
     }
+
+    if($shopseq == 14){
+        exit(header("Location: https://actrip.co.kr/pointlist_2023?num=1&resNumber=".$resNumber));
+    }
 }else{
     if($param == "surfbus_yy"){ //양양 셔틀버스
         
@@ -50,6 +54,10 @@ if($param == "none"){
     }else{ //동해 셔틀버스
         $shopseq = 14;
         $pointurl = "_view_tab3_dh.php";
+    }
+
+    if($shopseq == 14){
+        exit(header("Location: https://actrip.co.kr/pointlist_2023?resparam=surfbus_dh"));
     }
 }
 

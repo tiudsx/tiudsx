@@ -26,8 +26,10 @@ if($param_mid == ""){
 }
 
 $coupon_seq = 2;
+$gpsfolder = "";
 if($param == "surfbusgps_2023"){
     $coupon_seq = 1;
+    //$gpsfolder = "_2023";
 }
 ?>
 <div id="wrap">
@@ -73,7 +75,7 @@ if($nowTime > 0500 && $nowTime < 1300){
 }else{
     $count = 0;
 }
-//$busList = "'Y','E', 'S','A'";
+$busList = "'Y','E', 'S','A'";
 
 if($count == 1){
     $arrMapList = array();
@@ -121,7 +123,7 @@ function fnBusGPSPoint(obj) {
     var params = "resparam=mappoint&busgubun=" + busnum;
     $j.ajax({
         type: "POST",
-        url: "/act_2023/front/bus/bus_gps_json.php",
+        url: "/act_2023/front/bus<?=$gpsfolder?>/bus_gps_json.php",
         data: params,
         success: function (data) {
             $j("input[btnpoint='point']").css("background", "").css("color", "");
@@ -181,7 +183,8 @@ function fnBusGPSPoint(obj) {
                     </td>
                 </tr>
             <?}else{?>
-                <?if($arrMapList["Y"]){?>
+                <?if($coupon_seq == 2){?>
+            <?if($arrMapList["Y"]){?>
                 <tr>
                     <th>서울 → 양양행</th>
                     <td style="line-height:3;">
@@ -201,7 +204,7 @@ function fnBusGPSPoint(obj) {
                 </tr>
                 <?
                 }
-                
+            }
                 if($arrMapList["E"]){
                 ?>
                 <tr>

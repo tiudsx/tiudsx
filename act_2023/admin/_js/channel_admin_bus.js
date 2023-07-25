@@ -163,7 +163,7 @@ function fnBusModify(resseq) {
     var params = "resparam=busview&resseq=" + resseq;
     $j.ajax({
         type: "POST",
-        url: "/act_2023/admin/bus_mohaeng/list_info.php",
+        url: "/act_2023/admin/bus_dh/list_info.php",
         data: params,
         success: function(data) {
             fnBusPopupReset();

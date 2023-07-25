@@ -1,104 +1,13 @@
-<? 
-include __DIR__.'/../../common/db.php';
-include __DIR__.'/../../common/func.php';
-?>
-
 <?
-$resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
-$num = $_REQUEST["num"];
-
-$now = date("Y-m-d");
-$select_query = 'SELECT *, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM FROM `AT_RES_MAIN` a LEFT JOIN `AT_RES_SUB` as b 
-ON a.resnum = b.resnum 
-where a.resnum = "'.$resNumber.'" AND b.res_confirm IN (0,3,8)
-AND b.res_date >= "'.$now.'"
-ORDER BY a.resnum, b.ressubseq';
-
-$result_setlist = mysqli_query($conn, $select_query);
-$count = mysqli_num_rows($result_setlist);
-
-if($count == 0){
-    echo "<script>alert('예약된 정보가 없거나 이용일이 지났습니다.\\n\\n관리자에게 문의해주세요.');location.href='/ordersearch';</script>";
-	return;
-}
-
-$i = 0;
-$busgubun0 = 0;
-$busgubun1 = 0;
-$arrResInfoS = array();
-$arrResInfoE = array();
-while ($row = mysqli_fetch_assoc($result_setlist)){
-    if($i == 0){
-        $user_name = $row["user_name"];
-        $res_num = $row["resnum"];
-        $user_tel = $row["user_tel"];
-        $shopseq = $row["seq"];
-        $couponcode = $row["res_coupon"];
-
-        $dayCode = "busseat";
-        if($couponcode == "FRIPYY" || $couponcode == "FRIPDH"){
-            $dayCode = "frip_busseat";            
-        }
-    }
-    
-    $gubun = substr($row["res_bus"], 0, 1);
-    if($gubun == "Y" || $gubun == "E"){ //양양,동해행
-        $busgubun0 = 1;
-        $res_date0 = $row["res_date"];
-        if($shopseq == 7){
-            $res_busnum0 = $row["res_busnum"];
-
-        }else{
-            $res_busnum0 = fnBusCode($row["res_busnum"], $shopseq);
-        }
-
-        $arrResInfoS[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
-                                                , "res_busnum" => $row["res_busnum"]
-                                                , "res_seat" => $row["res_seat"]
-                                                , "res_spointname" => $row["res_spointname"]
-                                                , "res_epointname" => $row["res_epointname"]);
-
-         $resseq .= "<input type='hidden' id='ressubseqs' name='ressubseqs[]' value='".$row["ressubseq"]."'>";
-    }else{ //서울행
-        $busgubun1 = 1;
-        $res_date1 = $row["res_date"];
-        if($shopseq == 7){
-            $res_busnum1 = $row["res_busnum"];
-        }else{
-            $res_busnum1 = fnBusCode($row["res_busnum"], $shopseq);
-        }
-
-        $arrResInfoE[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
-                                                , "res_busnum" => $row["res_busnum"]
-                                                , "res_seat" => $row["res_seat"]
-                                                , "res_spointname" => $row["res_spointname"]
-                                                , "res_epointname" => $row["res_epointname"]);
-
-         $resseq .= "<input type='hidden' id='ressubseqe' name='ressubseqe[]' value='".$row["ressubseq"]."'>";
-    }
-
-    $i++;    
-}
-
-if($shopseq == 7){ //양양 셔틀버스
-    $param = "surfbus_yy";
-    $bustype0 = "Y";
-    $bustype1 = "S";
-    $bustypeText0 = "양양행";
-    $bustypeText1 = "서울행";
-    $channel_name = "";
-    $channel_foldername = "_js";
-    $channel_foldername2 = "bus";
-}else{ //동해 셔틀버스
-    $param = "surfbus_dh";
-    $bustype0 = "E";
-    $bustype1 = "A";
-    $bustypeText0 = "동해행";
-    $bustypeText1 = "서울행";
-    $channel_name = "channel_";
-    $channel_foldername = "front/_js";
-    $channel_foldername2 = "bus_2023";
-}
+//동해 셔틀버스
+$param = "surfbus_dh";
+$bustype0 = "E";
+$bustype1 = "A";
+$bustypeText0 = "동해행";
+$bustypeText1 = "서울행";
+$channel_name = "channel_";
+$channel_foldername = "front/_js";
+$channel_foldername2 = "bus_2023";
 
 $daytype = 0;
 if($busgubun0 == 1 && $busgubun1 == 1){
@@ -144,7 +53,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>액트립 서핑버스 내좌석 보기</h1>
+                <h1>액트립 서핑버스 예약정보 변경</h1>
                 <a class="reviewlink">
                     <span class="reviewcnt">예약번호 : <?=$res_num?></span>
                 </a>
@@ -157,7 +66,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on"><a>내좌석 보기</a></li>
+                            <li class="on"><a>좌석 및 정류장 변경</a></li>
                         </ul>
                     </div>
                 </div>
@@ -300,15 +209,16 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </table>
                         </div>
                     </ul>
-                    <ul class="selectStop" style="padding:0 4px;display:none;">
-                        <li style="display:none;"><img src="/act_2023/images/button/<?if($bustype0 == "Y"){ echo "btn061.png"; }else{ echo "btn064.png"; }?>" alt="<?=$bustypeText0?> 서핑버스"></li>
+                    <ul class="busLineTab2" style="display: block;padding-left: 10px;"></ul>
+                    <ul class="selectStop" style="padding:0 4px;">
+                        <li style="display:none;"><img src="/act_2023/images/button/btn064.png" alt="동해행 서핑버스"></li>
                         <li>
-                            <div id="selBus<?=$bustype0?>" class="bd" style="padding-top:2px;">
+                            <div id="selBusS" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="/act_2023/images/button/<?if($bustype1 == "S"){ echo "btn062.png"; }else{ echo "btn063.png"; }?>" alt="<?=$bustypeText1?> 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn063.png" alt="서울행 서핑버스"></li>
                         <li>
-                            <div id="selBus<?=$bustype1?>" class="bd" style="padding-top:2px;">
+                            <div id="selBusE" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                     </ul>
@@ -323,6 +233,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             }else{
                                 echo '<input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="돌아가기" onclick="history.back();" />';
                             }?>
+                            &nbsp;&nbsp;
+                            <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약 변경하기" onclick="fnBusSave();" />
                         </div>
                     </div>
                 </div>
@@ -330,7 +242,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             </div>
         </section>
     </div>
-</div><div id="nextbtn" class="busOption01" style="text-align:center;display:none;">
+</div>
+<div id="nextbtn" class="busOption01" style="text-align:center;display:none;">
                         <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusChangeNext();">
                     </div>
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
@@ -338,8 +251,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
 <script>
 	var busSeq = "<?=$shopseq?>";
-	var busTypeY = "S";
-    var busTypeS = "E";	
+	var busTypeY = "E";
+    var busTypeS = "A";	
     if($j("#shopseq").val() == 7){
 		busTypeY = "Y";
 		busTypeS = "S";
@@ -351,8 +264,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>
     var dayCode = "<?=$dayCode?>";
     var businit = 0;
-    var busrestype = "seatview";
-    var buschannel = "0";
+    var busrestype = "change";
+    var buschannel = "<?=$couponseq?>";
     var busData = {};
     var busResData = {};
     

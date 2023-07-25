@@ -448,7 +448,7 @@ if($param == "RtnPrice"){
             $shopname = $rowTime['shopname'];
             $etc = $rowTime["etc"];
             $res_confirm = $rowTime["res_confirm"];
-            $TotalPrice = $rowTime["res_totalprice"];
+            $TotalPrice += $rowTime["res_totalprice"];
         }
 
         $busSeatInfoTotal = " ▶ 좌석안내\n";

@@ -508,16 +508,28 @@ function fnBusCode($code, $bustype){
 
 	$code1 = substr($code, 0, 1);
 	$code2 = substr($code, 1, 3);
-	if($code1 == "S"){ //서울출발
-		$rtnCode1 = "Y";
-		$rtnCode2 = "E";
-	}else if($code1 == "E"){ //서울출발
-		$rtnCode1 = "S";
-		$rtnCode2 = "A";
+	if($bustype == 14){
+		if($code1 == "E"){ //서울출발
+			$rtnCode1 = "Y";
+			$rtnCode2 = "S";
+		}else if($code1 == "A"){ //서울출발
+			$rtnCode1 = "S";
+			$rtnCode2 = "E";
+		}
+	}else{
+		if($code1 == "S"){ //서울출발
+			$rtnCode1 = "Y";
+			$rtnCode2 = "E";
+		}else if($code1 == "E"){ //서울출발
+			$rtnCode1 = "S";
+			$rtnCode2 = "A";
+		}
 	}
 
 	if($bustype == "양양"){
 		return $rtnCode1.$code2;
+	}else if($bustype == "14"){
+		return $rtnCode2.$code2;
 	}else{
 		return $rtnCode2.$code2;
 	}

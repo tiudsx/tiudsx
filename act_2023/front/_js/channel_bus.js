@@ -179,7 +179,7 @@ function fnBusSeatInit(busnum, busseat, obj, busname) {
         if ($j("#daytype").val() == 1) { //왕복
             for (key in busResData) {
                 var arrVlu = busResData[key].split("/");
-                if (arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A") {
+                if (arrVlu[0].substring(0, 1) == "E" || arrVlu[0].substring(0, 1) == "A") {
                     fnSeatChangeSelected(busResData[key]);
                 }
             }
@@ -792,19 +792,33 @@ function fnSeatSelected(obj) {
 }
 
 function fnSeatChangeSelected(arrVlu) {
+    console.log(arrVlu + "/" + busType + "/" + busNum);
     arrVlu = arrVlu.split("/");
 
     var returnBusNum = arrVlu[0];
     var returnBusType = arrVlu[0].substring(0, 1);
+    if(returnBusType == "E"){
+        returnBusType = "S"; //출발
+    }else{
+        returnBusType = "E"; //복귀
+    }
+    returnBusNum = returnBusType + arrVlu[0].substring(1); //ESa1
     var returnDate = $j("#SurfBusE").val();
     var returnSeat = arrVlu[1];
     var returnBusName = $j("li[busnum=" + returnBusNum + "]").text();
 
     var sPoint = "";
     var ePoint = "";
-    
-    var arrObjs = eval("busPoint.sPoint" + returnBusNum.substring(0, 2));
-    var arrObje = eval("busPoint.ePoint" + returnBusType + "end");
+    // if(returnBusType == "A"){
+    //     var arrObjs = eval("busPoint.ePointS" );
+    //     var arrObje = eval("busPoint.ePointE");
+    // }else{
+    //     var arrObjs = eval("busPoint.sPointS" );
+    //     var arrObje = eval("busPoint.sPointE");
+    // }
+    var arrObjs = eval("busPoint." + returnBusType.toLowerCase() + "PointS" );
+    var arrObje = eval("busPoint." + returnBusType.toLowerCase() + "PointE");
+
     var selVlu = "", selVlu2 = "";
     if(buschannel == 17 || buschannel == 26){ //마린서프
         selVlu = "기사문해변";
@@ -822,11 +836,13 @@ function fnSeatChangeSelected(arrVlu) {
     }
         
     arrObjs.forEach(function(el) {
-        if(returnBusType == "E" || returnBusType == "Y"){
+        if(returnBusType == "S"){
             sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
         }else{
             if(selVlu != "" && selVlu == el.code){
                 sPoint += "<option value='N'>출발</option>";
+                sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else if(selVlu2 != "" && selVlu2 == el.code){
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else if(selVlu == ""){
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
@@ -834,9 +850,11 @@ function fnSeatChangeSelected(arrVlu) {
         }
     });
     arrObje.forEach(function(el) {
-        if(returnBusType == "E" || returnBusType == "Y"){
+        if(returnBusType == "S"){
             if(selVlu != "" && selVlu == el.code){
                 ePoint += "<option value='N'>도착</option>";
+                ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else if(selVlu2 != "" && selVlu2 == el.code){
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else if(selVlu == ""){
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
@@ -888,9 +906,11 @@ function fnSeatChangeSelected(arrVlu) {
     $j(bindObj).append(insHtml);
 
     var forObj = $j("select[id=startLocation" + returnBusType + "]");
+    console.log("select[id=startLocation" + returnBusType + "]");
     for (var i = 0; i < forObj.length; i++) {
         var arrBus = busResData[returnBusNum + "_" + forObj.eq(i).attr("seatnum")].split("/");
 
+        console.log(arrBus[2] + " / " + arrBus[3]);
         forObj.eq(i).val(arrBus[2]).change();
         forObj.eq(i).next().val(arrBus[3]);
     }

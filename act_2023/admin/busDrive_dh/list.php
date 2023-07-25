@@ -9,13 +9,12 @@ $shopseq = -3;
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
-<script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 
+<script type="text/javascript" src="/act_2023/front/_js/channel_common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/channel_admin_common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/channel_admin_bus.js?v=<?=time()?>"></script>
 <div class="bd_tl" style="width:100%;">
-	<h1 class="ngeb clear"><i class="bg_color"></i>양양 셔틀버스 예약현황</h1>
+	<h1 class="ngeb clear"><i class="bg_color"></i>동해 셔틀버스 예약현황</h1>
 </div>
 
 <div class="container" id="contenttop">

@@ -541,7 +541,7 @@ function fnChannel(obj){
     if(obj.value == "17" || obj.value == "20"){ //양양
         $j("#resbus option").eq(1).hide();
         $j("#resbus").val("YY");
-    }else if(obj.value == "21" || obj.value == "22" || obj.value == "23" || obj.value == "30"){ //동해
+    }else if(obj.value == "21" || obj.value == "22" || obj.value == "23"){ //동해
         $j("#resbus option").eq(0).hide();
         $j("#resbus").val("DH");
     }

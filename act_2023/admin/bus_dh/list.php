@@ -9,11 +9,11 @@ $shopseq = 0;
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
-<script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/admin/_js/admin_ajax.js?v=<?=time()?>"></script>
+
+<script type="text/javascript" src="/act_2023/front/_js/channel_common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/channel_admin_common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/channel_admin_bus.js?v=<?=time()?>"></script>
+
 
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 예약관리</h1>
@@ -30,8 +30,7 @@ $shopseq = 0;
             <ul class="tabs" style="margin-left:5px;">
                 <li class="active" rel="tab1">검색관리</li>
                 <li rel="tab2">예약관리</li>
-                <li rel="tab3">정산관리</li>
-                <li rel="tab4">타채널예약</li>
+                <!-- <li rel="tab4">타채널예약</li> -->
                 <li rel="tab5">카톡안내</li>
             </ul>
 
@@ -63,37 +62,37 @@ $shopseq = 0;
                         </tr>
                         <tr>
                             <td colspan="6">
-                                양양행
+                               동해행
                             </td>
                         </tr>
                         <tr>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusY1" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울-양양행</label></th>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusD1" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D1')" />서울-동해행</label></th>
                             <th>사당선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa3" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ESa1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ESa2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ESa3" style="vertical-align:-3px;" />3호차</label>
                             </td>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />양양-서울행</label></th>
-                            <th>양양 오후</th>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />동해-서울행</label></th>
+                            <th>동해 오후</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY21" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY22" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY23" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE21" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE22" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE23" style="vertical-align:-3px;" />3호차</label>
                             </td>
                         </tr>
                         <tr>
                             <th>종로선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo3" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJo1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJo2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJo3" style="vertical-align:-3px;" />3호차</label>
                             </td>
-                            <th>양양 저녁</th>
+                            <th>동해 저녁</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY51" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY52" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY53" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE51" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE52" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE53" style="vertical-align:-3px;" />3호차</label>
                             </td>
                         </tr>
                         <tr>
@@ -112,13 +111,7 @@ $shopseq = 0;
                         </tr>
                         <tr>
                             <td colspan="6" style="text-align:center;">
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus/list_search.php');" />
-                                
-                                <a id="kakaotalk-sharing-btn" href="javascript:shareMessage();">
-                                <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-                                    alt="카카오톡 공유 보내기 버튼" />
-                                </a>
-                                
+                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="검색" onclick="fnSearchAdmin('bus_dh/list_search.php');" />
                             </td>
                         </tr>
                     </table>
@@ -131,11 +124,6 @@ $shopseq = 0;
                         <b>달력 날짜를 선택하세요.</b>
                     </div>
                     <div id="divResList"></div>
-                </div>
-                
-                <!-- #tab3 -->
-                <div id="tab3" class="tab_content" style="display:none;">
-                    <?include 'list_cal.php'?>
                 </div>
 
                 <!-- #tab4 -->
@@ -359,43 +347,7 @@ $shopseq = 0;
 
 <script>
 $j(document).ready(function(){
-	fnSearchAdmin('bus/list_search.php');
-	fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');
+	fnSearchAdmin('bus_dh/list_search.php');
+	fnSearchAdmin('bus_dh/list_search_channel.php', '#mngKakaoSearch', 'N');
 });
-
-</script>
-
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
-
-<script>
-    Kakao.init('15043b4ab2fd95556fa77e2c604d421e'); // 사용하려는 앱의 JavaScript 키 입력
-
-    function shareMessage() {
-
-        let strMsg = "공유할 텍스트 정보\n인원 : 10명";
-
-        Kakao.Share.sendDefault({
-            objectType: 'text',
-            text: strMsg,
-            link: {
-            // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-            mobileWebUrl: 'https://developers.kakao.com',
-            webUrl: 'https://developers.kakao.com',
-            },
-            buttons: [
-            {
-                title: '공유하기',
-                link: {
-                mobileWebUrl: 'https://actrip.co.kr/act_2023/admin/bus/test.html',
-                webUrl: 'https://actrip.co.kr/act_2023/admin/bus/test.html',
-                },
-            }
-            ],
-        });
-
-        
-    }
-
-    
-
 </script>
