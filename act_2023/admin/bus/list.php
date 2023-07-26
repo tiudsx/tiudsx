@@ -14,6 +14,7 @@ $shopseq = 0;
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_ajax.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/admin/_js/admin_package.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 예약관리</h1>
@@ -33,6 +34,7 @@ $shopseq = 0;
                 <li rel="tab3">정산관리</li>
                 <li rel="tab4">타채널예약</li>
                 <li rel="tab5">카톡안내</li>
+                <li rel="tab6">패키지관리</li>
             </ul>
 
             <!-- #container -->
@@ -181,6 +183,11 @@ $shopseq = 0;
                 <!-- #tab5 -->
                 <div id="tab5" class="tab_content" style="display:none;">
                     <?include 'list_cancel.php'?>
+                </div>
+
+                <!-- #tab6 -->
+                <div id="tab6" class="tab_content" style="display:none;">
+                    <?include 'list_package.php'?>
                 </div>
             </div>
             <!-- .tab_container -->
