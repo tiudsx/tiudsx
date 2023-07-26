@@ -72,6 +72,7 @@ include __DIR__.'/../../common/logininfo.php';
 						<option value='전화예약'>전화예약</option>
 						<option value='현장예약'>현장예약</option>
 						<option value='여기어때'>여기어때</option>
+						<option value='와이리(모행)'>와이리(모행)</option>
 						<option value='액트립'>액트립</option>
 						<option value='프립'>프립</option>
 						<option value='클룩'>클룩</option>

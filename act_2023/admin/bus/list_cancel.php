@@ -144,41 +144,6 @@
 			<label><input type="checkbox" id="chkbusKakaoNumY2" name="chkbusNum_Kakao[]" checked="checked" value="SY53" style="vertical-align:-3px;" />3호차</label>
 		</td>
 	</tr>
-	<tr>
-		<td colspan="6">
-			동해행
-		</td>
-	</tr>
-	<tr>
-		<th rowspan="2"><label><input type="checkbox" checked="checked" value="14" style="vertical-align:-3px;"  id="chkBusY1" name="chkBus[]" onclick="fnChkBusAll_Kakao(this, 'D1')" />서울-동해행</label></th>
-		<th>사당선</th>
-		<td>
-			<label><input type="checkbox" id="chkbusKakaoNumD1" name="chkbusNum_Kakao[]" checked="checked" value="ESa1" style="vertical-align:-3px;" />1호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD1" name="chkbusNum_Kakao[]" checked="checked" value="ESa2" style="vertical-align:-3px;" />2호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD1" name="chkbusNum_Kakao[]" checked="checked" value="ESa3" style="vertical-align:-3px;" />3호차</label>
-		</td>
-		<th rowspan="2"><label><input type="checkbox" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll_Kakao(this, 'D2')" />동해-서울행</label></th>
-		<th>동해 오후</th>
-		<td>
-			<label><input type="checkbox" id="chkbusKakaoNumD2" name="chkbusNum_Kakao[]" checked="checked" value="AE21" style="vertical-align:-3px;" />1호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD2" name="chkbusNum_Kakao[]" checked="checked" value="AE22" style="vertical-align:-3px;" />2호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD2" name="chkbusNum_Kakao[]" checked="checked" value="AE23" style="vertical-align:-3px;" />3호차</label>
-		</td>
-	</tr>
-	<tr>
-		<th>종로선</th>
-		<td>
-			<label><input type="checkbox" id="chkbusKakaoNumD1" name="chkbusNum_Kakao[]" checked="checked" value="EJo1" style="vertical-align:-3px;" />1호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD1" name="chkbusNum_Kakao[]" checked="checked" value="EJo2" style="vertical-align:-3px;" />2호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD1" name="chkbusNum_Kakao[]" checked="checked" value="EJo3" style="vertical-align:-3px;" />3호차</label>
-		</td>
-		<th>동해 저녁</th>
-		<td>
-			<label><input type="checkbox" id="chkbusKakaoNumD2" name="chkbusNum_Kakao[]" checked="checked" value="AE51" style="vertical-align:-3px;" />1호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD2" name="chkbusNum_Kakao[]" checked="checked" value="AE52" style="vertical-align:-3px;" />2호차</label>
-			<label><input type="checkbox" id="chkbusKakaoNumD2" name="chkbusNum_Kakao[]" checked="checked" value="AE53" style="vertical-align:-3px;" />3호차</label>
-		</td>
-	</tr>
 </table>
 <table class='et_vars exForm bd_tb' style="width:60%">
 	<colgroup>

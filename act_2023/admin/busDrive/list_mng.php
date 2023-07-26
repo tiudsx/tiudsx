@@ -17,6 +17,7 @@ $select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS 
 						WHERE code = 'bus'
 							AND res_date = '$selDate' 
 							AND res_confirm = 3 
+							AND seq = 7
 						GROUP BY seq, shopname, 
 							(CASE WHEN LEFT(res_busnum, 1) = 'Y'  OR LEFT(res_busnum, 1) = 'E' 
 								THEN RIGHT(res_busnum, 3) 
@@ -81,21 +82,6 @@ while ($rowSub = mysqli_fetch_assoc($result_bus)){
 	</colgroup>
 	<tr>
 		<th rowspan="2">서울 <> 양양</th>
-		<td>
-			<?foreach($arrBusY as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this, 'busDrive');" />
-			<?}?>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<?foreach($arrBusS as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this, 'busDrive');" />
-			<?}?>
-		</td>
-	</tr>
-	<tr>
-		<th rowspan="2">서울 <> 동해</th>
 		<td>
 			<?foreach($arrBusE as $key=>$value){?>
 				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this, 'busDrive');" />

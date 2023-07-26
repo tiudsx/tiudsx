@@ -25,7 +25,7 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [동해행] 사당선 출발 셔틀버스</b></td>
+                    <td colspan="3" height="28"><b>★ [동해행] 서울출발 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
@@ -33,129 +33,45 @@
                     <th style="text-align:center;">위치</th>
                 </tr>
 
-                <?if($arrSa["신도림"]){?>
+                <?if($arrSa["신도림역"]){?>
                 <tr>
-                    <th>신도림</th>
-                    <td><?=fnBusPointArr("YSa_신도림", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YSa_신도림", 1)?></font>
+                    <th>신도림역</th>
+                    <td><?=fnBusPointArr2023("동해_신도림역", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("동해_신도림역", $shopseq, 1)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 1, 1, '신도림', this);"></td>
-                </tr>
-                <?}?>
-
-                <?if($arrSa["대림역"]){?>
-                <tr>
-                    <th>대림역</th>
-                    <td><?=fnBusPointArr("YSa_대림역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YSa_대림역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 2, 1, '대림역', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('S', 1, 1, '신도림역', this);"></td>
                 </tr>
                 <?}?>
 
                 <?if($arrSa["사당역"]){?>
                 <tr>
                     <th>사당역</th>
-                    <td><?=fnBusPointArr("YSa_사당역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YSa_사당역", 1)?></font>
+                    <td><?=fnBusPointArr2023("동해_사당역", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("동해_사당역", $shopseq, 1)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 4, 1, '사당역', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('S', 2, 1, '사당역', this);"></td>
                 </tr>
                 <?}?>
 
-                <?if($arrSa["강남역"]){?>
+                <?if($arrSa["올림픽공원역"]){?>
                 <tr>
-                    <th>강남역</th>
-                    <td><?=fnBusPointArr("YSa_강남역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YSa_강남역", 1)?></font>
+                    <th>올림픽공원역</th>
+                    <td><?=fnBusPointArr2023("동해_올림픽공원역", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("동해_올림픽공원역", $shopseq, 1)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 5, 1, '강남역', this);"></td>
-                </tr>
-                <?}?>
-
-                <?if($arrSa["종합운동장역"]){?>
-                <tr>
-                    <th>종합운동장역</th>
-                    <td><?=fnBusPointArr("YSa_종합운동장역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YSa_종합운동장역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 6, 1, '종합운동장역', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('S', 3, 1, '올림픽공원역', this);"></td>
                 </tr>
                 <?}?>
             </tbody>
         </table>
     <?
     }
-    
-    if(count($arrJo) > 0){
-    ?>
-        <table view="tbBus2" class="et_vars">
-            <colgroup>
-                <col style="width:90px;">
-                <col style="width:auto;">
-                <col style="width:58px;">
-            </colgroup>
-            <tbody>
-                <tr>
-                    <td colspan="3" height="28"><b>★ [동해행] 종로선 출발 셔틀버스</b></td>
-                </tr>
-                <tr>
-                    <th style="text-align:center;"></th>
-                    <th style="text-align:center;">탑승장소 및 시간</th>
-                    <th style="text-align:center;">위치</th>
-                </tr>
-
-                <?if($arrJo["합정역"]){?>
-                <tr>
-                    <th>합정역</th>
-                    <td><?=fnBusPointArr("YJo_합정역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YJo_합정역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 2, 2, '합정역', this);"></td>
-                </tr>
-                <?}?>
-
-                <?if($arrJo["종로3가역"]){?>
-                <tr>
-                    <th>종로3가역</th>
-                    <td><?=fnBusPointArr("YJo_종로3가역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YJo_종로3가역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 3, 2, '종로3가역', this);"></td>
-                </tr>
-                <?}?>
-
-                <?if($arrJo["건대입구"]){?>
-                <tr>
-                    <th>건대입구</th>
-                    <td><?=fnBusPointArr("YJo_건대입구", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YJo_건대입구", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 5, 2, '건대입구', this);"></td>
-                </tr>
-                <?}?>
-
-                <?if($arrJo["종합운동장역"]){?>
-                <tr>
-                    <th>종합운동장역</th>
-                    <td><?=fnBusPointArr("YJo_종합운동장역", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("YJo_종합운동장역", 1)?></font>
-                    </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('Y', 6, 1, '종합운동장역', this);"></td>
-                </tr>
-                <?}?>
-            </tbody>
-        </table>
-
-    <?
-    }
-    
-    if(count($arrSa) > 0 || count($arrJo) > 0){
+    if(count($arrSa) > 0){
     ?>
         <table view="tbBus2" class="et_vars">
             <tbody>
                 <tr>
-                    <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;">금진해변 &gt; 대진항 &gt; 솔.동해점</span></b></td>
+                    <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;"><?=fnBusPointList('busPoint_End_dh')?></span></b></td>
                 </tr>
             </tbody>
         </table>
@@ -172,7 +88,7 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3" height="28"><b>★ [서울행] 서울행 출발 셔틀버스</b></td>
+                    <td colspan="3" height="28"><b>★ [서울행] 서울복귀 셔틀버스</b></td>
                 </tr>
                 <tr>
                     <th style="text-align:center;"></th>
@@ -185,30 +101,60 @@
                 <?if($arrS2["솔.동해점"]){?>
                 <tr>
                     <th>솔.동해점</th>
-                    <td><?=fnBusPointArr("AE2_솔.동해점", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_솔.동해점", 3)?></font>
+                    <td><?=fnBusPointArr2023("오후_솔.동해점", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_솔.동해점", $shopseq, 1)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 1, 1, '솔.동해점', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 1, 1, '솔.동해점', this);"></td>
                 </tr>
                 <?}?>
 
                 <?if($arrS2["대진해변"]){?>
                 <tr>
                     <th>대진해변</th>
-                    <td><?=fnBusPointArr("AE2_대진해변", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_대진해변", 3)?></font>
+                    <td><?=fnBusPointArr2023("오후_대진해변", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_대진해변", $shopseq, 1)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 2, 1, '대진해변', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 2, 1, '대진해변', this);"></td>
+                </tr>
+                <?}?>
+
+                <?if($arrS2["나인비치"]){?>
+                <tr>
+                    <th>망상 나인비치</th>
+                    <td><?=fnBusPointArr2023("오후_나인비치", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_나인비치", $shopseq, 1)?></font>
+                    </td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 3, 1, '나인비치', this);"></td>
                 </tr>
                 <?}?>
 
                 <?if($arrS2["금진해변"]){?>
                 <tr>
                     <th>금진해변</th>
-                    <td><?=fnBusPointArr("AE2_금진해변", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_금진해변", 3)?></font>
+                    <td><?=fnBusPointArr2023("오후_금진해변", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_금진해변", $shopseq, 1)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 4, 1, '금진해변', this);"></td>
+                </tr>
+                <?}?>
+
+                <?if($arrS2["서프홀릭"]){?>
+                <tr>
+                    <th>금진 서프홀릭</th>
+                    <td><?=fnBusPointArr2023("오후_서프홀릭", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_서프홀릭", $shopseq, 1)?></font>
+                    </td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 5, 1, '서프홀릭', this);"></td>
+                </tr>
+                <?}?>
+
+                <?if($arrS2["브라보서프"]){?>
+                <tr>
+                    <th>금진 브라보서프</th>
+                    <td><?=fnBusPointArr2023("오후_브라보서프", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("오후_브라보서프", $shopseq, 1)?></font>
+                    </td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 6, 1, '브라보서프', this);"></td>
                 </tr>
                 <?}?>
 
@@ -252,7 +198,7 @@
         <table view="tbBus3" class="et_vars">
             <tbody>
                 <tr>
-                    <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;"><?=fnBusPointList('busPoint_End')?></span></b></td>
+                    <td height="28" style="border: 0px solid #DDD;"><b>★ 도착정류장<br><span style="padding-left:30px;"><?=fnBusPointList('busPoint_End2')?></span></b></td>
                 </tr>
             </tbody>
         </table>

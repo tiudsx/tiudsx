@@ -126,10 +126,10 @@ if($count == 0){
                 ?>
             </td>
             <td>
-                <input type="button" class="gg_btn res_btn_color1" style="width:48px; height:25px;" value="재발송" onclick="fnBusChannelKakao('<?=$arrChk[10]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
+                <!-- <input type="button" class="gg_btn res_btn_color1" style="width:48px; height:25px;" value="재발송" onclick="fnBusChannelKakao('<?=$arrChk[10]?>', '<?=$arrChk[1]?>');" /> &nbsp;  -->
                 <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusChannelDel(<?=$row['codeseq']?>);" /></td>
             <td>
-                <?=$rtnTextCode?>                
+                              
             </td>
         </tr>
 <?}?>

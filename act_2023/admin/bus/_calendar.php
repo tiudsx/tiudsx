@@ -76,12 +76,14 @@ $select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, re
 			WHERE code = "bus"			
 				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 				AND res_confirm <> 3
+				AND seq = 7
 			GROUP BY res_date, res_confirm
 			UNION ALL
 			SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm, res_bus FROM `AT_RES_SUB`
 			WHERE code = "bus"			
 				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 				AND res_confirm = 3
+				AND seq = 7
 			GROUP BY res_date, res_confirm, res_bus';
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 

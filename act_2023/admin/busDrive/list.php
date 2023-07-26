@@ -15,7 +15,7 @@ $shopseq = -3;
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
-	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 예약현황</h1>
+	<h1 class="ngeb clear"><i class="bg_color"></i>양양 셔틀버스 예약현황</h1>
 </div>
 
 <div class="container" id="contenttop">

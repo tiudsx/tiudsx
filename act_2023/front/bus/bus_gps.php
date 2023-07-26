@@ -11,9 +11,29 @@ $result_set = mysqli_query($conn, $select_query);
 
 mysqli_query($conn, "COMMIT");
 
+$param_mid = $_REQUEST["mid"];
+
+if($param_mid == ""){
+	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
+
+	if (!empty(strpos($_SERVER["REQUEST_URI"], '?'))){
+		$param = substr($param, 0, strpos($_SERVER["REQUEST_URI"], '?') - 1);
+	}
+
+	$param = explode('_', $param)[0];
+}else{
+	$param = $param_mid;
+}
+
+$coupon_seq = 2;
+$gpsfolder = "";
+if($param == "surfbusgps_2023"){
+    $coupon_seq = 1;
+    //$gpsfolder = "_2023";
+}
 ?>
 <div id="wrap">
-    <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
+    <? include __DIR__.'/../../_layout/_channel_layout_top.php'; ?>
 
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
@@ -55,7 +75,7 @@ if($nowTime > 0500 && $nowTime < 1300){
 }else{
     $count = 0;
 }
-//$busList = "'Y','E', 'S','A'";
+$busList = "'Y','E', 'S','A'";
 
 if($count == 1){
     $arrMapList = array();
@@ -103,7 +123,7 @@ function fnBusGPSPoint(obj) {
     var params = "resparam=mappoint&busgubun=" + busnum;
     $j.ajax({
         type: "POST",
-        url: "/act_2023/front/bus/bus_gps_json.php",
+        url: "/act_2023/front/bus<?=$gpsfolder?>/bus_gps_json.php",
         data: params,
         success: function (data) {
             $j("input[btnpoint='point']").css("background", "").css("color", "");
@@ -163,7 +183,8 @@ function fnBusGPSPoint(obj) {
                     </td>
                 </tr>
             <?}else{?>
-                <?if($arrMapList["Y"]){?>
+                <?if($coupon_seq == 2){?>
+            <?if($arrMapList["Y"]){?>
                 <tr>
                     <th>서울 → 양양행</th>
                     <td style="line-height:3;">
@@ -183,7 +204,7 @@ function fnBusGPSPoint(obj) {
                 </tr>
                 <?
                 }
-                
+            }
                 if($arrMapList["E"]){
                 ?>
                 <tr>
@@ -218,7 +239,7 @@ function fnBusGPSPoint(obj) {
     </div>
 </div>
 
-<? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
+<? include __DIR__.'/../../_layout/_channel_layout_bottom.php'; ?>
 
 <script>    
     $j(document).ready(function() {

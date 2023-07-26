@@ -74,9 +74,11 @@ if($hidsearch == ""){ //초기화면 조회
     $select_query = 'SELECT a.resseq, a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
                         ON a.resnum = b.resnum 
                         INNER JOIN AT_PROD_MAIN as c ON b.seq = c.seq 
-                        LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
+                        LEFT JOIN AT_COUPON_CODE d 
+                            ON b.res_coupon = d.coupon_code
                         WHERE b.res_confirm IN ('.$res_confirm.')
                             AND b.code = "bus"
+                            AND d.couponseq = 31
                             AND res_date > CAST("2023-07-21" AS DATE)
                             AND b.res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
                             ORDER BY b.resnum, b.res_date, b.ressubseq';
@@ -168,35 +170,14 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         }
 ?>
             <tr name="btnTrList" <?=$trcolor?>>
-                <td <?=$rowspan?> style="text-align: center;"><a href='https://actrip.co.kr/orderview?resNumber=<?=$PreMainNumber?>' target='_blank'><?=$PreMainNumber?></a></td>
+                <td <?=$rowspan?> style="text-align: center;"><?=$PreMainNumber?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$shopname?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$user_name?><br>(<?=$user_tel?>)</td>
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:25px;" value="상태변경" onclick="fnBusModify(<?=$resseq?>);" />  
-                </td>
-                <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
-                </td>
-                <td <?=$rowspan?>>                    
-                    <?if($TotalDisPrice > 0){?>
-                    <b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
-                    <?if(($TotalPrice-$TotalDisPrice) > 0){?>
-                    <br>(할인:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)
-                    <?}
-                    }?>
-                </td>
-                <td <?=$rowspan?>>
-                    <?if($RtnTotalPrice > 0){?>
-                        <b><?=number_format($RtnTotalPrice).'원'?></b>
-                    <?}?>
-                </td>
-                <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
-                    <br>
-                    <?=coupontype("admin", $couponseq, $res_coupon)?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -233,7 +214,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <form name="frmConfirm" id="frmConfirm" autocomplete="off">
         <div class="gg_first"><?=$titleText?> 예약정보</div>
             <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
-                <colgroup>
+                <!-- <colgroup>
                     <col width="8%" />
                     <col width="8%" />
                     <col width="auto" />
@@ -245,20 +226,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <col width="4%" />
                     <col width="6%" />
                     <col width="6%" />
-                    <col width="7%" />
-                    <col width="6%" />
-                    <col width="5%" />
-                </colgroup>
+                </colgroup> -->
                 <tbody>
                     <tr>
                         <th rowspan="2">예약번호</th>
                         <th rowspan="2">행선지명</th>
                         <th rowspan="2">이름/연락처</th>
-                        <th colspan="6">예약항목</th>
-                        <th rowspan="2">승인처리</th>
-                        <th rowspan="2">정류장변경</th>
-                        <th rowspan="2">결제금액</th>
-                        <th rowspan="2">환불금액</th>
+                        <th colspan="5">예약항목</th>
                         <th rowspan="2">요청사항</th>
                     </tr>
                     <tr>
@@ -267,7 +241,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <th>좌석번호</th>
                         <th>정류장</th>
                         <th>예약상태</th>
-                        <th>환불</th>
                     </tr>
 <?
     }
@@ -401,8 +374,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <td style='text-align:center;'>".$busNumText."</td>
                     <td style='text-align:center;'>".$row['res_seat']."번</td>
                     <td style='text-align:center;'>".$row["res_spointname"]." > ".$row["res_epointname"]."</td>
-                    <td style='text-align:center;'>".$ResConfirmText."</td>
-                    <td style='text-align:center;'>$RtnBank</td>";
+                    <td style='text-align:center;'>".$ResConfirmText."</td>";
     }else{
         $trcolor = "";
         if(($i % 2) == 1 && $i > 0){
@@ -418,7 +390,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <td style='text-align:center;'>".$row['res_seat']."번</td>
                         <td style='text-align:center;'>".$row["res_spointname"]." > ".$row["res_epointname"]."</td>
                         <td style='text-align:center;'>".$ResConfirmText."</td>
-                        <td style='text-align:center;'>$RtnBank</td>
                     </tr>";
     }
 
@@ -436,36 +407,14 @@ if(($i % 2) == 0 && $i > 0){
 }
 ?>
             <tr name="btnTrList" <?=$trcolor?>>
-                <td <?=$rowspan?> style="text-align: center;"><a href='https://actrip.co.kr/orderview?resNumber=<?=$PreMainNumber?>' target='_blank'><?=$PreMainNumber?></a></td>
+                <td <?=$rowspan?> style="text-align: center;"><?=$PreMainNumber?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$shopname?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$user_name?><br>(<?=$user_tel?>)</td>
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:25px;" value="상태변경" onclick="fnBusModify(<?=$resseq?>);" />  
-                </td>
-                <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
-                </td>
-                <td <?=$rowspan?>>
-                    <?if($TotalDisPrice > 0){?>
-                    <b style="font-weight:700;color:red;"><?=number_format($TotalDisPrice).'원'?></b>
-                    <?if(($TotalPrice-$TotalDisPrice) > 0){?>
-                    <br>(할인:<?=number_format($TotalPrice-$TotalDisPrice).'원'?>)
-                    <?}
-                    }?>
-                </td>
-                <td <?=$rowspan?>>
-                    <?if($RtnTotalPrice > 0){?>
-                        <b><?=number_format($RtnTotalPrice).'원'?></b>
-                    <?}?>
-                </td>
-                <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
                         <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
-                    <br>
-                    
-                    <?=coupontype("admin", $couponseq, $res_coupon)?>
                 </td>
             </tr>
             <?=$reslist1?>

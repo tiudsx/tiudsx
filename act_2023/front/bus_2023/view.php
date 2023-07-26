@@ -61,6 +61,14 @@ $sbusDate = $busData[1];
 
 //연락처 모바일 여부
 if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
+
+if($coupon_seq == 31){ //모행
+	$terms = "http://www.mohaeng.co.kr/index/terms/privacy_policy";
+    $rootUrl = "http://www.mohaeng.co.kr/";
+}else{
+	$terms = "/act_2023/_clause/privacy.html";
+    $rootUrl = "/";
+}
 ?>
 <div id="wrap">
     <? include __DIR__.'/../../_layout/_channel_layout_top.php'; ?>
@@ -71,7 +79,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <div class="top_area_zone">
         <section class="shoptitle">
             <div style="padding:6px;">
-                <h1>셔틀버스 예약</h1>
+                <h1>금진,동해 셔틀버스 예약</h1>
                 <div class="shopsubtitle">[좌석선택하기] 클릭 후 좌석/정류장을 예약하세요~</div>
             </div>
         </section>
@@ -92,7 +100,11 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </div>
                 </div>
             </div>
-        <?if($coupon_seq != 31){?>
+        <?
+        $tab3_View = "";
+        if($coupon_seq != 31){
+            $tab3_View = "display:none;";    
+        ?>
             <div id="view_tab1">
                 <div class="noticeline" id="content_tab1">
                     <?if($arrChannel == ""){?>
@@ -160,7 +172,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
             </div>
         <?}?>
-            <div id="view_tab3" class="view_tab3">
+            <div id="view_tab3" class="view_tab3" style="<?=$tab3_View?>">
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
                     <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
@@ -362,7 +374,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="/act_2023/_clause/privacy.html" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
+                                <!-- /act_2023/_clause/privacy.html -->
+                                    <input type="checkbox" id="chk9" name="chk9"> <strong>개인정보 수집이용 동의 </strong> <a href="<?=$terms?>" target="_blank" style="float:none;">[내용확인]</a> (필수동의)
                                 </td>
                             </tr>
                         </tbody>
@@ -393,6 +406,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 <script>    
 	var busSeq = "<?=$shopseq?>";
     var busTypeY = "S", busTypeS = "E";
+    var busTypeTitle = "<?=$bus_type?>";
     var dayCode = "busseat";
     var businit = 0;
     var busrestype = "none";
@@ -427,7 +441,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             
         var cp = fnCoupon("BUS", "load", $j("#coupon").val());
         if(cp == 0){
-            location.href = "/";
+            location.href = "<?=$rootUrl?>";
             return;
         }else{
             busrestype = "channel";
@@ -482,7 +496,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 }
 
                 if(arrDataS.length == 1){
-                    //fnBusNext();
+                    fnBusNext();
                 }
             <?}else{?>
                 $j('#ulDaytype li').eq(2).click();
@@ -514,7 +528,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 }
 
                 if(arrDataS.length == 1 && arrDataE.length == 1){
-                    //fnBusNext();
+                    fnBusNext();
                 }
             <?}?>
         }

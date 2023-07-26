@@ -39,7 +39,7 @@ if($param == "none"){
         
     }
 
-    $pointurl = fnBusUrl($shopseq, "url");
+    $pointurl = fnBusUrl($shopseq, "point");
 }else{
     $pointurl = fnBusUrl($param, "tab");
 }
@@ -58,7 +58,7 @@ $sbusDate = $busData[1];
 if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
 ?>
 <div id="wrap">
-    <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
+    <? include __DIR__.'/../../_layout/_channel_layout_top.php'; ?>
 
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
@@ -92,7 +92,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     </div>
 </div>
 
-<? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
+<? include __DIR__.'/../../_layout/_channel_layout_bottom.php'; ?>
 
 <script>
     $j(document).ready(function() {
@@ -100,6 +100,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     });
 
 	var busSeq = "<?=$shopseq?>";
+    var busTypeTitle = "<?=fnBusUrl(fnBusUrl($shopseq, "url"), "type");?>";
 </script>
 
 <script type="text/javascript" src="/act_2023/front/_js/channel_bus.js?v=<?=time()?>"></script>

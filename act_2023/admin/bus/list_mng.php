@@ -17,6 +17,7 @@ $select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS 
 						WHERE code = 'bus'
 							AND res_date = '$selDate' 
 							AND res_confirm = 3 
+							AND seq = 7
 						GROUP BY seq, shopname, 
 							(CASE WHEN LEFT(res_busnum, 1) = 'Y'  OR LEFT(res_busnum, 1) = 'E' 
 								THEN RIGHT(res_busnum, 3) 

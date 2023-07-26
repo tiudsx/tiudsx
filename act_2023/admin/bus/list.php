@@ -99,41 +99,6 @@ $shopseq = 0;
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="6">
-                               동해행
-                            </td>
-                        </tr>
-                        <tr>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusD1" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D1')" />서울-동해행</label></th>
-                            <th>사당선</th>
-                            <td>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ESa1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ESa2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="ESa3" style="vertical-align:-3px;" />3호차</label>
-                            </td>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusD2" name="chkBus[]" checked="checked" value="14" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'D2')" />동해-서울행</label></th>
-                            <th>동해 오후</th>
-                            <td>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE21" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE22" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE23" style="vertical-align:-3px;" />3호차</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>종로선</th>
-                            <td>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJo1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJo2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD1" name="chkbusNum[]" checked="checked" value="EJo3" style="vertical-align:-3px;" />3호차</label>
-                            </td>
-                            <th>동해 저녁</th>
-                            <td>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE51" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE52" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumD2" name="chkbusNum[]" checked="checked" value="AE53" style="vertical-align:-3px;" />3호차</label>
-                            </td>
-                        </tr>
-                        <tr>
                             <th>검색기간</th>
                             <td colspan="5">
                                 <input type="hidden" id="hidsearch" name="hidsearch" value="init">
@@ -255,14 +220,14 @@ $shopseq = 0;
                 <td colspan="9">
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
+							<col width="110" />
+							<col width="180" />
+							<col width="63" />
 							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
-							<col width="*" />
+							<col width="70" />
+							<col width="110" />
+							<col width="90" />
+							<col width="100" />
 						</colgroup>
 						<tbody>
                             <tr>
@@ -270,7 +235,7 @@ $shopseq = 0;
                                 <th>호차</th>
                                 <th>좌석</th>
                                 <th>정류장</th>
-                                <th>현재예약</th>
+                                <th>상태</th>
                                 <th>예약상태
                                     <select class="select" onchange="fnSelChange(this, 0);">
                                         <option value="">전체</option>

@@ -1,5 +1,6 @@
 <? 
 include __DIR__.'/../../common/db.php';
+include __DIR__.'/../../common/func.php';
 ?>
 
 <?
@@ -44,7 +45,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     if($gubun == "Y" || $gubun == "E"){ //양양,동해행
         $busgubun0 = 1;
         $res_date0 = $row["res_date"];
-        $res_busnum0 = $row["res_busnum"];
+        if($shopseq == 7){
+            $res_busnum0 = $row["res_busnum"];
+
+        }else{
+            $res_busnum0 = fnBusCode($row["res_busnum"], $shopseq);
+        }
 
         $arrResInfoS[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
                                                 , "res_busnum" => $row["res_busnum"]
@@ -56,7 +62,11 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else{ //서울행
         $busgubun1 = 1;
         $res_date1 = $row["res_date"];
-        $res_busnum1 = $row["res_busnum"];
+        if($shopseq == 7){
+            $res_busnum1 = $row["res_busnum"];
+        }else{
+            $res_busnum1 = fnBusCode($row["res_busnum"], $shopseq);
+        }
 
         $arrResInfoE[$row["ressubseq"]] = array("ressubseq" => $row["ressubseq"]
                                                 , "res_busnum" => $row["res_busnum"]
@@ -75,13 +85,19 @@ if($shopseq == 7){ //양양 셔틀버스
     $bustype0 = "Y";
     $bustype1 = "S";
     $bustypeText0 = "양양행";
-    $bustypeText1 = "서울행";    
+    $bustypeText1 = "서울행";
+    $channel_name = "";
+    $channel_foldername = "_js";
+    $channel_foldername2 = "bus";
 }else{ //동해 셔틀버스
     $param = "surfbus_dh";
     $bustype0 = "E";
     $bustype1 = "A";
     $bustypeText0 = "동해행";
     $bustypeText1 = "서울행";
+    $channel_name = "channel_";
+    $channel_foldername = "front/_js";
+    $channel_foldername2 = "bus_2023";
 }
 
 $daytype = 0;
@@ -314,21 +330,24 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             </div>
         </section>
     </div>
-</div>
+</div><div id="nextbtn" class="busOption01" style="text-align:center;display:none;">
+                        <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusChangeNext();">
+                    </div>
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
 
-<script>    
-	var busTypeY = "E";
-    var busTypeS = "A";	
+<script>
+	var busSeq = "<?=$shopseq?>";
+	var busTypeY = "S";
+    var busTypeS = "E";	
     if($j("#shopseq").val() == 7){
 		busTypeY = "Y";
 		busTypeS = "S";
     }
 </script>
 
-<script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/<?=$channel_foldername?>/<?=$channel_name?>bus.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/<?=$channel_foldername?>/<?=$channel_name?>busday.js?v=<?=time()?>"></script>
 <script>
     var dayCode = "<?=$dayCode?>";
     var businit = 0;
@@ -349,7 +368,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
         "bus":"<?=$busgubun?>",
         "seq":"<?=$shopseq?>"
     }
-    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
+    $j.getJSON("/act_2023/front/<?=$channel_foldername2?>/view_bus_day.php", objParam,
         function (data, textStatus, jqXHR) {
             busData = data;
             console.log(data);
@@ -368,23 +387,4 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     <?}?>
 
     fnBusChangeNext();
-
-    // for (key in busResData) {
-    //     var arrVlu = busResData[key].split("/");
-
-    //     var seatvlu = 0;
-    //     if(vlu == 1){
-    //         if (!(arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A")) { //양양,동해행
-    //             seatvlu = arrVlu[1];
-    //         }
-    //     }else{
-    //         if (arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A") { //서울행
-    //             seatvlu = arrVlu[1];
-    //         }
-    //     }
-        
-    //     if(seatvlu > 0){
-    //         $j("#tbSeat .busSeatList[busSeat=" + seatvlu + "]").removeClass("busSeatListN").addClass("busSeatListC");
-    //     }
-    // }
 </script>

@@ -3,104 +3,148 @@ header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 header('Pragma: no-cache'); // HTTP 1.0.
 header('Expires: 0'); // Proxies.
 
-function channel_sendKakao($arrKakao){
-	$curl = curl_init();
+function fnKakaoSend($data){
+	// cURL 초기화
+	$ch = curl_init();
+	$data = json_encode($data);
 
-	$rtnMsg = channel_kakaoMsg($arrKakao);
-    
-	curl_setopt_array($curl, array(
-	  CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 30,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "POST",
-	  CURLOPT_POSTFIELDS => $rtnMsg,
-	  CURLOPT_HTTPHEADER => array(
-		"content-type: application/json", "userId: surfenjoy"
-	  ),
-	));
+	$API_PLEX_ID = "wairi";
+	$API_PLEX_KEY = "1758a135-43db-481a-a367-65b4d6a666bf";
+	$API_PLEX_URL = "https://27ep4ci1w0.apigw.ntruss.com/at-standard/v2/send";
 
-	$response = curl_exec($curl);
-	$err = curl_error($curl);
+	// Authorization 헤더 설정
+	$authorizationHeader = $API_PLEX_ID . ';' . $API_PLEX_KEY;
+	//Content-Type
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		  'Authorization: ' . $authorizationHeader,
+		  'Accept: application/json',
+		  'Content-Type: application/json;charset=utf-8')
+	);
+	// cURL 옵션 설정
+	curl_setopt($ch, CURLOPT_URL, $API_PLEX_URL);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
-	curl_close($curl);
+	// HTTPS 요청을 위한 설정
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
-	return array($response, $err);
+	// 요청 실행
+	$response = curl_exec($ch);
+
+	// // 요청 실패 시 에러 출력
+	// if ($response === false) {
+	//    log_message('debug', 'cURL Error: ' . curl_error($ch));
+	// }
+
+	// // 응답 출력
+	// log_message('debug', 'Plex response : ' . $response);
+
+	// cURL 세션 종료
+	curl_close($ch);
+
+	return array($response, curl_error($curl));
 }
 
-function channel_kakaoContent($arrKakao){
-	if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
-		$kakaoMsg = $arrKakao["smsTitle"]
-			.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-			.'\n서핑버스를 예약해주셔서 감사합니다.'
-			.'\n\n예약정보 [예약확정]'
-			.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
-			.'\n ▶ 예약자 : '.$arrKakao["userName"]
-			.'\n'.$arrKakao["msgInfo"]
-			.'---------------------------------'
-			.'\n ▶ 안내사항'
-			.'\n      - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
-			.'\n      - 이용일, 탑승위치 확인 및 탑승시간 10분전 도착 부탁드려요~';
-
-	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채널 알림톡발송
-		if($arrKakao["PROD_TYPE"] == "bus_channel"){ //타채널 알림톡발송
-			$kakaoMsg = $arrKakao["smsTitle"]
-				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-				.'\n모행을 이용해주셔서 감사합니다.'
-				.'\n셔틀버스 좌석/정류장 예약관련 안내드립니다.'
-				.'\n\n예약정보 [예약대기]'
-				.'\n ▶ 예약상품 : 모행 셔틀버스'
-				.'\n ▶ 예약자 : '.$arrKakao["userName"]
-				.'\n ▶ 예약좌석'.$arrKakao["msgInfo"]
-				.'\n---------------------------------'
-				.'\n ▶ 안내사항'
-				.'\n      - [예약하기] 클릭 후 좌석/정류장을 예약해주세요.';
-
-		}else if($arrKakao["PROD_TYPE"] == "bus_push"){ // 타채널 재발송 안내
-			$kakaoMsg = $arrKakao["smsTitle"]
-				.'\n\n안녕하세요. '.$arrKakao["userName"].'님'
-				.'\n카카오채널로 예약링크를 안내드렸으나 예약확정이 안되어 다시 한번 안내드립니다.'
-				.'\n\n예약정보 [예약대기]'
-				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
-				.'\n ▶ 예약자 : '.$arrKakao["userName"]
-				.'\n---------------------------------'
-				.'\n ▶ 안내사항'
-				.'\n      - [예약하기] 클릭 후 좌석/정류장을 예약해주세요.';
-
-		}
-	}
-
-	return $kakaoMsg;
+function at_config($template_code, $data)
+{
+	$API_OUTGOING_KEY = "bba88a59f6f79c784c2ed3ce2a0c1bdacf8f0bef";
+	$at_template = at_template($template_code, $data);
+	if ($template_code == 'acrtip_reservation') {
+	  return array(
+		 "msg_type" => "AT",
+		 "msg_data" => array(
+			array(
+			   "msg_key" => $template_code,
+			   "sender_number" => "01027561810",
+			   "receiver_number" => $data['receiver_number'],
+			   "msg" => $at_template,
+			   "sender_key" => $API_OUTGOING_KEY,
+			   "template_code" => $template_code,
+			   "attachment" => array(
+				  "button" => array(
+					 array(
+						"name" => "예약하기",
+						"type" => "WL",
+						"url_mobile" => "https://actrip.co.kr/".$data['url']
+					 )
+				  )
+			   )
+			)
+		 )
+	  );
+   }else if($template_code == 'actrip_notice'){
+		return array(
+			"msg_type" => "AT",
+			"msg_data" => array(
+			array(
+				"msg_key" => $template_code,
+				"sender_number" => "01027561810",
+				"receiver_number" => $data['receiver_number'],
+				"msg" => $at_template,
+				"sender_key" => $API_OUTGOING_KEY,
+				"template_code" => $template_code
+				)
+			)
+		);
+   }
 }
 
-function channel_kakaoMsg($arrKakao){
-	$Url = "https://actrip.co.kr/";
+function at_template($template_code, $data): string
+{
+   switch ($template_code) {
+	  case 'acrtip_reservation' : //일반고객 구매_파트너 발송
+		 $msg = acrtip_reservation($data);
+		 break;
+	case 'actrip_notice' : //예약 확정 안내
+		$msg = actrip_notice($data);
+		break;
+	  default:
+		 $msg = '';
+		 break;
+   }
 
-	$btn_ResSearch = '{"type":"WL","name":"예약조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResSearch"].'"}';
-	$btn_ResChange = '{"type":"WL","name":"좌석/정류장 변경","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResChange"].'"}';
-	$btn_ResPoint = '{"type":"WL","name":"탑승시간/위치 안내","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResPoint"].'"}';
-	$btn_ResGPS = '{"type":"WL","name":"셔틀버스 실시간위치 조회","url_mobile":"https://actrip.co.kr/'.$arrKakao["btn_ResGPS"].'"}';
+   return $msg;
+}
 
-	$btnList = "";
-    if($arrKakao["tempName"] == "frip_bus02"){ //셔틀버스 예약확정
-        $btnList = '"button1":'.$btn_ResSearch
-			.',"button2":'.$btn_ResChange
-			.',"button3":'.$btn_ResPoint
-			.',"button4":'.$btn_ResGPS.',';
+function acrtip_reservation($data)
+{
+       return '[모행 버스 예약 안내]
 
-	}else if($arrKakao["tempName"] == "at_bus_kakao"){ //타채녈 셔틀버스 예약안내
-		$btnList = '"button1":{"type":"WL","name":"예약하기","url_mobile":"https://actrip.co.kr/'.$arrKakao["link1"].'"},';
-	}
+안녕하세요 '.$data['name'].'님, 모행입니다.
 
-	$arrKakao["kakaoMsg"] = channel_kakaoContent($arrKakao); //카카오 메시지 내용
+아래 내용으로 버스 예약이 접수되었습니다.
+아래 링크를 통해 좌석/정류장 예약 진행 부탁드립니다 :)
 
-	//문자발송용 변수
-	$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
+■ 예약 정보
+ - 예약상품: '.$data['shop_name'].'
+ - 예약자: '.$data['reservation_name'].'
+ - 예약좌석'.$data['seat'].'
 
-	$arryKakao = '[{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$msgSmsBtn.'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
+■ 버스 예약 안내
+ - [예약하기] 버튼을 클릭 후 좌석/정류장을 예약해주세요.
+ - 잔여석이 없을 경우 예약이 취소될 수 있으니 빠른 예약 부탁드립니다 :)
 
-    return $arryKakao;
+
+※ 문의사항이 있으실 경우, 모행 홈페이지 내 채널톡을 이용해주시면 더욱 빠른 상담이 가능합니다. 감사합니다.';
+}
+
+function actrip_notice($data)
+{
+   return '[모행 이용 안내]
+
+안녕하세요 '.$data['name'].'님, 액티비티 플랫폼 모행입니다 :)
+예약하신 상품 관련 안내사항 전달드립니다.
+
+■ 예약 정보
+- 예약상품: '.$data['shop_name'].'
+- '.$data['reservation_information'].'
+- 예약자: '.$data['reservation_name'].'
+---------------------------------
+▶ 안내사항
+'.$data['information'].'
+
+※ 문의사항이 있으실 경우, 모행 홈페이지 내 채널톡을 이용해주시면 더욱 빠른 상담이 가능합니다. 감사합니다.';
 }
 ?>

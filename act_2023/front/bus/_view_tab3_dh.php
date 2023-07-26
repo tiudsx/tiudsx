@@ -132,11 +132,11 @@
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '금진해변', this);"></td>
                 </tr>
                 <tr>
-                    <th>브라보서프</th>
-                    <td><?=fnBusPointArr("AE2_브라보서프", 0)?><br>
-                        <font color="red"><?=fnBusPointArr("AE2_브라보서프", 3)?></font>
+                    <th>서프홀릭</th>
+                    <td><?=fnBusPointArr("AE2_서프홀릭", 0)?><br>
+                        <font color="red"><?=fnBusPointArr("AE2_서프홀릭", 3)?></font>
                     </td>
-                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '브라보서프', this);"></td>
+                    <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('A', 3, 1, '서프홀릭', this);"></td>
                 </tr>
             </tbody>
         </table>

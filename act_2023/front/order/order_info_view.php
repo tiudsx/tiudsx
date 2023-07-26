@@ -4,6 +4,7 @@ $couponPrice = 0;
 $totalPrice = 0;
 $shopbankview = 0;
 $PointChangeChk = 0;
+$shopseq = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 
@@ -14,6 +15,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$res_confirm = $row['res_confirm'];
 	$res_coupon = $row['res_coupon'];
 	$couponseq = $row['couponseq'];
+	$shopseq = $row['seq'];
 
 	$chkView = 0;
 	$chkViewPrice = 1;
@@ -96,8 +98,17 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	//============= 환불금액 구역 =============
 	if($row['code'] == "bus"){
 		//셔틀버스 탑승 정보
-		$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));
-		$RtnBank = "탑승시간 : ".$arrPoint[0]." (".$arrPoint[1].")";
+		if($shopseq == 14){
+			$arrTime = fnBusPointArr2023("동해_신도림역", $shopseq, 1);
+			$arrPoint = fnBusPointArr2023("동해_신도림역", $shopseq, 0);
+
+		}else{
+			$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));
+			$arrTime = $arrPoint[0];
+			$arrPoint = $arrPoint[1];
+
+		}
+		$RtnBank = "탑승시간 : ".$arrTime." (".$arrPoint.")";
 		$ResNum = "구매수:".$row['res_ea'];
 	}else{
 		$RtnBank = '';
@@ -254,13 +265,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		}
 		if($PointChangeChk > 0 && $row['code'] == "bus"){
 		?>
-	
+<?if($shopseq != 14){?>
 	<div class="write_table" style="text-align:center;">
 	<input type="button" class="gg_btn gg_btn_grid large" style="width:100px; height:28px;color: #fff !important; background: #9326ff;display:;" value="내좌석 보기" onclick="location.href='/seatview?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
 
 	<input type="button" class="gg_btn gg_btn_grid large" style="width:110px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경" onclick="location.href='/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
 	</div>
-	
+<?}?>
 		<?
 		}
 
