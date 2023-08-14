@@ -64,6 +64,70 @@ jQuery(function() {
         }
     });
 
+    jQuery('input[cal=sdate2]').datepicker({
+        minDate: new Date("2020-04-01"),
+        beforeShow: function(date) {
+            var calObj = jQuery(this).parents("tr").find("[cal=edate2]");
+            if(calObj.val() == ""){
+                jQuery(this).datepicker("option", "maxDate", null);
+            }else{
+                var date = calObj.datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).datepicker("option", "maxDate", date);
+            }
+        },
+        onClose: function(selectedDate) {
+            // 시작일(fromDate) datepicker가 닫힐때
+            // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
+            var calObj = jQuery(this).parents("tr").find("[cal=edate2]");
+            if(jQuery(this).val() == ""){
+
+            }else{
+                var date = jQuery(this).datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).next().datepicker("option", "minDate", date);
+
+                //버스 구분
+                if($j("#busgubun").length > 0){
+                    if($j("#busgubun").val() == 1){ //1박 왕복
+                        calObj.val(plusDate(date.yyyymmdd(), 1));
+                    }else if($j("#busgubun").val() == 2){ //당일 왕복
+                        calObj.val(plusDate(date.yyyymmdd(), 0));
+                    }
+                }
+            }
+        }
+    });
+
+
+    jQuery('input[cal=edate2]').datepicker({
+        minDate: new Date("2020-05-01"),
+        beforeShow: function(date) {
+            if(jQuery(this).parents("tr").find("[cal=sdate2]").val() == ""){
+                jQuery(this).datepicker("option", "minDate", null);
+            }else{
+                var date = jQuery(this).parents("tr").find("[cal=sdate2]").datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).datepicker("option", "minDate", date);
+            }
+        },
+        onClose: function(selectedDate) {
+            // 시작일(fromDate) datepicker가 닫힐때
+            // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
+            if(jQuery(this).val() == ""){
+
+            }else{
+                var date = jQuery(this).datepicker('getDate');
+
+                date.setDate(date.getDate()); // Add 7 days
+                jQuery(this).prev().datepicker("option", "maxDate", date);
+            }
+        }
+    });
+
     var topBar = $j(".vip-tabwrap").offset();
     $j(window).scroll(function() {
         var docScrollY = $j(document).scrollTop();

@@ -187,7 +187,8 @@ if($param == "BusI"){
         if($msgType == 2){ //입금대기
             $pointTime = ' -> '.$endLocationE[$i];
         }else{
-            $pointTime = ' / '.explode("|", fnBusPoint($startLocationE[$i], $busCode))[0];
+            // $pointTime = ' / '.explode("|", fnBusPoint($startLocationE[$i], $busCode))[0];
+            $pointTime = ' / '.fnBusPointArr2023("오후_".$startLocationE[$i], $shopseq, 1);
         }
 
         if(array_key_exists($BusDateEnd[$i].$busCode, $arrSeatInfoE)){

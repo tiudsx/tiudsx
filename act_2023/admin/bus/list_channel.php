@@ -12,6 +12,8 @@
 	<tr>
 		<td colspan="6">
 			알림톡 발송 번호
+
+			<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:22px;" value="날짜/인원 초기화" onclick="fnDataReset();" />
 		</td>
 	</tr>
 	<tr>
@@ -24,12 +26,17 @@
 	</tr>
 	<tr>
 		<td>
+			<select id="busgubun" onchange="fnAdminBusGubun(this, 1);">
+				<option value="3">편도</option>
+				<option value="2">당일 왕복</option>
+				<option value="1">1박 왕복</option>
+			</select>
 			<select id="reschannel" onchange="fnChannel(this);">
 				<option value="11">프립</option>
 				<option value="17" kakaoUrl="https://open.kakao.com/o/goYwKe5e">프립-마린</option>
 				<option value="20" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">프립-인구</option>
 				<option value="21" kakaoUrl="https://open.kakao.com/o/g58J34ff">프립-서팩 동해</option>
-				<option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
+				<option value="22" kakaoUrl="https://open.kakao.com/o/g15tGdBf">프립-힐링캠프</option>
 				<option value="16">클룩</option>
 				<option value="7">네이버쇼핑</option>
 				<option value="15">서프존</option>
@@ -38,7 +45,7 @@
 				<option value="26" kakaoUrl="https://open.kakao.com/o/goYwKe5e">네이버-마린</option>
 				<option value="27" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">네이버-인구</option>
 				<option value="28" kakaoUrl="https://open.kakao.com/o/g58J34ff">네이버-서팩 동해</option>
-				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
+				<option value="29" kakaoUrl="https://open.kakao.com/o/g15tGdBf">네이버-힐링캠프</option>
 				<option value="23">금진 브라보</option>
 				<option value="30">엑스크루</option>
 				<option value="31">모행</option>
@@ -53,16 +60,16 @@
 		<td><input type="text" id="username" name="username" style="width:66px;" value="" class="itx2" maxlength="20" onkeyup="spacetrim(this);"></td>
 		<td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="20" onkeyup="spacetrim(this);"></td>
 		<td>
-			<input type="text" id="resDate1" name="resDate1" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
-			<select id="resbusseat1">
+			<input type="text" id="resDate1" name="resDate1" cal="sdate2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+			<select id="resbusseat1" onchange="fnAdminBusGubun(this, 2);fnseatcheck(this);">
 			<?for ($i=0; $i < 20; $i++) { 
 				echo '<option value="'.$i.'">'.$i.'명</option>';
 			}?>
 			</select>
 		</td>
 		<td>
-			<input type="text" id="resDate2" name="resDate2" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
-			<select id="resbusseat2">
+			<input type="text" id="resDate2" name="resDate2" cal="edate2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+			<select id="resbusseat2" onchange="fnseatcheck(this);">
 			<?for ($i=0; $i < 20; $i++) { 
 				echo '<option value="'.$i.'">'.$i.'명</option>';
 			}?>
@@ -108,7 +115,14 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="6" style="text-align:center;"><input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" /></td>
+		<td colspan="6" style="text-align:center;">
+			<select id="datareset">
+				<option value="1">-- 날짜/인원 초기화 --</option>
+				<option value="0">-- 날짜유지 --</option>
+				<option value="2">-- 인원 초기화 --</option>
+			</select><br><br>
+			<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" />
+		</td>
 	</tr>
 </table>
 </form>

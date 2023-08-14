@@ -47,10 +47,10 @@ echo ("
 	<div class='tour_calendar_header'>
 ");
 if($selMonth > 202003){
-	echo "<a href='javascript:fnCalMoveAdminList(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
+	echo "<a href='javascript:fnCalMoveAdminList(\"$p_m\", 0, -2);' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
 }
 
-echo "<a href='javascript:fnCalMoveAdminList(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
+echo "<a href='javascript:fnCalMoveAdminList(\"$n_m\", 0, -2);' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 
 echo ("
 		<div class='tour_calendar_title'>

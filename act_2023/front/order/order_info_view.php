@@ -99,8 +99,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	if($row['code'] == "bus"){
 		//셔틀버스 탑승 정보
 		if($shopseq == 14){
-			$arrTime = fnBusPointArr2023("동해_신도림역", $shopseq, 1);
-			$arrPoint = fnBusPointArr2023("동해_신도림역", $shopseq, 0);
+			$code1 = substr($row['res_bus'], 0, 1);
+			if($code1 == "E"){
+				$code1 = "동해";
+			}else{
+				$code1 = "오후";
+			}
+
+			$arrTime = fnBusPointArr2023($code1."_".$row['res_spointname'], $shopseq, 1);
+			$arrPoint = fnBusPointArr2023($code1."_".$row['res_spointname'], $shopseq, 0);
 
 		}else{
 			$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));

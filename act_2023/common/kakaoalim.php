@@ -185,7 +185,7 @@ function kakaoContent($arrKakao){
 				$kakaolink = "\n    https://open.kakao.com/o/g58J34ff\n";
 			}else if($arrKakao["couponseq"] == "22" || $arrKakao["couponseq"] == "29"){ //솔게하 패키지
 				$kakaoInfo = "\n\n ▶ 힐링 서핑캠프 오픈톡에 꼭 참여해주세요.\n    참여시 [이용일]+실명으로 입장해주세요 :)";
-				$kakaolink = "\n    https://open.kakao.com/o/g4UVz4ff\n";
+				$kakaolink = "\n    https://open.kakao.com/o/g15tGdBf\n";
 			}
 
 			$kakaoMsg = $arrKakao["smsTitle"]
@@ -236,7 +236,7 @@ function kakaoContent($arrKakao){
 				$kakaolink = "\n    https://open.kakao.com/o/g58J34ff";
 			}else if($arrKakao["PROD_URL"] == "22" || $arrKakao["PROD_URL"] == "29"){ //솔게하 패키지
 				$kakaoInfo = "\n\n ▶ 힐링 서핑캠프 오픈톡에 꼭 참여해주세요.\n    참여시 [이용일]+실명으로 입장해주세요 :)";
-				$kakaolink = "\n    https://open.kakao.com/o/g4UVz4ff";
+				$kakaolink = "\n    https://open.kakao.com/o/g15tGdBf";
 			}
 
 			$kakaoMsg = $arrKakao["smsTitle"]

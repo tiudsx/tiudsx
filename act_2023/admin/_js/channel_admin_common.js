@@ -139,9 +139,11 @@ function fnCalMoveAdminList(selDate, day, seq) {
     if (seq == 0 || seq == -2 || seq == -3) { //서핑버스
         $j("#divResList").html("");
         $j("#initText2").css("display", "");
-
+        
         if (seq == 0) { //서핑버스
             var calurl = "bus_mohaeng/_calendar.php";
+        }else if(seq == -2){
+            var calurl = "bus_dh/_calendar.php";
         }else if (seq == -3) { //서핑버스 등록관리
             var calurl = "busDrive_dh/_calendar.php";
         }

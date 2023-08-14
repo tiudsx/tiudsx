@@ -115,7 +115,7 @@
                 </tr>
             <?
             $i = 0;
-            foreach(array_reverse($ePoint) as $key=>$value){
+            foreach($ePoint as $key=>$value){
 
             $pointName = explode("_",$key)[1];
             $pointInfo = explode("|",$value);

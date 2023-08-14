@@ -113,6 +113,18 @@ function fnResKakaoAdmin(){
                 $j("#userphone").val("");
                 $j("#username").val("");
 
+                if($j("#datareset").val() == "0"){
+
+                }else if($j("#datareset").val() == "1"){
+                    $j("#resDate1").val("");
+                    $j("#resDate2").val("");
+                    $j("#resbusseat1").val(0);
+                    $j("#resbusseat2").val(0);
+                }else{
+                    $j("#resbusseat1").val(0);
+                    $j("#resbusseat2").val(0);
+                }
+
                 fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');
             }
         }
@@ -927,4 +939,36 @@ function fnCalMoveAdminCal(selDate, day) {
     var nowDate = new Date();
     $j("#tab3").load("/act_2023/admin/bus/list_cal.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
 
+}
+
+
+//편도, 왕복 구분
+function fnAdminBusGubun(obj, type){
+    if(type == 1){
+        $j("#resDate1").val("");
+        $j("#resDate2").val("");
+        $j("#resbusseat1").val(0);
+        $j("#resbusseat2").val(0);
+    }else{
+        if($j("#busgubun").val() == 1){ //1박 왕복
+            $j("#resbusseat2").val($j("#resbusseat1").val());
+        }else if($j("#busgubun").val() == 2){  //당일 왕복
+            $j("#resbusseat2").val($j("#resbusseat1").val());
+        }else{
+
+        }
+    }
+}
+
+function fnseatcheck(obj){
+    if($j(obj).val() == 0){
+        //$j(obj).prev().val("");
+    }
+}
+
+function fnDataReset(){
+    $j("#resDate1").val("");
+    $j("#resDate2").val("");
+    $j("#resbusseat1").val(0);
+    $j("#resbusseat2").val(0);    
 }

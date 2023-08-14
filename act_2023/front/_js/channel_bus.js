@@ -695,7 +695,7 @@ function fnSeatSelected(obj) {
         var arrObjs = eval("busPoint." + busType.toLowerCase() + "PointS" );
         var arrObje = eval("busPoint." + busType.toLowerCase() + "PointE");
 
-        var selVlu = "", selVlu2 = "";
+        var selVlu = "", selVlu2 = "", selVlu3 = "";
         if(buschannel == 17 || buschannel == 26){ //마린서프
             selVlu = "기사문해변";
         }else if(buschannel == 20 || buschannel == 24 || buschannel == 27){ //인구서프, 엉클 프립
@@ -704,9 +704,18 @@ function fnSeatSelected(obj) {
             selVlu = "대진해변";
         }else if(buschannel == 22 || buschannel == 29){ //솔게하
             selVlu = "솔.동해점";
-        }else if(buschannel == 23 || buschannel == 31){ //브라보서프, 모행
-            selVlu = "서프홀릭";
-            selVlu2 = "솔.동해점";
+        }else if(buschannel == 23){ //브라보서프
+            selVlu = "브라보서프";
+        }else if(buschannel == 31){ //모행
+            if(busType == "S"){
+                selVlu = "서프홀릭";
+                selVlu2 = "브라보서프";
+                selVlu3 = "솔.동해점";
+            }else{
+                selVlu = "솔.동해점";
+                selVlu2 = "서프홀릭";
+                selVlu3 = "브라보서프";
+            }
         }else if(buschannel == 25){ //금진 프립
             selVlu = "금진해변";
         }
@@ -721,6 +730,8 @@ function fnSeatSelected(obj) {
                     sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }else if(selVlu2 != "" && selVlu2 == el.code){
                     sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+                }else if(selVlu3 != "" && selVlu3 == el.code){
+                    sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }else if(selVlu == ""){
                     sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }
@@ -732,6 +743,8 @@ function fnSeatSelected(obj) {
                     ePoint += "<option value='N'>도착</option>";
                     ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }else if(selVlu2 != "" && selVlu2 == el.code){
+                    ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+                }else if(selVlu3 != "" && selVlu3 == el.code){
                     ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
                 }else if(selVlu == ""){
                     ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    
@@ -819,7 +832,7 @@ function fnSeatChangeSelected(arrVlu) {
     var arrObjs = eval("busPoint." + returnBusType.toLowerCase() + "PointS" );
     var arrObje = eval("busPoint." + returnBusType.toLowerCase() + "PointE");
 
-    var selVlu = "", selVlu2 = "";
+    var selVlu = "", selVlu2 = "", selVlu3 = "";
     if(buschannel == 17 || buschannel == 26){ //마린서프
         selVlu = "기사문해변";
     }else if(buschannel == 20 || buschannel == 24 || buschannel == 27){ //인구서프, 엉클 프립
@@ -828,9 +841,12 @@ function fnSeatChangeSelected(arrVlu) {
         selVlu = "대진해변";
     }else if(buschannel == 22 || buschannel == 29){ //솔게하
         selVlu = "솔.동해점";
-    }else if(buschannel == 23 || buschannel == 31){ //브라보서프, 모행
-        selVlu = "서프홀릭";
-        selVlu2 = "솔.동해점";
+    }else if(buschannel == 23){ //브라보서프
+        selVlu = "브라보서프";
+    }else if(buschannel == 31){ //모행
+        selVlu = "브라보서프";
+        selVlu2 = "서프홀릭";
+        selVlu3 = "솔.동해점";
     }else if(buschannel == 25){ //금진 프립
         selVlu = "금진해변";
     }
@@ -842,7 +858,9 @@ function fnSeatChangeSelected(arrVlu) {
             if(selVlu != "" && selVlu == el.code){
                 sPoint += "<option value='N'>출발</option>";
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
-            }else if(selVlu2 != "" && selVlu2 == el.code){
+            }else if(selVlu2 != "" && selVlu3 == el.code){
+                sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else if(selVlu3 != "" && selVlu3 == el.code){
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else if(selVlu == ""){
                 sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
@@ -854,7 +872,9 @@ function fnSeatChangeSelected(arrVlu) {
             if(selVlu != "" && selVlu == el.code){
                 ePoint += "<option value='N'>도착</option>";
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
-            }else if(selVlu2 != "" && selVlu2 == el.code){
+            }else if(selVlu2 != "" && selVlu3 == el.code){
+                ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            }else if(selVlu3 != "" && selVlu3 == el.code){
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
             }else if(selVlu == ""){
                 ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>";    

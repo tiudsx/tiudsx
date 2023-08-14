@@ -27,7 +27,7 @@
 			<select id="busgubun" onchange="fnAdminBusGubun(this, 1);">
 				<option value="1">1박 왕복</option>
 				<option value="2">당일 왕복</option>
-				<option value="3">편도 왕복</option>
+				<option value="3">편도</option>
 			</select>
 			<?if($user_id == "mohaeng"){?>
 				<input type="hidden" id="reschannel" name="reschannel" value="31">
@@ -36,8 +36,8 @@
 			<select id="reschannel">
 				<option value="31">모행</option>
 				<option value="23">금진 브라보</option>
-				<option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
-				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
+				<option value="22" kakaoUrl="https://open.kakao.com/o/g15tGdBf">프립-힐링캠프</option>
+				<option value="29" kakaoUrl="https://open.kakao.com/o/g15tGdBf">네이버-힐링캠프</option>
 			</select>
 			<?}?>
 		</td>

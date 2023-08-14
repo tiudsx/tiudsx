@@ -24,12 +24,17 @@
 	</tr>
 	<tr>
 		<td>
+			<select id="busgubun" onchange="fnAdminBusGubun(this, 1);">
+				<option value="3">편도</option>
+				<option value="2">당일 왕복</option>
+				<option value="1">1박 왕복</option>
+			</select>
 			<select id="reschannel" onchange="fnChannel(this);">
 				<option value="11">프립</option>
 				<option value="17" kakaoUrl="https://open.kakao.com/o/goYwKe5e">프립-마린</option>
 				<option value="20" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">프립-인구</option>
 				<option value="21" kakaoUrl="https://open.kakao.com/o/g58J34ff">프립-서팩 동해</option>
-				<option value="22" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">프립-힐링캠프</option>
+				<option value="22" kakaoUrl="https://open.kakao.com/o/g15tGdBf">프립-힐링캠프</option>
 				<option value="16">클룩</option>
 				<option value="7">네이버쇼핑</option>
 				<option value="15">서프존</option>
@@ -38,7 +43,7 @@
 				<option value="26" kakaoUrl="https://open.kakao.com/o/goYwKe5e">네이버-마린</option>
 				<option value="27" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">네이버-인구</option>
 				<option value="28" kakaoUrl="https://open.kakao.com/o/g58J34ff">네이버-서팩 동해</option>
-				<option value="29" kakaoUrl="https://open.kakao.com/o/g4UVz4ff">네이버-힐링캠프</option>
+				<option value="29" kakaoUrl="https://open.kakao.com/o/g15tGdBf">네이버-힐링캠프</option>
 				<option value="23">금진 브라보</option>
 				<option value="30">엑스크루</option>
 				<option value="31">모행</option>

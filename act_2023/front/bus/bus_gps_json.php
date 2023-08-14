@@ -36,17 +36,35 @@ if($param == "mappoint"){ //상세정보
     $mappoint = "";
     $mapNum = 0;
 
-    $busDataJson = fnBusPoint("", "");
-    $arrBusGubun = substr($busgubun, 0, 3);
+    
+    $arrBusGubun = substr($busgubun, 0, 1);
     $arrBusPoint = substr($busgubun, 1, 2);
     $arrBusData = array();
-    foreach($busDataJson as $key => $value){
-        if($arrBusPoint == substr($key, 1, 2)){
-            $arrBusData[explode("_", $key)[1]] = $value;
-        }    
+    if($arrBusGubun == "E" || $arrBusGubun == "A"){
+        //동해 노선
+        $busDataJson = fnBusPoint2023("", "", 14);
+    }else{
+        //양양 노선
+        $busDataJson = fnBusPoint("", "");
+
     }
 
-    $i = 0;
+    foreach($busDataJson as $key => $value){
+        if($arrBusGubun == "E"){  //동해행
+            if("동해" == explode("_", $key)[0]){
+                $arrBusData[explode("_", $key)[1]] = $value;
+            }
+        }else if($arrBusGubun == "A"){ //동해 서울행
+            if("오후" == explode("_", $key)[0]){
+                $arrBusData[explode("_", $key)[1]] = $value;
+            }
+        }else{
+            //양양
+            if($arrBusPoint == substr($key, 1, 2)){
+                $arrBusData[explode("_", $key)[1]] = $value;
+            }
+        }
+    }
 
     if($arrBusPoint == "Sa" || $arrBusPoint == "Jo"){
         $MARKER_SPRITE_Y_OFFSET = "MARKER_SPRITE_Y_OFFSET*3";
@@ -54,6 +72,7 @@ if($param == "mappoint"){ //상세정보
         $MARKER_SPRITE_Y_OFFSET = "0";
     }
 
+    $i = 0;
     foreach($arrBusData as $key => $value){
         $arrVlu = explode("|", $value);
         
@@ -70,6 +89,7 @@ if($param == "mappoint"){ //상세정보
         $i++;
     }
 
+    //버스 행선지
     while ($row = mysqli_fetch_assoc($result_setlist)){
         $busNum = $row['busName'];
         $busgubun = $row['bus_gubun'];
@@ -114,11 +134,11 @@ if($param == "mappoint"){ //상세정보
         // }
 
         $busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=1|";
-        if($busgubun == "E" || $busgubun == "A"){
-            $busGPS .= "busGPSList.bus = {'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
-        }else{
+        // if($busgubun == "E" || $busgubun == "A"){
+        //     $busGPS .= "busGPSList.bus = {'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
+        // }else{
             $busGPS .= "busGPSList.bus = {".$mappoint.",'$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$busgubun']}";
-        }
+        // }
         $mapNum++;
     }
 

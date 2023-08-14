@@ -53,6 +53,17 @@ if($reqCode == "busday"){
 
     for ($i=0; $i <= 45; $i++) { 
         $seatYN = "Y";
+
+        //동해행 - 프립
+        if(($_REQUEST["busNum"] == "SSa1" ) && $i <= 3 && $_REQUEST["busDate"] == "2023-08-12"){
+            $seatYN = "N";
+        }
+
+        //동해행 - 프립
+        if(($_REQUEST["busNum"] == "EE21" ) && $i <= 2 && $_REQUEST["busDate"] == "2023-08-13"){
+            $seatYN = "N";
+        }
+
         $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
     }
 
