@@ -178,7 +178,7 @@ for($r=0;$r<=$ra;$r++){
 			}
 
 			if($arrResCount[7][$ru] != ""){
-				$adminText .= "<br><font color='black'>취소</font>";
+				//$adminText .= "<br><font color='black'>취소</font>";
 				$gubunChk .= "97,";
 			}
 

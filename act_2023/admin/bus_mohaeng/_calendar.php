@@ -72,33 +72,21 @@ echo ("
 		<tbody>
 	");
 	
-$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm, "" as res_bus FROM `AT_RES_SUB` a
-				INNER JOIN AT_COUPON_CODE c
-					ON a.res_coupon = c.coupon_code
-					AND c.couponseq = 31
-			WHERE code = "bus"
-				AND a.seq = 14
-				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
-				AND res_date > CAST("2023-07-21" AS DATE)
-				AND res_confirm <> 3
-			GROUP BY res_date, res_confirm
-			UNION ALL
-			SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm, res_bus FROM `AT_RES_SUB` b
-				INNER JOIN AT_COUPON_CODE d
+$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm, res_bus, CASE WHEN d.couponseq = 31 THEN 0 ELSE 1 END AS coupon_seq FROM `AT_RES_SUB` b
+				LEFT JOIN AT_COUPON_CODE d
 					ON b.res_coupon = d.coupon_code
-					AND d.couponseq = 31
 			WHERE code = "bus"	
 				AND b.seq = 14		
 				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
 				AND res_date > CAST("2023-07-21" AS DATE)
 				AND res_confirm = 3
-			GROUP BY res_date, res_confirm, res_bus';
+			GROUP BY res_date, res_confirm, res_bus, coupon_seq';
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 $arrResCount = array();
 $arrResConfirm = array();
 while ($rowCal = mysqli_fetch_assoc($result_setlist_cal)){
 	if($rowCal['res_confirm'] == 3){
-		$arrResConfirm[$rowCal['res_bus']][$rowCal['sDay']] = $rowCal['Cnt'];
+		$arrResConfirm[$rowCal['res_bus']][$rowCal['sDay']][$rowCal['coupon_seq']] = $rowCal['Cnt'];
 	}
 	
 	$arrResCount[$rowCal['res_confirm']][$rowCal['sDay']] = $rowCal['Cnt'];
@@ -143,12 +131,24 @@ for($r=0;$r<=$ra;$r++){
 			$gubunChk = "";
 			if($arrResCount[3][$ru] != ""){
 				$cnt = 0;
+				$cnt2 = 0;
 				foreach ($arrResConfirm as $key => $value) {
 					//$adminText .= "<br><font color='red'><b>".$key.$value[$ru]."명 확정</b></font>";
-					$cnt += $value[$ru];
+					// if($value[$ru][0] == null){
+					// 	$value[$ru][0] = 0;
+					// }
+
+					// if($value[$ru][1] == null){
+					// 	$value[$ru][1] = 0;
+					// }
+					
+					$cnt += $value[$ru][0];
+					$cnt2 += $value[$ru][1];
 				}
 				
-				$adminText .= "<br><font color='red'><b>".$cnt."명 확정</b></font>";
+				$adminText .= "<br><font color='red'><b>모행 : ".$cnt."명</b></font>";
+				$adminText .= "<br><font color='red'><b>ACT : ".$cnt2."명</b></font>";
+				$adminText .= "<br><font>".($cnt + $cnt2)."명</font>";
 
 				$gubunChk .= "3,";
 			}
