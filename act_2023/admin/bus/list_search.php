@@ -68,7 +68,7 @@ if($hidsearch == ""){ //초기화면 조회
     }
 
     if($schText != ""){
-        $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
+        $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR  REPLACE(a.user_tel, "-", "") like "%'.str_replace('-', '', $schText).'%")';
     }
 
     $select_query = 'SELECT a.resseq, a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 

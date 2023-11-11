@@ -9,8 +9,8 @@ include __DIR__.'/../../common/db.php';
 $select_query = "SELECT A.*, REPLACE(B.name, '서핑버스 ', '') AS name FROM `AT_COUPON_CODE` AS A 
                     INNER JOIN AT_COUPON AS B 
                         ON A.couponseq = B.couponseq                        
-                    WHERE A.couponseq IN (7,10,11,12,14,15,16,17,20,21,22,23,26,27,28,29,30,31) AND A.use_yn = 'N'
-                    ORDER BY A.codeseq DESC";
+                    WHERE A.couponseq IN (7,10,11,12,14,15,16,17,20,21,22,23,26,27,28,29,30) AND A.use_yn = 'N'
+                    ORDER BY A.codeseq DESC"; //31 모행 제외
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -126,7 +126,9 @@ if($count == 0){
                 ?>
             </td>
             <td>
+                <?if($row['name'] != "모행"){?>
                 <input type="button" class="gg_btn res_btn_color1" style="width:40px; height:25px;" value="독촉" onclick="fnBusChannelKakao('<?=$arrChk[10]?>', '<?=$arrChk[1]?>');" /> &nbsp; 
+                <?}?>
                 <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusChannelDel(<?=$row['codeseq']?>);" /></td>
             <td>
                 <?=$rtnTextCode?>                
