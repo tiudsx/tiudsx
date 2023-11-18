@@ -565,7 +565,7 @@ function shortURL($url){
 	//echo "status_code:".$status_code."<br />";
 	curl_close ($ch);
 	if($status_code == 200) {
-	  return $response;
+	  return json_decode($response,true)["result"]["url"];
 	} else {
 	  return "Error :".$response;
 	}

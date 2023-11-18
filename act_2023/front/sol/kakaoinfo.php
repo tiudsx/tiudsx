@@ -343,7 +343,7 @@ if($count_sub == 0){
             </div>
 
             <div style="padding:10px 0 5px 0;font-size:12px;">
-            <a href="http://pf.kakao.com/_wxhsxgd" target="_blank" rel="noopener"><img src="/act_2023/images/mainImg/kakaochat_sol.jpg" class="placeholder"></a>
+            <a href="http://pf.kakao.com/_tHqMG" target="_blank" rel="noopener"><img src="/act_2023/images/mainImg/kakaochat_sol.jpg" class="placeholder"></a>
             </div>
         </section>
     </div>

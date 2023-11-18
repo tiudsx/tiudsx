@@ -775,46 +775,35 @@ function fnSearchAdminListTabSol(selDate, url) {
     });
 }
 
-//카톡 단일건 발송
-function fnKakaoSend(resseq) {
-    if (!confirm("알림톡 발송을 하시겠습니까?")) {
-        return;
-    }
-
-    var formData = { "resparam": "solkakao1", "resseq": resseq };
-    $j.post("/act_2023/admin/sol/list_save.php", formData,
-        function(data, textStatus, jqXHR) {
-            alert("알림톡 발송이 완료되었습니다.");
-            $j("calbox[sel='yes']").click();
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-        alert(textStatus);
-
-    });
-}
-
-function fnKakaoCheckSend() {
-    var chkVluY = $j("input[id=chkresseq]:checked").map(function() { return $j(this).val(); }).get();
-    if (chkVluY == "") {
-        alert("카톡 발송할 예약건을 선택해주세요.");
-        return;
-    }
-
-    if (!confirm("알림톡 발송을 하시겠습니까?")) {
-        return;
-    }
-
+//알롬톡 발송
+function fnKakaoSend(resseq, selBool) {
     var formData = [{ "name": "resparam", "value": "solkakaoAll" }];
-    $j("input[id=chkresseq]:checked").each(function(idx) {
-        formData.push({ "name": "chkresseq[]", "value": $j(this).val() });
-    });
+
+    if(selBool){
+        var chkVluY = $j("input[id=chkresseq]:checked").map(function() { return $j(this).val(); }).get();
+        if (chkVluY == "") {
+            alert("카톡 발송할 예약건을 선택해주세요.");
+            return;
+        }
+
+        $j("input[id=chkresseq]:checked").each(function(idx) {
+            formData.push({ "name": "chkresseq[]", "value": $j(this).val() });
+        });
+    }else{
+        formData.push({ "name": "chkresseq[]", "value": resseq });
+    }
+
+    if (!confirm("알림톡 발송을 하시겠습니까?")) {
+        return;
+    }
 
     $j.post("/act_2023/admin/sol/list_save.php", formData,
         function(data, textStatus, jqXHR) {
-            alert("알림톡 발송이 완료되었습니다.");
-            $j("calbox[sel='yes']").click();
+            //alert("알림톡 발송이 완료되었습니다.");
+            console.log("알림톡 : ", data, textStatus, jqXHR);
+            //$j("calbox[sel='yes']").click();
         }).fail(function(jqXHR, textStatus, errorThrown) {
         alert(textStatus);
-
     });
 }
 

@@ -5,8 +5,11 @@ header('Expires: 0'); // Proxies.
 
 function sendKakao($arrKakao){
 	$curl = curl_init();
-
-	$rtnMsg = kakaoMsg($arrKakao);
+	if($arrKakao["tempName"] == "sol_info01" || $arrKakao["tempName"] == "sol_info02"){
+		$rtnMsg = kakaoMsg2024($arrKakao);
+	}else{
+		$rtnMsg = kakaoMsg($arrKakao);
+	}
     
 	curl_setopt_array($curl, array(
 	  CURLOPT_URL => "https://alimtalk-api.bizmsg.kr/v2/sender/send",
@@ -28,6 +31,173 @@ function sendKakao($arrKakao){
 	curl_close($curl);
 
 	return array($response, $err);
+}
+
+
+function kakaoMsg2024($arrKakao){
+	$btnList = "";
+	$arryKakao = '';
+	foreach($arrKakao["arryData"] as $item) {
+
+		//내용 안내
+		$msgKakao = kakaoContent2024($arrKakao, $item);
+		$arrKakao["kakaoMsg"] = $msgKakao["kakaoMsg"];
+		$items = $msgKakao["items"];
+		
+		//문자발송용 변수
+		$msgSms = $arrKakao["kakaoMsg"];
+
+		$arryKakao .= '{
+			"message_type":"at"
+			,"phn":"82'.substr(str_replace('-', '',$item["userPhone"]), 1).'"
+			,"profile":"97a40cc247321233e99ceb03ab355c1e6ee4b9dd"
+			,"tmplId":"'.$arrKakao["tempName"].'"
+			,"msg":"'.$arrKakao["kakaoMsg"].'"
+
+			,"header":"'.$arrKakao["title"].'"
+			'.$items.'
+			,"smsKind":"L"
+			,"msgSms":"'.$msgSms.'"
+			,"smsSender":"'.str_replace('-', '',$item["userPhone"]).'"
+			,"smsLmsTit":"'.$arrKakao["title"].'"
+			,"smsOnly":"'.$arrKakao["smsOnly"].'"
+		}';
+
+		if( next( $arrKakao["arryData"] ) ) {
+			$arryKakao .= ",";
+		}
+	}
+
+	$arryKakao = '['.$arryKakao.']';
+	
+    
+    return $arryKakao;
+}
+
+function kakaoContent2024($arrKakao, $item){
+	$bankText = "농협 / 0-4337-5080-8";
+
+	if($arrKakao["tempName"] == "sol_info01"){ //솔게하 계좌안내
+		$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+			.'\n솔게하&솔서프 동해점을 예약해주셔서 감사합니다.'
+			.'\n입금 완료 후 예약확정 및 이용 가능합니다.'
+			.'\n\n ▶ 계좌번호 : '.$bankText
+			.'\n\n안내된 계좌로 입금 부탁드립니다.'
+			.'\n감사합니다.';
+
+		$items = '
+		,"items": {
+			"item": {
+				"list": [
+					{
+					"title": "예약자",
+					"description": "'.$item["userName"].'"
+					},
+					{
+					"title": "이용일",
+					"description": "'.$item["userDate"].'"
+					},
+					{
+					"title": "계좌번호",
+					"description": "'.$bankText.'"
+					},
+					{
+					"title": "예금주명",
+					"description": "이승철"
+					}
+				],
+				"summary": {
+					"title": "입금금액",
+					"description": "'.$item["userPrice"].'"
+				}
+			},
+			"itemHighlight": {
+				"title": "입금계좌 안내",
+				"description": "입금 완료 후 확정 됩니다."
+			}
+		}';
+
+		$items_text = $arrKakao["title"]
+		.'\n\n입금계좌 안내'
+		.'\n입금 완료 후 확정 됩니다.'
+		.'\n\n예약자 : '.$item["userName"]
+		.'\n이용일 : '.$item["userDate"]
+		.'\n계좌번호 : '.$bankText
+		.'\n예금주명 : 이승철'
+		.'\n입금금액 : '.$item["userPrice"]
+		.'\n\n';
+
+	}else if($arrKakao["tempName"] == "sol_info02"){ //솔게하 확정안내
+		$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+			.'\n솔게하&솔서프 동해점을 예약해주셔서 감사합니다.'
+			.'\n예약하신 정보를 안내드립니다.'
+			.'\n\n예약안내 : '.$item["link1"]
+			.'\n\n▶ 안내사항'
+			.'\n - 숙박 고객님은 입실시간 확인 후 셀프 체크인 부탁드려요~';
+			//.'\n - 기타 자세한 내용은 예약안내 링크에서 확인가능합니다.';
+
+		$items = '
+		,"items": {
+			"item": {
+				"list": [
+					{
+					"title": "예약자",
+					"description": "'.$item["userName"].'"
+					},
+					{
+					"title": "이용일",
+					"description": "'.$item["userDate"].'"
+					}
+				]
+			},
+			"itemHighlight": {
+				"title": "예약확정 안내",
+				"description": "아래 예약안내 링크를 확인해주세요."
+			}
+		}';
+
+		$items_text = $arrKakao["title"]
+		.'\n\n예약확정 안내'
+		.'\n아래 예약안내 링크를 확인해주세요.'
+		.'\n\n예약자 : '.$item["userName"]
+		.'\n이용일 : '.$item["userDate"]
+		.'\n\n';
+	}
+
+	return array(
+		"kakaoMsg"=> $kakaoMsg
+		, "items"=> $items
+		, "items_text"=> $items_text
+	);	
+}
+
+function kakaoDebug2024($response, $returnCode){	
+	$datetime = date('Y/m/d H:i'); 
+
+	$resnum = $response["item"]["DebugInfo"]["resnum"];
+	$PROD_NAME = $response["item"]["DebugInfo"]["PROD_NAME"];
+	$PROD_TABLE = $response["item"]["DebugInfo"]["PROD_TABLE"];
+	$PROD_TYPE = $response["item"]["DebugInfo"]["PROD_TYPE"];
+	$RES_CONFIRM = $response["item"]["DebugInfo"]["RES_CONFIRM"];
+	$USER_NAME = $response["item"]["userName"];
+	$USER_TEL = $response["item"]["userPhone"];
+	$KAKAO_DATE = $datetime;
+	
+	$items_text = kakaoContent2024($response["arrKakao"], $response["item"])["items_text"];
+	$KAKAO_CONTENT = $items_text.kakaoContent2024($response["arrKakao"], $response["item"])["kakaoMsg"]; //카카오 메시지 내용
+	
+	$KAKAO_BTN1 = "";
+	$KAKAO_BTN2 = "";
+	$KAKAO_BTN3 = "";
+	$KAKAO_BTN4 = "";
+	$KAKAO_BTN5 = "";
+
+	$code = $response["code"];
+	$msgid = $response["msgid"];
+	$message = $response["message"];
+	$originMessage = $response["originMessage"];
+
+	return "INSERT INTO `AT_KAKAO_HISTORY`(`resnum`, `PROD_NAME`, `PROD_TABLE`, `PROD_TYPE`, `RES_CONFIRM`, `USER_NAME`, `USER_TEL`, `KAKAO_DATE`, `KAKAO_CONTENT`, `KAKAO_BTN1`, `KAKAO_BTN2`, `KAKAO_BTN3`, `KAKAO_BTN4`, `KAKAO_BTN5`, `response`, `err`, `code`, `msgid`, `message`, `originMessage`) VALUES ('$resnum','$PROD_NAME','$PROD_TABLE','$PROD_TYPE',$RES_CONFIRM,'$USER_NAME','$USER_TEL','$KAKAO_DATE','$KAKAO_CONTENT','$KAKAO_BTN1','$KAKAO_BTN2','$KAKAO_BTN3','$KAKAO_BTN4','$KAKAO_BTN5', '$returnCode', '', '$code', '$msgid', '$message', '$originMessage');";
 }
 
 function kakaoContent($arrKakao){
@@ -339,7 +509,18 @@ function kakaoMsg($arrKakao){
 		//문자발송용 변수
 		$msgSmsBtn = $arrKakao["kakaoMsg"].'\n\n ▶ 문의 : http://pf.kakao.com/_HxmtMxl';
 
-		$arryKakao = '[{"message_type":"at","phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'","profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca","tmplId":"'.$arrKakao["tempName"].'","msg":"'.$arrKakao["kakaoMsg"].'",'.$btnList.'"smsKind":"L","msgSms":"'.$msgSmsBtn.'","smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'","smsLmsTit":"'.$arrKakao["smsTitle"].'","smsOnly":"'.$arrKakao["smsOnly"].'"}]';
+		$arryKakao = '[{
+			"message_type":"at"
+			,"phn":"82'.substr(str_replace('-', '',$arrKakao["userPhone"]), 1).'"
+			,"profile":"70f9d64c6d3b9d709c05a6681a805c6b27fc8dca"
+			,"tmplId":"'.$arrKakao["tempName"].'"
+			,"msg":"'.$arrKakao["kakaoMsg"].'"
+			,'.$btnList.'"smsKind":"L"
+			,"msgSms":"'.$msgSmsBtn.'"
+			,"smsSender":"'.str_replace('-', '',$arrKakao["userPhone"]).'"
+			,"smsLmsTit":"'.$arrKakao["smsTitle"].'"
+			,"smsOnly":"'.$arrKakao["smsOnly"].'"
+		}]';
 	}
     
     return $arryKakao;

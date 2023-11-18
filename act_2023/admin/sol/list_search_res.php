@@ -71,10 +71,7 @@ if($count == 0){
  <div class="contentimg bd">
     <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
-
-        <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoCheckSend();" />
+        
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;" id="tbSolList">
@@ -148,7 +145,7 @@ $css_table_right = " border-right:2px solid #c0c0c0";
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
 
-        <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoCheckSend();" />
+        <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoSend(null, true);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
@@ -437,7 +434,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>"><?=$rtnText?></td>
         <td style="<?=$fontcolor?>"><?=$rtnTextCode?>
             <?if($res_confirm == "확정"){?>
-            <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>);" />
+            <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>, false);" />
             <?}?>
         </td>
         <td style="<?=$fontcolor?>"><?=$res_company?></td>
