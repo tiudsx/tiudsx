@@ -21,9 +21,11 @@ if($param_mid == ""){
 	$param = $param_mid;
 }
 
-$shopseq = fnBusUrl($param, "seq");
-$pointurl = fnBusUrl($param, "tab");
-$bus_type = fnBusUrl($param, "type");
+$arrBus = fnBusUrl($param);
+
+$shopseq = $arrBus["seq"];
+$pointurl = $arrBus["tab"];
+$bus_type = $arrBus["type"];
 
 $arrChannel = $_REQUEST["param"];
 $coupon_seq = 0;

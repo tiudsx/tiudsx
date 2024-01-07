@@ -13,6 +13,7 @@ $arrS2 = array(); //서울행 오후
 $arrS5 = array(); //서울행 저녁
 
 $shopseq = 14; //동해
+
 if($param == "none"){
     if($resNumber != "none"){
         $select_query = "SELECT * FROM AT_RES_SUB WHERE resnum = $resNumber";
@@ -39,9 +40,9 @@ if($param == "none"){
         
     }
 
-    $pointurl = fnBusUrl($shopseq, "point");
+    $pointurl = fnBusUrl($shopseq)["point"];
 }else{
-    $pointurl = fnBusUrl($param, "tab");
+    $pointurl = fnBusUrl($param)["tab"];
 }
 
 $select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
@@ -100,7 +101,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     });
 
 	var busSeq = "<?=$shopseq?>";
-    var busTypeTitle = "<?=fnBusUrl(fnBusUrl($shopseq, "url"), "type");?>";
+    var busTypeTitle = "<?=fnBusUrl($shopseq)["type"];?>";
 </script>
 
 <script type="text/javascript" src="/act_2023/front/_js/channel_bus.js?v=<?=time()?>"></script>

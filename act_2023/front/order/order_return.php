@@ -295,7 +295,7 @@ if($param == "RtnPrice"){
         $busTypeS = "S";
         $busTitleName = "양양";
         $resparam = "surfbus_yy";
-    }else{
+    }else if($shopseq == 14){
         $busTypeY = "E";
         $busTypeS = "A";
         $busTitleName = "동해"; 

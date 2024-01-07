@@ -43,162 +43,6 @@ function plusDate($date, $count) {
 	return $NextDate;
 }
 
-
-//셔틀버스 이름
-function fnBusNum($vlu){
-	$busGubun = substr($vlu, 0, 1);
-	$busPoint = substr($vlu, 1, 2);
-	$busNumber = substr($vlu, 3, 1);
-
-	if($busPoint == "Sa"){ //사당선
-		$busPoint = "사당선";
-	}else if($busPoint == "Jo"){ //종로선
-		$busPoint = "종로선";
-	}else if($busPoint == "Y2" || $busPoint == "E2"){ //서울행 오후
-		$busPoint = "오후";		
-	}else if($busPoint == "Y5" || $busPoint == "E5"){ //서울행 저녁
-		$busPoint = "저녁";		
-	}
-
-	if($busGubun == 'Y'){
-		$busGubun = '양양행';
-	}else if($busGubun == 'E'){
-		$busGubun = '동해행';
-	}else{
-		$busGubun = '서울행';
-	}
-
-	
-	return $busGubun.' '.$busPoint.' '.$busNumber.'호차';
-}
-
-//셔틀버스 정류장 탑승시간, 위치
-function fnBusPoint($vlu, $busNumber){
-	$busNumber = substr($busNumber, 0, 3);
-
-	$busData = array(
-		// "YSa_신도림"=> "06:00|홈플러스 신도림점 앞|37.5095592|126.8885712|00:00"
-		// , "YSa_대림역"=> "06:07|대림역 2번출구 앞|37.4928008|126.8947074|00:00"
-		// , "YSa_사당역"=> "06:20|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336|00:00"
-		// , "YSa_강남역"=> "06:35|강남역 1번출구 버스정류장|37.4982078|127.0290928|00:00"
-		// , "YSa_종합운동장역"=> "06:50|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925|00:00"
-
-		// , "YJo_합정역"=> "05:50|합정역 3번출구 앞|37.5507926|126.9159159|00:00"
-		// , "YJo_종로3가역"=> "06:10|종로3가역 12번출구 새마을금고 앞|37.5703347|126.99317687|00:00"
-		// , "YJo_건대입구"=> "06:35|건대입구역 롯데백화점 스타시티점 입구|37.5393413|127.0716672|00:00"
-		// , "YJo_종합운동장역"=> "06:50|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925|00:00"
-		
-		// , "SY2_남애3리"=> "14:30|남애3리 입구|37.9452543|128.7814356|17:30"
-		// , "SY2_인구해변"=> "14:35|현남면사무소 맞은편|37.9689758|128.7599915|17:35"
-		// , "SY2_죽도해변"=> "14:42|GS25 죽도비치점 맞은편|37.9720003|128.7595433|17:42"
-		// , "SY2_기사문해변"=> "14:50|기사문 해변주차장 입구|38.0053627|128.7306342|17:50"
-		// , "SY2_서피비치"=> "15:00|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575|18:00"
-
-		  "YSa_신도림"=> "05:40|홈플러스 신도림점 앞|37.5095592|126.8885712|00:00"
-		, "YSa_대림역"=> "05:47|대림역 2번출구 앞|37.4928008|126.8947074|00:00"
-		, "YSa_사당역"=> "06:10|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336|00:00"
-		, "YSa_강남역"=> "06:25|강남역 1번출구 버스정류장|37.4982078|127.0290928|00:00"
-		, "YSa_종합운동장역"=> "06:40|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925|00:00"
-
-		, "YJo_합정역"=> "05:35|합정역 3번출구 앞|37.5507926|126.9159159|00:00"
-		, "YJo_종로3가역"=> "05:55|종로3가역 12번출구 새마을금고 앞|37.5703347|126.99317687|00:00"
-		, "YJo_건대입구"=> "06:25|건대입구역 롯데백화점 스타시티점 입구|37.5393413|127.0716672|00:00"
-		, "YJo_종합운동장역"=> "06:40|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925|00:00"
-
-		, "SY2_남애3리"=> "14:00|남애3리 입구|37.9452543|128.7814356|17:30"
-		, "SY2_인구해변"=> "14:05|현남면사무소 맞은편|37.9689758|128.7599915|17:35"
-		, "SY2_죽도해변"=> "14:10|GS25 죽도비치점 맞은편|37.9720003|128.7595433|17:42"
-		, "SY2_기사문해변"=> "14:20|기사문 해변주차장 입구|38.0053627|128.7306342|17:50"
-		, "SY2_서피비치"=> "14:30|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575|18:00"
-
-		, "SY5_남애3리"=> "17:30|남애3리 입구|37.9452543|128.7814356|00:00"
-		, "SY5_인구해변"=> "17:35|현남면사무소 맞은편|37.9689758|128.7599915|00:00"
-		, "SY5_죽도해변"=> "17:42|GS25 죽도비치점 맞은편|37.9720003|128.7595433|00:00"
-		, "SY5_기사문해변"=> "17:50|기사문 해변주차장 입구|38.0053627|128.7306342|00:00"
-		, "SY5_서피비치"=> "18:00|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575|00:00"
-
-		// , "ESa_신도림"=> "05:50|테크노마트 신도림점 앞|37.5095592|126.8885712|00:00"
-		// , "ESa_사당역"=> "06:20|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336|00:00"
-		// , "ESa_올림픽공원역"=> "06:50|올림픽공원역 1번출구 버스정류장 앞쪽|37.5104765|127.0722925|00:00"
-
-		, "AE2_솔.동해점"=> "14:30|솔게스트하우스 동해서핑점 입구|37.5782382|129.1156248|0"
-		, "AE2_대진해변"=> "14:35|대진해변 공영주차장 입구|37.5807657|129.111344|0"
-		, "AE2_나인비치"=> "14:40|망상 나인비치 주차장 입구|37.589873|129.0949103|0"
-		, "AE2_금진해변"=> "14:55|금진해변 공영주차장 입구|37.6347202|129.0450586|0"
-		, "AE2_서프홀릭"=> "15:00|금진해변 서프홀릭 입구|37.6380981|129.0440093|0"
-		// , "AE5_솔.동해점"=> "17:10|솔게스트하우스 동해서핑점 입구|37.5782382|129.1156248|00:00"
-		// , "AE5_대진해변"=> "17:15|대진해변 공영주차장 입구|37.5807657|129.111344|00:00"
-		// , "AE5_금진해변"=> "17:35|금진해변 공영주차장 입구|37.6347202|129.0450586|00:00"
-
-		// ,"YD-S-Sa_신도림"=> "05:40|홈플러스 신도림점 앞|37.5095592|126.8885712|00:00"
-		// , "YD-S-Sa_대림역"=> "05:47|대림역 2번출구 앞|37.4928008|126.8947074|00:00"
-		// , "YD-S-Sa_사당역"=> "06:10|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336|00:00"
-		// , "YD-S-Sa_강남역"=> "06:25|강남역 1번출구 버스정류장|37.4982078|127.0290928|00:00"
-		// , "YD-S-Sa_종합운동장역"=> "06:40|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925|00:00"
-
-		// , "YD-S-Jo_합정역"=> "05:35|합정역 3번출구 앞|37.5507926|126.9159159|00:00"
-		// , "YD-S-Jo_종로3가역"=> "05:55|종로3가역 12번출구 새마을금고 앞|37.5703347|126.99317687|00:00"
-		// , "YD-S-Jo_건대입구"=> "06:25|건대입구역 롯데백화점 스타시티점 입구|37.5393413|127.0716672|00:00"
-		// , "YD-S-Jo_종합운동장역"=> "06:40|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925|00:00"
-
-		// , "YD-E-E2_솔.동해점"=> "12:50|솔게스트하우스 동해서핑점 입구|37.5782382|129.1156248|17:10"
-		// , "YD-E-E2_대진해변"=> "12:55|대진해변 공영주차장 입구|37.5807657|129.111344|17:15"
-		// , "YD-E-E2_금진해변"=> "13:15|대진해변 공영주차장 입구|37.5807657|129.111344|17:15"
-		// , "YD-E-E2_남애3리"=> "14:00|남애3리 입구|37.9452543|128.7814356|17:30"
-		// , "YD-E-E2_인구해변"=> "14:05|현남면사무소 맞은편|37.9689758|128.7599915|17:35"
-		// , "YD-E-E2_죽도해변"=> "14:10|GS25 죽도비치점 맞은편|37.9720003|128.7595433|17:42"
-		// , "YD-E-E2_기사문해변"=> "14:20|기사문 해변주차장 입구|38.0053627|128.7306342|17:50"
-		// , "YD-E-E2_서피비치"=> "14:30|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575|18:00"
-
-		// , "YD-E-E5_남애3리"=> "17:30|남애3리 입구|37.9452543|128.7814356|00:00"
-		// , "YD-E-E5_인구해변"=> "17:35|현남면사무소 맞은편|37.9689758|128.7599915|00:00"
-		// , "YD-E-E5_죽도해변"=> "17:42|GS25 죽도비치점 맞은편|37.9720003|128.7595433|00:00"
-		// , "YD-E-E5_기사문해변"=> "17:50|기사문 해변주차장 입구|38.0053627|128.7306342|00:00"
-		// , "YD-E-E5_서피비치"=> "18:00|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575|00:00"
-	);
-
-	if($busData[$busNumber.'_'.$vlu] == null){
-		$busData["Yend_서피비치"] = "End";
-		$busData["Yend_기사문해변"] = "End";
-		$busData["Yend_죽도해변"] = "End";
-		$busData["Yend_인구해변"] = "End";
-		$busData["Yend_남애3리"] = "End";
-
-		$busData["Send_잠실역"] = "End";
-		$busData["Send_강남역"] = "End";
-		$busData["Send_사당역"] = "End";
-		
-		$busData["Eend_금진해변"] = "End";
-		$busData["Eend_대진해변"] = "End";
-		$busData["Eend_솔.동해점"] = "End";
-
-		return $busData;
-	}else{
-		return $busData[$busNumber.'_'.$vlu];
-	}
-}
-
-function fnBusPointArr($vlu, $gubun){
-	$arrData = explode("_", $vlu);
-	$arrDataList = explode("|", fnBusPoint($arrData[1], $arrData[0]));
-
-	if($gubun == 0){ //정류장 위치
-		return $arrDataList[1];
-	}else if($gubun == 1){ //탑승시간
-		$rtnData = explode(":", $arrDataList[0]);
-		return $rtnData[0]."시 ".$rtnData[1]. "분";
-	}else if($gubun == 2){ //서울행 탑승시간
-		$rtnData = explode(":", $arrDataList[0]);
-		$rtnData1 = $rtnData[0]."시 ".$rtnData[1]. "분 / ";
-		
-		$rtnData = explode(":", $arrDataList[4]);
-		return $rtnData1.$rtnData[0]."시 ".$rtnData[1]. "분";
-	}else if($gubun == 3){ //서울행 오후/저녁 탑승시간
-		$rtnData = explode(":", $arrDataList[0]);
-		return $rtnData[0]."시 ".$rtnData[1]. "분";
-	}
-}
-
 //셔틀버스 정류장 목록
 function fnBusPointList($vlu){
 	$busData = array(
@@ -207,7 +51,7 @@ function fnBusPointList($vlu){
 		, "busPoint_End_yy"=> "서피비치 &gt; 기사문해변 &gt; 죽도해변 &gt; 인구해변 &gt; 남애3리"
 		, "busPoint_End_dh"=> "금진해변 &gt; 금진 서프홀릭, 브라보서프 &gt; 망상 나인비치 &gt; 대진해변 &gt; 솔.동해점"
 		, "busPoint_End"=> "잠실역 &gt; 강남역 &gt; 사당역"
-		, "busPoint_End2"=> "올림픽공원역 &gt; 사당역 &gt; 신도림역"
+		, "busPoint_End2"=> "잠실역 &gt; 강남역 &gt; 사당역"
 	);
 
 	if($busData[$vlu] == null){
@@ -279,69 +123,6 @@ function decrypt($plaintext){
 	return $plaintext_dec;
 }
 
-function coupontype($type, $couponseq, $res_coupon){
-	$sitename = ""; 
-	$couponbool = false;
-	if($couponseq == 7 || $couponseq == 26 || $couponseq == 27 || $couponseq == 28 || $couponseq == 29){
-		$sitename = "[네이버쇼핑]"; 
-	}else if($couponseq == 10){
-		$sitename = "[네이버예약]"; 
-	}else if($couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){
-		$sitename = "[프립]"; 
-	}else if($couponseq == 16){
-		$sitename = "[클룩]"; 
-	}else if($couponseq == 12){
-		$sitename = "[마이리얼트립]"; 
-	}else if($couponseq == 15){
-		$sitename = "[서프존]"; 
-	}else if($couponseq == 23){
-		$sitename = "[브라보서프]"; 
-	}
-
-	if($type == "admin"){
-		if($couponseq == 17){
-			$sitename = "[프립-마린]"; 
-		}else if($couponseq == 20){
-			$sitename = "[프립-인구]"; 
-		}else if($couponseq == 21){
-			$sitename = "[프립-서팩]"; 
-		}else if($couponseq == 22){
-			$sitename = "[프립-힐링캠프]"; 
-
-		}else if($couponseq == 26){
-			$sitename = "[네이버-마린]"; 
-		}else if($couponseq == 27){
-			$sitename = "[네이버-인구]"; 
-		}else if($couponseq == 28){
-			$sitename = "[네이버-서팩]"; 
-		}else if($couponseq == 29){
-			$sitename = "[네이버-힐링캠프]"; 
-		}else if($couponseq == 30){
-			$sitename = "[엑스크루]"; 
-		}else if($couponseq == 31){
-			$sitename = "[모행]"; 
-		}else if($res_coupon == "MONS"){
-			$sitename = "[몬스터]"; 
-		}else if($res_coupon == "JOA"){
-			$sitename = "[조아서프]"; 
-		}else if($res_coupon != "" && $sitename == ""){
-			$sitename = "[할인]"; 
-		}
-	}
-
-	if($type == "bool"){
-		if($sitename == ""){
-			return false;
-		}else{
-			return true;
-		}
-	}else{
-		return $sitename;
-	}
-}
-
-
-
 //셔틀버스 이름
 function fnBusNum2023($vlu){
 	$busGubun = substr($vlu, 0, 1);
@@ -366,56 +147,63 @@ function fnBusNum2023($vlu){
 		$busGubun = '서울행';
 	}
 
-	
-	return $busGubun.' '.$busPoint.' '.$busNumber.'호차';
+	$rtn = array( 
+		"full"=> $busGubun.' '.$busPoint.' '.$busNumber.'호차'
+		, "gubun"=> $busGubun
+		, "point"=> $busPoint
+		, "num"=> $busNumber.'호차' );
+
+	return $rtn;
 }
 
 //셔틀버스 정류장 탑승시간, 위치
-function fnBusPoint2023($point, $busNumber, $busSeq){
+function fnBusPoint2023($bus_line, $point, $busSeq){
 	//busSeq
 	//7 : 양양      14 : 동해      212 : 양양/동해
 	if($busSeq == 14){
 		$busData = array(
-			"동해_신도림역"=> "05:50|테크노마트 신도림점 앞|37.5061933|126.8909233"
-			, "동해_사당역"=> "06:20|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336"
-			, "동해_올림픽공원역"=> "06:50|올림픽공원역 1번출구 버스정류장 앞쪽|37.5166186|127.1315229"
-			, "오후_솔.동해점"=> "14:30|솔게스트하우스 동해서핑점 입구|37.5782382|129.1156248"
-			, "오후_대진해변"=> "14:35|대진해변 공영주차장 입구|37.5807657|129.111344"
-			, "오후_나인비치"=> "14:40|망상 나인비치 주차장 입구|37.589873|129.0949103"
-			, "오후_금진해변"=> "14:55|금진해변 공영주차장 입구|37.6347202|129.0450586"
-			, "오후_서프홀릭"=> "15:00|금진해변 서프홀릭 입구|37.6399525|129.043521"
-			, "오후_브라보서프"=> "15:00|금진해변 브라보서프 입구|37.6380981|129.0440093"
+			  "사당_신도림"=> "06:10|홈플러스 신도림점 앞|37.5095592|126.8885712"
+			, "사당_대림역"=> "06:17|대림역 2번출구 앞|37.4928008|126.8947074"
+			, "사당_사당역"=> "06:30|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336"
+			, "사당_강남역"=> "06:45|강남역 1번출구 버스정류장|37.4982078|127.0290928"
+			, "사당_종합운동장역"=> "07:00|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925"
+			, "오후_솔.동해점"=> "12:30|솔게스트하우스 동해서핑점 입구|37.5782382|129.1156248"
+			, "오후_대진해변"=> "12:35|대진해변 공영주차장 입구|37.5807657|129.111344"
+			, "오후_나인비치"=> "12:40|망상 나인비치 주차장 입구|37.589873|129.0949103"
+			, "오후_금진해변"=> "12:55|금진해변 공영주차장 입구|37.6347202|129.0450586"
+			, "오후_서프홀릭"=> "13:00|금진해변 서프홀릭 입구|37.6399525|129.043521"
+			, "오후_브라보서프"=> "13:00|금진해변 브라보서프 입구|37.6380981|129.0440093"
 		);
 		
-		if($busData[$busNumber.'_'.$point] == null){
+		if($busData[$bus_line.'_'.$point] == null){
 			$busData["Send_금진해변"] = "End";
 			$busData["Send_서프홀릭"] = "End";
 			$busData["Send_브라보서프"] = "End";
 			$busData["Send_나인비치"] = "End";
 			$busData["Send_대진해변"] = "End";
 			$busData["Send_솔.동해점"] = "End";
-			
-			$busData["Eend_올림픽공원역"] = "End";
+	
+			$busData["Eend_잠실역"] = "End";
+			$busData["Eend_강남역"] = "End";
 			$busData["Eend_사당역"] = "End";
-			$busData["Eend_신도림역"] = "End";
 		}
 	}else if($busSeq == 7){
 		$busData = array(
 			  "사당_신도림"=> "06:00|홈플러스 신도림점 앞|37.5095592|126.8885712"
 			, "사당_대림역"=> "06:07|대림역 2번출구 앞|37.4928008|126.8947074"
-			, "사당_사당역"=> "06:20|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336"
-			, "사당_강남역"=> "06:35|강남역 1번출구 버스정류장|37.4982078|127.0290928"
-			, "사당_종합운동장역"=> "06:50|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925"
-			, "종로_합정역"=> "05:50|합정역 3번출구 앞|37.5507926|126.9159159"
-			, "종로_종로3가역"=> "06:10|종로3가역 12번출구 새마을금고 앞|37.5703347|126.99317687"
-			, "종로_건대입구"=> "06:35|건대입구역 롯데백화점 스타시티점 입구|37.5393413|127.0716672"
-			, "종로_종합운동장역"=> "06:50|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925"
+			, "사당_사당역"=> "06:30|사당역 6번출구 방향 참약사 장수약국 앞|37.4764807|126.9777336"
+			, "사당_강남역"=> "06:45|강남역 1번출구 버스정류장|37.4982078|127.0290928"
+			, "사당_종합운동장역"=> "07:00|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925"
+			, "종로_합정역"=> "05:55|합정역 3번출구 앞|37.5507926|126.9159159"
+			, "종로_종로3가역"=> "06:15|종로3가역 12번출구 새마을금고 앞|37.5703347|126.99317687"
+			, "종로_건대입구"=> "06:45|건대입구역 롯데백화점 스타시티점 입구|37.5393413|127.0716672"
+			, "종로_종합운동장역"=> "07:00|종합운동장역 4번출구 방향 버스정류장 뒤쪽|37.5104765|127.0722925"
 			
-			, "오후_남애3리"=> "14:30|남애3리 입구|37.9452543|128.7814356"
-			, "오후_인구해변"=> "14:35|현남면사무소 맞은편|37.9689758|128.7599915"
-			, "오후_죽도해변"=> "14:42|GS25 죽도비치점 맞은편|37.9720003|128.7595433"
-			, "오후_기사문해변"=> "14:50|기사문 해변주차장 입구|38.0053627|128.7306342"
-			, "오후_서피비치"=> "15:00|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575"
+			, "오후_남애3리"=> "12:30|남애3리 입구|37.9452543|128.7814356"
+			, "오후_인구해변"=> "12:35|현남면사무소 맞은편|37.9689758|128.7599915"
+			, "오후_죽도해변"=> "12:42|GS25 죽도비치점 맞은편|37.9720003|128.7595433"
+			, "오후_기사문해변"=> "12:50|기사문 해변주차장 입구|38.0053627|128.7306342"
+			, "오후_서피비치"=> "13:00|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575"
 
 			, "저녁_남애3리"=> "17:30|남애3리 입구|37.9452543|128.7814356"
 			, "저녁_인구해변"=> "17:35|현남면사무소 맞은편|37.9689758|128.7599915"
@@ -424,7 +212,7 @@ function fnBusPoint2023($point, $busNumber, $busSeq){
 			, "저녁_서피비치"=> "18:00|서피비치 회전교차로 횡단보도 앞|38.0268271|128.7169575"
 		);
 
-		if($busData[$busNumber.'_'.$point] == null){
+		if($busData[$bus_line.'_'.$point] == null){
 			$busData["Send_서피비치"] = "End";
 			$busData["Send_기사문해변"] = "End";
 			$busData["Send_죽도해변"] = "End";
@@ -438,66 +226,48 @@ function fnBusPoint2023($point, $busNumber, $busSeq){
 
 	}
 	
-	if($busData[$busNumber.'_'.$point] == null){
+	if($busData[$bus_line.'_'.$point] == null){
 		return $busData;
 	}else{
-		return $busData[$busNumber.'_'.$point];
+		return $busData[$bus_line.'_'.$point];
 	}
 }
 
 function fnBusPointArr2023($vlu, $busSeq, $type){
 	$arrData = explode("_", $vlu);
-	$arrDataList = explode("|", fnBusPoint2023($arrData[1], $arrData[0], $busSeq));
+	$arrDataList = explode("|", fnBusPoint2023($arrData[0], $arrData[1], $busSeq));
 
 	if($type == 0){ //정류장 위치
 		return $arrDataList[1];
 	}else if($type == 1){ //탑승시간
 		$rtnData = explode(":", $arrDataList[0]);
 		return $rtnData[0]."시 ".$rtnData[1]. "분";
-	}else if($type == 2){ //서울행 탑승시간
-		$rtnData = explode(":", $arrDataList[0]);
-		$rtnData1 = $rtnData[0]."시 ".$rtnData[1]. "분 / ";
-		
-		$rtnData = explode(":", $arrDataList[4]);
-		return $rtnData1.$rtnData[0]."시 ".$rtnData[1]. "분";
-	}else if($type == 3){ //서울행 오후/저녁 탑승시간
-		$rtnData = explode(":", $arrDataList[0]);
-		return $rtnData[0]."시 ".$rtnData[1]. "분";
 	}
 }
 
-function fnBusUrl($url, $type){
+function fnBusUrl($url){
 	$rtn = "";
 	if($url == "surfbus_yy" || $url == "surfbus_yy_2023" || $url == "7"){ //양양 셔틀버스
-		$shopseq = 7;
-        $bustype = "양양";
-		$taburl = "_view_tab3_yy.php";
-        $pointurl = "_view_point_yy.php";
-        $rtnUrl = "surfbus_yy_2023";
+		$rtn = array( 
+			"seq"=> 7
+			, "type"=> "양양"
+			, "tab"=> "_view_tab3_yy.php"
+			, "point"=> "_view_point_yy.php"
+			, "rtnUrl"=> "surfbus_yy_2023" );
 	}else if($url == "surfbus_dh" || $url == "surfbus_dh_2023" || $url == "14"){ //동해 셔틀버스
-		$shopseq = 14;
-		$bustype = "동해";
-		$taburl = "_view_tab3_dh.php";
-        $pointurl = "_view_point_dh.php";
-        $rtnUrl = "surfbus_dh_2023";
+		$rtn = array( 
+			"seq"=> 14
+			, "type"=> "동해"
+			, "tab"=> "_view_tab3_dh.php"
+			, "point"=> "_view_point_dh.php"
+			, "rtnUrl"=> "surfbus_dh_2023" );
 	}else{ //양양,동해 셔틀버스
-		$shopseq = 212;
-		$bustype = "양양동해";
-		$taburl = "_view_tab3_yd.php";
-        $pointurl = "_view_point_yd.php";
-        $rtnUrl = "surfbus_yd";
-	}
-	
-	if($type == "seq"){
-		$rtn = $shopseq;
-	}else if($type == "tab"){
-		$rtn = $taburl;
-	}else if($type == "point"){
-		$rtn = $pointurl;
-	}else if($type == "type"){
-		$rtn = $bustype;
-	}else if($type == "url"){
-		$rtn = $rtnUrl;
+		$rtn = array( 
+			"seq"=> 212
+			, "type"=> "양양동해"
+			, "tab"=> "_view_tab3_yd.php"
+			, "point"=> "_view_point_yd.php"
+			, "rtnUrl"=> "surfbus_yd" );
 	}
 
 	return $rtn;
@@ -569,5 +339,126 @@ function shortURL($url){
 	} else {
 	  return "Error :".$response;
 	}
+}
+
+//쿠폰코드 생성
+function RandString($len){
+	$return_str = "";
+
+	for ( $i = 0; $i < $len; $i++ ) {
+		mt_srand((double)microtime()*1000000);
+		$return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
+	}
+
+	return $return_str;
+}
+
+//쿠폰코드
+function fnCouponCode($seq){
+	// $sitename = ""; 
+	// $couponbool = false;
+	// if($couponseq == 7 || $couponseq == 26 || $couponseq == 27 || $couponseq == 28 || $couponseq == 29){
+	// 	$sitename = "[네이버쇼핑]"; 
+	// }else if($couponseq == 10){
+	// 	$sitename = "[네이버예약]"; 
+	// }else if($couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){
+	// 	$sitename = "[프립]"; 
+	// }else if($couponseq == 16){
+	// 	$sitename = "[클룩]"; 
+	// }else if($couponseq == 12){
+	// 	$sitename = "[마이리얼트립]"; 
+	// }else if($couponseq == 15){
+	// 	$sitename = "[서프존]"; 
+	// }else if($couponseq == 23){
+	// 	$sitename = "[브라보서프]"; 
+	// }
+
+	// if($type == "admin"){
+	// 	if($couponseq == 17){
+	// 		$sitename = "[프립-마린]"; 
+	// 	}else if($couponseq == 20){
+	// 		$sitename = "[프립-인구]"; 
+	// 	}else if($couponseq == 21){
+	// 		$sitename = "[프립-서팩]"; 
+	// 	}else if($couponseq == 22){
+	// 		$sitename = "[프립-힐링캠프]"; 
+
+	// 	}else if($couponseq == 26){
+	// 		$sitename = "[네이버-마린]"; 
+	// 	}else if($couponseq == 27){
+	// 		$sitename = "[네이버-인구]"; 
+	// 	}else if($couponseq == 28){
+	// 		$sitename = "[네이버-서팩]"; 
+	// 	}else if($couponseq == 29){
+	// 		$sitename = "[네이버-힐링캠프]"; 
+	// 	}else if($couponseq == 30){
+	// 		$sitename = "[엑스크루]"; 
+	// 	}else if($couponseq == 31){
+	// 		$sitename = "[모행]"; 
+	// 	}else if($res_coupon == "MONS"){
+	// 		$sitename = "[몬스터]"; 
+	// 	}else if($res_coupon == "JOA"){
+	// 		$sitename = "[조아서프]"; 
+	// 	}else if($res_coupon != "" && $sitename == ""){
+	// 		$sitename = "[할인]"; 
+	// 	}
+	// }
+
+	// if($type == "bool"){
+	// 	if($sitename == ""){
+	// 		return false;
+	// 	}else{
+	// 		return true;
+	// 	}
+	// }else{
+	// 	return $sitename;
+	// }
+	
+	$name = "";
+	$prod_name = "";
+
+	if($seq == 11 || $seq == 17 || $seq == 20 || $seq == 22){ //프립
+		$name = "프립";
+	}else if($seq == 15){ //서프존
+		$name = "서프존";
+	}else if($seq == 16){ //클룩
+		$name = "클룩";
+	}else if($seq == 23){ //브라보서프
+		$name = "브라보서프";
+	}else if($seq == 26 || $seq == 27 || $seq == 29){ //네이버
+		$name = "네이버 액트립";
+	}else if($seq == 31){ //모행
+		$name = "모행";
+	}
+
+	if($seq == 11){ //프립
+		$prod_name = "프립 셔틀버스";
+	}else if($seq == 15){ //서프존
+		$prod_name = "서프존 셔틀버스";
+	}else if($seq == 16){ //클룩
+		$prod_name = "클룩 셔틀버스";
+	}else if($seq == 17){ //프립 마린 당일
+		$prod_name = "당일 마린서프 패키지";
+	}else if($seq == 20){ //프립 인구 당일
+		$prod_name = "당일 인구서프 패키지";
+	}else if($seq == 22){ //프립 솔게하
+		$prod_name = "동해 힐링캠프 (1박)";
+	}else if($seq == 23){ //브라보서프
+		$prod_name = "브라보서프 (1박)";
+	}else if($seq == 26){ //네이버 마린 당일
+		$prod_name = "당일 마린서프 패키지";
+	}else if($seq == 27){ //네이버 인구 당일
+		$prod_name = "당일 인구서프 패키지";
+	}else if($seq == 29){ //네이버 솔게하
+		$prod_name = "동해 힐링캠프 (1박)";
+	}else if($seq == 31){ //모행
+		$prod_name = "모행";
+	}
+
+	$rtn = array( 
+		"name"=> $name
+		, "prod_name"=> $prod_name);
+
+	return $rtn;
 }
 ?>

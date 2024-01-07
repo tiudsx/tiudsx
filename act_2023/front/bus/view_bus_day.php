@@ -9,20 +9,20 @@ $groupData = array();
 
 //서핑버스 이용날짜 json
 if($reqCode == "busday"){
-    $seq = $_REQUEST["seq"];
+    $shopseq = $_REQUEST["seq"];
 
-    if($_REQUEST["bus"] == "Y"){
-        $busgubun = "S";
-    }else{
-        $busgubun = "A";
+    if($shopseq == 7){
+        $busgubun = "YY";
+    }else if($shopseq == 14){
+        $busgubun = "DH";
     }
 
     $now = date("Y-m-d");
-    $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' AND bus_gubun IN ('".$_REQUEST["bus"]."', '".$busgubun."') AND bus_date >= '$now' ORDER BY bus_date, bus_gubun, bus_name";
+    $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' AND bus_line = '$busgubun' AND bus_date >= '$now' ORDER BY bus_date, bus_gubun";
     $result_buslist = mysqli_query($conn, $select_query);
     
     while ($row = mysqli_fetch_assoc($result_buslist)){
-        $arrBusInfo = array("busnum" => $row["bus_gubun"].$row["bus_num"], "busname" => $row["bus_name"], "busseat" => $row["seat"]);
+        $arrBusInfo = array("bus_gubun" => $row["bus_gubun"], "bus_num" => $row["bus_num"], "bus_name" => $row["bus_name"], "bus_seat" => $row["seat"]);
         if($groupData[$row["bus_gubun"].$row["busjson"]] == null){
             $groupData[$row["bus_gubun"].$row["busjson"]] = array($arrBusInfo);
         }else{

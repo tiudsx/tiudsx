@@ -89,7 +89,7 @@ if($shopseq == 7){ //양양 셔틀버스
     $channel_name = "";
     $channel_foldername = "_js";
     $channel_foldername2 = "bus";
-}else{ //동해 셔틀버스
+}else if($shopseq == 14){ //동해 셔틀버스
     $param = "surfbus_dh";
     $bustype0 = "E";
     $bustype1 = "A";

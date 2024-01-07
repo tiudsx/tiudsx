@@ -56,17 +56,7 @@ if($param == "mohaeng"){
             goto errGo;
         }
 
-        function RandString($len){
-            $return_str = "";
-        
-            for ( $i = 0; $i < $len; $i++ ) {
-                mt_srand((double)microtime()*1000000);
-                $return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
-            }
-        
-            return $return_str;
-        }
-    
+        //쿠폰코드 생성
         $coupon_code = RandString(5);
         $user_ip = $_SERVER['REMOTE_ADDR'];
         $add_date = date("Y-m-d");

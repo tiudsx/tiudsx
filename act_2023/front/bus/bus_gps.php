@@ -247,5 +247,5 @@ function fnBusGPSPoint(obj) {
     });
 </script>
 
-<script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>

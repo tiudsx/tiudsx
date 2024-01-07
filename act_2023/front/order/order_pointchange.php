@@ -87,7 +87,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 if($shopseq == 7){ //양양 셔틀버스
     include __DIR__."/order_pointchange_yy.php";
 
-}else{ //동해 셔틀버스
+}else if($shopseq == 14){ //동해 셔틀버스
     echo "<script>alert('정류장 변경 요청은 상담톡으로 연락주세요~');location.href = '/';</script>";
     //include __DIR__."/order_pointchange_dh.php";
 }

@@ -40,7 +40,7 @@ if($param == "none"){
 
     if($shopseq == 7){ //양양 셔틀버스
         $pointurl = "_view_point_yy.php";
-    }else{ //동해 셔틀버스
+    }else if($shopseq == 14){ //동해 셔틀버스
         $pointurl = "_view_point_dh.php";
     }
 
@@ -117,5 +117,5 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     });
 </script>
 
-<script type="text/javascript" src="/act_2023/_js/bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>
