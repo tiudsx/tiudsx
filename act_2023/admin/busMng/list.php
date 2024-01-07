@@ -40,22 +40,21 @@ $shopseq = -2;
 
                     <input type="hidden" id="hidselDate" name="hidselDate" value="">
 
+                    운행일 : <span id="res_busdate"></span>
                     <table class='et_vars exForm bd_tb' style="width:100%">
                         <colgroup>
-                            <col style="width:100px;">
                             <col style="width:auto;">
-                            <col style="width:150px;">
+                            <col style="width:90px;">
                             <col style="width:100px;">
-                            <col style="width:150px;">
+                            <col style="width:110px;">
                             <col style="width:80px;">
-                            <col style="width:80px;">
+                            <col style="width:90px;">
                             <col style="width:80px;">
                         </colgroup>
                         <tr>
-                            <th>운행일</th>
-                            <th>버스번호</th>
-                            <th>노선</th>
+                            <th>버스정보</th>
                             <th>좌석수</th>
+                            <th>가격</th>
                             <th>GPS</th>
                             <th>사용여부</th>
                             <th>예약가능</th>
@@ -64,60 +63,27 @@ $shopseq = -2;
                         <tr id="trbus" style="display:none;">
                             <td style="text-align:center;">
                                 <input type="hidden" id="resseq" name="resseq[]" size="10" value="" class="itx">
-                                <input type="text" id="res_busdate" name="res_busdate[]" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7">
-                            </td>
-                            <td style="text-align:center;">
-                                <select id="res_busgubun" name="res_busgubun[]" class="select" sel="">
-                                    <option value="" selected>--- 버스번호 ----</option>
-                                    <option value="Y|Sa1|사당선 1호차">양양행(사당선) 1호차</option>
-                                    <option value="Y|Sa2|사당선 2호차">양양행(사당선) 2호차</option>
-                                    <option value="Y|Sa3|사당선 3호차">양양행(사당선) 3호차</option>
-                                    <option value="Y|Jo1|종로선 1호차">양양행(종로선) 1호차</option>
-                                    <option value="Y|Jo2|종로선 2호차">양양행(종로선) 2호차</option>
-                                    <option value="Y|Jo3|종로선 3호차">양양행(종로선) 3호차</option>
+                                <select id="res_busline" name="res_busline[]" class="select" sel="">
+                                    <option value="" selected>행선지</option>
                                     <option value="">-------</option>
-                                    <option value="S|Y21|오후 1호차">양양>서울행 오후 1호차</option>
-                                    <option value="S|Y22|오후 2호차">양양>서울행 오후 2호차</option>
-                                    <option value="S|Y23|오후 3호차">양양>서울행 오후 3호차</option>
-                                    <option value="S|Y51|저녁 1호차">양양>서울행 저녁 1호차</option>
-                                    <option value="S|Y52|저녁 2호차">양양>서울행 저녁 2호차</option>
-                                    <option value="S|Y53|저녁 3호차">양양>서울행 저녁 3호차</option>
-                                    <option value="">-------</option>
-                                    <option value="YD-S|Sa1|사당선 1호차">양양,동해(사당선) 1호차</option>
-                                    <option value="YD-S|Sa2|사당선 2호차">양양,동해(사당선) 2호차</option>
-                                    <option value="YD-S|Jo1|종로선 1호차">양양,동해(종로선) 1호차</option>
-                                    <option value="YD-S|Jo2|종로선 1호차">양양,동해(종로선) 2호차</option>
-                                    <option value="YD-E|E21|오후 1호차">양양,동해>서울행 오후 1호차</option>
-                                    <option value="YD-E|E22|오후 2호차">양양,동해>서울행 오후 2호차</option>
-                                    <option value="YD-E|E51|오후 1호차">양양>서울행 저녁 1호차</option>
-                                    <option value="YD-E|E52|오후 2호차">양양>서울행 저녁 2호차</option>
-                                    <option value="">-------</option>
-                                    <option value="E|Sa1|사당선 1호차">동해행(사당선) 1호차</option>
-                                    <option value="E|Sa2|사당선 2호차">동해행(사당선) 2호차</option>
-                                    <option value="E|Sa3|사당선 3호차">동해행(사당선) 3호차</option>
-                                    <option value="E|Jo1|종로선 1호차">동해행(종로선) 1호차</option>
-                                    <option value="E|Jo2|종로선 2호차">동해행(종로선) 2호차</option>
-                                    <option value="E|Jo3|종로선 3호차">동해행(종로선) 3호차</option>
-                                    <option value="">-------</option>
-                                    <option value="A|E21|오후 1호차">동해>서울행 오후 1호차</option>
-                                    <option value="A|E22|오후 2호차">동해>서울행 오후 2호차</option>
-                                    <option value="A|E23|오후 3호차">동해>서울행 오후 3호차</option>
-                                    <option value="A|E51|저녁 1호차">동해>서울행 저녁 1호차</option>
-                                    <option value="A|E52|저녁 2호차">동해>서울행 저녁 2호차</option>
-                                    <option value="A|E53|저녁 3호차">동해>서울행 저녁 3호차</option>
+                                    <option value="YY">양양</option>
+                                    <option value="DH">동해</option>
                                 </select>
-                            </td>
-                            <td style="text-align:center;">
-                                <select id="res_point" name="res_point[]" class="select" sel="">
-                                    <option value="" selected>--- 노선 ----</option>
-                                    <option value="sadang">사당선</option>
-                                    <option value="jongno">종로선</option>
+                                <select id="res_busgubun" name="res_busgubun[]" class="select" sel="">
+                                    <option value="" selected>노선</option>
                                     <option value="">-------</option>
-                                    <option value="yang1">양양 오후</option>
-                                    <option value="yang2">양양 저녁</option>
+                                    <option value="SA">사당선</option>
+                                    <option value="JO">종로선</option>
                                     <option value="">-------</option>
-                                    <option value="dong1">동해 오후</option>
-                                    <option value="dong2">동해 저녁</option>
+                                    <option value="AM">오후 복귀</option>
+                                    <option value="PM">저녁 복귀</option>
+                                </select>
+                                <select id="res_busnum" name="res_busnum[]" class="select" sel="">
+                                    <option value="" selected>호차</option>
+                                    <option value="1">1호차</option>
+                                    <option value="2">2호차</option>
+                                    <option value="3">3호차</option>
+                                    <option value="4">4호차</option>
                                 </select>
                             </td>
                             <td style="text-align:center;">
@@ -125,6 +91,9 @@ $shopseq = -2;
                                     <option value="44">44</option>
                                     <option value="45">45</option>
                                 </select>
+                            </td>
+                            <td style="text-align:center;">
+                                <input type="text" id="res_price" name="res_price[]" style="width:66px;" value="20000" class="itx2">
                             </td>
                             <td style="text-align:center;">
                                 <select id="res_gpsname" name="res_gpsname[]" class="select" sel="">
@@ -152,9 +121,8 @@ $shopseq = -2;
                         <tr>
                             <td class="col-02" style="text-align:center;" colspan="8">
                                 <input type="hidden" id="resparam" name="resparam" size="10" value="busMngadd" class="itx">
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="등록" onclick="fnBusMngDataAdd('add');" id="Add"/>
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;display:none;" value="수정" onclick="fnBusMngDataAdd('modify');" id="Modify" />&nbsp;
-                                <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="초기화" onclick="fnBusPopupReset();" />
+                                <input type="button" class="btnsurfdel" style="width:120px; height:40px;" value="저장" onclick="fnBusMngDataAdd('add');" id="Add"/>&nbsp;
+                                <input type="button" class="btnsurfadd" style="width:120px; height:40px;" value="초기화" onclick="fnBusMngList($j('#hidselDate').val());" />
                             </td>
                         </tr>
                     </table>

@@ -85,46 +85,6 @@ function fnPassengerAdmin(obj, seq) {
     fnSearchAdmin(url);
 }
 
-function fnBusMngList(selDate){
-    $j.blockUI({ message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false, css: { width: '650px', height: "150px", textAlign: 'center', left: '23%', top: '20%' } });
-
-    $j("#initText2").css("display", "none");
-    var url = "busMng/list_info.php";
-    var formData = { "resparam": "busmnglist", "selDate": selDate };
-
-    $j.ajax({
-        type: "POST",
-        url: "/act_2023/admin/" + url,
-        data: formData,
-        success: function(data) {
-            $j("tr[rowadd=1]").remove();
-            $j("#res_busdate").val($j("#hidselDate").val());
-            if(data == 0){
-                //row 추가
-                //fnBusAdd("trbus");
-            }else{
-                for (let i = 0; i < data.length; i++) {
-                    fnBusAdd("trbus");
-
-                    var objTr = $j("tr[id=trbus]:last");
-
-                    $j("#hidselDate").val(data[i].bus_date);
-
-                    objTr.find("#resseq").val(data[i].dayseq);
-                    objTr.find("#res_busdate").val(data[i].bus_date);
-                    objTr.find("#res_busgubun").val(data[i].bus_gubun + "|" + data[i].bus_num + "|" + data[i].bus_name);
-                    objTr.find("#res_seat").val(data[i].seat);
-                    objTr.find("#res_gpsname").val(data[i].gpsname);
-                    objTr.find("#res_useYN").val(data[i].useYN);
-                    objTr.find("#res_channel").val(data[i].channel);
-                }
-                console.log(data);
-            }
-            setTimeout('fnBlockClose();', 500);
-        }
-    });
-}
-
 function fnDateReset() {
     $j("#sDate").val('');
     $j("#eDate").val('');

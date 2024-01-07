@@ -13,7 +13,6 @@ $shopseq = 0;
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/admin/_js/admin_ajax.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_package.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
@@ -31,10 +30,7 @@ $shopseq = 0;
             <ul class="tabs" style="margin-left:5px;">
                 <li class="active" rel="tab1">검색관리</li>
                 <li rel="tab2">예약관리</li>
-                <li rel="tab3">정산관리</li>
-                <li rel="tab4">타채널예약</li>
-                <li rel="tab5">카톡안내</li>
-                <li rel="tab6">패키지관리</li>
+                <li rel="tab3">패키지관리</li>
             </ul>
 
             <!-- #container -->
@@ -137,21 +133,6 @@ $shopseq = 0;
                 
                 <!-- #tab3 -->
                 <div id="tab3" class="tab_content" style="display:none;">
-                    <?include 'list_cal.php'?>
-                </div>
-
-                <!-- #tab4 -->
-                <div id="tab4" class="tab_content" style="display:none;">
-                    <?include 'list_channel.php'?>
-                </div>
-                
-                <!-- #tab5 -->
-                <div id="tab5" class="tab_content" style="display:none;">
-                    <?include 'list_cancel.php'?>
-                </div>
-
-                <!-- #tab6 -->
-                <div id="tab6" class="tab_content" style="display:none;">
                     <?include 'list_package.php'?>
                 </div>
             </div>

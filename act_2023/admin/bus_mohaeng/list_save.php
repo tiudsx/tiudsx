@@ -154,7 +154,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$busTypeS = "S";
 			$busTitleName = "양양";
 			$resparam = "surfbus_yy";
-		}else{
+		}else if($shopseq == 14){
 			$busTypeY = "E";
 			$busTypeS = "A";    
 			$busTitleName = "동해";    
@@ -293,20 +293,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
     $resbusseat1 = $_REQUEST["resbusseat1"];
     $resbusseat2 = $_REQUEST["resbusseat2"];
 
-	//7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
-	//16:클룩
-	//18:프립-니지모리  19:프립-제천
-	function RandString($len){
-		$return_str = "";
-	
-		for ( $i = 0; $i < $len; $i++ ) {
-			mt_srand((double)microtime()*1000000);
-			$return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
-		}
-	
-		return $return_str;
-	}
-
+	//쿠폰코드 생성
 	$coupon_code = RandString(5);
 	$user_ip = $_SERVER['REMOTE_ADDR'];
     $add_date = date("Y-m-d");

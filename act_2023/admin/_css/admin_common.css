@@ -12,7 +12,7 @@ li,p,dt,dd,div,span{word-break:break-all}
 i, em, address {font-style: normal; }
 
 /* Title */
-.bd_tl{float:left;margin:4px 0px 0px;*padding-bottom:24px}
+.bd_tl{margin:4px 0px 0px;padding-bottom:5px}
 .bd_tl h1,.bd_tl h2{margin:0;padding:0 20px;font-size:16px;line-height:22px}
 .bd_tl a{float:left;text-decoration:none;color:#555}
 .bd_tl i{display:block;position:absolute;top:0;left:0;width:12px;height:22px;border-radius:2px}

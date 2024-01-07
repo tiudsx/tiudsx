@@ -28,44 +28,39 @@ if($param == "busMngdel"){
 
 	mysqli_query($conn, "COMMIT");
 }else if($param == "busMngadd"){
-	$res_busgubun = $_REQUEST["res_busgubun"]; //버스번호
-	$res_point = $_REQUEST["res_point"]; //노선
+	$res_busline = $_REQUEST["res_busline"]; //행선지
+	$res_busgubun = $_REQUEST["res_busgubun"]; //노선
+	$res_busnum = $_REQUEST["res_busnum"]; //호차
+	$res_price = $_REQUEST["res_price"]; //가격
 	$res_seat = $_REQUEST["res_seat"]; //좌석수
 	$res_gpsname = $_REQUEST["res_gpsname"]; //GPS 이름
 	$res_useYN = $_REQUEST["res_useYN"]; //사용여부
 	$res_channel = $_REQUEST["res_channel"]; //예약형태
 
-	//$select_query = "DELETE FROM AT_PROD_BUS_DAY WHERE bus_date = '$bus_date'";
-	//$result_set = mysqli_query($conn, $select_query);
-
-	//$errmsg = $select_query;
-	//if(!$result_set) goto errGo;
-
 	//서핑버스 정보등록
 	for($i = 1; $i < count($resseq); $i++){
-		$bus_date = $bus_date;
 		$dayseq = $resseq[$i];
-		$arrGubun = explode("|",$res_busgubun[$i]);
-		$bus_gubun = $arrGubun[0];
-		$bus_num = $arrGubun[1];
-		$bus_name = $arrGubun[2];
-		$code = $res_point[$i];
+		$bus_line = $res_busline[$i]; //행선지
+		$bus_gubun = $res_busgubun[$i]; //노선
+		$bus_num = $res_busnum[$i]; //호차
+		$code = "";
+		$price = $res_price[$i];
 		$seat = $res_seat[$i];
 		$gpsname = $res_gpsname[$i];
 		$useYN = $res_useYN[$i];
 		$channel = $res_channel[$i];
 
 		if($dayseq == ""){
-			$select_query = "INSERT INTO `AT_PROD_BUS_DAY`(`bus_date`, `code`, `bus_gubun`, `bus_name`, `bus_num`, `gpsname`, `seat`, `useYN`, `channel`) VALUES ('$bus_date', '$code', '$bus_gubun', '$bus_name', '$bus_num', '$gpsname', $seat, '$useYN', '$channel')";
+			$select_query = "INSERT INTO `AT_PROD_BUS_DAY`(`bus_date`, `code`, `bus_line`, `bus_gubun`, `bus_num`, `gpsname`, `seat`, `price`, `useYN`, `channel`) VALUES ('$bus_date', '$code', '$bus_line', '$bus_gubun', '$bus_num', '$gpsname', $seat, $price, '$useYN', '$channel')";
 		}else{
 			$select_query = "UPDATE `AT_PROD_BUS_DAY` SET 
-				`bus_date`='$bus_date'
-				,`code`='$code'
+				 `code`='$code'
+				,`bus_line`='$bus_line'
 				,`bus_gubun`='$bus_gubun'
-				,`bus_name`='$bus_name'
 				,`bus_num`='$bus_num'
 				,`gpsname`='$gpsname'
 				,`seat`=$seat
+				,`price`=$price
 				,`useYN`='$useYN'
 				,`channel`='$channel'
 			WHERE dayseq = $dayseq";

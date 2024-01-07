@@ -71,18 +71,22 @@ echo ("
 		<tbody>
 	");
 	
-$select_query_cal = 'SELECT COUNT(*) AS Cnt, bus_date, DAY(bus_date) AS sDay, useYN FROM `AT_PROD_BUS_DAY` 
+$select_query_cal = 'SELECT COUNT(*) AS Cnt, bus_date, DAY(bus_date) AS sDay, useYN, bus_line FROM `AT_PROD_BUS_DAY` 
 						WHERE (Year(bus_date) = '.$Year.' AND Month(bus_date) = '.$Mon.')
-						GROUP BY bus_date, useYN';
+						GROUP BY bus_date, useYN, bus_line';
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 
 $arrResCount = array();
 $arrResConfirm = array();
 while ($rowCal = mysqli_fetch_assoc($result_setlist_cal)){
 	if($rowCal['useYN'] == "Y"){
-		$arrResCount[$rowCal['sDay']][0] = $rowCal['Cnt'];
+		if($rowCal['bus_line'] == "YY"){ //양양
+			$arrResCount[$rowCal['sDay']][0] = $rowCal['Cnt'];
+		}else{ //동해
+			$arrResCount[$rowCal['sDay']][1] = $rowCal['Cnt'];
+		}
 	}else{
-		$arrResCount[$rowCal['sDay']][1] = $rowCal['Cnt'];
+		$arrResCount[$rowCal['sDay']][2] = $rowCal['Cnt'];
 	}
 }
 
@@ -110,10 +114,13 @@ for($r=0;$r<=$ra;$r++){
 			
 			$adminText = "";
 			if($arrResCount[$ru][0] != ""){
-				$adminText .= "<br><font color='red'><b>".$arrResCount[$ru][0]."대 배차</b></font>";
+				$adminText .= "<br><font color='red'><b>양양 ".$arrResCount[$ru][0]."대</b></font>";
+			}
+			if($arrResCount[$ru][1] != ""){
+				$adminText .= "<br><font color='red'><b>동해 ".$arrResCount[$ru][1]."대</b></font>";
 			}
 
-			if($arrResCount[$ru][1] != ""){
+			if($arrResCount[$ru][2] != ""){
 				$adminText .= "<br><font color='black'>".$arrResCount[$ru][1]."대 취소</font>";
 			}
 

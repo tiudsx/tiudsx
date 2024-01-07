@@ -58,7 +58,7 @@ if($param == "solkakaoAll"){
 		"arryData"=> $arryKakao
 		, "array"=> "true" //배열 여부
 		, "tempName"=> "sol_info02" //템플릿 코드
-		, "title"=> $msgTitle //타일틀
+		, "title"=> $msgTitle //타이틀
 		, "smsOnly"=> "N" //문자발송 여부
 	);
 	
@@ -342,7 +342,7 @@ if($param == "solkakaoAll"){
 				"arryData"=> $arryKakao
 				, "array"=> "true" //배열 여부
 				, "tempName"=> "sol_info02" //템플릿 코드
-				, "title"=> $msgTitle //타일틀
+				, "title"=> $msgTitle //타이틀
 				, "smsOnly"=> "N" //문자발송 여부
 			);
 
@@ -372,7 +372,7 @@ if($param == "solkakaoAll"){
 				// 카카오 알림톡 DB 저장 END
 		
 				$resseq = $arryKakao[$i]["DebugInfo"]["resseq"];
-				$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', res_kakao = res_kakao + 1, userinfo = '".$msgid."' WHERE resseq = $seq";
+				$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', res_kakao = res_kakao + 1, userinfo = '".$msgid."' WHERE resseq = $resseq";
 				$result_set = mysqli_query($conn, $select_query);
 		
 				$errmsg = $select_query;
@@ -409,7 +409,7 @@ if($param == "solkakaoAll"){
 			"arryData"=> $arryKakao
 			, "array"=> "true" //배열 여부
 			, "tempName"=> "sol_info01" //템플릿 코드
-			, "title"=> $msgTitle //타일틀
+			, "title"=> $msgTitle //타이틀
 			, "smsOnly"=> "N" //문자발송 여부
 		);
 			

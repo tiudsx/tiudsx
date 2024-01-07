@@ -96,7 +96,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$userPhone = $user_tel;
 	$usermail = $user_email;
 
-    //==========================카카오 메시지 발송 ==========================
+	//==========================카카오 메시지 발송 ==========================
     if($intseq3 != "0"){ //예약 확정처리 : 고객발송
         $select_query_sub = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
         $resultSite = mysqli_query($conn, $select_query_sub);
@@ -155,7 +155,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$busTypeS = "S";
 			$busTitleName = "양양";
 			$resparam = "surfbus_yy";
-		}else{
+		}else if($shopseq == 14){
 			$busTypeY = "E";
 			$busTypeS = "A";    
 			$busTitleName = "동해";    
@@ -237,188 +237,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
     }
 
 	mysqli_query($conn, "COMMIT");
-}else if($param == "reskakaodel"){
-    $codeseq = $_REQUEST["codeseq"];
-
-	$select_query = "DELETE FROM AT_COUPON_CODE WHERE codeseq = $codeseq";
-	$result_set = mysqli_query($conn, $select_query);
-	if(!$result_set) goto errGo;
-	
-	mysqli_query($conn, "COMMIT");
-	
-}else if($param == "reskakaode2"){ //타채널 예약안내 재발송
-	$kakao_msgid = $_REQUEST['kakao_msgid'];
-
-	$select_query = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
-	$resultSite = mysqli_query($conn, $select_query_sub);
-
-	$select_query = "SELECT * FROM `AT_KAKAO_HISTORY` WHERE prod_type = 'bus_channel' AND response LIKE '%$kakao_msgid%'";
-	$result = mysqli_query($conn, $select_query);
-	$rowMain = mysqli_fetch_array($result);
-
-	$userName = $rowMain["USER_NAME"];
-	$userPhone = $rowMain["USER_TEL"];
-	$link1 = $rowMain["KAKAO_BTN1"];
-	// $KAKAO_CONTENT = $rowMain["KAKAO_CONTENT"];
-
-	// $KAKAO_CONTENT = str_replace('서핑버스를 예약해주셔서 감사합니다.', '카카오채널로 예약링크를 안내드렸으나', $KAKAO_CONTENT);
-	// $KAKAO_CONTENT = str_replace('좌석/정류장 예약관련 안내드립니다.', '예약확정이 안되어 다시 한번 안내드립니다.', $KAKAO_CONTENT);
-	
-	// $msgTitle = str_replace("<br />", "", nl2br($KAKAO_CONTENT));
-	
-	$msgTitle = '액트립 서핑버스 예약안내';
-	$arrKakao = array(
-		"gubun"=> "bus"
-		, "admin"=> "N"
-		, "tempName"=> "at_bus_kakao"
-		, "smsTitle"=> $msgTitle
-		, "userName"=> $userName
-		, "userPhone"=> $userPhone
-		, "shopname"=> "액트립 서핑버스"
-		, "link1"=>$link1
-		, "smsOnly"=>"N"
-		, "PROD_NAME"=>"타채널 알림톡 재발송"
-		, "PROD_URL"=>""
-		, "PROD_TYPE"=>"bus_push"
-		, "RES_CONFIRM"=>"-1"
-	);
-
-	$arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-	// 카카오 알림톡 DB 저장 START
-	$select_query = kakaoDebug($arrKakao, $arrRtn);            
-	$result_set = mysqli_query($conn, $select_query);
-	// 카카오 알림톡 DB 저장 END
-
-	mysqli_query($conn, "COMMIT");
-	
-}else if($param == "reskakao"){ //버스 예약안내 카톡 : 타채널예약건
-    $resbus = $_REQUEST["resbus"];
-    $userName = $_REQUEST["username"];
-    $userPhone = $_REQUEST["userphone"];
-    $reschannel = $_REQUEST["reschannel"];
-	
-    $resDate1 = $_REQUEST["resDate1"];
-    $resDate2 = $_REQUEST["resDate2"];
-    $resbusseat1 = $_REQUEST["resbusseat1"];
-    $resbusseat2 = $_REQUEST["resbusseat2"];
-
-	//7:서핑버스 네이버쇼핑, 10:네이버예약, 11:프립, 17:프립 패키지, 12:마이리얼트립, 14:망고서프패키지, 15:서프엑스
-	//16:클룩
-	//18:프립-니지모리  19:프립-제천
-	function RandString($len){
-		$return_str = "";
-	
-		for ( $i = 0; $i < $len; $i++ ) {
-			mt_srand((double)microtime()*1000000);
-			$return_str .= substr('123456789ABCDEFGHIJKLMNPQRSTUVWXYZ', mt_rand(0,33), 1);
-		}
-	
-		return $return_str;
-	}
-
-	$coupon_code = RandString(5);
-	$user_ip = $_SERVER['REMOTE_ADDR'];
-    $add_date = date("Y-m-d");
-
-	if($resbus == "YY"){ //양양행
-		$seatName = "양양행";
-		$seatName2 = "양양";
-	}else{ //동해행
-		$seatName = "동해행";
-		$seatName2 = "동해";
-	}
-
-	$resseatMsg = "";
-	if($resbusseat1 > 0){ //양양행,동해행 좌석예약
-		$resseatMsg = "\n    [$seatName] ".$resDate1." / ".$resbusseat1."자리";
-	}
-
-	if($resbusseat2 > 0){ //서울행 좌석예약
-		$resseatMsg .= "\n    [서울행] ".$resDate2." / ".$resbusseat2."자리";
-	}
-
-	$prodTitle = ' 서핑버스';
-	if($reschannel == 11){ //프립
-		$prodTitle = 'x프립버스';
-		$seatName2 = $seatName2." 프립버스";
-	}else if($reschannel == 17 || $reschannel == 20 || $reschannel == 21 || $reschannel == 22 || $reschannel == 26 || $reschannel == 27 || $reschannel == 28 || $reschannel == 29){ //당일 패키지
-		$prodTitle = ' 서핑패키지';
-		if($reschannel == 17 || $reschannel == 26){
-			$seatName2 = $seatName2." 마린서프";
-		}else if($reschannel == 20 || $reschannel == 27){
-			$seatName2 = $seatName2." 인구서프";
-		}else if($reschannel == 21 || $reschannel == 28){
-			$seatName2 = "서프팩토리 동해점";
-		}else if($reschannel == 22 || $reschannel == 29){
-			$seatName2 = "힐링 서핑캠프";
-		}
-	}else if($reschannel == 12){ //마이리얼트립
-
-	}else if($reschannel == 14){ //망고서프 패키지
-
-	}else if($reschannel == 15){ //서프엑스
-		$prodTitle = 'x서프엑스 서핑버스';
-		$seatName2 = $seatName2." 서핑버스x서프엑스";
-	}else if($reschannel == 16){ //클룩
-		$prodTitle = 'X클룩 서핑버스';
-		$seatName2 = $seatName2." 서핑버스x클룩";
-	}else if($reschannel == 23){ //금진 브라보
-		$prodTitle = 'x브라보서프 서핑버스';
-		$seatName2 = $seatName2." 서핑버스x브라보서프";
-	}else if($reschannel == 30){ //엑스크루
-		$prodTitle = 'x엑스크루 서핑버스';
-		$seatName2 = $seatName2." 서핑버스x엑스크루";
-	}else if($reschannel == 31){ //모행
-		$prodTitle = 'x모행 서핑버스';
-		$seatName2 = $seatName2." 서핑버스x모행";
-	}else{		
-		$seatName2 = $seatName2." 서핑버스";
-	}
-
-	$msgTitle = "액트립$prodTitle 예약안내";
-	$link1 = "surfbus_res?param=".urlencode(encrypt(date("Y-m-d").'|'.$coupon_code.'|resbus|'.$resDate1.'|'.$resDate2.'|'.$resbusseat1.'|'.$resbusseat2.'|'.$userName.'|'.$userPhone.'|'.$resbus.'|'.$reschannel.'|'));
-	$arrKakao = array(
-		"gubun"=> "bus"
-		, "admin"=> "N"
-		, "tempName"=> "at_bus_kakao"
-		, "smsTitle"=> $msgTitle
-		, "userName"=> $userName
-		, "userPhone"=> $userPhone
-		, "shopname"=> $seatName2
-		, "msgInfo"=>$resseatMsg
-		, "link1"=> $link1
-		, "smsOnly"=>"N"
-		, "PROD_NAME"=>"타채널 알림톡발송"
-		, "PROD_URL"=>$reschannel
-		, "PROD_TYPE"=>"bus_channel"
-		, "RES_CONFIRM"=>"-1"
-	);
-
-	$arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-	//------- 쿠폰코드 입력 -----
-	$data = json_decode($arrRtn[0], true);
-	$kakao_code = $data[0]["code"];
-	$kakao_type = $data[0]["data"]["type"];
-	$kakao_msgid = $data[0]["data"]["msgid"];
-	$kakao_message = $data[0]["message"];
-	$kakao_originMessage = $data[0]["originMessage"];
-
-	$userinfo = "$userName|$userPhone|$resDate1|$resbusseat1|$resDate2|$resbusseat2|$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid|$resbus|$reschannel";
-	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`, `etc`) VALUES ('$reschannel', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo', '$link1');";
-	$result_set = mysqli_query($conn, $select_query);
- 	if(!$result_set) goto errGo;
-	//------- 쿠폰코드 입력 -----
-
-	// 카카오 알림톡 DB 저장 START
-	$select_query = kakaoDebug($arrKakao, $arrRtn);            
-	$result_set = mysqli_query($conn, $select_query);
-	// 카카오 알림톡 DB 저장 END
-
-   mysqli_query($conn, "COMMIT");
-	
-	// echo $coupon_code." / ";
 }else if($param == "busDatadel"){ //데이터 완전삭제
 	$resnum = $_REQUEST["resnum"];
 
@@ -652,7 +470,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 					$busTypeS = "S";
 					$busTitleName = "양양";
 					$resparam = "surfbus_yy";
-				}else{
+				}else if($shopseq == 14){
 					$busTypeY = "E";
 					$busTypeS = "A";    
 					$busTitleName = "동해";    
