@@ -15,7 +15,7 @@ function rtnProfile($type){
 
 function sendKakao($arrKakao){
 	$curl = curl_init();
-	if($arrKakao["tempName"] == "sol_info01" || $arrKakao["tempName"] == "sol_info02" || $arrKakao["tempName"] == "actrip_info01"){
+	if(strpos($arrKakao["tempName"], "sol_") !== false || strpos($arrKakao["tempName"], "actrip_") !== false){
 		$rtnMsg = kakaoMsg2024($arrKakao);
 	}else{
 		$rtnMsg = kakaoMsg($arrKakao);
@@ -45,7 +45,7 @@ function sendKakao($arrKakao){
 
 
 function kakaoMsg2024($arrKakao){
-	if($arrKakao["tempName"] == "sol_info01" || $arrKakao["tempName"] == "sol_info02"){
+	if(strpos($arrKakao["tempName"], "sol_") !== false ){
 		$profile = rtnProfile("sol");
 	}else{
 		$profile = rtnProfile("actrip");
@@ -194,17 +194,6 @@ function kakaoContent2024($arrKakao, $item){
 				.'\n    - 최소인원(20명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
 				.'\n    - 운행취소 시 이용일 3~4일 전 연락드립니다.';
 
-		}else if($item["gubun"] == "bus_channel"){
-			//타채널 예약안내
-			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
-				.'\n'.$item["sub_name"].'에서 셔틀버스를 예약해주셔서 감사합니다.'
-				.'\n액트립 사이트에서 좌석/정류장을 예약하셔야 확정 및 이용 가능합니다.'
-				.'\n\n - 예약상태 : 예약대기'
-				.'\n - 예약상품 : '.$item["sub_prod"]
-				.'\n - 예약하기 : '.$item["link1"]
-				.'\n\n▶ 안내사항'
-				.'\n    - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~'
-				.'\n    - 취소/환불 및 문의는 채팅으로 연락주세요.';
 		}
 
 		$items = '
@@ -229,6 +218,51 @@ function kakaoContent2024($arrKakao, $item){
 
 		//디버깅용 아이템리스트
 		$items_text = $arrKakao["title"]
+		.'\n\n이용노선 : '.$item["bus_line"]
+		.'\n출발일 : '.$item["day_start"]
+		.'\n복귀일 : '.$item["day_return"]
+		.'\n\n';
+	}else if($arrKakao["tempName"] == "actrip_info02"){ //액트립 버스예약
+		if($item["gubun"] == "bus_channel"){
+			//타채널 예약안내
+			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+				.'\n'.$item["sub_name"].'에서 셔틀버스 상품을 예약해주셔서 이용 안내드립니다.'
+				.'\n\n고객님은 현재 예약대기 상태입니다.'
+				.'\n액트립 사이트에서 좌석/정류장을 예약하셔야 확정 및 이용 가능합니다.'
+				.'\n\n - 좌석예약 : '.$item["link1"]
+				.'\n\n▶ 안내사항'
+				.'\n    - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~'
+				.'\n    - 취소/환불 및 문의는 채팅으로 연락주세요.';
+		}
+
+		$items = '
+		,"items": {
+			"item": {
+				"list": [
+					{
+					"title": "이용노선",
+					"description": "'.$item["bus_line"].'"
+					},
+					{
+					"title": "출발일",
+					"description": "'.$item["day_start"].'"
+					},
+					{
+					"title": "복귀일",
+					"description": "'.$item["day_return"].'"
+					}
+				]
+			},
+			"itemHighlight": {
+				"title": "셔틀버스 예약대기",
+				"description": "아래 링크에서 좌석을 예약해주세요."
+			}
+		}';
+
+		//디버깅용 아이템리스트
+		$items_text = $arrKakao["title"]
+		.'\n\n셔틀버스 예약대기'
+		.'\n아래 링크에서 좌석/정류장 예약해주세요.'
 		.'\n\n이용노선 : '.$item["bus_line"]
 		.'\n출발일 : '.$item["day_start"]
 		.'\n복귀일 : '.$item["day_return"]

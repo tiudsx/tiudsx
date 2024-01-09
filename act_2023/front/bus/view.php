@@ -29,7 +29,19 @@ $bus_type = $arrBus["type"]; //양양, 동해
 
 $arrChannel = $_REQUEST["param"];
 $couponseq = "";
+
+$view_tab1 = "";
+$view_tab3 = "none";
+$view_tab1_class = "class='on'";
+$view_tab3_class = "";
+
+//타채널 알림톡 좌석예약
 if($arrChannel != ""){
+    $view_tab1 = "none";
+    $view_tab3 = "";
+    $view_tab1_class = "";
+    $view_tab3_class = "class='on'";
+
     $arrChk = explode("|", decrypt($arrChannel));
     $codeseq = $arrChk[1];  //쿠폰코드
 
@@ -57,9 +69,9 @@ if($arrChannel != ""){
     $start_cnt = $rowMain["start_cnt"];
     $return_cnt = $rowMain["return_cnt"];
 
-    $daytype = 0;
+    $daytype = 0; //편도
     if($start_cnt > 0 && $return_cnt > 0){
-        $daytype = 1;
+        $daytype = 1; //왕복
     }
 }
 
@@ -98,14 +110,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <div id="tabnavi" class="fixed1" style="top: 49px;">
                     <div class="vip-tabnavi">
                         <ul>
-                            <li class="on" onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li>
+                            <li <?=$view_tab1_class?> onclick="fnResViewBus(true, '#content_tab1', 70, this);"><a>상세설명</a></li>
                             <li onclick="fnResViewBus(false, '#view_tab2', 70, this);fnMapClick();"><a>정류장안내</a></li>
-                            <li onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li>
+                            <li <?=$view_tab3_class?> onclick="fnResViewBus(false, '#view_tab3', 70, this);"><a>셔틀예약</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div id="view_tab1">
+            <div id="view_tab1" style="display:<?=$view_tab1?>;">
                 <div class="noticeline" id="content_tab1">
                     <?if($arrChannel == ""){?>
                         <article>
@@ -171,69 +183,45 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 <? include $pointurl; ?>
 
             </div>
-            <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:none;">
+            <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:<?=$view_tab3?>;">
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
                     <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
                     <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
-                    <br>편도/왕복<input type="text" id="daytype" name="daytype" value="0">
-                    <br>행성지<input type="text" id="busgubun" name="busgubun" value="<?=$busgubun?>">
-                    <br>달력컨트롤<input type="text" id="nextchk" name="nextchk" value="Y">
+                    <br>편도/왕복<input type="text" id="bus_gubun" name="bus_gubun" value="S">
+                    <br>행선지<input type="text" id="bus_line" name="bus_line" value="<?=$busgubun?>">
                 </span>
                 
                 <div id="resStep1">
-                    <div class="busOption01" style="padding-bottom: 0px;">
-                        <ul class="destination" id="ulDaytype" style="margin-bottom: 0px;">
-                            <li><img src="/act_2023/images/viewicon/sign.svg" alt="">일정</li>
-                            <li class="toYang on" onclick="fnBusDayType(0, this);">편도<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusDayType(1, this);">왕복<i class="fas fa-chevron-right"></i></li>
-                        </ul>
-                    </div>
+                    
                     <div class="busOption01" style="padding-bottom: 0px;" id="route">
                         <ul class="destination" id="ulroute" style="margin-bottom: 0px;">
-                            <li><img src="/act_2023/images/viewicon/route.svg" alt="">행선지</li>
-                        <?if($shopseq == 7){?>
-                            <li class="toYang on" onclick="fnBusGubun('YY_S', this);">양양행<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('YY_E', this);">서울행<i class="fas fa-chevron-right"></i></li>
-                        <?}else if($shopseq == 14){?>
-                            <li class="toYang on" onclick="fnBusGubun('DH_S', this);">동해행<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('DH_S', this);">서울행<i class="fas fa-chevron-right"></i></li>
-                        <?}else{?>
-                            <li class="toYang on" onclick="fnBusGubun('YD_S', this);">양양,동해행<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('YD_E', this);">서울행<i class="fas fa-chevron-right"></i></li>                            
-                        <?}?>
+                            <li><img src="/act_2023/images/viewicon/route.svg" alt="">일정</li>
+                            <li class="toYang on" onclick="fnBusGubun('S', this);">출발<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang" onclick="fnBusGubun('E', this);">복귀<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang" onclick="fnBusGubun('A', this);" style="margin-left: 10px;">왕복<i class="fas fa-chevron-right"></i></li>
                         </ul>
                     </div>
                     <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
-                        <ul class="busDate" id="busdate">
-                            <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">이용일</li>
-                            <li class="calendar"><input type="text" id="SurfBus" name="SurfBus" readonly="readonly" class="itx" cal="busdate"></li>
-                        </ul>
-                        <ul class="busLine" style="display: ;">
-                            <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선</li>
-                        </ul>
-                        <ul class="busStop" id="buspointlist" style="display: none;">
-                            <li id="buspointtext"></li>
-                        </ul>
-                        <ul class="busDate" id="sbusdate" style="display:none;">
+                        <ul class="busDate " data-key="bus_start">
                             <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">출발일</li>
-                            <li class="calendar"><input type="text" id="SurfBusS" name="SurfBusS" readonly="readonly" class="itx" cal="busdate"></li>
+                            <li class="calendar"><input type="text" id="bus_start" name="bus_start" readonly="readonly" class="itx" cal="busdate"></li>
                         </ul>
-                        <ul class="busLine" style="display: none;">
+                        <ul class="busLine" data-key="bus_start">
                             <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
                         </ul>
-                        <ul class="busStop" id="buspointlist" style="display: none;">
+                        <ul class="busStop" data-key="bus_start">
                             <li id="buspointtext"></li>
                         </ul>
-                        <ul class="busDate" id="ebusdate" style="display:none;">
+                        <ul class="busDate" data-key="bus_return" style="display:none;">
                             <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">복귀일</li>
-                            <li class="calendar"><input type="text" id="SurfBusE" name="SurfBusE" readonly="readonly" class="itx" cal="busdate"></li>
+                            <li class="calendar"><input type="text" id="bus_return" name="bus_return" readonly="readonly" class="itx" cal="busdate"></li>
                         </ul>
-                        <ul class="busLine" style="display: none;">
+                        <ul class="busLine" data-key="bus_return" style="display: none;">
                             <li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>
                         </ul>
-                        <ul class="busStop" id="buspointlist" style="display: none;">
+                        <ul class="busStop" data-key="bus_return" style="display: none;">
                             <li id="buspointtext"></li>
                         </ul>
                     </div>                
@@ -244,7 +232,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;display:none;">
                     <span id="resseatnum" style="font-size: medium;width:100%;text-align:center;display: block;"></span>
-                    <ul style="display: ;">
+                    <ul>
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선선택</li>
                     </ul>
                     <ul class="busLineTab" style="display: block;">
@@ -313,40 +301,16 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <ul class="busLineTab2" style="display: block;padding-left: 10px;"></ul>
 
                     <ul class="selectStop" style="padding:0 4px;">
-                    <?if($shopseq == 7){?>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn061.png" alt="양양행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn061.png" alt="출발 셔틀버스"></li>
                         <li>
-                            <div id="selBusY" class="bd" style="padding-top:2px;">
+                            <div id="sel_start" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn062.png" alt="서울행 서핑버스"></li>
+                        <li style="display:none;"><img src="/act_2023/images/button/btn062.png" alt="복귀 셔틀버스"></li>
                         <li>
-                            <div id="selBusS" class="bd" style="padding-top:2px;">
+                            <div id="sel_return" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                    <?}else if($shopseq == 14){?>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn064.png" alt="동해행 서핑버스"></li>
-                        <li>
-                            <div id="selBusE" class="bd" style="padding-top:2px;">
-                            </div>
-                        </li>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn063.png" alt="서울행 서핑버스"></li>
-                        <li>
-                            <div id="selBusA" class="bd" style="padding-top:2px;">
-                            </div>
-                        </li>
-                    <?}else{?>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn064.png" alt="동해행 서핑버스"></li>
-                        <li>
-                            <div id="selBusE" class="bd" style="padding-top:2px;">
-                            </div>
-                        </li>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn063.png" alt="서울행 서핑버스"></li>
-                        <li>
-                            <div id="selBusA" class="bd" style="padding-top:2px;">
-                            </div>
-                        </li>
-                    <?}?>
                     </ul>
                 </div>
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
@@ -453,7 +417,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     var json_busDay = {}; //달력에 날짜 선택용 json
     
     fnBusDate(shopseq, "<?=$busgubun?>"); //버스 예약 가능한 날짜
-console.log("json_busDay", json_busDay);
+    
     var start_cnt = 0;
     var return_cnt = 0;
     jQuery(function() {
@@ -536,14 +500,12 @@ console.log("json_busDay", json_busDay);
                 $j('#ulDaytype li').eq(2).removeAttr("onclick");
 
                 //양양행 1대일경우
-                var gubun = fnBusDateGubun($j("#SurfBusS").attr("gubun"), "SurfBusS");
                 var arrDataS = busData[gubun + $j("#SurfBusS").val().substring(5).replace('-', '')];
                 if(arrDataS.length == 1){
                     $j("li[busnum=" + arrDataS[0].busnum + "]").click();
                 }
 
                 //서울행 1대일경우
-                var gubun = fnBusDateGubun($j("#SurfBusE").attr("gubun"), "SurfBusE");
                 var arrDataE = busData[gubun + $j("#SurfBusE").val().substring(5).replace('-', '')];
                 if(arrDataE.length == 1){
                     $j("li[busnum=" + arrDataE[0].busnum + "]").click();

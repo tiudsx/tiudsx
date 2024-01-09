@@ -49,7 +49,7 @@
     foreach($arrPoint as $key=>$value){
         if(strpos($key, "동해_") !== false){
             $sPoint[$key] = $value;
-        }else if(strpos($key, "오후_") !== false){
+        }else if(strpos($key, "AM_") !== false){
             $ePoint[$key] = $value;
         }
     }

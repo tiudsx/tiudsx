@@ -32,6 +32,10 @@ if($reqCode == "busday"){
 //서핑버스 실시간 좌석 조회
 }else if($reqCode == "busseat"){
 
+    $shopseq = $_REQUEST["shopseq"];
+    $bus_date = $_REQUEST["bus_date"];
+    $bus_gubun = $_REQUEST["bus_gubun"];
+    $bus_num = $_REQUEST["bus_num"];
     /*
     예약상태
         0 : 미입금
@@ -47,100 +51,40 @@ if($reqCode == "busday"){
 
     for ($i=0; $i <= 45; $i++) { 
         $seatYN = "Y";
-        // //$_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51" ||         
-        // if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i >= 29){
-        //     $seatYN = "N";
-        // }
-
-        // // if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i <= 20){
-        // //     $seatYN = "N";
-        // // }
-
-        // // if(($_REQUEST["busNum"] == "YSa1" || $_REQUEST["busNum"] == "SY51") && $i >= 29){
-        // //     $seatYN = "N";
-        // // }
-
-        // //양양행 - 프립
-        // if(($_REQUEST["busNum"] == "YSa1" ) && $i >= 33 && $_REQUEST["busDate"] == "2023-05-27"){
-        //     $seatYN = "N";
-        // }
-
-        // //서울행 - 프립
-        // if(($_REQUEST["busNum"] == "SY51") && $i >= 33 && $_REQUEST["busDate"] == "2023-05-28"){
-        //     $seatYN = "N";
-        // }
+        
         $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
     }
 
-    $select_query = 'SELECT * FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';
+    $select_query = "SELECT * FROM `AT_RES_SUB` where res_confirm IN (0, 1, 2, 3, 6, 8) AND res_date = '$bus_date' AND seq = $shopseq AND bus_gubun = '$bus_gubun' AND bus_num = '$bus_num'";
     $result_setlist = mysqli_query($conn, $select_query);
     while ($row = mysqli_fetch_assoc($result_setlist)){        
         $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
     }
+
 }else if($reqCode == "busseatcnt"){
-    $select_query = "SELECT * FROM AT_PROD_BUS_DAY WHERE bus_date = '".$_REQUEST["busDate"]."' AND concat(bus_gubun, '', bus_num) = '".$_REQUEST["busNum"]."'";
-    $result = mysqli_query($conn, $select_query);
-    $rowMain = mysqli_fetch_array($result);
-
-    $seat = $rowMain["seat"];
-    $channel = $rowMain["channel"];
-    $channel = "N";
-    
-    if($channel == "Y"){
-        $groupData[] = array("seatcnt" => $seat);
+    //셔틀버스 노선표시
+    $bus_date = $_REQUEST["bus_date"];
+	$arrGubun = explode('_', $_REQUEST["bus_line"]);
+    $bus_line = $arrGubun[0];
+    $orderby = "";
+    if($arrGubun[1] == "S"){
+        $bus_gubun = "'SA', 'JO'";
+        $orderby = "DESC";
     }else{
-        $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';
-        $result_setlist = mysqli_query($conn, $select_query);
-        while ($row = mysqli_fetch_assoc($result_setlist)){
-            $groupData[] = array("seatcnt" => $row['cnt']);
-        }
-    }
-}else if($reqCode == "frip_seatcnt"){
-    $seq = $_REQUEST["seq"];
-    $select_query = 'SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'" AND seq = '.$seq;
-    $result_setlist = mysqli_query($conn, $select_query);
-    while ($row = mysqli_fetch_assoc($result_setlist)){
-        $groupData[] = array("seatcnt" => $row['cnt']);
-    }
-}else if($reqCode == "frip_busseat"){
-
-    /*
-    예약상태
-        0 : 미입금
-        1 : 예약대기
-        2 : 임시확정
-        3 : 확정
-        4 : 환불요청
-        5 : 환불완료
-        6 : 임시취소
-        7 : 취소
-        8 : 입금완료
-    */
-
-    for ($i=0; $i <= 45; $i++) { 
-        $seatYN = "Y";
-
-        //동해행 - 프립
-        if(($_REQUEST["busNum"] == "ESa1" || $_REQUEST["busNum"] == "AE51") && $i < 21){
-            //$seatYN = "N";
-        }
-
-        //양양행 - 프립
-        if(($_REQUEST["busNum"] == "YSa1" ) && $i < 33 && $_REQUEST["busDate"] == "2023-05-27"){
-            $seatYN = "N";
-        }
-
-        //서울행 - 프립
-        if(($_REQUEST["busNum"] == "SY51") && $i < 33 && $_REQUEST["busDate"] == "2023-05-28"){
-            $seatYN = "N";
-        }
-        $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
+        $bus_gubun = "'AM', 'PM'";
+        $orderby = "ASC";
     }
 
-    $select_query = 'SELECT * FROM `AT_RES_SUB` where res_date = "'.$_REQUEST["busDate"].'" AND res_confirm IN (0, 1, 2, 3, 6, 8) AND res_bus = "'.$_REQUEST["busNum"].'"';
-    $result_setlist = mysqli_query($conn, $select_query);
-    while ($row = mysqli_fetch_assoc($result_setlist)){        
-        $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
+    $select_query = "SELECT bus_gubun, bus_num, seat,
+            (SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_confirm IN (0, 1, 2, 3, 6, 8) AND res_date = a.bus_date AND bus_line = a.bus_line AND bus_gubun = a.bus_gubun AND bus_num = a.bus_num) AS seatcnt
+         FROM `AT_PROD_BUS_DAY` AS a WHERE bus_date = '$bus_date' AND bus_line = '$bus_line' AND bus_gubun IN ($bus_gubun)
+         ORDER BY bus_gubun $orderby, bus_num
+         ";
+
+    $result = mysqli_query($conn, $select_query);
+    
+    while ( $row = $result->fetch_assoc()){
+        $groupData[] = $row;
     }
 }
 

@@ -205,7 +205,7 @@ if($param == "BusI"){
             $pointTime = ' -> '.$endLocationE[$i];
         }else{
             // $pointTime = ' / '.explode("|", fnBusPoint($startLocationE[$i], $busCode))[0];
-            $pointTime = ' / '.fnBusPointArr2023("오후_".$startLocationE[$i], $shopseq, 1);
+            $pointTime = ' / '.fnBusPointArr2023("AM_".$startLocationE[$i], $shopseq, 1);
         }
 
         if(array_key_exists($BusDateEnd[$i].$busCode, $arrSeatInfoE)){

@@ -27,9 +27,7 @@ function fnBusDate(seq, bus_line){
  
     $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
         function (data, textStatus, jqXHR) {
-            json_busData = data;
-
-            Object.entries(json_busData).forEach(function(el) {
+            Object.entries(data).forEach(function(el) {
                 if(el[0].substring(0, 2) == "SA" || el[0].substring(0, 2) == "JO"){ //사당, 종로
                     if(json_busDay[bus_line + "_S"] == null){
                         json_busDay[bus_line + "_S"] = {};

@@ -96,7 +96,7 @@ if($param == "reskakaodel"){ //예약건 삭제
 	$link1 = $rowMain["etc"];
 
 	//==========================카카오 메시지 발송 ==========================
-	$msgTitle = '액트립 셔틀버스 좌석예약안내';
+	$msgTitle = '액트립 셔틀버스 예약안내';
 	$DebugInfo = array(
 		"PROD_NAME" => "셔틀버스 타채널예약 재발송"
 		, "PROD_TABLE" => "AT_RES_TEMP"
@@ -126,7 +126,7 @@ if($param == "reskakaodel"){ //예약건 삭제
 	$arrKakao = array(
 		"arryData"=> $arryKakao
 		, "array"=> "true" //배열 여부
-		, "tempName"=> "actrip_info01" //템플릿 코드
+		, "tempName"=> "actrip_info02" //템플릿 코드
 		, "title"=> $msgTitle //타이틀
 		, "smsOnly"=> "N" //문자발송 여부
 	);
@@ -248,7 +248,7 @@ if($param == "reskakaodel"){ //예약건 삭제
 	 $result_set = mysqli_query($conn, $select_query);
 
 	//==========================카카오 메시지 발송 ==========================
-	$msgTitle = '액트립 셔틀버스 좌석예약안내';
+	$msgTitle = '액트립 셔틀버스 예약안내';
 	$DebugInfo = array(
 		"PROD_NAME" => "셔틀버스 타채널예약"
 		, "PROD_TABLE" => "AT_RES_TEMP"
@@ -278,7 +278,7 @@ if($param == "reskakaodel"){ //예약건 삭제
 	$arrKakao = array(
 		"arryData"=> $arryKakao
 		, "array"=> "true" //배열 여부
-		, "tempName"=> "actrip_info01" //템플릿 코드
+		, "tempName"=> "actrip_info02" //템플릿 코드
 		, "title"=> $msgTitle //타이틀
 		, "smsOnly"=> "N" //문자발송 여부
 	);

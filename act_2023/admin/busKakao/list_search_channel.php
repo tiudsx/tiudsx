@@ -141,9 +141,7 @@ if($count == 0){
                 <?=$row['kakao_cnt']?> 회              
             </td>
             <td>
-                <?if($json["code"] != "fail"){?>
                 <input type="button" class="gg_btn res_btn_color1" style="width:50px; height:25px;" value="재발송" onclick="fnBusChannelKakao('<?=$row['resnum']?>');" /> &nbsp; 
-                <?}?>
             </td>
             <td>
                 <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:25px;" value="삭제" onclick="fnBusChannelDel(<?=$row['codeseq']?>);" /></td>

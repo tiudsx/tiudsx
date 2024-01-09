@@ -101,8 +101,8 @@
                 <?if($arrS2["솔.동해점"]){?>
                 <tr>
                     <th>솔.동해점</th>
-                    <td><?=fnBusPointArr2023("오후_솔.동해점", $shopseq, 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("오후_솔.동해점", $shopseq, 1)?></font>
+                    <td><?=fnBusPointArr2023("AM_솔.동해점", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("AM_솔.동해점", $shopseq, 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 1, 1, '솔.동해점', this);"></td>
                 </tr>
@@ -111,8 +111,8 @@
                 <?if($arrS2["대진해변"]){?>
                 <tr>
                     <th>대진해변</th>
-                    <td><?=fnBusPointArr2023("오후_대진해변", $shopseq, 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("오후_대진해변", $shopseq, 1)?></font>
+                    <td><?=fnBusPointArr2023("AM_대진해변", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("AM_대진해변", $shopseq, 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 2, 1, '대진해변', this);"></td>
                 </tr>
@@ -121,8 +121,8 @@
                 <?if($arrS2["나인비치"]){?>
                 <tr>
                     <th>망상 나인비치</th>
-                    <td><?=fnBusPointArr2023("오후_나인비치", $shopseq, 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("오후_나인비치", $shopseq, 1)?></font>
+                    <td><?=fnBusPointArr2023("AM_나인비치", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("AM_나인비치", $shopseq, 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 3, 1, '나인비치', this);"></td>
                 </tr>
@@ -131,8 +131,8 @@
                 <?if($arrS2["금진해변"]){?>
                 <tr>
                     <th>금진해변</th>
-                    <td><?=fnBusPointArr2023("오후_금진해변", $shopseq, 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("오후_금진해변", $shopseq, 1)?></font>
+                    <td><?=fnBusPointArr2023("AM_금진해변", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("AM_금진해변", $shopseq, 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 4, 1, '금진해변', this);"></td>
                 </tr>
@@ -141,8 +141,8 @@
                 <?if($arrS2["서프홀릭"]){?>
                 <tr>
                     <th>금진 서프홀릭</th>
-                    <td><?=fnBusPointArr2023("오후_서프홀릭", $shopseq, 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("오후_서프홀릭", $shopseq, 1)?></font>
+                    <td><?=fnBusPointArr2023("AM_서프홀릭", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("AM_서프홀릭", $shopseq, 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 5, 1, '서프홀릭', this);"></td>
                 </tr>
@@ -151,8 +151,8 @@
                 <?if($arrS2["브라보서프"]){?>
                 <tr>
                     <th>금진 브라보서프</th>
-                    <td><?=fnBusPointArr2023("오후_브라보서프", $shopseq, 0)?><br>
-                        <font color="red"><?=fnBusPointArr2023("오후_브라보서프", $shopseq, 1)?></font>
+                    <td><?=fnBusPointArr2023("AM_브라보서프", $shopseq, 0)?><br>
+                        <font color="red"><?=fnBusPointArr2023("AM_브라보서프", $shopseq, 1)?></font>
                     </td>
                     <td><input type="button" class="bd_btn mapviewid" style="padding-top:4px;" value="지도" onclick="fnBusMap('E', 6, 1, '브라보서프', this);"></td>
                 </tr>
