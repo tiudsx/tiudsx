@@ -34,8 +34,8 @@
                     </th>
                 </tr>
                 <tr>
-                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;background:#1973e1;color:#fff;" value="서울 출발" onclick="fnBusPoint(this, 1);"></td>
-                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="서울 복귀" onclick="fnBusPoint(this, 2);"></td>
+                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;background:#1973e1;color:#fff;" value="사당선" onclick="fnBusPoint(this, 1);"></td>
+                    <td style="text-align:center;"><input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="오후 출발" onclick="fnBusPoint(this, 2);"></td>
                 </tr>
             </tbody>
         </table>

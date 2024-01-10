@@ -1169,10 +1169,6 @@ function fnBusSave() {
     setTimeout('$j("#frmRes").attr("action", "' + submiturl + '").submit();', 500);
 }
 
-function fnUnblock(objId) {
-    $j(objId).unblock();
-}
-
 function fnCouponCheck(obj) {
     var cp = fnCoupon("BUS", "load", $j("#coupon").val());
     if (cp > 0) {

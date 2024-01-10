@@ -226,7 +226,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </ul>
                     </div>                
                     <div id="nextbtn" class="busOption01" style="text-align:center;">
-                        <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusNext();">
+                        <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusNext(1);">
                     </div>
                 </div>
 
@@ -238,7 +238,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <ul class="busLineTab" style="display: block;">
                     </ul>
                 </div>
-                <div class="busOption02" style="display:none;">
+                <div class="busOption02" id="bus_step1" style="display:none;">
                     <ul class="busSeat">
                         <div style="text-align:center">
                             <span style="font-size: 1.3em;">
@@ -298,17 +298,24 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </table>
                         </div>
                     </ul>
-                    <ul class="busLineTab2" style="display: block;padding-left: 10px;"></ul>
-
+                    <ul class="busLineTab2" style="display: none;padding-left: 10px;"></ul>
+                    
+                    <div id="nextbtn" class="busOption01" style="text-align:center;padding-top:0px;">
+                        <input type="button" class="btnsurfadd" style="width:160px;font-size: 1.2em;" value="이전단계" onclick="fnBusPrev(0);">&nbsp;&nbsp;
+                        <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="다음단계" onclick="fnBusNext(2);">
+                    </div>
+                </div>
+                
+                <div class="busOption02" id="bus_step2" style="display:none;">
                     <ul class="selectStop" style="padding:0 4px;">
                         <li style="display:none;"><img src="/act_2023/images/button/btn061.png" alt="출발 셔틀버스"></li>
                         <li>
-                            <div id="sel_start" class="bd" style="padding-top:2px;">
+                            <div id="selBus_S" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                         <li style="display:none;"><img src="/act_2023/images/button/btn062.png" alt="복귀 셔틀버스"></li>
                         <li>
-                            <div id="sel_return" class="bd" style="padding-top:2px;">
+                            <div id="selBus_E" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                     </ul>
@@ -376,7 +383,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     </table>
                     <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
                         <div>
-                            <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="이전단계" onclick="fnBusPrev(0);" />&nbsp;&nbsp;
+                            <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="이전단계" onclick="fnBusPrev(1);" />&nbsp;&nbsp;
                             <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약하기" onclick="fnBusSave();" />
                         </div>
                     </div>
@@ -413,6 +420,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     var dayCode = "busseat";
     var businit = 0;
     var busrestype = "none";
+    var buschannel = "<?=$couponseq?>";
     var json_busData = {}; //셔틀버스 노선 이용가능 날짜 json
     var json_busDay = {}; //달력에 날짜 선택용 json
     
