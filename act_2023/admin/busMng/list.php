@@ -93,7 +93,7 @@ $shopseq = -2;
                                 </select>
                             </td>
                             <td style="text-align:center;">
-                                <input type="text" id="res_price" name="res_price[]" style="width:66px;" value="20000" class="itx2">
+                                <input type="text" id="res_price" name="res_price[]" style="width:66px;" value="" class="itx2">
                             </td>
                             <td style="text-align:center;">
                                 <select id="res_gpsname" name="res_gpsname[]" class="select" sel="">

@@ -22,7 +22,7 @@ if($reqCode == "busday"){
     $result_buslist = mysqli_query($conn, $select_query);
     
     while ($row = mysqli_fetch_assoc($result_buslist)){
-        $arrBusInfo = array("bus_gubun" => $row["bus_gubun"], "bus_num" => $row["bus_num"], "bus_name" => $row["bus_name"], "bus_seat" => $row["seat"]);
+        $arrBusInfo = array("bus_gubun" => $row["bus_gubun"], "bus_num" => $row["bus_num"], "bus_seat" => $row["seat"]);
         if($groupData[$row["bus_gubun"].$row["busjson"]] == null){
             $groupData[$row["bus_gubun"].$row["busjson"]] = array($arrBusInfo);
         }else{
@@ -75,7 +75,7 @@ if($reqCode == "busday"){
         $orderby = "ASC";
     }
 
-    $select_query = "SELECT bus_gubun, bus_num, seat,
+    $select_query = "SELECT bus_gubun, bus_num, seat, price,
             (SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_confirm IN (0, 1, 2, 3, 6, 8) AND res_date = a.bus_date AND bus_line = a.bus_line AND bus_gubun = a.bus_gubun AND bus_num = a.bus_num) AS seatcnt
          FROM `AT_PROD_BUS_DAY` AS a WHERE bus_date = '$bus_date' AND bus_line = '$bus_line' AND bus_gubun IN ($bus_gubun)
          ORDER BY bus_gubun $orderby, bus_num
@@ -84,6 +84,20 @@ if($reqCode == "busday"){
     $result = mysqli_query($conn, $select_query);
     
     while ( $row = $result->fetch_assoc()){
+        $bus_name = "";
+        if($row['bus_gubun'] == "SA"){
+            $bus_name = "사당선 ";
+        }else if($row['bus_gubun'] == "JO"){
+            $bus_name = "종로선 ";
+        }else if($row['bus_gubun'] == "AM"){
+            $bus_name = "오후 ";
+        }else if($row['bus_gubun'] == "PM"){
+            $bus_name = "저녁 ";
+        }
+        
+        $row["bus_name"] = $bus_name.$row["bus_num"]."호차";
+        $row["bus_price"] = $row["price"];
+
         $groupData[] = $row;
     }
 }

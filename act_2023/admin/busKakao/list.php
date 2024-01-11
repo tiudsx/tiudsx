@@ -100,6 +100,7 @@ $j(document).ready(function(){
                         <td><input type="text" id="userphone" name="userphone" style="width:100px;" value="" class="itx2" maxlength="20" onkeyup="spacetrim(this);"></td>
                         <td>
                             <select id="start_bus_gubun" name="start_bus_gubun" class="select" sel="">
+                                <option value="ALL">전체</option>
                                 <option value="SA">사당선</option>
                                 <option value="JO">종로선</option>
                             </select>
@@ -112,6 +113,7 @@ $j(document).ready(function(){
                         </td>
                         <td>
                             <select id="return_bus_gubun" name="return_bus_gubun" class="select" sel="">
+                                <option value="ALL">전체</option>
                                 <option value="AM">오후 출발</option>
                                 <option value="PM">저녁 출발</option>
                             </select>

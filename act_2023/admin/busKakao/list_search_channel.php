@@ -112,13 +112,30 @@ if($count == 0){
 
     $rtnTextCode = '<span class="kakao_view" seq="'.$row['codeseq'].'">'.$rtnText.'</span><span style="display:none;"><b>'.$row['insdate'].'</b> : <a href="https://alimtalk-api.bizmsg.kr/codeList.html" target=_blank>오류코드 목록</a><br>'.$rtnMessage.'</span>';
 
+    $start_bus_gubun = "";
+    if($row['start_bus_gubun'] == "SA"){
+        $start_bus_gubun = "사당선";
+    }else if($row['start_bus_gubun'] == "JO"){
+        $start_bus_gubun = "종로선";
+    }else if($row['start_bus_gubun'] == "ALL"){
+        $start_bus_gubun = "전체";
+    }
+    
+    $return_bus_gubun = "";
+    if($row['return_bus_gubun'] == "AM"){
+        $return_bus_gubun = "오후";
+    }else if($row['return_bus_gubun'] == "PM"){
+        $return_bus_gubun = "저녁";
+    }else if($row['return_bus_gubun'] == "ALL"){
+        $return_bus_gubun = "전체";
+    }
     ?>
         <tr>
             <td><a href="<?=$row['etc']?>" target="_blank"><b>[<?=(($row['bus_line'] == "YY") ? "양양" : "동해")?>]</b></a></td>
             <td><a href="<?=$row['etc']?>" target="_blank"><?=$row['name']?></a></td>
             <td><?=$row['user_name']?></td>
             <td><?=$row['user_phone']?></td>
-            <td><b><?=(($row['start_bus_gubun'] == "SA") ? "사당선" : "종로선")?></b></td>
+            <td><b><?=$start_bus_gubun?></b></td>
             <td>
                 <?
                 if($row['start_cnt'] > 0){
@@ -128,7 +145,7 @@ if($count == 0){
                 }
                 ?>    
             </td>
-            <td><b><?=(($row['return_bus_gubun'] == "AM") ? "오후" : "저녁")?></b></td>
+            <td><b><?=$return_bus_gubun?></b></td>
             <td>
                 <?
                 if($row['return_cnt'] > 0){

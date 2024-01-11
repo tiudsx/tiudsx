@@ -362,35 +362,14 @@ function fnBusSearchDate(selectedDate, objID) {
     $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
         function(data, textStatus, jqXHR) {
             data.forEach(function(el, i) {
-                var bus_name = fnBusName(el.bus_gubun) + " " + el.bus_num + "호차";
-
                 if (el.seat <= el.seatcnt && !(busrestype == "change" || busrestype == "seatview")) { //매진
-                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + bus_name + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + bus_name + '</li>');
+                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + bus_name + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.bus_name + '</li>');
                 }else{
-                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(this);" seat="' + el.seat + '" bus_gubun="' + el.bus_gubun + '" bus_num="' + el.bus_num + '" style="cursor:pointer;">' + bus_name + '</li>');
+                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(this);" seat="' + el.seat + '" bus_gubun="' + el.bus_gubun + '" bus_num="' + el.bus_num + '" bus_price="' + el.bus_price + '" style="cursor:pointer;">' + el.bus_name + '</li>');
                 }
             });
         }
     );
-}
-
-/**
- * 버스 구분명칭
- * @param bus_gubun 버스구분코드
- */
-function fnBusName(bus_gubun){
-    var rtn = "";
-    if(bus_gubun == "SA"){
-        rtn = "사당선";
-    }else if(bus_gubun == "JO"){
-        rtn = "종로선";
-    }else if(bus_gubun == "AM"){
-        rtn = "오후";
-    }else if(bus_gubun == "PM"){
-        rtn = "저녁";
-    }
-
-    return rtn;
 }
 
 //
@@ -452,8 +431,8 @@ function fnBusNext(step) {
         $j(".busLineTab li").remove();
 
         $j(".selectStop li").css("display", "none");
-        $j("#sel_start").html("");
-        $j("#sel_return").html("");
+        $j("#selBus_S").html("");
+        $j("#selBus_E").html("");
 
         if ($j("#bus_gubun").val() == "S" || $j("#bus_gubun").val() == "A") { //서울 출발
             if ($j("#bus_start").val() == "") {
@@ -467,11 +446,10 @@ function fnBusNext(step) {
                 return;
             }
             
-            $j("#selBus_S").html("");
             $j(".selectStop li").eq(0).css("display", "");
             $j(".selectStop li").eq(1).css("display", "");
 
-            $j(".busLineTab").append('<li class="on" caldate="' + $j("#bus_start").val() + '" style="cursor:pointer;" bus_gubun="' + bus_selected.attr("bus_gubun") + '" bus_num="' + bus_selected.attr("bus_num") + '" onclick="fnBusSeatInit(this, 0);">[출발] ' +  bus_selected.text() + '</li>');
+            $j(".busLineTab").append('<li class="on" caldate="' + $j("#bus_start").val() + '" style="cursor:pointer;" bus_gubun="' + bus_selected.attr("bus_gubun") + '" bus_num="' + bus_selected.attr("bus_num") + '" bus_price="' + bus_selected.attr("bus_price") + '"  bus_name="' + bus_selected.text() + '" onclick="fnBusSeatInit(this, 0);">[출발] ' +  bus_selected.text() + '</li>');
         }
 
         if ($j("#bus_gubun").val() == "E" || $j("#bus_gubun").val() == "A") { //서울 복귀
@@ -486,7 +464,6 @@ function fnBusNext(step) {
                 return;
             }
             
-            $j("#selBus_E").html("");
             $j(".selectStop li").eq(2).css("display", "");
             $j(".selectStop li").eq(3).css("display", "");
 
@@ -494,7 +471,7 @@ function fnBusNext(step) {
             if($j("#bus_gubun").val() == "A"){
                 classOn = "";
             }
-            $j(".busLineTab").append('<li ' + classOn + 'caldate="' + $j("#bus_return").val() + '" style="cursor:pointer;" bus_gubun="' + bus_selected.attr("bus_gubun") + '" bus_num="' + bus_selected.attr("bus_num") + '" onclick="fnBusSeatInit(this, 1);">[복귀] ' +  bus_selected.text() + '</li>');
+            $j(".busLineTab").append('<li ' + classOn + 'caldate="' + $j("#bus_return").val() + '" style="cursor:pointer;" bus_gubun="' + bus_selected.attr("bus_gubun") + '" bus_num="' + bus_selected.attr("bus_num") + '" bus_price="' + bus_selected.attr("bus_price") + '"  bus_name="' + bus_selected.text() + '" onclick="fnBusSeatInit(this, 1);">[복귀] ' +  bus_selected.text() + '</li>');
         }
 
         $j(".busLineTab2").html($j(".busLineTab").html());
@@ -693,7 +670,9 @@ function fnSeatSelected(obj) {
     /**버스호차 */
     var bus_num = selObj.attr("bus_num");
     /**버스 노선명 표시 */
-    var bus_text = selObj.text();//fnBusName(bus_gubun);
+    var bus_text = selObj.attr("bus_name");
+    /**버스 가격 */
+    var bus_price = selObj.attr("bus_price");
 
     //도착정류장
     if(bus_gubun == "SA" || bus_gubun == "JO"){
@@ -833,7 +812,7 @@ function fnSeatSelected(obj) {
         insHtml += '				<tr id="' + busType + '_' + objVlu + '" trseat="' + objVlu + '">' +
             '					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
             '					<td style="line-height:2;">' +
-            '						<select id="startLocation' + busType + '" seatnum="' + objVlu + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + bus_num + '\', -1);">' +
+            '						<select id="startLocation' + busType + '" seatnum="' + objVlu + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + busType + '\');">' +
             '							' + sPoint +
             '						</select> →' +
             '						<select id="endLocation' + busType + '" seatnum="' + objVlu + '" name="endLocation' + busType + '[]" class="select">' +
@@ -843,8 +822,9 @@ function fnSeatSelected(obj) {
             '						<input type="hidden" id="hidbusSeat' + busType + '" name="hidbusSeat' + busType + '[]" value="' + objVlu + '" />' +
             '						<input type="hidden" id="hidbusDate' + busType + '" name="hidbusDate' + busType + '[]" value="' + selDate + '" />' +
             '						<input type="hidden" id="hidbusNum' + busType + '" name="hidbusNum' + busType + '[]" value="' + bus_num + '" />' +
+            '						<input type="hidden" id="hidbusPrice' + busType + '" value="' + bus_price + '" />' +
             '					</td>' +
-            '					<td style="text-align:center;" onclick="fnSeatDel(this, ' + objVlu + '' + busType + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
+            '					<td style="text-align:center;" onclick="fnSeatDel(this, \'' + busType + '\', ' + objVlu + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
             '				</tr>';
         if (tbCnt == 0) {
             insHtml += '			</tbody>' +
@@ -867,22 +847,28 @@ function fnSeatSelected(obj) {
  * @returns 
  */
 function fnPriceSum(obj, num) {
-    return;
-    var cnt = $j("input[id=hidbusSeat" + busTypeY + "]").length + $j("input[id=hidbusSeat" + busTypeS + "]").length;
+    var cntS = $j("input[id=hidbusSeatS]").length;
+    var cntE = $j("input[id=hidbusSeatE]").length;
 
-    if (cnt == 0) return;
+    if ((cntS + cntE) == 0) return;
+    
+    var bus_priceS = $j("input[id=hidbusPriceS]").val();
+    var bus_priceE = $j("input[id=hidbusPriceE]").val();
+
+    var totalPrice = (cntS * bus_priceS) + (cntE * bus_priceE);
+
     $j("#lastcouponprice").html("");
     if ($j("#couponcode").val() == "" || $j("#couponprice").val() == 0) {
-        $j("#lastPrice").html(commify(cnt * 20000) + "원");
+        $j("#lastPrice").html(commify(totalPrice) + "원");
     } else {
         var cp = $j("#couponprice").val();
         if (cp <= 100) { //퍼센트 할인			
             cp = (1 - (cp / 100));
-            $j("#lastPrice").html(commify((cnt * 20000) * cp) + "원");
-            $j("#lastcouponprice").html(" (" + commify(cnt * 20000) + "원 - 할인쿠폰:" + commify((cnt * 20000) - ((cnt * 20000) * cp)) + "원)");
+            $j("#lastPrice").html(commify((totalPrice) * cp) + "원");
+            $j("#lastcouponprice").html(" (" + commify(totalPrice) + "원 - 할인쿠폰:" + commify((totalPrice) - ((totalPrice) * cp)) + "원)");
         } else { //금액할인
-            $j("#lastPrice").html(commify((cnt * 20000) - cp) + "원");
-            $j("#lastcouponprice").html(" (" + commify(cnt * 20000) + "원 - 할인쿠폰:" + commify(cp) + "원)");
+            $j("#lastPrice").html(commify((totalPrice) - cp) + "원");
+            $j("#lastcouponprice").html(" (" + commify(totalPrice) + "원 - 할인쿠폰:" + commify(cp) + "원)");
         }
     }
 }
@@ -892,9 +878,20 @@ function fnPriceSum(obj, num) {
  * @param {*} obj 
  * @param {*} num 
  */
-function fnSeatDel(obj, num) {
-    var arrId = $j(obj).parents('tbody').attr('id').split('_');
-    if (selDate == arrId[0] && busNum == arrId[1]) {
+function fnSeatDel(obj, busGubun, num) {
+    /**선택된 노선 */
+    var selObj = $j(".busLineTab li[class=on]");
+    /**버스노선 */
+    var bus_gubun = selObj.attr("bus_gubun");
+
+    //도착정류장
+    if(bus_gubun == "SA" || bus_gubun == "JO"){
+        var busType = "S";
+    }else{
+        var busType = "E";
+    }
+    
+    if (busType == busGubun) {
         $j("#tbSeat .busSeatList[busSeat=" + num + "]").removeClass("busSeatListC").addClass("busSeatListY");
     }
 
@@ -912,43 +909,31 @@ function fnSeatDel(obj, num) {
  * @returns 
  */
 function fnBusSave() {
-    var chkVluY = $j("input[id=hidbusSeat" + busTypeY + "]").map(function() { return $j(this).val(); }).get();
-    var chkVluS = $j("input[id=hidbusSeat" + busTypeS + "]").map(function() { return $j(this).val(); }).get();
+    var chkVluS = $j("input[id=hidbusSeatS]").map(function() { return $j(this).val(); }).get();
+    var chkVluE = $j("input[id=hidbusSeatE]").map(function() { return $j(this).val(); }).get();
 
-    var chksLocationY = $j("select[id=startLocation" + busTypeY + "]").map(function() { return $j(this).val(); }).get();
-    var chkeLocationY = $j("select[id=endLocation" + busTypeY + "]").map(function() { return $j(this).val(); }).get();
-    var chksLocationS = $j("select[id=startLocation" + busTypeS + "]").map(function() { return $j(this).val(); }).get();
-    var chkeLocationS = $j("select[id=endLocation" + busTypeS + "]").map(function() { return $j(this).val(); }).get();
-
-    if ($j("#daytype").val() == 0) { //편도
-        if (chkVluY == "" && chkVluS == "") {
-            alert("셔틀버스 좌석을 선택해 주세요.");
-
-            fnMapView("#seatTab", 80);
-            return;
-        }
-    } else {
-        if (chkVluY == "") {
-            alert("셔틀버스 출발 좌석을 선택해 주세요.");
-
-            fnMapView("#seatTab", 80);
-            return;
-        }
-
-        if (chkVluS == "") {
-            alert("셔틀버스 복귀 좌석을 선택해 주세요.");
-
-            fnMapView("#seatTab", 80);
-            return;
-        }
-    }
-
-    if (chksLocationY.indexOf('N') != -1 || chkeLocationY.indexOf('N') != -1) {
-        alert('셔틀버스 정류장을 선택해주세요.');
+    if (($j("#bus_gubun").val() == "S" || $j("#bus_gubun").val() == "A") && chkVluS == "") {
+        alert("셔틀버스 출발 좌석을 선택해 주세요.");
         return;
     }
-    if (chksLocationS.indexOf('N') != -1 || chkeLocationS.indexOf('N') != -1) {
-        alert('셔틀버스  정류장을 선택해주세요.');
+
+    if (($j("#bus_gubun").val() == "E" || $j("#bus_gubun").val() == "A") && chkVluE == "") {
+        alert("셔틀버스 복귀 좌석을 선택해 주세요.");
+        return;
+    }
+    
+
+    var chk_startS = $j("select[id=startLocationS]").map(function() { return $j(this).val(); }).get();
+    var chk_endS = $j("select[id=endLocationS]").map(function() { return $j(this).val(); }).get();
+    var chk_startE = $j("select[id=startLocationE]").map(function() { return $j(this).val(); }).get();
+    var chk_endE = $j("select[id=endLocationE]").map(function() { return $j(this).val(); }).get();
+
+    if (chk_startS.indexOf('N') != -1 || chk_endS.indexOf('N') != -1) {
+        alert('출발일 정류장을 선택해주세요.');
+        return;
+    }
+    if (chk_startE.indexOf('N') != -1 || chk_endE.indexOf('N') != -1) {
+        alert('복귀일 정류장을 선택해주세요.');
         return;
     }
 

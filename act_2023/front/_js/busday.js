@@ -90,25 +90,22 @@ function getListFilter(data, key, value){
     });
 }
 
-function fnBusTime(obj, busnum, num) {
-    if (num == -1) {
-        var objStop = $j(obj).parent().find("#stopLocation");
-    } else {
-        var objStop = $j("td[id=stopLocation]").eq(num);
-    }
+function fnBusTime(obj, busType) {
+    var objStop = $j(obj).parent().find("#stopLocation");
     if (obj.value == "N") {
         objStop.text('');
         return;
     }
 
-    busnum = busnum.substring(0, 3)
-    var params = "gubun=point&bus_line=" + obj.value + "&point=" + busnum + "&shopseq=" + shopseq;
-    $j.ajax({
-        type: "POST",
-        url: "/act_2023/front/bus/view_bus_point.php",
-        data: params,
-        success: function(data) {
-            objStop.html("탑승시간 : " + data.split("|")[0] + "<br> 탑승위치 : " + data.split("|")[1]);
-        }
-    })    
+    if(busType == "S"){
+        var bus_selected = $j("ul[class=busLine]:eq(0) li[class=on]");
+    }else if(busType == "E"){
+        var bus_selected = $j("ul[class=busLine]:eq(1) li[class=on]");
+    }
+
+    var bus_gubun = bus_selected.attr("bus_gubun");
+    var arrObj = eval("busPoint." + bus_gubun); //정류장 목록
+    var data = arrObj.filter(row => row.code == obj.value)[0] //선택 정류장 데이터
+
+    objStop.html(data["point"] + " <span style='color:red;'>(" + data["time"].split(":")[0] + "시 " + data["time"].split(":")[1] + "분)</span>");
 }
