@@ -37,9 +37,9 @@ function fnBusDataDel(){
             alert("정상적으로 삭제되었습니다.");
 
             if (calObj.attr("value") == null) {
-                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
+                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
             } else {
-                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
+                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
             }
 
             if ($j("input[name=buspoint]").length > 0) {
@@ -171,7 +171,7 @@ function fnBusDel(obj){
             alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
         } else {            
             fnBusMngList($j("#hidselDate").val());
-            fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), $j("#hidselDate").val().split('-')[2], -2);
+            fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), $j("#hidselDate").val().split('-')[2], -2);
         }
     }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
@@ -217,6 +217,8 @@ function fnSelChange(obj, num) {
 }
 
 function fnBusModify(resseq) {
+    //alert("작업 예정");
+    return;
     var params = "resparam=busview&resseq=" + resseq;
     $j.ajax({
         type: "POST",
@@ -348,9 +350,9 @@ function fnBusDataAdd() {
                 alert("정상적으로 처리되었습니다.");
 
                 if (calObj.attr("value") == null) {
-                    fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
+                    fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
                 } else {
-                    fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
+                    fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
                 }
 
                 if ($j("input[name=buspoint]").length > 0) {
@@ -410,7 +412,7 @@ function fnBusMngDataAdd(gubun) {
                 alert("정상적으로 처리되었습니다.");
 
                 fnBusMngList(calObj.attr("value"));
-                fnCalMoveAdminList($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
+                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
                 fnBlockClose();
             } else {
                 var arrRtn = data.split('|');
@@ -473,28 +475,32 @@ function fnKakaoInfo() {
         }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
-function fnDayList(vlu, obj, folderName){
+/**
+ * 셔틀버스 예약 정보
+ * @param {*} vlu 
+ * @param {*} obj 
+ * @param {*} folderName 
+ */
+function fnDayList(gubun, num, obj, folderName){
 	$j("input[name=buspoint]").removeClass("buson");
 	$j("input[name=buspoint]").css("background", "white");
-	if(vlu == "ALL"){
-		$j("#dayList").html('<div style="text-align:center;font-size:14px;padding:50px;"><b>버스종류를 선택하세요.</b></div>');
-	}else{
-		$j('#dayList').block({ message: "<br><h1>셔틀버스 좌석 조회 중...</h1><br><br>" }); 
+	
+    $j('#dayList').block({ message: "<br><h1>셔틀버스 좌석 조회 중...</h1><br><br>" }); 
 
-		$j(obj).addClass("buson");
-		$j(obj).css("background", "#2dc15e");
-		$j("#busNum").val(vlu);
+    $j(obj).addClass("buson");
+    $j(obj).css("background", "#2dc15e");
+    $j("#bus_gubun").val(gubun);
+    $j("#bus_num").val(num);
 
-		var formData = $j("#frmDaySearch").serializeArray();
+    var formData = $j("#frmDaySearch").serializeArray();
 
-		$j.post("/act_2023/admin/" + folderName + "/list_mngsearch.php", formData,
-			function(data, textStatus, jqXHR){
-			   $j("#dayList").html(data);
-			   $j('#dayList').unblock();
-			}).fail(function(jqXHR, textStatus, errorThrown){
-		 
-		});
-	}
+    $j.post("/act_2023/admin/" + folderName + "/list_mngsearch.php", formData,
+        function(data, textStatus, jqXHR){
+            $j("#dayList").html(data);
+            $j('#dayList').unblock();
+        }).fail(function(jqXHR, textStatus, errorThrown){
+        
+    });
 }
 
 //서핑버스 정산
@@ -502,4 +508,79 @@ function fnCalMoveAdminCal(selDate, day) {
     var nowDate = new Date();
     $j("#tab3").load("/act_2023/admin/bus/list_cal.php?selDate=" + selDate + "&selDay=" + day + "&t=" + nowDate.getTime());
 
+}
+
+/**
+ * 달력 날짜 클릭
+ * @param {*} obj 
+ */
+function fnDaySelected(obj, seq) {
+    var selDate = obj.attributes.value.value;
+    
+    $j("#right_article3 calBox").not(".nocount").css("background", "white");
+    $j("#right_article3 calBox").filter(".nocount").css("background", "#efefef");
+    $j("calBox[sel=yes]").attr("sel", "no");
+    $j(obj).css("background", "#c6c6ff");
+    $j(obj).attr("sel", "yes");
+
+    $j("#sDate").val(selDate);
+    $j("#eDate").val(selDate);
+    $j("#hidselDate").val(selDate);
+
+    $j("#schText").val('');
+
+    $j('input[id=chkbusNumY1]').prop('checked', true);
+    $j('input[id=chkbusNumY2]').prop('checked', true);
+    $j('input[id=chkbusNumD1]').prop('checked', true);
+    $j('input[id=chkbusNumD2]').prop('checked', true);
+    $j('#chkBusY1').prop('checked', true);
+    $j('#chkBusY2').prop('checked', true);
+    $j('#chkBusD1').prop('checked', true);
+    $j('#chkBusD2').prop('checked', true);
+    $j('#chkGubun').prop('checked', false);
+
+    $j("#divResList").load("/act_2023/admin/bus/list_mng.php?selDate=" + selDate + "&seq=" + seq);
+    $j("#initText2").css("display", "none");
+
+    $j("input[id=chkResConfirm]").prop("checked", false);
+
+    var arrGubun = $j(obj).attr("gubunchk").split(',');
+    for (var i = 0; i < arrGubun.length; i++) {
+        $j("input[id=chkResConfirm][value=" + arrGubun[i] + "]").prop('checked', true);
+    }
+
+    fnSearchAdmin("bus/list_search.php");
+}
+
+/**
+ * 달력 월 이동 : 양양, 동해 셔틀버스 예약관리
+ * @param {*} selDate 
+ * @param {*} shopseq 
+ */
+function fnCalMove_Bus(selDate, shopseq) {
+    var nowDate = new Date();
+
+    $j("#divResList").html("");
+    $j("#initText2").css("display", "");
+
+    $j("#right_article3").load("/act_2023/admin/bus/_calendar.php?selDate=" + selDate + "&shopseq=" + shopseq + "&t=" + nowDate.getTime());
+}
+
+function fnCalMove_Bus2(selDate, day, seq) {
+    var nowDate = new Date();
+
+    if (seq == 0 || seq == -2 || seq == -3) { //서핑버스
+        $j("#divResList").html("");
+        $j("#initText2").css("display", "");
+
+        if (seq == 0) { //서핑버스
+            var calurl = "bus/_calendar.php";
+        }else if (seq == -2) { //서핑버스 등록관리
+            var calurl = "busMng/_calendar.php";
+        }else if (seq == -3) { //서핑버스 등록관리
+            var calurl = "busDrive/_calendar.php";
+        }
+    }
+
+    $j("#right_article3").load("/act_2023/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
 }

@@ -316,6 +316,13 @@ function fnBusDataAdd() {
         }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
+
+/**
+ * 셔틀버스 예약 정보
+ * @param {*} vlu 
+ * @param {*} obj 
+ * @param {*} folderName 
+ */
 function fnDayList(vlu, obj, folderName){
 	$j("input[name=buspoint]").removeClass("buson");
 	$j("input[name=buspoint]").css("background", "white");

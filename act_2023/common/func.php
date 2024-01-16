@@ -7,10 +7,13 @@ function fnWeek($date){
 
 //휴무일 설정
 function fnholidays(){
-	$nowYear = "2023";
-	$nextYear = "2024";
+	$nowYear = "2024";
+	$nextYear = "2025";
 
 	return array(
+        "0410"=> array( "type"=> 0, "title"=> "국회의원 선거", "year"=> $nowYear ),
+        "0506"=> array( "type"=> 0, "title"=> "어린이날 대체휴일", "year"=> $nowYear ),
+
         "0101"=> array( "type"=> 0, "title"=> "신정", "year"=> "" ),
         "0301"=> array( "type"=> 0, "title"=> "삼일절", "year"=> "" ),
         "0505"=> array( "type"=> 0, "title"=> "어린이날", "year"=> "" ),
@@ -21,15 +24,15 @@ function fnholidays(){
         "1225"=> array( "type"=> 0, "title"=> "크리스마스", "year"=> "" ),
 
 		//매년 변경
-        "0527"=> array( "type"=> 0, "title"=> "부처님오신날", "year"=> $nowYear ), 
+        "0515"=> array( "type"=> 0, "title"=> "석가탄신일", "year"=> $nowYear ), 
 
-        "0928"=> array( "type"=> 0, "title"=> "추석", "year"=> $nowYear ),
-        "0929"=> array( "type"=> 0, "title"=> "추석", "year"=> $nowYear ),
-        "0930"=> array( "type"=> 0, "title"=> "추석", "year"=> $nowYear ),
+        "0916"=> array( "type"=> 0, "title"=> "추석", "year"=> $nowYear ),
+        "0917"=> array( "type"=> 0, "title"=> "추석", "year"=> $nowYear ),
+        "0918"=> array( "type"=> 0, "title"=> "추석", "year"=> $nowYear ),
 
-        "0209"=> array( "type"=> 0, "title"=> "설날", "year"=> $nextYear ),
-        "0210"=> array( "type"=> 0, "title"=> "설날", "year"=> $nextYear ),
-        "0212"=> array( "type"=> 0, "title"=> "설날", "year"=> $nextYear )
+        "0128"=> array( "type"=> 0, "title"=> "설날", "year"=> $nextYear ),
+        "0129"=> array( "type"=> 0, "title"=> "설날", "year"=> $nextYear ),
+        "0130"=> array( "type"=> 0, "title"=> "설날", "year"=> $nextYear )
 
     );
 }
@@ -125,33 +128,25 @@ function decrypt($plaintext){
 
 //셔틀버스 이름
 function fnBusNum2023($vlu){
-	$busGubun = substr($vlu, 0, 1);
-	$busPoint = substr($vlu, 1, 2);
-	$busNumber = substr($vlu, 3, 1);
+	$bus_gubun = substr($vlu, 0, 2); //버스 노선
+	$bus_num = substr($vlu, 2, 1); //버스 호차
 
-	if($busPoint == "Sa"){ //사당선
+	if($bus_gubun == "SA"){ //사당선
 		$busPoint = "사당선";
-	}else if($busPoint == "Jo"){ //종로선
+	}else if($bus_gubun == "JO"){ //종로선
 		$busPoint = "종로선";
-	}else if($busPoint == "Y2" || $busPoint == "E2"){ //서울행 오후
+	}else if($bus_gubun == "AM"){ //서울행 오후
 		$busPoint = "오후";		
-	}else if($busPoint == "Y5" || $busPoint == "E5"){ //서울행 저녁
+	}else if($bus_gubun == "PM"){ //서울행 저녁
 		$busPoint = "저녁";		
 	}
 
-	if($busGubun == 'Y'){
-		$busGubun = '양양행';
-	}else if($busGubun == 'E'){
-		$busGubun = '동해행';
-	}else{
-		$busGubun = '서울행';
-	}
-
 	$rtn = array( 
-		"full"=> $busGubun.' '.$busPoint.' '.$busNumber.'호차'
-		, "gubun"=> $busGubun
+		"full"=> $busPoint.' '.$bus_num.'호차'
+		, "gubun"=> $bus_gubun
 		, "point"=> $busPoint
-		, "num"=> $busNumber.'호차' );
+		, "bus_num"=> $bus_num
+		, "num"=> $bus_num.'호차' );
 
 	return $rtn;
 }
@@ -247,14 +242,14 @@ function fnBusPointArr2023($vlu, $busSeq, $type){
 
 function fnBusUrl($url){
 	$rtn = "";
-	if($url == "surfbus_yy" || $url == "surfbus_yy_2023" || $url == "7"){ //양양 셔틀버스
+	if($url == "surfbus_yy" || $url == "surfbus_yy_2023" || $url == "busadmin" || $url == "7"){ //양양 셔틀버스
 		$rtn = array( 
 			"seq"=> 7
 			, "type"=> "양양"
 			, "tab"=> "_view_tab3_yy.php"
 			, "point"=> "_view_point_yy.php"
 			, "rtnUrl"=> "surfbus_yy_2023" );
-	}else if($url == "surfbus_dh" || $url == "surfbus_dh_2023" || $url == "14"){ //동해 셔틀버스
+	}else if($url == "surfbus_dh" || $url == "surfbus_dh_2023" || $url == "busadmin_dh" || $url == "14"){ //동해 셔틀버스
 		$rtn = array( 
 			"seq"=> 14
 			, "type"=> "동해"

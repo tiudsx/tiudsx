@@ -66,18 +66,17 @@ if($reqCode == "busday"){
     $bus_date = $_REQUEST["bus_date"];
 	$arrGubun = explode('_', $_REQUEST["bus_line"]);
     $bus_line = $arrGubun[0];
+    $bus_oper = $arrGubun[1];
     $orderby = "";
-    if($arrGubun[1] == "S"){
-        $bus_gubun = "'SA', 'JO'";
+    if($bus_oper == "start"){
         $orderby = "DESC";
     }else{
-        $bus_gubun = "'AM', 'PM'";
         $orderby = "ASC";
     }
 
     $select_query = "SELECT bus_gubun, bus_num, seat, price,
             (SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_confirm IN (0, 1, 2, 3, 6, 8) AND res_date = a.bus_date AND bus_line = a.bus_line AND bus_gubun = a.bus_gubun AND bus_num = a.bus_num) AS seatcnt
-         FROM `AT_PROD_BUS_DAY` AS a WHERE bus_date = '$bus_date' AND bus_line = '$bus_line' AND bus_gubun IN ($bus_gubun)
+         FROM `AT_PROD_BUS_DAY` AS a WHERE bus_date = '$bus_date' AND bus_line = '$bus_line' AND bus_oper = '$bus_oper'
          ORDER BY bus_gubun $orderby, bus_num
          ";
 

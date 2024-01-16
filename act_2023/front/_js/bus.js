@@ -345,10 +345,10 @@ function fnBusSearchDate(selectedDate, objID) {
     
     if (objID == "bus_start") {
         eqnum = 0;
-        bus_line = bus_line + "_S";
+        bus_line = bus_line + "_start";
     } else if (objID == "bus_return") {
         eqnum = 1;
-        bus_line = bus_line + "_E";
+        bus_line = bus_line + "_return";
     }
     
     $j("ul[class=busLine]:eq(" + eqnum + ") li:not(:first-child)").remove();

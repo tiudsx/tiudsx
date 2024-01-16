@@ -30,8 +30,7 @@ $j(document).ready(function(){
         <ul class="tabs">
             <li class="active" rel="tab1">타채널예약</li>
             <li rel="tab2">HTML 맵핑</li>
-            <li rel="tab3">카톡안내</li>
-            <li rel="tab4">정산관리</li>
+            <li rel="tab3">정산관리</li>
         </ul>
 
         <!-- #container -->
@@ -204,11 +203,6 @@ $j(document).ready(function(){
             
             <!-- #tab3 -->
             <div id="tab3" class="tab_content" style="display:none;">
-                <?include 'list_cancel.php'?>
-            </div>
-
-            <!-- #tab4 -->
-            <div id="tab4" class="tab_content" style="display:none;">
                 <?include 'list_cal.php'?>
             </div>
         </div>

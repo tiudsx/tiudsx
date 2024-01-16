@@ -1,7 +1,28 @@
 <?php 
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/logininfo.php';
-$shopseq = 0;
+
+$param_mid = $_REQUEST["mid"];
+
+if($param_mid == ""){
+	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
+
+	if (!empty(strpos($_SERVER["REQUEST_URI"], '?'))){
+		$param = substr($param, 0, strpos($_SERVER["REQUEST_URI"], '?') - 1);
+	}
+
+	$param = explode('_', $param)[0];
+}else{
+	$param = $param_mid;
+}
+
+if($param == "busadmin"){ //양양 셔틀버스
+    $shopseq = 7;
+    $bus_type = "양양";
+}else if($param == "busadmin_dh"){ //동해 셔틀버스
+    $shopseq = 14;
+    $bus_type = "동해"; 
+}
 ?>
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_bus.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_common.css">
@@ -11,12 +32,11 @@ $shopseq = 0;
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_package.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
-	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 예약관리</h1>
+	<h1 class="ngeb clear"><i class="bg_color"></i><?=$bus_type?> 셔틀버스 예약관리</h1>
 </div>
 
 <div class="container" id="contenttop">
@@ -31,6 +51,7 @@ $shopseq = 0;
                 <li class="active" rel="tab1">검색관리</li>
                 <li rel="tab2">예약관리</li>
                 <li rel="tab3">패키지관리</li>
+                <li rel="tab4">카톡안내</li>
             </ul>
 
             <!-- #container -->
@@ -61,19 +82,19 @@ $shopseq = 0;
                         </tr>
                         <tr>
                             <td colspan="6">
-                                양양행
+                                
                             </td>
                         </tr>
                         <tr>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusY1" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울-양양행</label></th>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusY1" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울 출발</label></th>
                             <th>사당선</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa1" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa2" style="vertical-align:-3px;" />2호차</label>
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa3" style="vertical-align:-3px;" />3호차</label>
                             </td>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />양양-서울행</label></th>
-                            <th>양양 오후</th>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />서울 복귀</label></th>
+                            <th>오후 출발</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY21" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY22" style="vertical-align:-3px;" />2호차</label>
@@ -87,7 +108,7 @@ $shopseq = 0;
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo2" style="vertical-align:-3px;" />2호차</label>
                                 <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo3" style="vertical-align:-3px;" />3호차</label>
                             </td>
-                            <th>양양 저녁</th>
+                            <th>저녁 출발</th>
                             <td>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY51" style="vertical-align:-3px;" />1호차</label>
                                 <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY52" style="vertical-align:-3px;" />2호차</label>
@@ -97,6 +118,7 @@ $shopseq = 0;
                         <tr>
                             <th>검색기간</th>
                             <td colspan="5">
+                                <input type="hidden" id="shopseq" name="shopseq" value="<?=$shopseq?>">
                                 <input type="hidden" id="hidsearch" name="hidsearch" value="init">
                                 <input type="text" id="sDate" name="sDate" cal="sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >&nbsp;~
                                 <input type="text" id="eDate" name="eDate" cal="edate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
@@ -106,7 +128,10 @@ $shopseq = 0;
                         </tr>
                         <tr>
                             <th>검색어</th>
-                            <td colspan="5"><input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;"></td>
+                            <td colspan="5">
+                                <input type="text" id="schText" name="schText" value="" class="itx2" style="width:100px;">
+                                
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="6" style="text-align:center;">
@@ -134,6 +159,11 @@ $shopseq = 0;
                 <!-- #tab3 -->
                 <div id="tab3" class="tab_content" style="display:none;">
                     <?include 'list_package.php'?>
+                </div>
+                
+                <!-- #tab4 -->
+                <div id="tab4" class="tab_content" style="display:none;">
+                    <?include 'list_cancel.php'?>
                 </div>
             </div>
             <!-- .tab_container -->
@@ -348,7 +378,6 @@ $shopseq = 0;
 <script>
 $j(document).ready(function(){
 	fnSearchAdmin('bus/list_search.php');
-	fnSearchAdmin('bus/list_search_channel.php', '#mngKakaoSearch', 'N');
 });
 
 </script>

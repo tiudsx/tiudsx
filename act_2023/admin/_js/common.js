@@ -13,7 +13,12 @@ function fnBlockClose() {
     $j.unblockUI();
 }
 
-//예약조회
+/**
+ * 예약조회
+ * @param {*} url 
+ * @param {*} objID 
+ * @param {*} objForm 
+ */
 function fnSearchAdmin(url, objID, objForm) {
     $j.blockUI({ message: "<br><br><br><h1>데이터 조회 중...</h1>", focusInput: false, css: { width: '650px', height: "150px", textAlign: 'center', left: '23%', top: '20%' } });
 
@@ -97,7 +102,7 @@ function fnCalMoveAdminList(selDate, day, seq) {
         $j("#divResList").html("");
         $j("#initText2").css("display", "");
 
-        if (seq == 0) { //서핑버스
+        if (seq == 0) { //양양, 동해 셔틀버스
             var calurl = "bus/_calendar.php";
         }else if (seq == -2) { //서핑버스 등록관리
             var calurl = "busMng/_calendar.php";
