@@ -16,17 +16,24 @@ $j.ajax({
     }
 })
 
-//버스 예약 가능한 날짜
+/**달력에 날짜 선택용 json */
+var json_busDay = {};
+
+/**
+ * 버스 예약 가능한 날짜
+ * @param {*} seq 
+ * @param {*} bus_line 
+ */
 function fnBusDate(seq, bus_line){
-    var objParam = {
+    var formData = {
         "code":"busday",
         "seq":seq
     }
 
     bus_line = bus_line.substring(0, 2);
  
-    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
-        function (data, textStatus, jqXHR) {
+    $j.post("/act_2023/front/bus/view_bus_day.php", formData,
+        function(data, textStatus, jqXHR) {
             Object.entries(data).forEach(function(el) {
                 if(el[0].substring(0, 2) == "SA" || el[0].substring(0, 2) == "JO"){ //사당, 종로
                     if(json_busDay[bus_line + "_S"] == null){
@@ -42,8 +49,8 @@ function fnBusDate(seq, bus_line){
                     json_busDay[bus_line + "_E"][el[0].substring(2, 6)] = "1";
                 }
             });
-        }
-    );
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+    });
 }
 
 //버스 정류장 호출 함수

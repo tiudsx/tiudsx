@@ -1,133 +1,91 @@
 <?php
+include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/func.php';
 
-$hidsearch = $_REQUEST["hidsearch"];
+$shopseq = $_REQUEST["shopseq"];
+$chkResConfirm = $_REQUEST["chkResConfirm"];
+$chkbusNum = $_REQUEST["chkbusNum"];
+$sDate = $_REQUEST["sDate"];
+$eDate = $_REQUEST["eDate"];
+$schText = trim($_REQUEST["schText"]);
 
-if($hidsearch == ""){ //초기화면 조회
-    $select_query = 'SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-                        ON a.resnum = b.resnum 
-                        LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
-                        WHERE b.seq IN (7, 14)
-                            AND b.res_confirm IN (0, 1, 8, 4)
-                            ORDER BY b.resnum, b.ressubseq';
+for($b = 0; $b < count($chkResConfirm); $b++){
+    $res_confirm .= $chkResConfirm[$b].',';
 
-    $titleText = "전체";
-    $listText = "미입금,예약대기,입금완료,환불요청";    
-}else{
-	include __DIR__.'/../../common/db.php';
-
-    $chkResConfirm = $_REQUEST["chkResConfirm"];
-    $chkbusNum = $_REQUEST["chkbusNum"];
-    $sDate = $_REQUEST["sDate"];
-    $eDate = $_REQUEST["eDate"];
-    $schText = trim($_REQUEST["schText"]);
-    
-    for($b = 0; $b < count($chkResConfirm); $b++){
-        $res_confirm .= $chkResConfirm[$b].',';
-
-        if($chkResConfirm[$b] == 0){
-            $listText .= "미입금,";
-        }else if($chkResConfirm[$b] == 1){
-            $listText .= "예약대기,";
-        }else if($chkResConfirm[$b] == 3){
-            $listText .= "확정,";
-        }else if($chkResConfirm[$b] == 8){
-            $listText .= "입금완료,";
-        }else if($chkResConfirm[$b] == 7){
-            $listText .= "취소,";
-        }else if($chkResConfirm[$b] == 4){
-            $listText .= "환불요청,";
-        }else if($chkResConfirm[$b] == 5){
-            $listText .= "환불완료,";
-        }
+    if($chkResConfirm[$b] == 0){
+        $listText .= "미입금,";
+    }else if($chkResConfirm[$b] == 1){
+        $listText .= "예약대기,";
+    }else if($chkResConfirm[$b] == 3){
+        $listText .= "확정,";
+    }else if($chkResConfirm[$b] == 8){
+        $listText .= "입금완료,";
+    }else if($chkResConfirm[$b] == 7){
+        $listText .= "취소,";
+    }else if($chkResConfirm[$b] == 4){
+        $listText .= "환불요청,";
+    }else if($chkResConfirm[$b] == 5){
+        $listText .= "환불완료,";
     }
-
-    $res_confirm .= '99';
-    if($listText != ""){
-        $listText = substr($listText, 0, strlen($listText) - 1);
-    }
-
-    $inResType = "";
-    for($b = 0; $b < count($chkbusNum); $b++){
-        $inResType .= '"'.$chkbusNum[$b].'",';
-    }
-    $inResType .= '"99"';
-
-    $busDate = "";
-    if($sDate == "" && $eDate == ""){
-        $titleText = "전체";
-    }else{
-        if($sDate != "" && $eDate != ""){
-            $busDate = ' AND (res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
-        }else if($sDate != ""){
-            $busDate = ' AND res_date >= CAST("'.$sDate.'" AS DATE)';
-        }else if($eDate != ""){
-            $busDate = ' AND res_date <= CAST("'.$eDate.'" AS DATE)';
-        }
-        $titleText = "[$sDate ~ $eDate]";
-    }
-
-    if($schText != ""){
-        $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR  REPLACE(a.user_tel, "-", "") like "%'.str_replace('-', '', $schText).'%")';
-    }
-
-    $select_query = 'SELECT a.resseq, a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-                        ON a.resnum = b.resnum 
-                        INNER JOIN AT_PROD_MAIN as c ON b.seq = c.seq 
-                        LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
-                        WHERE b.res_confirm IN ('.$res_confirm.')
-                            AND b.code = "bus"
-                            AND b.res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
-                            ORDER BY b.resnum, b.res_date, b.ressubseq';
-
 }
 
+$res_confirm .= '99';
+if($listText != ""){
+    $listText = substr($listText, 0, strlen($listText) - 1);
+}
+
+$inResType = "";
+for($b = 0; $b < count($chkbusNum); $b++){
+    $inResType .= '"'.$chkbusNum[$b].'",';
+}
+$inResType .= '"99"';
+
+$busDate = "";
+if($sDate == "" && $eDate == ""){
+    $titleText = "전체";
+}else{
+    if($sDate != "" && $eDate != ""){
+        $busDate = ' AND (res_date BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
+    }else if($sDate != ""){
+        $busDate = ' AND res_date >= CAST("'.$sDate.'" AS DATE)';
+    }else if($eDate != ""){
+        $busDate = ' AND res_date <= CAST("'.$eDate.'" AS DATE)';
+    }
+    $titleText = "[$sDate ~ $eDate]";
+}
+
+if($schText != ""){
+    $schText = ' AND (a.resnum like "%'.$schText.'%" OR a.user_name like "%'.$schText.'%" OR  REPLACE(a.user_tel, "-", "") like "%'.str_replace('-', '', $schText).'%")';
+}
+
+$select_query = "SELECT a.resseq, a.user_name, a.user_tel, a.etc, a.user_email, a.memo
+                        , b.*, d.couponseq
+                        , concat(b.bus_gubun,'',b.bus_num) AS res_busnum FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
+                    ON a.resnum = b.resnum 
+                    INNER JOIN AT_PROD_MAIN as c ON b.seq = c.seq 
+                    LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
+                    WHERE b.res_confirm IN ($res_confirm)
+                        AND b.seq = $shopseq
+                        AND concat(b.bus_gubun,'',b.bus_num) IN ($inResType)
+                        $busDate
+                        $schText 
+                        ORDER BY b.resnum, b.res_date, b.ressubseq";
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
 if($count == 0){
 ?>
- <div class="contentimg bd">
- <div class="gg_first"><?=$titleText?> 예약정보</div>
+<div class="contentimg bd">
+<div class="gg_first">
+    <?=$titleText?> 예약정보
+</div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
         <colgroup>
-            <col width="8%" />
-            <col width="8%" />
             <col width="auto" />
-            <col width="7%" />
-            <col width="11%" />
-            <col width="5%" />
-            <col width="12%" />
-            <col width="5%" />
-            <col width="4%" />
-            <col width="6%" />
-            <col width="6%" />
-            <col width="8%" />
-            <col width="6%" />
-            <col width="5%" />
         </colgroup>
         <tbody>
             <tr>
-                <th rowspan="2">예약번호</th>
-                <th rowspan="2">행선지명</th>
-                <th rowspan="2">이름/연락처</th>
-                <th colspan="6">예약항목</th>
-                <th rowspan="2">승인처리</th>
-                <th rowspan="2">정류장변경</th>
-                <th rowspan="2">결제금액</th>
-                <th rowspan="2">환불금액</th>
-                <th rowspan="2">요청사항</th>
-            </tr>
-            <tr>
-                <th>이용일</th>
-                <th>행선지</th>
-                <th>좌석번호</th>
-                <th>정류장</th>
-                <th>예약상태</th>
-                <th>환불</th>
-            </tr>
-            <tr>
-                <td colspan="14" style="text-align:center;height:50px;">
+                <td style="text-align:center;height:50px;">
                     <b>[<?=$listText?>] 건으로 조회된 데이터가 없습니다.</b>
                 </td>
             </tr>
@@ -152,7 +110,6 @@ $ChangeChk = 0;
 $reslist = '';
 $reslist1 = '';
 $reslistConfirm = "";
-$busNum = "";
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 	$MainNumber = $row['resnum'];
@@ -168,7 +125,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 ?>
             <tr name="btnTrList" <?=$trcolor?>>
                 <td <?=$rowspan?> style="text-align: center;"><a href='https://actrip.co.kr/orderview?resNumber=<?=$PreMainNumber?>' target='_blank'><?=$PreMainNumber?></a></td>
-                <td <?=$rowspan?> style="text-align: center;"><?=$shopname?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$user_name?><br>(<?=$user_tel?>)</td>
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
@@ -192,10 +148,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 </td>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
-                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
+                        <span class="btn_view" seq="2<?=$i?>"><b>[요청사항]</b></span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
-                    <?=coupontype("admin", $couponseq, $res_coupon)?>
+                    <?=fnCouponCode($couponseq)["prod_name"]?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -214,7 +170,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$reslist = '';
 		$reslist1 = '';
         $reslistConfirm = "";
-        $busNum = "";
     }
     
     $resseq = $row['resseq'];
@@ -230,14 +185,17 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 ?>
         <div class="contentimg bd">
         <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-        <div class="gg_first"><?=$titleText?> 예약정보</div>
+            <div class="gg_first">
+                <?=$titleText?> 예약정보 &nbsp; 
+                <span style="font-weight:500;font-size:12px;color:#333;">총 개수 : <?=$count?>개 / 총 인원 : <span id="user_num">0</span>명</span>
+            </div>
+
             <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;">
                 <colgroup>
                     <col width="8%" />
-                    <col width="8%" />
                     <col width="auto" />
                     <col width="7%" />
-                    <col width="11%" />
+                    <col width="8%" />
                     <col width="5%" />
                     <col width="13%" />
                     <col width="5%" />
@@ -245,13 +203,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <col width="6%" />
                     <col width="6%" />
                     <col width="7%" />
-                    <col width="6%" />
-                    <col width="5%" />
+                    <col width="7%" />
+                    <col width="8%" />
                 </colgroup>
                 <tbody>
                     <tr>
                         <th rowspan="2">예약번호</th>
-                        <th rowspan="2">행선지명</th>
                         <th rowspan="2">이름/연락처</th>
                         <th colspan="6">예약항목</th>
                         <th rowspan="2">승인처리</th>
@@ -367,8 +324,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         }
     }
 
-    $busNumText = fnBusNum($row['res_busnum']);
-    $busNum .= $busNumText.',';
+    $busNumText = fnBusNum2023($row['res_busnum'])["full"];
     
     /*
     예약상태
@@ -436,7 +392,6 @@ if(($i % 2) == 0 && $i > 0){
 ?>
             <tr name="btnTrList" <?=$trcolor?>>
                 <td <?=$rowspan?> style="text-align: center;"><a href='https://actrip.co.kr/orderview?resNumber=<?=$PreMainNumber?>' target='_blank'><?=$PreMainNumber?></a></td>
-                <td <?=$rowspan?> style="text-align: center;"><?=$shopname?></td>
                 <td <?=$rowspan?> style="text-align: center;"><?=$user_name?><br>(<?=$user_tel?>)</td>
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
@@ -460,11 +415,11 @@ if(($i % 2) == 0 && $i > 0){
                 </td>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <?if($etc != ""){?>
-                        <span class="btn_view" seq="2<?=$i?>">있음</span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
+                        <span class="btn_view" seq="2<?=$i?>"><b>[요청사항]</b></span><span style='display:none;'><b>요청사항</b><br><?=$etc?></span>
                     <?}?>
                     <br>
                     
-                    <?=coupontype("admin", $couponseq, $res_coupon)?>
+                    <?=fnCouponCode($couponseq)["prod_name"]?>
                 </td>
             </tr>
             <?=$reslist1?>
@@ -483,6 +438,7 @@ if(($i % 2) == 0 && $i > 0){
 
 <script type="text/javascript">
 $j(document).ready(function(){
+    $j("#user_num").text(<?=$i?>);
 	$j(".btn_view[seq]").mouseover(function(e){ //조회 버튼 마우스 오버시
 		var seq = $j(this).attr("seq");
 		var obj = $j(".btn_view[seq="+seq+"]");

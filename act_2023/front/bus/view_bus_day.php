@@ -36,6 +36,7 @@ if($reqCode == "busday"){
     $bus_date = $_REQUEST["bus_date"];
     $bus_gubun = $_REQUEST["bus_gubun"];
     $bus_num = $_REQUEST["bus_num"];
+    $buschannel = $_REQUEST["buschannel"];
     /*
     예약상태
         0 : 미입금
@@ -55,7 +56,19 @@ if($reqCode == "busday"){
         $groupData[] = array("seatnum" => "$i", "seatYN" => $seatYN);
     }
 
-    $select_query = "SELECT * FROM `AT_RES_SUB` where res_confirm IN (0, 1, 2, 3, 6, 8) AND res_date = '$bus_date' AND seq = $shopseq AND bus_gubun = '$bus_gubun' AND bus_num = '$bus_num'";
+    $select_query = "SELECT res_seat FROM `AT_RES_SUB` WHERE res_confirm IN (0, 1, 2, 3, 6, 8) 
+                        AND res_date = '$bus_date' 
+                        AND seq = $shopseq 
+                        AND bus_gubun = '$bus_gubun' 
+                        AND bus_num = '$bus_num'
+                    UNION ALL
+					SELECT bus_seat AS res_seat FROM AT_RES_TEMP_SEAT
+						WHERE shopseq = $shopseq
+							AND bus_date = '$bus_date' 
+							AND bus_gubun = '$bus_gubun' 
+							AND bus_num = '$bus_num'
+                            AND (('$buschannel' = '' AND use_yn = 'N') OR ('$buschannel' != '' AND use_yn = 'Y'))
+                        ";
     $result_setlist = mysqli_query($conn, $select_query);
     while ($row = mysqli_fetch_assoc($result_setlist)){        
         $groupData[$row['res_seat']] = array("seatnum" => $row['res_seat'], "seatYN" => "N");
@@ -64,6 +77,7 @@ if($reqCode == "busday"){
 }else if($reqCode == "busseatcnt"){
     //셔틀버스 노선표시
     $bus_date = $_REQUEST["bus_date"];
+    $bus_gubun = $_REQUEST["bus_gubun"]; //노선 표시 구분값 
 	$arrGubun = explode('_', $_REQUEST["bus_line"]);
     $bus_line = $arrGubun[0];
     $bus_oper = $arrGubun[1];
@@ -73,10 +87,18 @@ if($reqCode == "busday"){
     }else{
         $orderby = "ASC";
     }
-
+    
+    $bus_gubun_channel = "";
+    if($bus_gubun != "ALL"){ //예약가능한 노선만 표시
+        $bus_gubun_channel = "AND bus_gubun = '$bus_gubun'";
+    }
     $select_query = "SELECT bus_gubun, bus_num, seat, price,
             (SELECT COUNT(*) AS cnt FROM `AT_RES_SUB` where res_confirm IN (0, 1, 2, 3, 6, 8) AND res_date = a.bus_date AND bus_line = a.bus_line AND bus_gubun = a.bus_gubun AND bus_num = a.bus_num) AS seatcnt
-         FROM `AT_PROD_BUS_DAY` AS a WHERE bus_date = '$bus_date' AND bus_line = '$bus_line' AND bus_oper = '$bus_oper'
+         FROM `AT_PROD_BUS_DAY` AS a 
+            WHERE bus_date = '$bus_date' 
+                AND bus_line = '$bus_line' 
+                AND bus_oper = '$bus_oper'
+                $bus_gubun_channel
          ORDER BY bus_gubun $orderby, bus_num
          ";
 

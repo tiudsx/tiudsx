@@ -10,7 +10,6 @@ $shopseq = -2;
 
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 
@@ -66,8 +65,8 @@ $shopseq = -2;
                                 <select id="res_busline" name="res_busline[]" class="select" sel="">
                                     <option value="" selected>행선지</option>
                                     <option value="">-------</option>
-                                    <option value="YY">양양</option>
-                                    <option value="DH">동해</option>
+                                    <option value="YY|7">양양</option>
+                                    <option value="DH|14">동해</option>
                                 </select>
                                 <select id="res_busgubun" name="res_busgubun[]" class="select" sel="">
                                     <option value="" selected>노선</option>
@@ -93,7 +92,7 @@ $shopseq = -2;
                                 </select>
                             </td>
                             <td style="text-align:center;">
-                                <input type="text" id="res_price" name="res_price[]" style="width:66px;" value="" class="itx2">
+                                <input type="text" id="res_price" name="res_price[]" style="width:66px;" value="20000" class="itx2">
                             </td>
                             <td style="text-align:center;">
                                 <select id="res_gpsname" name="res_gpsname[]" class="select" sel="">
@@ -153,9 +152,3 @@ $shopseq = -2;
 </div>
 
 <iframe id="ifrmResize" name="ifrmResize" style="width:800px;height:400px;display:none;"></iframe>
-
-<script>
-$j(document).ready(function(){
-
-});
-</script>

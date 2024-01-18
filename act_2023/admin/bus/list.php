@@ -86,33 +86,33 @@ if($param == "busadmin"){ //양양 셔틀버스
                             </td>
                         </tr>
                         <tr>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusY1" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울 출발</label></th>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusY1" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y1')" />서울 출발</label></th>
                             <th>사당선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YSa3" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="SA1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="SA2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="SA3" style="vertical-align:-3px;" />3호차</label>
                             </td>
-                            <th rowspan="2"><label><input type="checkbox" id="chkBusY2" name="chkBus[]" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />서울 복귀</label></th>
+                            <th rowspan="2"><label><input type="checkbox" id="chkBusY2" checked="checked" value="7" style="vertical-align:-3px;" onclick="fnChkBusAll(this, 'Y2')" />서울 복귀</label></th>
                             <th>오후 출발</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY21" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY22" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY23" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="AM1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="AM2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="AM3" style="vertical-align:-3px;" />3호차</label>
                             </td>
                         </tr>
                         <tr>
                             <th>종로선</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo1" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo2" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="YJo3" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="JO1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="JO2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY1" name="chkbusNum[]" checked="checked" value="JO3" style="vertical-align:-3px;" />3호차</label>
                             </td>
                             <th>저녁 출발</th>
                             <td>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY51" style="vertical-align:-3px;" />1호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY52" style="vertical-align:-3px;" />2호차</label>
-                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="SY53" style="vertical-align:-3px;" />3호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="PM1" style="vertical-align:-3px;" />1호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="PM2" style="vertical-align:-3px;" />2호차</label>
+                                <label><input type="checkbox" id="chkbusNumY2" name="chkbusNum[]" checked="checked" value="PM3" style="vertical-align:-3px;" />3호차</label>
                             </td>
                         </tr>
                         <tr>

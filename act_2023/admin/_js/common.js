@@ -60,8 +60,6 @@ function fnPassengerAdmin(obj, seq) {
         $j('input[id=chkbusNumD2]').prop('checked', true);
         $j('#chkBusY1').prop('checked', true);
         $j('#chkBusY2').prop('checked', true);
-        $j('#chkBusD1').prop('checked', true);
-        $j('#chkBusD2').prop('checked', true);
         $j('#chkGubun').prop('checked', false);
 
         var folderName = "bus";

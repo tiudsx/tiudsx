@@ -9,7 +9,7 @@ $bus_num = $_REQUEST["bus_num"];
 ?>
 
 <?
-$select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, a.resseq, b.res_seat, b.res_spointname, b.res_epointname FROM 
+$select_query_sub = "SELECT 'res' AS title, a.user_name, a.user_tel, a.etc, a.resseq, b.res_seat, b.res_spointname, b.res_epointname, '' use_yn FROM 
 						`AT_RES_MAIN` AS a INNER JOIN `AT_RES_SUB` AS b 
 							ON a.resnum = b.resnum 
                                 AND b.code = 'bus'
@@ -18,49 +18,50 @@ $select_query_sub = "SELECT a.user_name, a.user_tel, a.etc, a.resseq, b.res_seat
 							AND b.bus_gubun = '$bus_gubun' 
 							AND b.bus_num = '$bus_num' 
 							AND b.res_confirm = 3
-						ORDER BY a.user_tel";
+						UNION ALL
+					SELECT 'seat' AS title, '선점' AS user_name, '' AS user_tel, '' AS etc, 0 AS resseq, bus_seat AS res_seat, '' AS res_spointname, '' AS res_epointname, use_yn FROM AT_RES_TEMP_SEAT
+						WHERE shopseq = $shopseq
+							AND bus_date = '$selDate' 
+							AND bus_gubun = '$bus_gubun' 
+							AND bus_num = '$bus_num'";
 $result_setlist = mysqli_query($conn, $select_query_sub);
 $count_sub = mysqli_num_rows($result_setlist);
 
+//좌석수 쿼리
+$select_query = "SELECT seat FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' AND bus_gubun = '$bus_gubun' AND bus_num = '$bus_num' AND bus_date = '$selDate'";
+$result = mysqli_query($conn, $select_query);
+$rowMain = mysqli_fetch_array($result);
+
 if($count_sub == 0){
-	echo '<div style="text-align:center;font-size:14px;padding:50px;" id="initText2">
-				<b>예약된 좌석이 없습니다.</b>
-			</div>';
-	return;
+?>
+
+<?
 }
 
 $arrUserInfo = array();
 $arrDB_Start = array();
 $arrDB_End = array();
+
+$arrDB_Seat = array(); //좌석 선점
 while ($row = mysqli_fetch_assoc($result_setlist)){
-	$arrUserInfo[$row['res_seat']] = array($row["user_name"], $row["user_tel"], $row["res_spointname"], $row["resseq"]);
+	if($row['title'] == "res"){
+		$arrUserInfo[$row['res_seat']] = array($row["user_name"], $row["user_tel"], $row["res_spointname"], $row["resseq"]);
 
-	if(array_key_exists($row['res_spointname'], $arrDB_Start)){ //출발 정류장
-		$arrDB_Start[$row['res_spointname']] += 1;
-	}else{
-		$arrDB_Start[$row['res_spointname']] = 1;
-	}
+		if(array_key_exists($row['res_spointname'], $arrDB_Start)){ //출발 정류장
+			$arrDB_Start[$row['res_spointname']] += 1;
+		}else{
+			$arrDB_Start[$row['res_spointname']] = 1;
+		}
 
-	if(array_key_exists($row['res_epointname'], $arrDB_End)){ //도착 정류장
-		$arrDB_End[$row['res_epointname']] += 1;
+		if(array_key_exists($row['res_epointname'], $arrDB_End)){ //도착 정류장
+			$arrDB_End[$row['res_epointname']] += 1;
+		}else{
+			$arrDB_End[$row['res_epointname']] = 1;
+		}
 	}else{
-		$arrDB_End[$row['res_epointname']] = 1;
+		$arrDB_Seat[$row['res_seat']] = $row["use_yn"];
 	}
 }
-
-// echo '<script type="text/javascript">$j(document).ready(function(){';
-
-// while ($row = mysqli_fetch_assoc($result_setlist)){
-// 	echo '$j("#seat'.$row['res_seat'].'").removeClass("tab1");';
-
-// 	echo '$j("#seat'.$row['res_seat'].'").attr("onclick", "fnBusModify('.$row['resseq'].')");';
-// 	echo '$j("#seat'.$row['res_seat'].'").addClass("tab2");';
-// 	echo '$j("#seat'.$row['res_seat'].' input").remove();';
-
-// 	echo '$j("#seat'.$row['res_seat'].'").parent().append(" <span  '.$cssColor.'></span> <br><b>'.$row["user_name"].'</b> (<span><a href=tel:'.$row["user_tel"].' style=cursor:text;>'.$row["user_tel"].'</a>)<br>['.$row["res_spointname"].']</span>");';
-// }
-
-// echo '});</script>';
 
 $arrBus_Start = array();
 $arrBus_End = array();
@@ -153,13 +154,16 @@ foreach($busDataJson as $key => $value){
 
 	<div style="padding-bottom:5px;"></div>
 
-<?
-$select_query = "SELECT seat FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' AND bus_gubun = '$bus_gubun' AND bus_num = '$bus_num' AND bus_date = '$selDate'";
-$result = mysqli_query($conn, $select_query);
-$rowMain = mysqli_fetch_array($result);
-?>
 <form name="frmDayConfirm" id="frmDayConfirm" autocomplete="off">
-    <div class="gg_first">셔틀버스 예약정보</div>
+    <div class="gg_first">
+		셔틀버스 예약정보 &nbsp;
+		<input type="button" class="btnsurfdel" style="width:90px; height:20px;" value="좌석선점" onclick="fnSeatTemp_Save();" id="Add">
+		<input type="hidden" name="resparam" value="tempSeat">
+		<input type="hidden" name="bus_date" value="<?=$selDate?>">
+		<input type="hidden" name="shopseq" value="<?=$shopseq?>">
+		<input type="hidden" name="bus_gubun" value="<?=$bus_gubun?>">
+		<input type="hidden" name="bus_num" value="<?=$bus_num?>">
+	</div>
 
     <table class="et_vars exForm bd_tb" style="margin-bottom:5px;width:100%;">
 		<colgroup>
@@ -197,6 +201,16 @@ $rowMain = mysqli_fetch_array($result);
 				$onclick = "onclick='fnBusModify($res_seq);'";
 				$user_text = "<br><b>$user_name</b> <span>(<a href='tel:$user_tel' style='cursor:text;'>$user_tel</a>)<br>[$user_point]</span>";
 			}
+
+			$chkedN = "";
+			$chkedY = "";
+			if($arrDB_Seat[$for_i] == "N"){
+				$class = "tab2";
+				$chkedN = "checked='checked'";
+			}else if($arrDB_Seat[$for_i] == "Y"){
+				$class = "tab2";
+				$chkedY = "checked='checked'";
+			}
 			
 			$arrInfo[$for_i] = $user_text;
 			$arrClass[$for_i] = $class;
@@ -211,7 +225,14 @@ $rowMain = mysqli_fetch_array($result);
 		?>
 				<td class="col-3" style="text-align:center;vertical-align:top;">
 					<span id="seat<?=$for_i?>" class="<?=$arrClass[$for_i]?>" <?=$arrClick[$for_i]?>>
-						<span style="width:45px;"><label><input type="checkbox"> <?=$for_i?></label></span>
+						<span style="width:60px;">
+							<label><?=$for_i?></label> 
+						</span>
+					</span>
+					<span>
+						<br>
+						<label><input type="checkbox" id="tempSeatN_<?=$for_i?>" name="tempSeatN[]" onclick="fnSeatTemp_Chk(this, 'N');" value="<?=$for_i?>" <?=$chkedN?>>타채널</label> 
+						<label><input type="checkbox" id="tempSeatY_<?=$for_i?>" name="tempSeatY[]" onclick="fnSeatTemp_Chk(this, 'Y');" value="<?=$for_i?>" <?=$chkedY?>>일반</label> 
 					</span>
 					<?=$arrInfo[$for_i]?>
 				</td>
@@ -221,7 +242,14 @@ $rowMain = mysqli_fetch_array($result);
 		?>
 				<td class="col-3" style="text-align:center;vertical-align:top;">
 					<span id="seat<?=$for_i?>" class="<?=$arrClass[$for_i]?>" <?=$arrClick[$for_i]?>>
-						<span style="width:45px;"><label><?=$for_i?></label></span>
+						<span style="width:60px;">
+							<label><?=$for_i?></label> 
+						</span>
+					</span>
+					<span style="display:<?=$chkedDisplay?>;">
+						<br>
+						<label><input type="checkbox" id="tempSeatN_<?=$for_i?>" name="tempSeatN[]" onclick="fnSeatTemp_Chk(this, 'N');" value="<?=$for_i?>" <?=$chkedN?>>타채널</label> 
+						<label><input type="checkbox" id="tempSeatY_<?=$for_i?>" name="tempSeatY[]" onclick="fnSeatTemp_Chk(this, 'Y');" value="<?=$for_i?>" <?=$chkedY?>>일반</label> 
 					</span>
 					<?=$arrInfo[$for_i]?>
 				</td>

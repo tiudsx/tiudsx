@@ -40,8 +40,15 @@ if($param == "busMngdel"){
 	//서핑버스 정보등록
 	for($i = 1; $i < count($resseq); $i++){
 		$dayseq = $resseq[$i];
-		$bus_line = $res_busline[$i]; //행선지
+		$shopseq = explode("|", $res_busline[$i])[1];  //shopseq
+		$bus_line = explode("|", $res_busline[$i])[0];  //행선지
 		$bus_gubun = $res_busgubun[$i]; //노선
+		if($bus_gubun == "SA" || $bus_gubun == "JO"){
+			$bus_oper = "start";
+		}else{
+			$bus_oper = "return";
+		}
+
 		$bus_num = $res_busnum[$i]; //호차
 		$code = "";
 		$price = $res_price[$i];
@@ -51,10 +58,12 @@ if($param == "busMngdel"){
 		$channel = $res_channel[$i];
 
 		if($dayseq == ""){
-			$select_query = "INSERT INTO `AT_PROD_BUS_DAY`(`bus_date`, `code`, `bus_line`, `bus_gubun`, `bus_num`, `gpsname`, `seat`, `price`, `useYN`, `channel`) VALUES ('$bus_date', '$code', '$bus_line', '$bus_gubun', '$bus_num', '$gpsname', $seat, $price, '$useYN', '$channel')";
+			$select_query = "INSERT INTO `AT_PROD_BUS_DAY`(`bus_date`, `code`, `shopseq`, `bus_oper`, `bus_line`, `bus_gubun`, `bus_num`, `gpsname`, `seat`, `price`, `useYN`, `channel`) VALUES ('$bus_date', '$code', $shopseq, '$bus_oper', '$bus_line', '$bus_gubun', '$bus_num', '$gpsname', $seat, $price, '$useYN', '$channel')";
 		}else{
 			$select_query = "UPDATE `AT_PROD_BUS_DAY` SET 
 				 `code`='$code'
+				,`shopseq`=$shopseq
+				,`bus_oper`='$bus_oper'
 				,`bus_line`='$bus_line'
 				,`bus_gubun`='$bus_gubun'
 				,`bus_num`='$bus_num'

@@ -119,7 +119,7 @@ function fnBusMngList(selDate){
                     var objTr = $j("tr[id=trbus]:last");
 
                     objTr.find("#resseq").val(data[i].dayseq);
-                    objTr.find("#res_busline").val(data[i].bus_line); //행선지
+                    objTr.find("#res_busline").val(data[i].bus_line + "|" + data[i].shopseq); //행선지
                     objTr.find("#res_busgubun").val(data[i].bus_gubun); //노선
                     objTr.find("#res_busnum").val(data[i].bus_num); //호차
                     objTr.find("#res_seat").val(data[i].seat);
@@ -128,7 +128,7 @@ function fnBusMngList(selDate){
                     objTr.find("#res_channel").val(data[i].channel);
                     objTr.find("#res_price").val(data[i].price);
                 }
-                console.log(data);
+                //console.log(data);
             }
             setTimeout('fnBlockClose();', 500);
         }
@@ -171,7 +171,7 @@ function fnBusDel(obj){
             alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
         } else {            
             fnBusMngList($j("#hidselDate").val());
-            fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), $j("#hidselDate").val().split('-')[2], -2);
+            fnCalMove_BusMng($j(".tour_calendar_month").text().replace('.', ''), $j("#hidselDate").val().split('-')[2], -2);
         }
     }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
@@ -412,7 +412,7 @@ function fnBusMngDataAdd(gubun) {
                 alert("정상적으로 처리되었습니다.");
 
                 fnBusMngList(calObj.attr("value"));
-                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
+                fnCalMove_BusMng($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
                 fnBlockClose();
             } else {
                 var arrRtn = data.split('|');
@@ -535,8 +535,6 @@ function fnDaySelected(obj, seq) {
     $j('input[id=chkbusNumD2]').prop('checked', true);
     $j('#chkBusY1').prop('checked', true);
     $j('#chkBusY2').prop('checked', true);
-    $j('#chkBusD1').prop('checked', true);
-    $j('#chkBusD2').prop('checked', true);
     $j('#chkGubun').prop('checked', false);
 
     $j("#divResList").load("/act_2023/admin/bus/list_mng.php?selDate=" + selDate + "&seq=" + seq);
@@ -566,16 +564,20 @@ function fnCalMove_Bus(selDate, shopseq) {
     $j("#right_article3").load("/act_2023/admin/bus/_calendar.php?selDate=" + selDate + "&shopseq=" + shopseq + "&t=" + nowDate.getTime());
 }
 
-function fnCalMove_Bus2(selDate, day, seq) {
+/**
+ * 달력 월 이동 : 버스등록
+ * @param {*} selDate 
+ * @param {*} day 
+ * @param {*} seq 
+ */
+function fnCalMove_BusMng(selDate, day, seq) {
     var nowDate = new Date();
 
-    if (seq == 0 || seq == -2 || seq == -3) { //서핑버스
+    if (seq == -2 || seq == -3) { //서핑버스
         $j("#divResList").html("");
         $j("#initText2").css("display", "");
 
-        if (seq == 0) { //서핑버스
-            var calurl = "bus/_calendar.php";
-        }else if (seq == -2) { //서핑버스 등록관리
+        if (seq == -2) { //서핑버스 등록관리
             var calurl = "busMng/_calendar.php";
         }else if (seq == -3) { //서핑버스 등록관리
             var calurl = "busDrive/_calendar.php";
@@ -583,4 +585,36 @@ function fnCalMove_Bus2(selDate, day, seq) {
     }
 
     $j("#right_article3").load("/act_2023/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
+}
+
+/**
+ * 타채널 좌석선점 저장
+ */
+function fnSeatTemp_Save(){
+    //var chkVluY = $j("input[id=tempSeat]:checked").map(function() { return $j(this).val(); }).get();
+    
+    if (!confirm("좌석선점을 하시겠습니까?")) {
+        return;
+    }
+
+    var formData = $j("#frmDayConfirm").serializeArray();
+    $j.post("/act_2023/admin/bus/list_save.php", formData,
+        function(data, textStatus, jqXHR) {
+            $j("input[name=buspoint]").filter(".buson").click();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+        alert(textStatus);
+    });
+}
+
+/**
+ * 타채널 좌석선점 체크박스
+ */
+function fnSeatTemp_Chk(obj, type){
+    const vlu = $j(obj).val();
+
+    if(type == "N" && $j("#tempSeatY_" + vlu).is(":checked")){ //일반 체크 여부 확인
+        $j("#tempSeatY_" + vlu).prop('checked', false);
+    }else if(type == "Y" && $j("#tempSeatN_" + vlu).is(":checked")){
+        $j("#tempSeatN_" + vlu).prop('checked', false);
+    }
 }

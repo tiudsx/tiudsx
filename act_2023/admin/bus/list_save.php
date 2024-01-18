@@ -110,21 +110,21 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			//$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));
 			//$RtnBank = "탑승시간 : ".$arrPoint[0]." (".$arrPoint[1].")";
 
-			$pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
+			// $pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
 
-			if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
-				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-				}else{
-					$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-				}
-			}else{
-				if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-				}else{
-					$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-				}
-			}
+			// if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
+			// 	if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
+			// 		$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+			// 	}else{
+			// 		$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+			// 	}
+			// }else{
+			// 	if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
+			// 		$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+			// 	}else{
+			// 		$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+			// 	}
+			// }
         }
         
 		// 예약좌석 정보 : 양양행
@@ -425,21 +425,21 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 					$coupon = $rowSub['res_coupon'];
 					$busGubun = substr($rowSub['res_bus'], 0, 1);
 
-					$pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
+					// $pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
 
-					if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
-						if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
-							$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-						}else{
-							$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-						}
-					}else{
-						if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
-							$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-						}else{
-							$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-						}
-					}
+					// if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
+					// 	if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
+					// 		$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+					// 	}else{
+					// 		$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+					// 	}
+					// }else{
+					// 	if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
+					// 		$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+					// 	}else{
+					// 		$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
+					// 	}
+					// }
 				}
 
 				// 예약좌석 정보 : 양양행
@@ -592,6 +592,42 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			// 카카오 알림톡 DB 저장 END
 			
 		}
+	}
+
+	mysqli_query($conn, "COMMIT");
+}else if($param == "tempSeat"){ //좌석선점
+	$tempSeatN = $_REQUEST["tempSeatN"]; //타채널 체크
+	$tempSeatY = $_REQUEST["tempSeatY"]; //일반 체크
+
+	$shopseq = $_REQUEST["shopseq"];
+	$bus_date = $_REQUEST["bus_date"];
+	$bus_gubun = $_REQUEST["bus_gubun"];
+	$bus_num = $_REQUEST["bus_num"];
+
+	$select_query = "DELETE FROM AT_RES_TEMP_SEAT WHERE shopseq = $shopseq 
+						AND bus_date = '$bus_date'
+						AND bus_gubun = '$bus_gubun'
+						AND bus_num = '$bus_num'";
+	$result_set = mysqli_query($conn, $select_query);
+
+	//타채널 좌석 저장
+	for($i = 0; $i < count($tempSeatN); $i++){
+		$seat = $tempSeatN[$i];
+		
+		$select_query = "INSERT INTO `AT_RES_TEMP_SEAT`(`shopseq`, `bus_date`, `bus_gubun`, `bus_num`, `bus_seat`, `use_yn`, `insdate`) VALUES ($shopseq, '$bus_date', '$bus_gubun', '$bus_num', $seat, 'N', now())";
+		$result_set = mysqli_query($conn, $select_query);
+		
+		if(!$result_set) goto errGo;
+	}
+
+	//일반 좌석 저장
+	for($i = 0; $i < count($tempSeatY); $i++){
+		$seat = $tempSeatY[$i];
+		
+		$select_query = "INSERT INTO `AT_RES_TEMP_SEAT`(`shopseq`, `bus_date`, `bus_gubun`, `bus_num`, `bus_seat`, `use_yn`, `insdate`) VALUES ($shopseq, '$bus_date', '$bus_gubun', '$bus_num', $seat, 'Y', now())";
+		$result_set = mysqli_query($conn, $select_query);
+		
+		if(!$result_set) goto errGo;
 	}
 
 	mysqli_query($conn, "COMMIT");

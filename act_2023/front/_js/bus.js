@@ -339,7 +339,7 @@ function fnBusGubun(gubun, obj, type) {
  * @param selectedDate 선택 날짜
  * @param objid id
  */
-function fnBusSearchDate(selectedDate, objID) {
+function fnBusSearchDate(selectedDate, objID, bus_gubun = "ALL") {
     var eqnum = 0;
     var bus_line = $j("#bus_line").val();
     
@@ -353,13 +353,14 @@ function fnBusSearchDate(selectedDate, objID) {
     
     $j("ul[class=busLine]:eq(" + eqnum + ") li:not(:first-child)").remove();
 
-    var objParam = {
+    var formData = {
         "code": "busseatcnt",
         "bus_date": selectedDate,
         "bus_line": bus_line,
-        "shopseq": shopseq
+        "shopseq": shopseq,
+        "bus_gubun": bus_gubun
     }
-    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
+    $j.post("/act_2023/front/bus/view_bus_day.php", formData,
         function(data, textStatus, jqXHR) {
             data.forEach(function(el, i) {
                 if (el.seat <= el.seatcnt && !(busrestype == "change" || busrestype == "seatview")) { //매진
@@ -368,8 +369,8 @@ function fnBusSearchDate(selectedDate, objID) {
                     $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(this);" seat="' + el.seat + '" bus_gubun="' + el.bus_gubun + '" bus_num="' + el.bus_num + '" bus_price="' + el.bus_price + '" style="cursor:pointer;">' + el.bus_name + '</li>');
                 }
             });
-        }
-    );
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+    });
 }
 
 //
@@ -589,19 +590,20 @@ function fnBusSeatInit(obj, num) {
     var bus_gubun = selObj.attr("bus_gubun"); //버스 호차
 
     var seatjson = [];
-    var objParam = {
+    var formData = {
         "code": dayCode,
         "bus_date": selDate,
         "bus_gubun": bus_gubun,
         "bus_num": busnum,
-        "shopseq": shopseq
+        "shopseq": shopseq,
+        "buschannel": buschannel
     }
-    $j.getJSON("/act_2023/front/bus/view_bus_day.php", objParam,
+    $j.post("/act_2023/front/bus/view_bus_day.php", formData,
         function(data, textStatus, jqXHR) {
             seatjson = data;
-        }
-    );
-
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+    });
+    
     //예약 좌석 표시
     $j("#tbSeat .busSeatList").addClass("busSeatListN").removeClass("busSeatListY").removeClass("busSeatListC");
     seatjson.forEach(function(el) {
@@ -696,9 +698,9 @@ function fnSeatSelected(obj) {
         }
     } else { //예매 가능한 좌석
         if (busrestype == "change" || busrestype == "seatview") {
-            if ($j("#daytype").val() == 0) { //편도
+            if ($j("#bus_gubun").val() != "A") { //편도
                 var defaultCnt = Object.keys(busResData).length;
-                var selCnt = $j("tr[trseat]").length + 1; //$j("select[id=startLocation" + busType + "]").length + 1;
+                var selCnt = $j("tr[trseat]").length + 1;
                 if (defaultCnt < selCnt) {
                     if (busrestype == "seatview") { //내좌석보기
                         return;
@@ -744,17 +746,15 @@ function fnSeatSelected(obj) {
                 }
             }
         } else if (busrestype == "channel") { //타채널 예약건
-            var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length + 1;
-            var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length + 1;
-            
-            if (busType == "E" || busType == "Y") {
-                if (resbusseat1 < selCntS) {
-                    alert(((busTypeY == "Y") ? "양양행" : "동해행") + "은 " + resbusseat1 + "좌석까지 예약 가능합니다.");
+            var selCnt = $j(`#selBus_${busType} tr[trseat]`).length + 1;
+            if(busType == "S"){ //서울 출발
+                if (start_cnt < selCnt) {
+                    alert("출발 좌석은  " + start_cnt + "자리 예약 가능합니다.");
                     return;
                 }
-            } else {
-                if (resbusseat2 < selCntE) {
-                    alert("서울행은 " + resbusseat2 + "좌석까지 예약 가능합니다.");
+            }else{ //서울 복귀
+                if (return_cnt < selCnt) {
+                    alert("복귀 좌석은 " + return_cnt + "자리 예약 가능합니다.");
                     return;
                 }
             }

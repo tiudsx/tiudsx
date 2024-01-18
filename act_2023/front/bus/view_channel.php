@@ -12,7 +12,7 @@ if($arrChannel == ""){
     if($busgubun == "YY"){ //양양
         $url = "/surfbus_yy?param=";
     }else{ //동해
-        $url = "/surfbus_dh_2023?param=";
+        $url = "/surfbus_dh?param=";
     }
     
     echo "<script>location.href='".$url."'+encodeURIComponent('$arrChannel');</script>";

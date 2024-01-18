@@ -5,21 +5,27 @@ include __DIR__.'/../../common/func.php';
 $selDate = $_REQUEST["selDate"];
 $shopseq = $_REQUEST["seq"];
 
-$select_query_bus = "SELECT seq, bus_oper, bus_gubun, bus_num, res_confirm, COUNT(*) AS CntBus,
-						(CASE WHEN bus_gubun = 'SA'
-									THEN '10' + RIGHT(bus_num, 1)
-								WHEN bus_gubun = 'JO'
-									THEN '20' + RIGHT(bus_num, 1)
-								WHEN bus_gubun = 'AM'
-									THEN '30' + RIGHT(bus_num, 1)
-								WHEN bus_gubun = 'PM'
-									THEN '40' + RIGHT(bus_num, 1)
-								ELSE bus_num END) AS orderby FROM `AT_RES_SUB` 
-						WHERE code = 'bus'
-							AND res_date = '$selDate' 
-							AND res_confirm = 3 
-							AND seq = $shopseq
-						GROUP BY seq, bus_oper, bus_gubun, bus_num, res_confirm
+$select_query_bus = "SELECT (CASE WHEN a.bus_gubun = 'SA'
+									THEN '10' + RIGHT(a.bus_num, 1)
+								WHEN a.bus_gubun = 'JO'
+									THEN '20' + RIGHT(a.bus_num, 1)
+								WHEN a.bus_gubun = 'AM'
+									THEN '30' + RIGHT(a.bus_num, 1)
+								WHEN a.bus_gubun = 'PM'
+									THEN '40' + RIGHT(a.bus_num, 1)
+								ELSE a.bus_num END) AS orderby, a.*, b.res_confirm, IFNULL(b.CntBus, 0) AS CntBus  FROM `AT_PROD_BUS_DAY` AS a LEFT JOIN 
+						(SELECT seq, bus_oper, bus_gubun, bus_num, res_confirm, COUNT(*) AS CntBus
+							FROM `AT_RES_SUB` 
+							WHERE code = 'bus'
+								AND res_date = '$selDate' 
+								AND res_confirm = 3 
+								AND seq = $shopseq
+							GROUP BY seq, bus_oper, bus_gubun, bus_num, res_confirm) AS b
+						ON a.shopseq = b.seq
+							AND a.bus_oper = b.bus_oper
+							AND a.bus_gubun = b.bus_gubun
+							AND a.bus_num = b.bus_num
+						WHERE a.shopseq = $shopseq AND a.bus_date = '$selDate'
 						ORDER BY orderby ASC";
 $result_bus = mysqli_query($conn, $select_query_bus);
 $count = mysqli_num_rows($result_bus);

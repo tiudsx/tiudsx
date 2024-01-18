@@ -34,6 +34,12 @@ $view_tab1 = "";
 $view_tab3 = "none";
 $view_tab1_class = "class='on'";
 $view_tab3_class = "";
+$bus_gubun = "S"; //편도 - 서울 출발
+
+//일정, 노선 표시 여부
+$classS = "on";
+$displayS_2 = "";
+$displayE_2 = "style='display:none;'";
 
 //타채널 알림톡 좌석예약
 if($arrChannel != ""){
@@ -43,12 +49,12 @@ if($arrChannel != ""){
     $view_tab3_class = "class='on'";
 
     $arrChk = explode("|", decrypt($arrChannel));
-    $codeseq = $arrChk[1];  //쿠폰코드
+    $codeseq = $arrChk[1];  //쿠폰코드 seq
 
-	$select_query = "SELECT A.*, B.couponseq, B.etc
+	$select_query = "SELECT A.*, B.couponseq, B.coupon_code
                         FROM AT_RES_TEMP AS A INNER JOIN AT_COUPON_CODE AS B
                                 ON A.codeseq = B.codeseq
-                        WHERE codeseq = '$codeseq'";
+                        WHERE A.codeseq = '$codeseq'";
     $result = mysqli_query($conn, $select_query);
     $rowMain = mysqli_fetch_array($result);
 
@@ -60,18 +66,44 @@ if($arrChannel != ""){
     $userPhone3 = substr($userPhone, 7, 4);
 
     $couponseq = $rowMain["couponseq"]; //채널
+    $coupon_code = $rowMain["coupon_code"]; //쿠폰코드
 
     $start_bus_gubun = $rowMain["start_bus_gubun"]; //출발노선
     $return_bus_gubun = $rowMain["return_bus_gubun"]; //복귀노선
 
-    $start_day = $rowMain["start_day"];
-    $return_day = $rowMain["return_day"];
-    $start_cnt = $rowMain["start_cnt"];
-    $return_cnt = $rowMain["return_cnt"];
+    $start_day = $rowMain["start_day"]; //출발일
+    $return_day = $rowMain["return_day"]; //복귀일
+    $start_cnt = $rowMain["start_cnt"]; //출발 인원
+    $return_cnt = $rowMain["return_cnt"]; //복귀인원
 
-    $daytype = 0; //편도
     if($start_cnt > 0 && $return_cnt > 0){
-        $daytype = 1; //왕복
+        $bus_gubun = "A"; //왕복
+    }else if($return_cnt > 0){
+        $bus_gubun = "E"; //편도 - 서울 복귀
+    }
+
+    //일정, 노선 표시 여부
+    if($bus_gubun == "A"){ //왕복
+        $classA = "on";
+        $displayS = "style='display:none;'";
+        $displayE = "style='display:none;'";
+        
+        $displayS_2 = "";
+        $displayE_2 = "";
+    }else if($bus_gubun == "S"){ //출발
+        $classS = "on";
+        $displayA = "style='display:none;'";
+        $displayE = "style='display:none;'";
+        
+        $displayS_2 = "";
+        $displayE_2 = "style='display:none;'";
+    }else if($bus_gubun == "E"){ //출발
+        $classE = "on";
+        $displayA = "style='display:none;'";
+        $displayS = "style='display:none;'";
+        
+        $displayS_2 = "style='display:none;'";
+        $displayE_2 = "";
     }
 }
 
@@ -189,7 +221,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <br>resparam<input type="text" id="resparam" name="resparam" value="BusI" />
                     <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
-                    <br>편도/왕복<input type="text" id="bus_gubun" name="bus_gubun" value="S">
+                    <br>편도/왕복<input type="text" id="bus_gubun" name="bus_gubun" value="<?=$bus_gubun?>">
                     <br>행선지<input type="text" id="bus_line" name="bus_line" value="<?=$busgubun?>">
                 </span>
                 
@@ -198,30 +230,31 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                     <div class="busOption01" style="padding-bottom: 0px;" id="route">
                         <ul class="destination" id="ulroute" style="margin-bottom: 0px;">
                             <li><img src="/act_2023/images/viewicon/route.svg" alt="">일정</li>
-                            <li class="toYang on" onclick="fnBusGubun('S', this);">출발<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('E', this);">복귀<i class="fas fa-chevron-right"></i></li>
-                            <li class="toYang" onclick="fnBusGubun('A', this);" style="margin-left: 10px;">왕복<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang <?=$classS?>" <?=$displayS?> <?=($couponseq == "") ? "onclick=\"fnBusGubun('S', this);\"" : "" ?>>출발<i class="fas fa-chevron-right"></i></li>
+                            <li class="toYang <?=$classE?>" <?=$displayE?> <?=($couponseq == "") ? "onclick=\"fnBusGubun('E', this);\"" : "" ?> style="margin-right: 10px;">복귀<i class="fas fa-chevron-right"></i></li>
+                           
+                            <li class="toYang <?=$classA?>" <?=$displayA?> <?=($couponseq == "") ? "onclick=\"fnBusGubun('A', this);\"" : "" ?>>왕복<i class="fas fa-chevron-right"></i></li>
                         </ul>
                     </div>
                     <div id="layerbus1" class="busOption01" style="padding-top: 10px;">
-                        <ul class="busDate " data-key="bus_start">
+                        <ul class="busDate " data-key="bus_start" <?=$displayS_2?>>
                             <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">출발일</li>
                             <li class="calendar"><input type="text" id="bus_start" name="bus_start" readonly="readonly" class="itx" cal="busdate"></li>
                         </ul>
-                        <ul class="busLine" data-key="bus_start">
+                        <ul class="busLine" data-key="bus_start" <?=$displayS_2?>>
                             <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
                         </ul>
-                        <ul class="busStop" data-key="bus_start">
+                        <ul class="busStop" data-key="bus_start" <?=$displayS_2?>>
                             <li id="buspointtext"></li>
                         </ul>
-                        <ul class="busDate" data-key="bus_return" style="display:none;">
+                        <ul class="busDate" data-key="bus_return" <?=$displayE_2?>>
                             <li><img src="/act_2023/images/viewicon/calendar.svg" alt="">복귀일</li>
                             <li class="calendar"><input type="text" id="bus_return" name="bus_return" readonly="readonly" class="itx" cal="busdate"></li>
                         </ul>
-                        <ul class="busLine" data-key="bus_return" style="display: none;">
+                        <ul class="busLine" data-key="bus_return" <?=$displayE_2?>>
                             <li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>
                         </ul>
-                        <ul class="busStop" data-key="bus_return" style="display: none;">
+                        <ul class="busStop" data-key="bus_return" <?=$displayE_2?>>
                             <li id="buspointtext"></li>
                         </ul>
                     </div>                
@@ -330,14 +363,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <tbody>
                             <tr>
                                 <th><em>*</em> 이름</th>
-                                <td><input type="text" id="userName" name="userName" value="" class="itx" maxlength="15"></td>
+                                <td><input type="text" id="userName" name="userName" value="<?=$userName?>" class="itx" maxlength="15"></td>
                             </tr>
                             <tr>
                                 <th><em>*</em> 연락처</th>
                                 <td>
                                     <input type="<?=$inputtype?>" name="userPhone1" id="userPhone1" value="010" size="3" maxlength="3" class="tel itx" style="width:50px;"> - 
-                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="" size="4" maxlength="4" class="tel itx" style="width:60px;"> - 
-                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="" size="4" maxlength="4" class="tel itx" style="width:60px;">
+                                    <input type="<?=$inputtype?>" name="userPhone2" id="userPhone2" value="<?=$userPhone2?>" size="4" maxlength="4" class="tel itx" style="width:60px;"> - 
+                                    <input type="<?=$inputtype?>" name="userPhone3" id="userPhone3" value="<?=$userPhone3?>" size="4" maxlength="4" class="tel itx" style="width:60px;">
                                 </td>
                             </tr>
                             <tr style="display:none;">
@@ -422,7 +455,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     var busrestype = "none";
     var buschannel = "<?=$couponseq?>";
     var json_busData = {}; //셔틀버스 노선 이용가능 날짜 json
-    var json_busDay = {}; //달력에 날짜 선택용 json
     
     fnBusDate(shopseq, "<?=$busgubun?>"); //버스 예약 가능한 날짜
     
@@ -437,7 +469,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             return;
         }else{
             busrestype = "channel";
-            $j("#couponbtn").click();
+            //$j("#couponbtn").click();
 
             if($j("#coupon").val() == ""){
                 
@@ -449,79 +481,34 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 
             start_cnt = <?=$start_cnt?>;
             return_cnt = <?=$return_cnt?>;
-                
-            $j("#userName").val("<?=$resusername?>");
-            $j("#userPhone1").val("<?=$resusertel1?>");
-            $j("#userPhone2").val("<?=$resusertel2?>");
-            $j("#userPhone3").val("<?=$resusertel3?>");
 
-            <?if($daytype == 0){?>
-                $j('#ulDaytype li').eq(1).click();
-                $j('#ulDaytype li').eq(1).removeAttr("onclick");
-                $j('#ulDaytype li').eq(2).removeAttr("onclick").css("display", "none");
+            $j("#bus_start").datepicker('option', 'disabled', true);
+            $j("#bus_return").datepicker('option', 'disabled', true);
+            
+            <?if($bus_gubun != "A"){?>
 
                 <?if($start_cnt > 0){ //양양행 ?>
-                    $j("#ulroute li:eq(1)").click();
-                    $j("#ulroute li:eq(1)").removeAttr("onclick");
-                    $j("#ulroute li:eq(2)").css("display", "none");
-                    $j("#resseatnum").html(((busTypeY == "Y") ? "양양행" : "동해행") + " : " + start_cnt + "자리 예약가능<br>");
+                    //$j("#resseatnum").html("출발 : " + start_cnt + "자리<br>");
 
-                    $j("#SurfBus").val("<?=$start_day?>");
+                    $j("#bus_start").val("<?=$start_day?>");
+                    fnBusSearchDate($j("#bus_start").val(), "bus_start", "<?=$start_bus_gubun?>");
                 <?}?>
 
                 <?if($return_cnt > 0){ //서울행  ?>
-                    $j("#ulroute li:eq(2)").click();
-                    $j("#ulroute li:eq(2)").removeAttr("onclick");
-                    $j("#ulroute li:eq(1)").css("display", "none");
-                    $j("#resseatnum").html("서울행 : " + return_cnt + "자리 예약가능<br>");
+                    //$j("#resseatnum").html("복귀 : " + return_cnt + "자리<br>");
 
-                    $j("#SurfBus").val("<?=$return_day?>");
+                    $j("#bus_return").val("<?=$return_day?>");
+                    fnBusSearchDate($j("#bus_return").val(), "bus_return", "<?=$return_bus_gubun?>");
                 <?}?>
-                
-                $j("#SurfBus").datepicker('option', 'disabled', true);
-
-                fnBusSearchDate($j("#SurfBus").val(), $j("#busgubun").val(), $j("#SurfBus").attr("id"));
-                
-                var arrDataS = busData[$j("#busgubun").val() + $j("#SurfBus").val().substring(5).replace('-', '')];
-                if(arrDataS.length == 1){
-                    $j("li[busnum=" + arrDataS[0].busnum + "]").click();
-                }
-
-                if(arrDataS.length == 1){
-                    fnBusNext();
-                }
             <?}else{?>
-                $j('#ulDaytype li').eq(2).click();
 
-                $j("#SurfBusS").val("<?=$start_day?>");
-                $j("#SurfBusE").val("<?=$return_day?>");
+                $j("#bus_start").val("<?=$start_day?>");
+                $j("#bus_return").val("<?=$return_day?>");
                 
-                $j("#resseatnum").html(((busTypeY == "Y") ? "양양행" : "동해행") + " : " + start_cnt + "자리 예약가능 / 서울행 : " + return_cnt + "자리 예약가능<br>");
+                //$j("#resseatnum").html("출발 : " + start_cnt + "자리 / 복귀 : " + return_cnt + "자리<br>");
                 
-                fnBusSearchDate($j("#SurfBusS").val(), $j("#SurfBusS").attr("gubun"), $j("#SurfBusS").attr("id"));
-                fnBusSearchDate($j("#SurfBusE").val(), $j("#SurfBusE").attr("gubun"), $j("#SurfBusE").attr("id"));
-
-                $j("#SurfBusS").datepicker('option', 'disabled', true);
-                $j("#SurfBusE").datepicker('option', 'disabled', true);
-
-                $j('#ulDaytype li').eq(1).removeAttr("onclick").css("display", "none");
-                $j('#ulDaytype li').eq(2).removeAttr("onclick");
-
-                //양양행 1대일경우
-                var arrDataS = busData[gubun + $j("#SurfBusS").val().substring(5).replace('-', '')];
-                if(arrDataS.length == 1){
-                    $j("li[busnum=" + arrDataS[0].busnum + "]").click();
-                }
-
-                //서울행 1대일경우
-                var arrDataE = busData[gubun + $j("#SurfBusE").val().substring(5).replace('-', '')];
-                if(arrDataE.length == 1){
-                    $j("li[busnum=" + arrDataE[0].busnum + "]").click();
-                }
-
-                if(arrDataS.length == 1 && arrDataE.length == 1){
-                    fnBusNext();
-                }
+                fnBusSearchDate($j("#bus_start").val(), "bus_start", "<?=$start_bus_gubun?>");
+                fnBusSearchDate($j("#bus_return").val(), "bus_return", "<?=$return_bus_gubun?>");
             <?}?>
         }
         <?}?>
