@@ -428,6 +428,8 @@ function fnBusPrev(num) {
  * @returns 
  */
 function fnBusNext(step) {
+    fnMapView('#view_tab3', 70);
+
     if(step == 1){
         $j(".busLineTab li").remove();
 
@@ -852,9 +854,9 @@ function fnPriceSum(obj, num) {
 
     if ((cntS + cntE) == 0) return;
     
-    var bus_priceS = $j("input[id=hidbusPriceS]").val();
-    var bus_priceE = $j("input[id=hidbusPriceE]").val();
-
+    var bus_priceS = ($j("input[id=hidbusPriceS]").val() == null) ? 0 : $j("input[id=hidbusPriceS]").val();
+    var bus_priceE = ($j("input[id=hidbusPriceE]").val() == null) ? 0 : $j("input[id=hidbusPriceE]").val();
+    
     var totalPrice = (cntS * bus_priceS) + (cntE * bus_priceE);
 
     $j("#lastcouponprice").html("");
@@ -939,7 +941,7 @@ function fnBusSave() {
 
     var submiturl = "/act_2023/front/bus/view_bus_save.php";
     if (busrestype == "change") {
-        if ($j("#daytype").val() == 0) { //편도
+        if ($j("#bus_gubun").val() != "A") { //편도
             var defaultCnt = Object.keys(busResData).length;
             var selCnt = $j("tr[trseat]").length;
             if (defaultCnt != selCnt) {
@@ -951,10 +953,8 @@ function fnBusSave() {
                 defaultCntE = 0;
 
             //기본 양양행 왕복
-            var btntextS = ((busTypeY == "Y") ? "양양행" : "동해행"),
-                btntextE = "서울행";
-            var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length;
-            var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length;
+            var selCntS = $j("#selBus_S tr[trseat]").length;
+            var selCntE = $j("#selBus_E tr[trseat]").length;
 
             for (key in busResData) {
                 var arrVlu = busResData[key].split("/");
@@ -966,12 +966,12 @@ function fnBusSave() {
             }
 
             if (defaultCntS != selCntS) {
-                alert(btntextS + "으로 예약된 좌석수(" + defaultCntS + "자리)와 동일한 개수로 선택해주세요~");
+                alert("예약된 좌석수(" + defaultCntS + "자리)와 동일한 개수로 선택해주세요~");
                 return;
             }
 
             if (defaultCntE != selCntE) {
-                alert(btntextE + "으로 예약된 좌석수(" + defaultCntE + "자리)와 동일한 개수로 선택해주세요~");
+                alert("예약된 좌석수(" + defaultCntE + "자리)와 동일한 개수로 선택해주세요~");
                 return;
             }
         }
@@ -983,16 +983,16 @@ function fnBusSave() {
         }
     } else {
         if (busrestype == "channel") {
-            var selCntS = $j("#selBus" + busTypeY + " tr[trseat]").length;
-            var selCntE = $j("#selBus" + busTypeS + " tr[trseat]").length;
+            var selCntS = $j("#selBus_S tr[trseat]").length;
+            var selCntE = $j("#selBus_E tr[trseat]").length;
 
-            if (resbusseat1 > 0 && resbusseat1 != selCntS) {
-                alert(((busTypeY == "Y") ? "양양행" : "동해행") + "은 " + resbusseat1 + "좌석 예약해주세요~");
+            if (start_cnt > 0 && start_cnt != selCntS) {
+                alert("출발 좌석은  " + start_cnt + "자리 예약해주세요.");
                 return;
             }
 
-            if (resbusseat2 > 0 && resbusseat2 != selCntE) {
-                alert("서울행은 " + resbusseat2 + "좌석 예약해주세요");
+            if (return_cnt > 0 && return_cnt != selCntE) {
+                alert("복귀 좌석은 " + return_cnt + "자리 예약해주세요.");
                 return;
             }
         }
@@ -1017,7 +1017,7 @@ function fnBusSave() {
             return;
         }
 
-        if (!confirm("액트립 셔틀버스를 예약하시겠습니까?")) {
+        if (!confirm("셔틀버스를 예약하시겠습니까?")) {
             return;
         }
     }
@@ -1025,4 +1025,35 @@ function fnBusSave() {
     $j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
 
     setTimeout('$j("#frmRes").attr("action", "' + submiturl + '").submit();', 500);
+}
+
+
+/**
+ * 셔틀버스 쿠폰코드 적용
+ * @param {*} obj 
+ */
+function fnCouponCheck(obj) {
+    var cp = fnCoupon("BUS", "load", $j("#coupon").val());
+    if (cp > 0) {
+        $j("#coupondis").css("display", "");
+        $j("#couponcode").val($j("#coupon").val())
+        $j("#couponprice").val(cp);
+
+        if (cp <= 100) { //퍼센트 할인
+            $j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 " + cp + "% 할인");
+            if(cp == 100){
+                $j("#coupondis").closest("tr").hide();
+            }
+        } else { //금액할인
+            $j("#coupondis").html("<br>적용쿠폰코드 : " + $j("#coupon").val() + "<br>총 결제금액에서 " + commify(cp) + "원 할인");
+        }
+    } else {
+        $j("#coupondis").css("display", "none");
+        $j("#coupondis").html("");
+        $j("#couponcode").val("")
+        $j("#couponprice").val(0);
+    }
+    $j("#coupon").val("");
+
+    fnPriceSum('', 1);
 }
