@@ -23,13 +23,59 @@ if($param == "solkakaoAll"){
 	for($i = 0; $i < count($chkresseq); $i++){
 		$resseq = $chkresseq[$i];
 
-		$select_query = "SELECT user_name, user_tel, resnum FROM `AT_SOL_RES_MAIN` WHERE resseq = $resseq";
+		$select_query = "SELECT 
+								@sdate:=MIN(CASE 
+													WHEN sdate = '0000-00-00' THEN NULL 
+													ELSE sdate END) 
+								, @edate:=MAX(CASE 
+													WHEN edate = '0000-00-00' THEN NULL 
+													ELSE edate END) 
+								, @resdate_max:=MAX(CASE 
+													WHEN resdate = '0000-00-00' THEN NULL 
+													ELSE resdate END) 
+								, @resdate_min:=MIN(CASE 
+													WHEN resdate = '0000-00-00' THEN NULL 
+													ELSE resdate END) 
+							FROM AT_SOL_RES_SUB WHERE resseq = $resseq;";
+		$result = mysqli_query($conn, $select_query);
+
+		$select_query = "SELECT user_name, user_tel, resnum, @sdate AS sdate, @edate AS edate, @resdate_max AS resdate_max, @resdate_min AS resdate_min FROM `AT_SOL_RES_MAIN` WHERE resseq = $resseq;";
 		$result = mysqli_query($conn, $select_query);
 		$rowMain = mysqli_fetch_array($result);
 	
 		$userName = $rowMain["user_name"];
 		$userPhone = $rowMain["user_tel"];
 		$resnum = $rowMain["resnum"];
+		$sdate = $rowMain["sdate"];
+		$edate = $rowMain["edate"];
+		$resdate_max = $rowMain["resdate_max"];
+		$resdate_min = $rowMain["resdate_min"];
+
+		$date_start = "";
+		$date_end = "";
+		if($sdate == null){ //숙박일이 없는 경우 : 바베큐 또는 강습이용일
+			$date_start = $resdate_min;
+			$date_end = $resdate_max;
+		}else{ //숙박일이 있는 경우
+			if($resdate_min == null){ //바베큐 또는 강습일이 없는 경우
+				$date_start = $sdate;
+				$date_end = $edate;
+			}else{
+				if($sdate >= $resdate_min){
+					$date_start = $resdate_min;
+				}else{
+					$date_start = $sdate;
+				}
+				
+				if($edate <= $resdate_max){
+					$date_end = $resdate_max;
+				}else{
+					$date_end = $edate;
+				}
+			}
+		}
+
+		$userDate = ($date_start == $date_end) ? $date_start : "$date_start ~ $date_end";
 	
 		//==========================카카오 메시지 발송 ==========================
 		$msgTitle = '솔게하&솔서프 동해점';
@@ -46,7 +92,7 @@ if($param == "solkakaoAll"){
 			"gubun"=> $code
 			, "userName"=> $userName
 			, "userPhone"=> $userPhone
-			, "userDate"=> "2023-11-01 ~ 2023-11-02"
+			, "userDate"=> $userDate
 			, "link1"=>shortURL("https://actrip.co.kr/sol_kakao?num=1&seq=".urlencode(encrypt($resseq))) //예약조회/취소
 			, "DebugInfo"=> $DebugInfo
 		);	
@@ -72,11 +118,6 @@ if($param == "solkakaoAll"){
 		$msgid = $data[$i]["data"]["msgid"];
 		$message = $data[$i]["message"];
 		$originMessage = $data[$i]["originMessage"];
-		
-		// $userinfo = "$userName|$userPhone|$datetime||||$code|$type|$message|$originMessage|$msgid";
-
-		// echo "<br>키 : ".$userinfo;
-		// echo "<br>response : ".json_encode($data[$i]);
 		
 		$kakao_response = array(
 			"arrKakao"=> $arrKakao
@@ -137,7 +178,6 @@ if($param == "solkakaoAll"){
 	$resseq = $_REQUEST["resseq"];
 	$res_adminname = $_REQUEST["res_adminname"];
 	$user_name = $_REQUEST["user_name"];
-	// $user_tel = $_REQUEST["user_tel1"]."-".$_REQUEST["user_tel2"]."-".$_REQUEST["user_tel3"];
 	$user_tel = $_REQUEST["user_tel"];
 
 	$res_stayshop = $_REQUEST["res_stayshop"];
@@ -149,7 +189,7 @@ if($param == "solkakaoAll"){
 	$res_staynum = $_REQUEST["res_staynum"];
 	$res_company = $_REQUEST["res_company"];
 	$res_bbqdate = $_REQUEST["res_bbqdate"];
-	$res_bbq = $_REQUEST["res_bbq"];
+	$res_party = $_REQUEST["res_party"];
 
 	$res_surfshop = $_REQUEST["res_surfshop"];
 	$res_surfdate = $_REQUEST["res_surfdate"];
@@ -217,9 +257,10 @@ if($param == "solkakaoAll"){
 			$staysex = $res_staysex[$i];
 			$stayroom = null;
 			$staynum = null;
-			$bbq = $res_bbq[$i];
+			$party = $res_party[$i];
 			$stayM = $res_stayM[$i];
 
+			//숙박
 			if($res_stayshop[$i] != "N"){
 				$sdate = $res_staysdate[$i];
 				$edate = $res_stayedate[$i];
@@ -242,16 +283,14 @@ if($param == "solkakaoAll"){
 				if($count > 0){
 					goto errGoRoom;
 				}
-
-				$kaka_stay = "숙박,";
 			}
 
+			//바베큐
 			if($res_bbqdate[$i] != ""){
 				$resdate = $res_bbqdate[$i];
-				$kaka_bbq = "바베큐,";
 			}
 
-			$select_query = "INSERT INTO `AT_SOL_RES_SUB`(`resseq`, `res_type`, `prod_name`, `sdate`, `edate`, `resdate`, `staysex`, `stayroom`, `staynum`, `bbq`, `stayM`) VALUES ($seq, 'stay', '$prod_name', '$sdate', '$edate', '$resdate', '$staysex', '$stayroom', '$staynum', '$bbq', $stayM)";
+			$select_query = "INSERT INTO `AT_SOL_RES_SUB`(`resseq`, `res_type`, `prod_name`, `sdate`, `edate`, `resdate`, `staysex`, `stayroom`, `staynum`, `party`, `stayM`) VALUES ($seq, 'stay', '$prod_name', '$sdate', '$edate', '$resdate', '$staysex', '$stayroom', '$staynum', '$party', $stayM)";
 			$result_set = mysqli_query($conn, $select_query);
 
 			$errmsg = $select_query;
@@ -272,21 +311,19 @@ if($param == "solkakaoAll"){
 			$surfrentM = 0;
 			$surfrentW = 0;
 
+			//서핑강습
 			if($res_surfshop[$i] != "N"){
 				$resdate = $res_surfdate[$i];
 				$restime = $res_surftime[$i];
 				$surfM = $res_surfM[$i];
 				$surfW = $res_surfW[$i];
-
-				$kaka_surf = "서핑강습,";
 			}
 
+			//장비렌탈
 			if($res_rent[$i] != "N"){
 				$resdate = $res_surfdate[$i];
 				$surfrentM = $res_rentM[$i];
 				$surfrentW = $res_rentW[$i];
-
-				$kaka_rent = "장비렌탈,";
 			}
 
 			$select_query = "INSERT INTO `AT_SOL_RES_SUB`(`resseq`, `res_type`, `prod_name`, `resdate`, `restime`, `surfM`, `surfW`, `surfrent`, `surfrentM`, `surfrentW`, `sdate`, `edate`) VALUES ($seq, 'surf', '$prod_name', '$resdate', '$restime', $surfM, $surfW, '$surfrent', $surfrentM, $surfrentW, '', '')";
@@ -297,25 +334,65 @@ if($param == "solkakaoAll"){
 		}
 	}
 
-	//알림톡 발송 (확정, 등록일경우)
-	$kakaoRes = $kaka_stay.$kaka_bbq.$kaka_surf.$kaka_rent;
+	if(($res_kakao == "Y" && $res_confirm == "확정") || $res_kakao == "S"){
+		$select_query = "SELECT 
+								@sdate:=MIN(CASE 
+													WHEN sdate = '0000-00-00' THEN NULL 
+													ELSE sdate END) 
+								, @edate:=MAX(CASE 
+													WHEN edate = '0000-00-00' THEN NULL 
+													ELSE edate END) 
+								, @resdate_max:=MAX(CASE 
+													WHEN resdate = '0000-00-00' THEN NULL 
+													ELSE resdate END) 
+								, @resdate_min:=MIN(CASE 
+													WHEN resdate = '0000-00-00' THEN NULL 
+													ELSE resdate END) 
+							FROM AT_SOL_RES_SUB WHERE resseq = $seq;";
+		$result = mysqli_query($conn, $select_query);
 
-	if($kakaoRes != ""){
-		$kakaoRes = substr($kakaoRes, 0, strlen($kakaoRes) - 1);
-	}
-
-	if($res_kakao == "Y" && $res_confirm == "확정"){
-		$select_query = "SELECT user_name, user_tel, resnum, res_kakaoinfo FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq";
+		$select_query = "SELECT user_name, user_tel, resnum, res_kakaoinfo, @sdate AS sdate, @edate AS edate, @resdate_max AS resdate_max, @resdate_min AS resdate_min FROM `AT_SOL_RES_MAIN` WHERE resseq = $seq;";
 		$result = mysqli_query($conn, $select_query);
 		$rowMain = mysqli_fetch_array($result);
-	
+
 		$userName = $rowMain["user_name"];
 		$userPhone = $rowMain["user_tel"];
 		$res_kakaoinfo = $rowMain["res_kakaoinfo"];
 		$resnum = $rowMain["resnum"];
+		$sdate = $rowMain["sdate"];
+		$edate = $rowMain["edate"];
+		$resdate_max = $rowMain["resdate_max"];
+		$resdate_min = $rowMain["resdate_min"];
 
+		$date_start = "";
+		$date_end = "";
+		if($sdate == null){ //숙박일이 없는 경우 : 바베큐 또는 강습이용일
+			$date_start = $resdate_min;
+			$date_end = $resdate_max;
+		}else{ //숙박일이 있는 경우
+			if($resdate_min == null){ //바베큐 또는 강습일이 없는 경우
+				$date_start = $sdate;
+				$date_end = $edate;
+			}else{
+				if($sdate >= $resdate_min){
+					$date_start = $resdate_min;
+				}else{
+					$date_start = $sdate;
+				}
+				
+				if($edate <= $resdate_max){
+					$date_end = $resdate_max;
+				}else{
+					$date_end = $edate;
+				}
+			}
+		}
+
+		$userDate = ($date_start == $date_end) ? $date_start : "$date_start ~ $date_end";
+	}
+
+	if($res_kakao == "Y" && $res_confirm == "확정"){
 		if($res_kakaoinfo == "N"){
-		
 			//==========================카카오 메시지 발송 ==========================
 			$msgTitle = '솔게하&솔서프 동해점';
 			$DebugInfo = array(
@@ -331,7 +408,7 @@ if($param == "solkakaoAll"){
 				"gubun"=> $code
 				, "userName"=> $userName
 				, "userPhone"=> $userPhone
-				, "userDate"=> "2023-11-01 ~ 2023-11-02"
+				, "userDate"=> $userDate
 				, "link1"=>shortURL("https://actrip.co.kr/sol_kakao?num=1&seq=".urlencode(encrypt($seq))) //예약조회/취소
 				, "DebugInfo"=> $DebugInfo
 			);	
@@ -398,7 +475,7 @@ if($param == "solkakaoAll"){
 			"gubun"=> $code
 			, "userName"=> $user_name
 			, "userPhone"=> $user_tel
-			, "userDate"=> "2023-11-01 ~ 2023-11-02"
+			, "userDate"=> $userDate
 			, "userPrice"=> number_format($res_kakaoBank).'원'
 			, "DebugInfo"=> $DebugInfo
 		);	

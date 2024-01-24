@@ -112,18 +112,21 @@ include __DIR__.'/../../common/logininfo.php';
                 <td colspan="10">
 					<table class="et_vars exForm bd_tb tbcenter" style="width:100%">
 						<colgroup>
+							<col width="180" />
 							<col width="190" />
-							<col width="270" />
-							<col width="*" />
+							<col width="auto" />
+							<col width="110" />
+							<col width="130" />
 							<col width="150" />
-							<col width="170" />
 							<col width="70" />
 						</colgroup>
 						<tbody>
 							<tr>
-                                <th colspan="5">숙박정보 
+                                <th colspan="6">숙박정보 
 									<input type="button" class="btnsurfadd" style="width:90px; height:22px;" value="전체 일괄적용" data-gubun="btnAll"></th>
-                                <th rowspan="2"><input type="button" class="btnsurfadd" style="width:40px;" value="추가" data-gubun="trstay"></th>
+                                <th rowspan="2">
+									<input type="button" class="btnsurfadd" style="width:40px;" value="추가" data-gubun="trstay">
+								</th>
                             </tr>
                             <tr>
                                 <th>숙소명</th>
@@ -133,8 +136,8 @@ include __DIR__.'/../../common/logininfo.php';
 								</th>
                                 <th>고객정보</th>
                                 <th>성별</th>
-								<th>
-									바베큐
+								<th colspan="2">
+									파티참여
 									<input type="button" class="btnsurfadd" style="width:60px; height:22px;" value="일괄적용" data-gubun="btnbbq">
 								</th>
 							</tr>
@@ -142,12 +145,14 @@ include __DIR__.'/../../common/logininfo.php';
 								<td>
 									<input type="hidden" id="stayseq" name="stayseq[]" >
 									<input type="hidden" id="staytype" name="staytype[]" value="I">
-									<input type="hidden" id="res_stayshop" name="res_stayshop[]" value="N">
 									<input type="hidden" id="res_staysex" name="res_staysex[]" value="남">
 									<input type="hidden" id="res_stayM" name="res_stayM[]" value="1"> 
 
-									<label><input type="radio" name="res_stayshopChk" id="res_stayshopChk" value="N" onchange="fnSolStaySel(this);" checked>미신청</label> &nbsp;
-									<label><input type="radio" name="res_stayshopChk" id="res_stayshopChk1" value="솔게스트하우스" onchange="fnSolStaySel(this);">솔게하</label>
+									<select id="res_stayshop" name="res_stayshop[]" class="select" onchange="fnSolStaySel(this);" sel="">
+										<option value="N">미신청</option>
+										<option value="솔게스트하우스">솔게하</option>
+										<option value="로얄비취">로얄비취</option>
+									</select>
 								</td>
 								<td style="line-height:2.3em">
 									<input type="text" calid="res_staysdate" cal="sol_sdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7"> ~ 
@@ -175,6 +180,14 @@ include __DIR__.'/../../common/logininfo.php';
 								<td>
 									<label><input type="radio" name="res_staysexChk" id="res_staysexChk" onchange="fnSolSexSel(this);" value="남" checked>남</label> &nbsp;
 									<label><input type="radio" name="res_staysexChk" id="res_staysexChk1" onchange="fnSolSexSel(this);" value="여">여</label>
+								</td>
+								<td>
+									<select id="res_party" name="res_party[]" class="select" sel="" onchange="fnPartySel(this);">
+										<option value="N">미참여</option>
+										<option value="BBQ">바베큐</option>
+										<option value="PUB">펍파티</option>
+										<option value="ALL">바베큐+펍</option>
+									</select>
 								</td>
 								<td>
 									<input type="text" calid="res_bbqdate" cal="date" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7">
@@ -539,7 +552,7 @@ include __DIR__.'/../../common/logininfo.php';
                                 <th>이용일</th>
                                 <th>고객정보</th>
                                 <th>성별</th>
-                                <th>바베큐</th>
+                                <th>파티참여</th>
 							</tr>
 							<tr id="trstay_2" style="display:none;">
 								<td>
@@ -557,6 +570,12 @@ include __DIR__.'/../../common/logininfo.php';
 									<input type="text" id="res_staysex_2" size="3" class="itx" readonly>
 								</td>
 								<td>
+									<select id="res_party_2" class="select">
+										<option value="N">미참여</option>
+										<option value="BBQ">바베큐</option>
+										<option value="PUB">펍파티</option>
+										<option value="ALL">바베큐+펍</option>
+									</select>
 									<input type="text" calid="res_bbqdate_2" readonly="readonly" style="width:66px;" class="itx2" maxlength="7" disabled>
 								</td>
 							</tr>

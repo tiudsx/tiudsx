@@ -1,41 +1,12 @@
 $j(function() {
     $j('.btnsurfadd').on('click', function(e){
-        
         var $self = $j(this);
         var id = $self.data("gubun");
-
-        if(id == "btnbbq"){
-            if($j("input[calid=res_bbqdate]").eq(1).val() == null || $j("input[calid=res_bbqdate]").eq(1).val() == ""){
-                alert("첫번째열 바베큐 이용날짜를 선택하세요.");
-                return;
-            }
-
-            $j("input[calid=res_bbqdate]").val($j("input[calid=res_bbqdate]").eq(1).val());
-            $j("input[calid=res_bbqdate]").eq(0).val("");
-            return;
-        }else if(id == "btnstay"){
-            $j("input[calid=res_staysdate]").val($j("input[calid=res_staysdate]").eq(1).val());
-            $j("input[calid=res_stayedate]").val($j("input[calid=res_stayedate]").eq(1).val());
-            $j("input[calid=res_staysdate]").eq(0).val("");
-            $j("input[calid=res_stayedate]").eq(0).val("");
-            return;
-        }else if(id == "btnAll"){
+        
+        if(id == "btnAll"){
             //숙소
-            $j("input[id=res_stayshop]").val($j("input[id=res_stayshop]").eq(1).val());
-            $j("input[id=res_stayshop]").eq(0).val("N");
-
-            if($j("input[id=res_stayshop]").eq(1).val() == "N"){
-                $j("input[id=res_stayshopChk]").prop("checked", true);
-            }else{
-                $j("input[id=res_stayshopChk1]").prop("checked", true);
-            }
-            $j("input[id=res_stayshopChk]").eq(0).prop("checked", true);
-
-            //숙박일
-            $j("input[calid=res_staysdate]").val($j("input[calid=res_staysdate]").eq(1).val());
-            $j("input[calid=res_stayedate]").val($j("input[calid=res_stayedate]").eq(1).val());
-            $j("input[calid=res_staysdate]").eq(0).val("");
-            $j("input[calid=res_stayedate]").eq(0).val("");
+            $j("select[id=res_stayshop]").val($j("select[id=res_stayshop]").eq(1).val());
+            $j("select[id=res_stayshop]").eq(0).val("N");
 
             //성별
             $j("input[id=res_staysex]").val($j("input[id=res_staysex]").eq(1).val());
@@ -47,15 +18,32 @@ $j(function() {
                 $j("input[id=res_staysexChk1]").prop("checked", true);
             }
             $j("input[id=res_staysexChk]").eq(0).prop("checked", true);
+        }
 
-            //바베큐일
-            $j("input[calid=res_bbqdate]").val($j("input[calid=res_bbqdate]").eq(1).val());
+        //숙박일
+        if(id == "btnAll" || id == "btnstay"){
+            $j("input[calid=res_staysdate]").val($j("input[calid=res_staysdate]").eq(1).val());
+            $j("input[calid=res_stayedate]").val($j("input[calid=res_stayedate]").eq(1).val());
+            $j("input[calid=res_staysdate]").eq(0).val("");
+            $j("input[calid=res_stayedate]").eq(0).val("");
+        }
+
+        //바베큐, 펍파티
+        if(id == "btnAll" || id == "btnbbq"){
+
+            var date_disabled = ($j("input[calid=res_bbqdate]").eq(1).attr("disabled") == null) ? false : true;
+
+            $j("input[calid=res_bbqdate]").val($j("input[calid=res_bbqdate]").eq(1).val()).attr("disabled", date_disabled);
             $j("input[calid=res_bbqdate]").eq(0).val("");
-            return;
+
+            $j("select[id=res_party]").val($j("select[id=res_party]").eq(1).val());
+            $j("select[id=res_party]").eq(0).val("N");
         }
 
         //row 추가
-        fnSolAdd(null, id, "");
+        if(id == "trsurf" || id == "trstay"){
+            fnSolAdd(null, id, "");
+        }
     })
 });
 
@@ -100,14 +88,14 @@ function fnSolAdd(obj, id, num) {
     $j("tr[id=" + id + "]:last").css("display", "")
 
     //숙소, 성별 디폴트 체크
-    $j("tr[id=" + id + "]:last").find('#res_stayshopChk').prop("checked", true)
     $j("tr[id=" + id + "]:last").find('#res_staysexChk').prop("checked", true)
     
     //숙소, 성별 name 변경
-    $j("tr[id=" + id + "]:last").find('input[name=res_stayshopChk]').attr("name", "res_stayshopChk_" + $j("tr[id=" + id + "]").length);
     $j("tr[id=" + id + "]:last").find('input[name=res_staysexChk]').attr("name", "res_staysexChk_" + $j("tr[id=" + id + "]").length);
 
-    $j("tr[id=" + id + "]:last").find('input[cal=date]').removeClass('hasDatepicker').removeAttr('id').datepicker({
+    var date_disabled = (id == "trstay") ? true : false;
+
+    $j("tr[id=" + id + "]:last").find('input[cal=date]').removeClass('hasDatepicker').attr("disabled", date_disabled).removeAttr('id').datepicker({
         //minDate : plusDate(date, -1)
         onClose: function(selectedDate) {
             var date = jQuery(this).datepicker('getDate');
@@ -118,7 +106,7 @@ function fnSolAdd(obj, id, num) {
     });
 
     if(num == ""){
-        $j("tr[id=" + id + "]:last").find('input[cal=sol_sdate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
+        $j("tr[id=" + id + "]:last").find('input[cal=sol_sdate]').removeClass('hasDatepicker').attr("disabled", "disabled").removeAttr('id').datepicker({
             beforeShow: function(date) {
                 var date = jQuery(this).next().datepicker('getDate');
 
@@ -146,7 +134,7 @@ function fnSolAdd(obj, id, num) {
 
         });
 
-        $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').removeAttr('id').datepicker({
+        $j("tr[id=" + id + "]:last").find('input[cal=sol_edate]').removeClass('hasDatepicker').attr("disabled", "disabled").removeAttr('id').datepicker({
             beforeShow: function(date) {
                 var date = jQuery(this).prev().datepicker('getDate');
 
@@ -187,13 +175,18 @@ function fnSolAddInit(obj) {
 
 //바베큐 날짜 초기화
 function fnSolDateDel(obj) {
+    var objId = $j(obj).closest("#trstay");
+    
     $j(obj).prev().val("");
+    //objId.find("#res_party").val("N").attr("disabled", "disabled");
 }
 
 function fnSolStaySel(obj) {
     var objId = $j(obj).closest("#trstay");
     
     objId.find("#res_stayshop").val($j(obj).val());
+
+    var date_disabled = false;
     if ($j(obj).val() == "N") {
         objId.find("input[calid=res_staysdate]").val("");
         objId.find("input[calid=res_stayedate]").val("");
@@ -201,7 +194,24 @@ function fnSolStaySel(obj) {
         objId.find("#res_stayroom").val("");
         objId.find("#res_staynum option").remove();
         objId.find("#res_staynum").append("<option value=''>-------</optoin>");
+        date_disabled = true;
     }
+    
+    objId.find("input[calid=res_staysdate]").attr("disabled", date_disabled);
+    objId.find("input[calid=res_stayedate]").attr("disabled", date_disabled);
+}
+
+function fnPartySel(obj){
+    var objId = $j(obj).closest("#trstay");
+
+    var date_disabled = false;
+    if ($j(obj).val() == "N") {
+        objId.find("input[calid=res_bbqdate]").val("");
+
+        date_disabled = true;
+    }
+
+    objId.find("input[calid=res_bbqdate]").attr("disabled", date_disabled);
 }
 
 function fnSolSexSel(obj) {
@@ -302,10 +312,6 @@ function fnSolModify(resseq, num) {
 
 
                     if (data[i].prod_name != "N") {
-                        if(num == ""){
-                            objTr.find("#res_stayshopChk1").prop("checked", true);
-                        }
-
                         objTr.find("#res_stayshop" + num).val(data[i].prod_name);
                         objTr.find("input[calid=res_staysdate" + num + "]").val(data[i].sdate);
                         objTr.find("input[calid=res_stayedate" + num + "]").val(data[i].edate);
@@ -326,9 +332,14 @@ function fnSolModify(resseq, num) {
                             }
                         }
                     }
+
+                    objTr.find("select[id=res_party" + num + "]").val(data[i].party);
                     if (data[i].resdate != "0000-00-00") {
                         objTr.find("input[calid=res_bbqdate" + num + "]").val(data[i].resdate);
                     }
+                    
+                    objTr.find("select[id=res_bbq" + num + "]").val(data[i].bbq);
+                    objTr.find("select[id=res_pub" + num + "]").val(data[i].pub);
                 } else { //강습&렌탈
                     fnSolAdd(null, 'trsurf', num);
 
@@ -369,26 +380,26 @@ function fnSolDataAdd(gubun) {
         return;
     }
 
-    if ($j("input[id=res_stayshop]").length == 1 && $j("select[id=res_surfshop]").length == 1) {
+    if ($j("select[id=res_stayshop]").length == 1 && $j("select[id=res_surfshop]").length == 1) {
         alert("숙박 및 서핑강습 신청 정보가 없습니다.");
         return;
     } else {
-        for (let i = 1; i < $j("input[id=res_stayshop]").length; i++) {
-            //바베큐 날짜
-            if ($j("input[calid=res_bbqdate]").eq(i).val() == "") {
-                $j("input[id=res_bbqdate]").eq(i).val("");
-            }else{
-                $j("input[id=res_bbqdate]").eq(i).val($j("input[calid=res_bbqdate]").eq(i).val());
-            }
-
-            if ($j("input[id=res_stayshop]").eq(i).val() == "N" && $j("input[id=res_bbqdate]").eq(i).val() == "") {
+        for (let i = 1; i < $j("select[id=res_stayshop]").length; i++) {
+            //숙박 & 바베큐 하나라도 체크
+            if ($j("select[id=res_stayshop]").eq(i).val() == "N" && $j("select[id=res_party]").eq(i).val() == "N") {
                 alert(i + "번째 숙박/파티 중 하나이상 선택해주세요~");
                 return;
             }
             
-            if ($j("input[id=res_stayshop]").eq(i).val() == "N") {
-                $j("input[calid=res_staysdate]").eq(i).val("");
-                $j("input[calid=res_stayedate]").eq(i).val("");
+            //숙박 이용날짜
+            if ($j("select[id=res_stayshop]").eq(i).val() == "N") {
+                if (!($j("input[calid=res_staysdate]").eq(i).val() == "" || $j("input[calid=res_stayedate]").eq(i).val() == "")) {
+                    alert("숙소명을 선택해주세요~");
+                    return;
+                }
+                
+                $j("input[id=res_staysdate]").eq(i).val("");
+                $j("input[id=res_stayedate]").eq(i).val("");
             } else {
                 if ($j("input[calid=res_staysdate]").eq(i).val() == "" || $j("input[calid=res_stayedate]").eq(i).val() == "") {
                     alert("숙박 이용 날짜를 선택해주세요~");
@@ -397,6 +408,23 @@ function fnSolDataAdd(gubun) {
 
                 $j("input[id=res_staysdate]").eq(i).val($j("input[calid=res_staysdate]").eq(i).val());
                 $j("input[id=res_stayedate]").eq(i).val($j("input[calid=res_stayedate]").eq(i).val());
+            }
+
+            //바베큐 날짜
+            if ($j("select[id=res_party]").eq(i).val() == "N") {
+                if (!($j("input[calid=res_bbqdate]").eq(i).val() == "")) {
+                    alert("파티참여 여부를 선택해주세요~");
+                    return;
+                }
+
+                $j("input[id=res_bbqdate]").eq(i).val("");
+            } else {
+                if ($j("input[calid=res_bbqdate]").eq(i).val() == "") {
+                    alert("파티참여 날짜를 선택해주세요~");
+                    return;
+                }
+
+                $j("input[id=res_bbqdate]").eq(i).val($j("input[calid=res_bbqdate]").eq(i).val());
             }
         }
 
