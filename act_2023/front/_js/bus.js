@@ -433,7 +433,7 @@ function fnBusNext(step) {
     if(step == 1){
         $j(".busLineTab li").remove();
 
-        $j(".selectStop li").css("display", "none");
+        $j("#bus_step2 ul").css("display", "none");
         $j("#selBus_S").html("");
         $j("#selBus_E").html("");
 
@@ -449,8 +449,10 @@ function fnBusNext(step) {
                 return;
             }
             
-            $j(".selectStop li").eq(0).css("display", "");
-            $j(".selectStop li").eq(1).css("display", "");
+            $j("#bus_step2 ul").eq(0).css("display", "");
+            $j("#bus_step2 ul").eq(1).css("display", "");
+            $j("#selBusName_S").text(bus_selected.text());
+            $j("#selBusDate_S").text($j("#bus_start").val().substring(5).replace('-', '/'));
 
             $j(".busLineTab").append('<li class="on" caldate="' + $j("#bus_start").val() + '" style="cursor:pointer;" bus_gubun="' + bus_selected.attr("bus_gubun") + '" bus_num="' + bus_selected.attr("bus_num") + '" bus_price="' + bus_selected.attr("bus_price") + '"  bus_name="' + bus_selected.text() + '" onclick="fnBusSeatInit(this, 0);">[출발] ' +  bus_selected.text() + '</li>');
         }
@@ -467,8 +469,10 @@ function fnBusNext(step) {
                 return;
             }
             
-            $j(".selectStop li").eq(2).css("display", "");
-            $j(".selectStop li").eq(3).css("display", "");
+            $j("#bus_step2 ul").eq(2).css("display", "");
+            $j("#bus_step2 ul").eq(3).css("display", "");
+            $j("#selBusName_E").text(bus_selected.text());
+            $j("#selBusDate_E").text($j("#bus_return").val().substring(5).replace('-', '/'));
 
             var classOn = "class='on' ";
             if($j("#bus_gubun").val() == "A"){
@@ -803,8 +807,9 @@ function fnSeatSelected(obj) {
                 '			</colgroup>' +
                 '			<tbody>' +
                 '				<tr>' +
-                '					<th colspan="3">[' + selDate + '] ' + bus_text +
-                '					</th>' +
+                '					<th>좌석</th>' +
+                '					<th>탑승/하차 정류장</th>' +
+                '					<th>취소</th>' +
                 '				</tr>';
             bindObj = `#selBus_${busType}`;
         }else{
@@ -814,7 +819,7 @@ function fnSeatSelected(obj) {
         insHtml += '				<tr id="' + busType + '_' + objVlu + '" trseat="' + objVlu + '">' +
             '					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
             '					<td style="line-height:2;">' +
-            '						<select id="startLocation' + busType + '" seatnum="' + objVlu + '" name="startLocation' + busType + '[]" class="select" onchange="fnBusTime(this, \'' + busType + '\');">' +
+            '						<select id="startLocation' + busType + '" seatnum="' + objVlu + '" name="startLocation' + busType + '[]" class="select">' +
             '							' + sPoint +
             '						</select> →' +
             '						<select id="endLocation' + busType + '" seatnum="' + objVlu + '" name="endLocation' + busType + '[]" class="select">' +
@@ -916,11 +921,13 @@ function fnBusSave() {
 
     if (($j("#bus_gubun").val() == "S" || $j("#bus_gubun").val() == "A") && chkVluS == "") {
         alert("셔틀버스 출발 좌석을 선택해 주세요.");
+        fnBusPrev(1);
         return;
     }
 
     if (($j("#bus_gubun").val() == "E" || $j("#bus_gubun").val() == "A") && chkVluE == "") {
         alert("셔틀버스 복귀 좌석을 선택해 주세요.");
+        fnBusPrev(1);
         return;
     }
     

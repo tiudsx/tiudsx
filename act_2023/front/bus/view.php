@@ -257,7 +257,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <ul class="busStop" data-key="bus_return" <?=$displayE_2?>>
                             <li id="buspointtext"></li>
                         </ul>
-                    </div>                
+                    </div>
                     <div id="nextbtn" class="busOption01" style="text-align:center;">
                         <input type="button" id="exceldown" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="좌석선택하기" onclick="fnBusNext(1);">
                     </div>
@@ -338,19 +338,37 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="다음단계" onclick="fnBusNext(2);">
                     </div>
                 </div>
-                
-                <div class="busOption02" id="bus_step2" style="display:none;">
-                    <ul class="selectStop" style="padding:0 4px;">
-                        <li style="display:none;"><img src="/act_2023/images/button/btn061.png" alt="출발 셔틀버스"></li>
-                        <li>
+
+                <div class="busOption01" id="bus_step2" style="display:none;">
+                    <ul class="busLine">
+                        <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
+                        <li id="selBusName_S" class="on"></li>
+                    </ul>
+                    <ul class="busDate">
+                        <li><img src="/act_2023/images/viewicon/calendar.svg" alt=""><span id="selBusDate_S"></span></li>
+                        <li style="width:330px; height:auto;">
                             <div id="selBus_S" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
-                        <li style="display:none;"><img src="/act_2023/images/button/btn062.png" alt="복귀 셔틀버스"></li>
-                        <li>
+                    </ul>
+                    <ul class="busLine">
+                        <li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>
+                        <li id="selBusName_E" class="on"></li>
+                    </ul>
+                    <ul class="busDate">
+                        <li><img src="/act_2023/images/viewicon/calendar.svg" alt=""><span id="selBusDate_E"></span></li>
+                        <li style="width:330px; height:auto;">
                             <div id="selBus_E" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
+                    </ul>
+                </div>
+                <div class="busOption02" style="display:none;">
+                    <ul class="selectStop" style="padding:0 4px;">
+                        <li style="display:none;"><img src="/act_2023/images/viewicon/bus.svg" style="height: 18px;    vertical-align: middle;margin-right: 6px;">출발노선</li>
+                        
+                        <li style="display:none;"><img src="/act_2023/images/viewicon/bus.svg" style="height: 18px;    vertical-align: middle;margin-right: 6px;">복귀노선</li>
+                        
                     </ul>
                 </div>
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
@@ -414,11 +432,9 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             </tr>
                         </tbody>
                     </table>
-                    <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
-                        <div>
-                            <input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="이전단계" onclick="fnBusPrev(1);" />&nbsp;&nbsp;
-                            <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약하기" onclick="fnBusSave();" />
-                        </div>
+                    <div style="padding:10px; text-align:center;" id="divBtnRes">
+                        <input type="button" class="btnsurfadd" style="width:160px;font-size: 1.2em;" value="이전단계" onclick="fnBusPrev(1);">&nbsp;&nbsp;
+                        <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="예약하기" onclick="fnBusSave();">
                     </div>
                 </div>
             </form>
@@ -469,6 +485,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
             return;
         }else{
             busrestype = "channel";
+            $j("#couponbtn").click();
 
             start_cnt = <?=$start_cnt?>;
             return_cnt = <?=$return_cnt?>;
