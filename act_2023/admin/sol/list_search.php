@@ -17,8 +17,12 @@ $Day = $arrDate[2];
 
 if($gubun == "cancel"){
     $confirmText = "'취소'";
+    $tabColor1 = "";
+    $tabColor2 = "gg_btn_color";
 }else{
     $confirmText = "'대기', '확정'";
+    $tabColor1 = "gg_btn_color";
+    $tabColor2 = "";
 }
 
 $select_query = "
@@ -52,60 +56,16 @@ $count = mysqli_num_rows($result_setlist);
 if($count == 0){
 ?>
  <div class="contentimg bd">
-    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
-    
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
+    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>)
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large <?=$tabColor1?>" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="파티인원" onclick="fnListTab('stay', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large <?=$tabColor2?>" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;" id="tbSolList">
-        <colgroup>
-            <col width="9%" />
-            <col width="9%" />
-            <col width="6%" />
-            <col width="*" />
-            <col width="4%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="8%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="5%" />
-            <col width="5%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="8%" />
-            <col width="7%" />
-        </colgroup>
         <tbody>
             <tr>
-                <th rowspan="2">이름</th>
-                <th rowspan="2">연락처</th>
-                <th rowspan="2">구분</th>
-                <th rowspan="2">예약정보</th>
-                <th colspan="3">강습</th>
-                <th colspan="2">렌탈</th>
-                <th colspan="3">숙박&파티</th>
-                <th rowspan="2">요청사항</th>
-                <th rowspan="2">직원메모</th>
-                <th rowspan="2">입실</th>
-                <th rowspan="2">상태</th>
-                <th rowspan="2">알림톡</th>
-                <th rowspan="2">예약업체</th>
-            </tr>
-            <tr>
-                <th>시간</th>
-                <th>남</th>
-                <th>여</th>
-                <th>남</th>
-                <th>여</th>
-                <th>파티</th>
-                <th>남</th>
-                <th>여</th>
-            </tr>
-            <tr>
-                <td colspan="18" style="text-align:center;height:50px;">
+                <td style="text-align:center;height:50px;">
                     <b>예약된 목록이 없습니다. 달력에서 다른 날짜를 선택하세요.</b>
                 </td>
             </tr>
@@ -123,38 +83,42 @@ $css_table_right = " border-right:2px solid #c0c0c0";
 
 <div class="contentimg bd">
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
+    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>)
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large <?=$tabColor1?>" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="파티인원" onclick="fnListTab('stay', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
-
+    <?if($gubun != "cancel"){?>
         <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoSend(null, true);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
+    <?}?>
+
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large <?=$tabColor2?>" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
     </div>
     <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
         <colgroup>
-            <col width="4%" />
-            <col width="*" />
-            <col width="5%" />
-            <col width="8%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="7%" />
-            <col width="4%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="6%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="5%" />
-            <col width="7%" />
-            <col width="6%" />
+            <col width="44px" />
+            <col width="110px" />
+            <col width="60px" />
+            <col width="100px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="85px" />
+            <col width="45px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="75px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="62px" />
+            <col width="82px" />
+            <col width="auto" />
         </colgroup>
         <tbody>
             <tr>
@@ -162,6 +126,7 @@ $css_table_right = " border-right:2px solid #c0c0c0";
                 <th style="<?=$css_table?>" rowspan="2" colspan="2">예약자</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="3">숙박정보</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="2">바베큐</th>
+                <th style="<?=$css_table.$css_table_right?>" colspan="2">2차</th>
                 <th style="<?=$css_table?>" rowspan="2">서핑샵</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="3">서핑강습</th>
                 <th style="<?=$css_table?>" colspan="3">렌탈</th>
@@ -173,6 +138,8 @@ $css_table_right = " border-right:2px solid #c0c0c0";
             </tr>
             <tr>
                 <th style="<?=$css_table?>">숙박일</th>
+                <th style="<?=$css_table?>">남</th>
+                <th style="<?=$css_table.$css_table_right?>">여</th>
                 <th style="<?=$css_table?>">남</th>
                 <th style="<?=$css_table.$css_table_right?>">여</th>
                 <th style="<?=$css_table?>">남</th>
@@ -263,7 +230,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $stayInfo = "";
     $bbqText = "";
     $surfrentText = "";
-    $resText = "";
     $stayMText = "";
     $stayWText = "";
     $bbqMText = "";
@@ -274,8 +240,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         }else{
             if($row['sMonth'] == $Mon || $row['eMonth'] == $Mon){
                 if(!((int)$Day == $eDay)){
-                    $resText = "숙박";
-                    //$stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
                     $stayText = str_replace("-", ".", substr($sdate, 5, 10))." ~ ".str_replace("-", ".", substr($edate, 5, 10));
 
                     if($res_confirm == "확정" || $res_confirm == "대기"){
@@ -294,8 +258,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         }
 
         if($Day == $row['resDay']){
-            $resText .= (($resText == "") ? "" : "/")."파티";
-            // $stayText .= (($stayText == "") ? "$bbq" : " / $bbq");
             $bbqText = $bbq;
             
             if($staysex == "남"){
@@ -306,19 +268,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 $TotalbbqW += $stayMem;
             }
         }
-
-        // if(($bbq != "N" && $prod_name == "N") || $prod_name != "솔게하"){
-            // if($staysex == "남"){
-            //     $stayMText = $stayMem.(($stayMem == "")? "" : "명");
-            // }else{
-            //     $stayWText = $stayMem.(($stayMem == "")? "" : "명");
-            // }
-        // }
     }else{ //강습&렌탈
         $res_room_chk = "";
         if($Day == $row['resDay']){
             if($prod_name != "N"){
-                $resText = "강습";
                 $surfText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
 
                 $TotalsurfM += $surfM;
@@ -326,12 +279,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             }
 
             if($surfrent != "N"){            
-                $resText .= (($resText == "") ? "" : "/")."렌탈";
-                // $surfrentText .= (($surfText == "") ? "" : " / ").$surfrent;
                 $surfrentText = $surfrent;
             }
-
-            //$surfText .= (($surfText == "") ? "" : " ($resdate)");
         }
     }
 
@@ -413,6 +362,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <!-- <td style="<?=$fontcolor?>"><?=$bbqText?></td> -->
         <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
         <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
+        <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
         <td style="<?=$fontcolor?>"><?=$surfText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
@@ -452,7 +403,7 @@ $rowlist .= $b."|";
                     <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
                     <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
                 </td>
-                <td colspan="7"></td>
+                <td colspan="9"></td>
             </tr>
 		</tbody>
     </table>

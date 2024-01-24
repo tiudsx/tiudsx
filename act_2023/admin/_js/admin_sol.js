@@ -720,24 +720,24 @@ function fnSearchAdminListSol(selDate, gubun) {
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).attr("rowspan", rowCnt);
-                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).attr("rowspan", rowCnt);
-                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
                     $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(22).attr("rowspan", rowCnt);
+                    $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(23).attr("rowspan", rowCnt);
 
 
                     for (let x = 1; x < rowCnt; x++) {
                         nextrowCnt++;
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(23).remove();
+                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(22).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(21).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(20).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(19).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(18).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(17).remove();
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(16).remove();
-                        $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(15).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(2).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(1).remove();
                         $j("#tbSolList tr").eq(nextrowCnt).find('td').eq(0).remove();

@@ -29,8 +29,9 @@ $count = mysqli_num_rows($result_setlist);
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
     <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>)
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="파티인원" onclick="fnListTab('stay', this);" />
         <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
+        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
     </div>
     
 <?
