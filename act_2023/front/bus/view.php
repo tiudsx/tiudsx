@@ -363,14 +363,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                         </li>
                     </ul>
                 </div>
-                <div class="busOption02" style="display:none;">
-                    <ul class="selectStop" style="padding:0 4px;">
-                        <li style="display:none;"><img src="/act_2023/images/viewicon/bus.svg" style="height: 18px;    vertical-align: middle;margin-right: 6px;">출발노선</li>
-                        
-                        <li style="display:none;"><img src="/act_2023/images/viewicon/bus.svg" style="height: 18px;    vertical-align: middle;margin-right: 6px;">복귀노선</li>
-                        
-                    </ul>
-                </div>
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
                     <p class="restitle">예약자 정보</p>
                     <table class="et_vars exForm bd_tb bustext" style="width:100%;margin-bottom:5px;">
@@ -442,7 +434,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
         </section>
     </div>
 </div>
-<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
+<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
         <!-- <img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png" id="slide1"> -->

@@ -320,7 +320,8 @@ function fnBusGubun(gubun, obj, type) {
     $j("#bus_start").val(""); //출발일
     $j("#bus_return").val(""); //복귀일
 
-    $j("ul[class=busLine] li:not(:first-child)").remove();
+    $j("ul[class=busLine]:eq(0) li:not(:first-child)").remove();
+    $j("ul[class=busLine]:eq(1) li:not(:first-child)").remove();
 
     if (gubun == "S") { //편도 - 출발
         $j("ul[data-key=bus_start]").css("display", "");
@@ -448,6 +449,7 @@ function fnBusNext(step) {
                 alert("출발노선을 선택해주세요.");
                 return;
             }
+            console.log("bus_selected S", bus_selected);
             
             $j("#bus_step2 ul").eq(0).css("display", "");
             $j("#bus_step2 ul").eq(1).css("display", "");
@@ -468,6 +470,7 @@ function fnBusNext(step) {
                 alert("복귀노선을 선택해주세요.");
                 return;
             }
+            console.log("bus_selected E", bus_selected);
             
             $j("#bus_step2 ul").eq(2).css("display", "");
             $j("#bus_step2 ul").eq(3).css("display", "");
@@ -829,6 +832,7 @@ function fnSeatSelected(obj) {
             '						<input type="hidden" id="hidbusSeat' + busType + '" name="hidbusSeat' + busType + '[]" value="' + objVlu + '" />' +
             '						<input type="hidden" id="hidbusDate' + busType + '" name="hidbusDate' + busType + '[]" value="' + selDate + '" />' +
             '						<input type="hidden" id="hidbusNum' + busType + '" name="hidbusNum' + busType + '[]" value="' + bus_num + '" />' +
+            '						<input type="hidden" id="hidbusGubun' + busType + '" name="hidbusGubun' + busType + '[]" value="' + bus_gubun + '" />' +
             '						<input type="hidden" id="hidbusPrice' + busType + '" value="' + bus_price + '" />' +
             '					</td>' +
             '					<td style="text-align:center;" onclick="fnSeatDel(this, \'' + busType + '\', ' + objVlu + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
@@ -1029,7 +1033,7 @@ function fnBusSave() {
         }
     }
 
-    $j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
+    //$j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
 
     setTimeout('$j("#frmRes").attr("action", "' + submiturl + '").submit();', 500);
 }

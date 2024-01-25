@@ -58,8 +58,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <td>$user_tel</td>
                     <td>$BBQ_M</td>
                     <td>$BBQ_W</td>
+                    <td></td>
                     <td>$PUB_M</td>
                     <td>$PUB_W</td>
+                    <td></td>
                 </tr>
             ";
 
@@ -73,42 +75,49 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 }
 ?>
 
-<table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:50%;">
+<table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:65%;">
     <colgroup>
-        <col width="*" />
-        <col width="25%" />
-        <col width="13%" />
-        <col width="13%" />
-        <col width="13%" />
+        <col width="80px" />
+        <col width="100px" />
+        <col width="90px" />
+        <col width="90px" />
+        <col width="auto" />
+        <col width="90px" />
+        <col width="90px" />
+        <col width="auto" />
     </colgroup>
     <tbody>
         <tr>
             <th rowspan="2">이름</th>
             <th rowspan="2">연락처</th>
-            <th colspan="2">1차 바베큐</th>
-            <th colspan="2">2차 파티</th>
+            <th colspan="3">1차 바베큐</th>
+            <th colspan="3">2차 파티</th>
         </tr>
         <tr>
             <th>남</th>
             <th>여</th>
+            <th>비고</th>
             <th>남</th>
             <th>여</th>
+            <th>비고</th>
         </tr>
         <?=$partyinfo?>
         <tr>
-            <td colspan="6" style="height:1px;padding:0px;background-color:#efefef"></td>
+            <td colspan="8" style="height:1px;padding:0px;background-color:#efefef"></td>
         </tr>
         <tr>
             <td colspan="2">인원 합계</td>
             <td><?=$partyBBQ_M?> 명</td>
             <td><?=$partyBBQ_W?> 명</td>
+            <td>&nbsp;</td>
             <td><?=$partyPUB_M?> 명</td>
             <td><?=$partyPUB_W?> 명</td>
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <th colspan="2">총 인원</th>
-            <th colspan="2"><?=$partyBBQ_M+$partyBBQ_W?> 명</th>
-            <th colspan="2"><?=$partyPUB_M+$partyPUB_W?> 명</th>
+            <th colspan="3"><?=$partyBBQ_M+$partyBBQ_W?> 명</th>
+            <th colspan="3"><?=$partyPUB_M+$partyPUB_W?> 명</th>
         </tr>
     </tbody>
 </table>
