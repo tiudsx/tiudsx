@@ -19,44 +19,6 @@ var holidays = {
     "0213": { type: 0, title: "설날", year: "2021" }
 };
 
-var rtnBusDate = function(day, getDay, json, bus) {
-    var holiday = holidays[$j.datepicker.formatDate("mmdd", day)];
-    var thisYear = $j.datepicker.formatDate("yy", day);
-
-    if (json != "init") {
-        var onoffDay = json[bus + ((day.getMonth() + 1) + 100).toString().substring(1, 3) + (day.getDate() + 100).toString().toString().substring(1, 3)];
-    }
-
-    var cssRes = "";
-    if (holiday) {
-        if (thisYear == holiday.year || holiday.year == "") {
-            cssRes = "date-sunday";
-        }
-    }
-
-    var result;
-    if (getDay == 0) {
-        cssRes = "date-sunday";
-    } else if (getDay == 6) {
-        cssRes = "date-saturday";
-    } else {
-        cssRes = "";
-    }
-
-    if (json == "init") {
-        result = [true, cssRes];
-    } else {
-        if (onoffDay) {
-            result = [true, cssRes];
-        } else {
-            result = [false, cssRes];
-        }
-    }
-
-    return result;
-}
-
-
 var selDate;
 var busNum;
 var busNumName;

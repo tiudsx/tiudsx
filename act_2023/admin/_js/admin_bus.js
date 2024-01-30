@@ -4,6 +4,8 @@ $j(function() {
         var $self = $j(this);
         var id = $self.data("gubun");
 
+        if(id != "trbus") return;
+
         var calObj = $j("calBox[sel=yes]");
         //$j("#hidselDate").val(calObj.attr("value"));
         //$j("#res_busdate").text(calObj.attr("value"));
@@ -379,7 +381,7 @@ function fnBusDataAdd() {
 }
 
 
-function fnBusMngDataAdd(gubun) {
+function fnBusMngDataAdd() {
     if($j("input[id=resseq]").length <= 1)    {
         alert("날짜 선택 및 버스 추가하세요.");
         return;
@@ -406,6 +408,39 @@ function fnBusMngDataAdd(gubun) {
 
     var calObj = $j("calBox[sel=yes]");
     var formData = $j("#frmModify").serializeArray();
+    $j.post("/act_2023/admin/busMng/list_save.php", formData,
+        function(data, textStatus, jqXHR) {
+            if (data == 0) {
+                alert("정상적으로 처리되었습니다.");
+
+                fnBusMngList(calObj.attr("value"));
+                fnCalMove_BusMng($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], -2);
+                fnBlockClose();
+            } else {
+                var arrRtn = data.split('|');
+                if (arrRtn[0] == "err") {
+                    alert("처리 중 에러가 발생하였습니다.\n\n관리자에게 문의하세요." + "\n\n" + arrRtn[1]);
+                }
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {});
+}
+
+function fnBusMngCopy(selDate){
+    if($j("input[id=resseq]").length <= 1) {
+        alert("날짜 선택 및 버스 추가하세요.");
+        return;
+    }
+    if($j("input[calid=res_date]").val() == ""){
+        alert("복사할 날짜를 선택하세요.");
+        return;        
+    }
+    
+    if (!confirm("복사 하시겠습니까?")) {
+        return;
+    }
+    
+    var calObj = $j("calBox[sel=yes]");
+    var formData = { "resparam": "busMngCopy", "hidselDate": selDate, "copyDate": $j("input[calid=res_date]").val() };
     $j.post("/act_2023/admin/busMng/list_save.php", formData,
         function(data, textStatus, jqXHR) {
             if (data == 0) {

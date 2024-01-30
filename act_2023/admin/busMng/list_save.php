@@ -27,6 +27,17 @@ if($param == "busMngdel"){
 	if(!$result_set) goto errGo;
 
 	mysqli_query($conn, "COMMIT");
+}else if($param == "busMngCopy"){
+	$copyDate = $_REQUEST["copyDate"];
+
+	$select_query = "INSERT INTO AT_PROD_BUS_DAY 
+						SELECT 0, '$copyDate', code, shopseq, bus_oper, bus_line, bus_gubun, bus_num, '', seat, price, useYN, channel  FROM `AT_PROD_BUS_DAY`  WHERE bus_date = '$bus_date'";
+	$result_set = mysqli_query($conn, $select_query);
+
+	$errmsg = $select_query;
+	if(!$result_set) goto errGo;
+
+	mysqli_query($conn, "COMMIT");
 }else if($param == "busMngadd"){
 	$res_busline = $_REQUEST["res_busline"]; //행선지
 	$res_busgubun = $_REQUEST["res_busgubun"]; //노선

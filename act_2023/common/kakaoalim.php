@@ -179,23 +179,9 @@ function kakaoContent2024($arrKakao, $item){
 		.'\n이용일 : '.$item["userDate"]
 		.'\n\n';
 	}else if($arrKakao["tempName"] == "actrip_info01"){ //액트립 버스예약
-		if($item["gubun"] == "bus_stay"){
-			//입금대기 안내
-			$bankText = "우리은행 / 1002-845-467316";
-
-			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
-				.'\n액트립 셔틀버스를 예약해주셔서 감사합니다.'
-				.'\n입금 완료 후 예약확정 및 이용 가능합니다.'
-				.'\n\n - 계좌 : '.$bankText
-				.'\n - 예금주 : 이승철'
-				.'\n - 총금액 : '.$item["userPrice"]
-				.'\n\n ▶ 안내사항'
-				.'\n    - 1시간 이내 미입금시 자동취소됩니다.'
-				.'\n    - 최소인원(20명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
-				.'\n    - 운행취소 시 이용일 3~4일 전 연락드립니다.';
-
-		}
-
+		//알림톡 내용
+		$kakaoMsg = "";
+		
 		$items = '
 		,"items": {
 			"item": {
@@ -233,7 +219,41 @@ function kakaoContent2024($arrKakao, $item){
 				.'\n\n▶ 안내사항'
 				.'\n    - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~'
 				.'\n    - 취소/환불 및 문의는 채팅으로 연락주세요.';
+			
+			$title = "셔틀버스 예약대기";
+			$description = "아래 링크에서 좌석을 예약해주세요.";
+		}else if($item["gubun"] == "bus_stay"){
+			//입금대기 안내
+			$bankText = "우리은행 / 1002-845-467316";
+
+			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+				.'\n액트립 셔틀버스를 예약해주셔서 감사합니다.'
+				.'\n입금 완료 후 확정 및 이용 가능합니다.'
+				.'\n\n - 계좌 : '.$bankText
+				.'\n - 예금주 : 이승철'
+				.'\n - 총금액 : '.$item["userPrice"]
+				.'\n\n ▶ 안내사항'
+				.'\n    - 1시간 이내 미입금시 자동취소됩니다.'
+				.'\n    - 최소인원(15명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
+				.'\n    - 운행취소시 이용일 3~4일 전 연락드립니다.';
+
+				
+			$title = "셔틀버스 예약대기";
+			$description = "아래 안내된 계좌로 입금해주세요.";
+		}else if($item["gubun"] == "bus_confirm"){
+			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+				.'\n액트립 셔틀버스를 예약해주셔서 감사합니다.'
+				.'\n이용에 불편함이 없도록 예약정보 확인 후 이용해주세요~ :)'
+				.'\n\n - 예약정보 : '.$item["link1"]
+				.'\n\n ▶ 안내사항'
+				.'\n    - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
+				.'\n    - 탑승시간 10분전에 예약하신 정류장으로 도착해주세요.';
+
+				
+			$title = "셔틀버스 예약확정";
+			$description = "예약정보 확인 후 이용해주세요~";
 		}
+
 
 		$items = '
 		,"items": {
@@ -254,15 +274,15 @@ function kakaoContent2024($arrKakao, $item){
 				]
 			},
 			"itemHighlight": {
-				"title": "셔틀버스 예약대기",
-				"description": "아래 링크에서 좌석을 예약해주세요."
+				"title": "'.$title.'",
+				"description": "'.$description.'"
 			}
 		}';
 
 		//디버깅용 아이템리스트
 		$items_text = $arrKakao["title"]
-		.'\n\n셔틀버스 예약대기'
-		.'\n아래 링크에서 좌석/정류장 예약해주세요.'
+		.'\n\n'.$title
+		.'\n'.$description
 		.'\n\n이용노선 : '.$item["bus_line"]
 		.'\n출발일 : '.$item["day_start"]
 		.'\n복귀일 : '.$item["day_return"]
@@ -428,7 +448,7 @@ function kakaoContent($arrKakao){
 			.'---------------------------------'
 			.'\n ▶ 안내사항'
 			.'\n      - 1시간 이내 미입금시 자동취소됩니다.'
-			.'\n      - 최소인원(20명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
+			.'\n      - 최소인원(15명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
 			.'\n      - 운행취소 시 이용일 3~4일 전 연락드립니다.'
 			.'\n\n ▶ 입금계좌'
 			.'\n      - 우리은행 / 1002-845-467316 / 이승철';
@@ -472,7 +492,6 @@ function kakaoContent($arrKakao){
 				.'\n서핑버스를 예약해주셔서 감사합니다.'
 				.'\n\n예약정보 [예약확정]'
 				.'\n ▶ 예약상품 : '.$arrKakao["shopname"]
-				//.'\n ▶ 예약번호 : '.$arrKakao["MainNumber"]
 				.'\n ▶ 예약자 : '.$arrKakao["userName"]
 				.'\n'.$arrKakao["msgInfo"]
 				.$kakaoInfo.$kakaolink
@@ -480,8 +499,6 @@ function kakaoContent($arrKakao){
 				.'\n ▶ 안내사항'
 				.'\n      - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
 				.'\n      - 이용일, 탑승위치 확인 및 탑승시간 10분전 도착 부탁드려요~';
-				// .'\n      - 최소인원(20명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
-				// .'\n      - 운행취소 시 이용일 3~4일 전 연락드립니다.';
 
 		}
 
@@ -532,7 +549,7 @@ function kakaoContent($arrKakao){
 				.'\n ▶ 안내사항'
 				.'\n      - [예약하기] 클릭 후 좌석/정류장을 예약해주세요.'
 				.'\n      - 잔여석이 없을 경우 예약이 취소 될 수 있으니 빠른 예약부탁드려요~'
-				.'\n      - 최소인원(20명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
+				.'\n      - 최소인원(15명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'
 				.'\n      - 운행취소 시 이용일 3~4일 전 연락드립니다.';
 
 		}else if($arrKakao["PROD_TYPE"] == "bus_push"){ // 타채널 재발송 안내

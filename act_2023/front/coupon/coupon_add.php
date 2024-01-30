@@ -23,14 +23,6 @@ if(1 == 1){
     $coupon_code = RandString(5);
     $user_ip = $_SERVER['REMOTE_ADDR'];
     $add_date = date("Y-m-d");
-
-    $select_query = "UPDATE AT_COUPON_CODE 
-                        SET use_yn = 'Y'
-                        ,user_ip = '$user_ip'
-                        ,use_date = now()
-                    WHERE add_date < '$add_date' AND use_yn = 'N' AND issue_type == 'A';";
-    $result_set = mysqli_query($conn, $select_query);
-    mysqli_query($conn, "COMMIT");
     
     $select_query = "SELECT * FROM AT_COUPON_CODE where couponseq = $arrdate[1] AND seq = '$arrdate[2]' AND use_yn = 'N' AND add_ip = '$user_ip'";
     //echo '<br>'.$select_query.'<br>';

@@ -23,12 +23,14 @@ var holidays = {
     
 };
 
-var rtnBusDate = function(day, getDay, json, bus) {
+var rtnBusDate = function(day, getDay, bus) {
     var holiday = holidays[$j.datepicker.formatDate("mmdd", day)];
     var thisYear = $j.datepicker.formatDate("yy", day);
 
-    if (json != "init") {
-        var onoffDay = json[bus][$j.datepicker.formatDate("mmdd", day)];
+    if(json_busDay[bus] == null){
+        var onoffDay = false;
+    }else{
+        var onoffDay = json_busDay[bus][$j.datepicker.formatDate("mmdd", day)];
     }
 
     var cssRes = "";
@@ -46,14 +48,10 @@ var rtnBusDate = function(day, getDay, json, bus) {
         }
     }
 
-    if (json == "init") {
+    if (onoffDay) {
         result = [true, cssRes];
     } else {
-        if (onoffDay) {
-            result = [true, cssRes];
-        } else {
-            result = [false, cssRes];
-        }
+        result = [false, cssRes];
     }
 
     return result;
@@ -78,7 +76,7 @@ jQuery(function() {
             }else if($j(this).attr("id") == "bus_return"){
                 busLine = busLine + "_E";
             }
-            return rtnBusDate(date, date.getDay(), json_busDay, busLine);
+            return rtnBusDate(date, date.getDay(), busLine);
         }
     });
 
@@ -391,9 +389,9 @@ function fnPointList(obj) {
  */
 function fnBusPrev(num) {
     if (num == 0) {
-        if (!confirm("선택하신 좌석 및 정류장 정보가 초기화됩니다.\n\n이전단계로 돌아가시겠습니까?")) {
-            return;
-        }
+        // if (!confirm("선택하신 좌석 및 정류장 정보가 초기화됩니다.\n\n이전단계로 돌아가시겠습니까?")) {
+        //     return;
+        // }
         
         $j('#resStep1').css("display", "");
         
@@ -449,7 +447,6 @@ function fnBusNext(step) {
                 alert("출발노선을 선택해주세요.");
                 return;
             }
-            console.log("bus_selected S", bus_selected);
             
             $j("#bus_step2 ul").eq(0).css("display", "");
             $j("#bus_step2 ul").eq(1).css("display", "");
@@ -470,7 +467,6 @@ function fnBusNext(step) {
                 alert("복귀노선을 선택해주세요.");
                 return;
             }
-            console.log("bus_selected E", bus_selected);
             
             $j("#bus_step2 ul").eq(2).css("display", "");
             $j("#bus_step2 ul").eq(3).css("display", "");
@@ -517,6 +513,19 @@ function fnBusNext(step) {
 
         if (($j("#bus_gubun").val() == "E" || $j("#bus_gubun").val() == "A") && chkVluE == "") {
             alert("셔틀버스 복귀 좌석을 선택해 주세요.");
+            return;
+        }
+        
+        //기본 양양행 왕복
+        var selCntS = $j("#selBus_S tr[trseat]").length;
+        var selCntE = $j("#selBus_E tr[trseat]").length;
+        if (start_cnt > 0 && start_cnt != selCntS) {
+            alert("출발 좌석은  " + start_cnt + "자리 예약해주세요.");
+            return;
+        }
+
+        if (return_cnt > 0 && return_cnt != selCntE) {
+            alert("복귀 좌석은 " + return_cnt + "자리 예약해주세요.");
             return;
         }
 
@@ -1067,4 +1076,12 @@ function fnCouponCheck(obj) {
     $j("#coupon").val("");
 
     fnPriceSum('', 1);
+}
+
+/**
+ * 비지니스 로직에서 호출 함수
+ * @param {*} objId 
+ */
+function fnUnblock(objId) {
+    $j(objId).unblock();
 }

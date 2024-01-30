@@ -26,9 +26,9 @@ mysqli_query($conn, "BEGIN");
 $rtn_data = array();
 $success = false;
 
-if($param == "mohaeng"){
+if($param == "mohaeng1"){
 
-    if($type == "bus_kakao"){
+    if($type == "bus_kakao1"){
         //모행 파라미터
         $resbus = "DH"; //버스 노선
         $reschannel = "31"; //모행 코드

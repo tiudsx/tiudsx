@@ -186,7 +186,6 @@ if($param == "reskakaodel"){ //예약건 삭제
 	//쿠폰코드 생성
 	$coupon_code = RandString(5);
 	$user_ip = $_SERVER['REMOTE_ADDR'];
-    $add_date = date("Y-m-d");
 
 	if($resbus == "YY"){ //양양행
 		$busTitleName = "양양";
@@ -202,6 +201,7 @@ if($param == "reskakaodel"){ //예약건 삭제
 		$bus_line = "$busTitleName → 서울";
 	}
 	
+	$couponDate = "";
 	if($start_cnt == 0){
 		$start_bus_gubun = "";
 		$start_day = "";
@@ -215,6 +215,8 @@ if($param == "reskakaodel"){ //예약건 삭제
 			$bus_gubun = "출발";
 		}
 		$day_start = "[$start_day] $bus_gubun $start_cnt"."자리";
+		
+		$add_date = $start_day;
 	}
 	
 	if($return_cnt == 0){
@@ -231,7 +233,17 @@ if($param == "reskakaodel"){ //예약건 삭제
 		}
 
 		$day_return = "[$return_day] $bus_gubun $return_cnt"."자리";
+
+		$add_date = $return_day;
 	}
+
+    $select_query = "UPDATE AT_COUPON_CODE 
+                        SET use_yn = 'Y'
+                        ,user_ip = '$user_ip'
+                        ,use_date = now()
+                    WHERE (add_date < '$add_date' AND add_date IS NOT NULL) AND use_yn = 'N';";
+    $result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
 	
 	//------- 쿠폰코드 입력 -----
 	$select_query = "INSERT INTO `AT_COUPON_CODE` (`couponseq`, `coupon_code`, `seq`, `use_yn`, `add_ip`, `add_date`, `insdate`, `userinfo`, `etc`) VALUES ('$couponseq', '$coupon_code', 'BUS', 'N', '$user_ip', '$add_date', now(), '$userinfo', '');";

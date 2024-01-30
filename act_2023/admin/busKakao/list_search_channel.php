@@ -13,7 +13,7 @@ $select_query = "SELECT A.*, B.etc, C.name, D.msgid, D.message, D.response, D.co
                             ON B.couponseq = C.couponseq
                         INNER JOIN AT_KAKAO_HISTORY AS D
                         	ON A.resnum = D.resnum
-                    WHERE A.res_chk = 'N'
+                    WHERE A.res_chk = 'N' AND B.use_yn = 'N'
                     ORDER BY tempseq ASC";
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);

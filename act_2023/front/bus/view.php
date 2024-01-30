@@ -76,6 +76,12 @@ if($arrChannel != ""){
     $start_cnt = $rowMain["start_cnt"]; //출발 인원
     $return_cnt = $rowMain["return_cnt"]; //복귀인원
 
+
+    if(date("Y-m-d") > $start_day || date("Y-m-d") > $return_day){
+        echo "<script>alert('이용일이 지난 예약건입니다.');location.href='/';</script>";
+        return;
+    }
+
     if($start_cnt > 0 && $return_cnt > 0){
         $bus_gubun = "A"; //왕복
     }else if($return_cnt > 0){
@@ -157,7 +163,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                             <ul>
                                 <li class="litxt">1시간 이내 미입금시 자동취소됩니다.</li>
                                 <li class="litxt">무통장 입금시 예약자와 입금자명이 동일해야합니다.</li>
-                                <li class="litxt">최소인원(20명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
+                                <li class="litxt">최소인원(15명) 모집이 안될 경우 운행이 취소될 수 있으며, 전액 환불됩니다.</li>
                                 <li class="litxt">천재지변으로 인하여 셔틀버스 운행이 취소될 경우 전액환불됩니다.</li>
                                 <li class="litxt">현금영수증 신청은 이용일 이후&nbsp;<span style="color:#059bc0;">[카카오채널 : 액트립]</span> 에서 신청가능합니다.</li>
                             </ul>
@@ -434,7 +440,7 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
         </section>
     </div>
 </div>
-<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:;"></iframe>
+<iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
 <div class="con_footer">
     <div class="fixedwidth resbottom">
         <!-- <img src="https://actrip.cdn1.cafe24.com/button/btnReserve.png" id="slide1"> -->
@@ -450,8 +456,8 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     var bus_line = "<?=$bus_type?>"; //행선지 양양, 동해
 </script>
 
-<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=1"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=1"></script>
 
 <!-- Swiper JS -->
 <script type="text/javascript" src="/act_2023/front/_js/swiper.min.js"></script>

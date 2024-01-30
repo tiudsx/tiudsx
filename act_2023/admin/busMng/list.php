@@ -120,8 +120,10 @@ $shopseq = -2;
                         <tr>
                             <td class="col-02" style="text-align:center;" colspan="8">
                                 <input type="hidden" id="resparam" name="resparam" size="10" value="busMngadd" class="itx">
-                                <input type="button" class="btnsurfdel" style="width:120px; height:40px;" value="저장" onclick="fnBusMngDataAdd('add');" id="Add"/>&nbsp;
-                                <input type="button" class="btnsurfadd" style="width:120px; height:40px;" value="초기화" onclick="fnBusMngList($j('#hidselDate').val());" />
+                                <input type="button" class="btnsurfdel" style="width:120px; height:40px;" value="저장" onclick="fnBusMngDataAdd();" id="Add"/>&nbsp;
+                                <input type="button" class="btnsurfadd" style="width:120px; height:40px;" value="초기화" onclick="fnBusMngList($j('#hidselDate').val());" />&nbsp;
+                                <input type="text" calid="res_date" name="res_date[]" cal="date" size="10" class="itx" readonly="readonly">
+                                <input type="button" class="btnsurfadd" style="width:120px; height:40px;" value="복사" onclick="fnBusMngCopy($j('#hidselDate').val());" />
                             </td>
                         </tr>
                     </table>
