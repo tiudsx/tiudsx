@@ -35,7 +35,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$cancelChk = "";
 	}
 
-	if(coupontype("bool", $couponseq, "")){
+	//타채널 및 100% 쿠폰 사용건
+	if(fnCouponCode($couponseq)["gubun"]){
 		$chkView = 0;
 		$chkViewPrice = 0;
 		$cancelChk = "coupon";
@@ -98,23 +99,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	//============= 환불금액 구역 =============
 	if($row['code'] == "bus"){
 		//셔틀버스 탑승 정보
-		if($shopseq == 14){
-			$code1 = substr($row['res_bus'], 0, 1);
-			if($code1 == "E"){
-				$code1 = "동해";
-			}else{
-				$code1 = "오후";
-			}
+		
+		$arrPoint = fnBusPointArr2023($row['bus_gubun']."_".$row['res_spointname'], $shopseq, 0);
+		$arrTime = fnBusPointArr2023($row['bus_gubun']."_".$row['res_spointname'], $shopseq, 1);
 
-			$arrTime = fnBusPointArr2023($code1."_".$row['res_spointname'], $shopseq, 1);
-			$arrPoint = fnBusPointArr2023($code1."_".$row['res_spointname'], $shopseq, 0);
-
-		}else{
-			$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));
-			$arrTime = $arrPoint[0];
-			$arrPoint = $arrPoint[1];
-
-		}
 		$RtnBank = "탑승시간 : ".$arrTime." (".$arrPoint.")";
 		$ResNum = "구매수:".$row['res_ea'];
 	}else{
@@ -156,14 +144,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             }else if($stayPlus == 2){
                 $ResOptInfo = "숙박일 : $preDate(2박)";
             }else{
-                // $ResOptInfo = "안내 : $optinfo";
             }
         }else if($row['optcode'] == "rent"){
 
         }else if($row['optcode'] == "pkg"){
 			$ResOptInfo = $optinfo;
         }else if($row['optcode'] == "bbq"){
-			//$ResOptInfo = str_replace('<br>', '', $optinfo);
 			$ResOptInfo = $optinfo;
         }
 	}
@@ -221,7 +207,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 					<br><?=$row['res_date']?>
 					</label>
 				</td>
-				<td><b><?=fnBusNum($row['res_bus'])?> : <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
+				<td><b><?=fnBusNum2023($row['bus_gubun'].$row['bus_num'])["full"]?> : <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
 				<td style="text-align:center;" class="<?=$ResColor?>"><?=$ResConfirm?></td>
 			</tr>
 			<tr class="<?=$ResCss?>">

@@ -8,22 +8,12 @@ $infoUrl = "order_info_view.php";
 $funUrl = "/../../common/func.php";
 $dbTableMain = "`AT_RES_MAIN`";
 $dbTableSub = "`AT_RES_SUB`";
-if($gubun == 3){
-	$title = "액트립x프립셔틀";
-	$infoUrl = "order_info_view.php";
-	$funUrl = "/../../frip/inc_func.php";
-	$dbTableMain = "`AT_RES_FRIP_MAIN`";
-	$dbTableSub = "`AT_RES_FRIP_SUB`";
-}
 
 include __DIR__.'/../../common/db.php';
 include __DIR__.$funUrl;
 
 
-
-$cancelChk = "none";
-
-if($gubun == 1){
+if($gubun == 1){ //서핑샵
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.optcode, c.stay_day 
 						FROM ".$dbTableMain." a INNER JOIN ".$dbTableSub." as b 
 							ON a.resnum = b.resnum
@@ -33,7 +23,7 @@ if($gubun == 1){
 						WHERE a.resnum = $resNumber
 							ORDER BY a.resnum, b.ressubseq";
 
-}else{
+}else{ //셔틀버스
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, TIMESTAMPDIFF(MINUTE, b.confirmdate, now()) as timeM2, d.couponseq
 						FROM ".$dbTableMain." a INNER JOIN ".$dbTableSub." as b 
 							ON a.resnum = b.resnum 
@@ -74,30 +64,18 @@ if($count == 0){
 				<?
 				include_once($infoUrl);
 
-				if($cancelChk == "none"){
-					echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:none;">
-					※ 이용 1일전에는 취소가 불가능합니다.
-					</div>';
-				}
-
-				$sitename = coupontype("", $couponseq, "");
-				
-				if($sitename == "" && $res_totalprice == 0){
-					$cancelChk = "coupon";
-					$sitename = "웹사이트 또는 업체";
-				}
-
 				if($gubun != 3){
-					if($cancelChk == "coupon"){
-						$sitename = "※ 취소/환불은 카카오채널 [액트립]으로 문의해주세요~";
-						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;display:;">'.$sitename.'</div>';
+					if($res_totalprice == 0){
+						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;">';
+						echo '※ 취소/환불은 카카오채널 [액트립]으로 문의해주세요~<br>';
+						echo '<span style="font-weight:500;font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 이용일 4일 이전 취소 시 : 전액 환불<br>';
+						echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 이용일 3일 이전 취소 시 : 환불 불가</span>';
+						echo '</div>';
 					}else{
-					?>
-					<div class="write_table" style="padding-top:2px;padding-bottom:15px;">
-					※ 이용 1일전에는 취소/환불이 안됩니다.<br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 예약확정 후 2시간 이내에는 취소/환불이 가능합니다.
-					</div>
-					<?
+						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;">';
+						echo '※ 이용 1일전에는 취소/환불이 안됩니다.<br>';
+						echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;단, 예약확정 후 2시간 이내에는 취소/환불이 가능합니다.';
+						echo '</div>';
 					}
 				}
 				?>

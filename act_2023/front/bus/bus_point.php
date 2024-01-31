@@ -70,9 +70,6 @@ $bussubinfo = $rowMain["sub_info"];
 $busData = explode("|", $rowMain["sub_tag"]);
 $busgubun = $busData[0];
 $sbusDate = $busData[1];
-
-//연락처 모바일 여부
-if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "text";
 ?>
 <div id="wrap">
     <? include __DIR__.'/../../_layout/_layout_top.php'; ?>

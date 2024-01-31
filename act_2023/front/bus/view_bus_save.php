@@ -148,10 +148,10 @@ if($param == "BusI"){
                 if(!$result_set) goto errGo;
 
                 //타채널 데이터 완료 처리
-                $select_query = "UPDATE AT_RES_TEMP SET res_chk = 'Y' WHERE AND codeseq = $codeseq;";
+                $select_query = "UPDATE AT_RES_TEMP SET res_chk = 'Y' WHERE codeseq = $codeseq;";
                 $result_set = mysqli_query($conn, $select_query);
 
-                $errCode = "01";
+                $errCode = "01_1";
                 if(!$result_set) goto errGo;
             }
         }
@@ -333,7 +333,7 @@ if($param == "BusI"){
             ///sendMail($arrMail); //메일 발송
         }
         
-        //echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
 	}
 }
 

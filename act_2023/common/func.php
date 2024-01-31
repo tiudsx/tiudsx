@@ -350,65 +350,6 @@ function RandString($len){
 
 //쿠폰코드
 function fnCouponCode($seq){
-	// $sitename = ""; 
-	// $couponbool = false;
-	// if($couponseq == 7 || $couponseq == 26 || $couponseq == 27 || $couponseq == 28 || $couponseq == 29){
-	// 	$sitename = "[네이버쇼핑]"; 
-	// }else if($couponseq == 10){
-	// 	$sitename = "[네이버예약]"; 
-	// }else if($couponseq == 11 || $couponseq == 17 || $couponseq == 20 || $couponseq == 21 || $couponseq == 22){
-	// 	$sitename = "[프립]"; 
-	// }else if($couponseq == 16){
-	// 	$sitename = "[클룩]"; 
-	// }else if($couponseq == 12){
-	// 	$sitename = "[마이리얼트립]"; 
-	// }else if($couponseq == 15){
-	// 	$sitename = "[서프존]"; 
-	// }else if($couponseq == 23){
-	// 	$sitename = "[브라보서프]"; 
-	// }
-
-	// if($type == "admin"){
-	// 	if($couponseq == 17){
-	// 		$sitename = "[프립-마린]"; 
-	// 	}else if($couponseq == 20){
-	// 		$sitename = "[프립-인구]"; 
-	// 	}else if($couponseq == 21){
-	// 		$sitename = "[프립-서팩]"; 
-	// 	}else if($couponseq == 22){
-	// 		$sitename = "[프립-힐링캠프]"; 
-
-	// 	}else if($couponseq == 26){
-	// 		$sitename = "[네이버-마린]"; 
-	// 	}else if($couponseq == 27){
-	// 		$sitename = "[네이버-인구]"; 
-	// 	}else if($couponseq == 28){
-	// 		$sitename = "[네이버-서팩]"; 
-	// 	}else if($couponseq == 29){
-	// 		$sitename = "[네이버-힐링캠프]"; 
-	// 	}else if($couponseq == 30){
-	// 		$sitename = "[엑스크루]"; 
-	// 	}else if($couponseq == 31){
-	// 		$sitename = "[모행]"; 
-	// 	}else if($res_coupon == "MONS"){
-	// 		$sitename = "[몬스터]"; 
-	// 	}else if($res_coupon == "JOA"){
-	// 		$sitename = "[조아서프]"; 
-	// 	}else if($res_coupon != "" && $sitename == ""){
-	// 		$sitename = "[할인]"; 
-	// 	}
-	// }
-
-	// if($type == "bool"){
-	// 	if($sitename == ""){
-	// 		return false;
-	// 	}else{
-	// 		return true;
-	// 	}
-	// }else{
-	// 	return $sitename;
-	// }
-	
 	$name = "";
 	$prod_name = "";
 
@@ -450,9 +391,16 @@ function fnCouponCode($seq){
 		$prod_name = "모행";
 	}
 
+	if($prod_name == ""){
+		$gubun = false;
+	}else{
+		$gubun = true;
+	}
+
 	$rtn = array( 
 		"name"=> $name
-		, "prod_name"=> $prod_name);
+		, "prod_name"=> $prod_name
+		, "gubun"=> $gubun);
 
 	return $rtn;
 }

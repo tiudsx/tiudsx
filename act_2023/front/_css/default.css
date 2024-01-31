@@ -85,3 +85,23 @@ html.sb-scroll-lock{overflow:hidden;}/*모바일버튼 클릭시 페이지스크
 .rescolor4 {color:rgb(179, 4, 112);}
 .rescolor3 {color:blue;}
 .rescolor2 {color:rgb(99, 15, 155);}
+
+#page_load {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: block;
+    opacity: 0.9;
+    background: white;
+    z-index: 99;
+    text-align: center;
+}
+
+#page_load > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+}

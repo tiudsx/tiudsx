@@ -43,6 +43,8 @@ $displayE_2 = "style='display:none;'";
 
 //타채널 알림톡 좌석예약
 if($arrChannel != ""){
+    $page_load = true; //페이지 로딩 표시
+
     $view_tab1 = "none";
     $view_tab3 = "";
     $view_tab1_class = "";
@@ -450,7 +452,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
 </div>
 
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
-
 <script>    
     var shopseq = $j("#shopseq").val();
     var bus_line = "<?=$bus_type?>"; //행선지 양양, 동해
@@ -476,7 +477,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     var return_cnt = 0;
     jQuery(function() {
         <?if($coupon_code != ""){?>
-            
         var cp = fnCoupon("BUS", "load", $j("#coupon").val());
         if(cp == 0){
             location.href = "/";

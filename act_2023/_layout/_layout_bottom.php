@@ -3,6 +3,20 @@
     </div>
 </div-->
 
+
+<?if($page_load){?>
+<div id="page_load">
+  <img src="/act_2023/images/icon/loading.gif" alt="loading">
+</div>
+
+<script>
+	window.onload = function(){
+        //페이지 로딩 제거
+        $j("#page_load").css("display", "none");
+	};
+</script>
+<?}?>
+
 <div class="footer_Util_wrap00">
 	<div class="footer_Util_wrap0">
 		<!--유틸메뉴-->
