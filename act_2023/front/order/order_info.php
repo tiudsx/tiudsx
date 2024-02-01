@@ -152,5 +152,36 @@ if($count == 0){
         </section>
     </div>
 </div>
+<div class="con_footer">
+    <div class="fixedwidth resbottom">
+		<input type="button" class="btnsurfdel" id="slide1" style="width:120px; height:40px;display:none;" value="창닫기" onclick="fnLayerView('');" >
+        <div id="sildeing" style="display:block;height:100%;padding-top:5px;">
+            <iframe frameborder="0" id="ifrmView" name="ifrmView" style="width:100%;height:100%;" scrolling="auto"></iframe>
+        </div>
+    </div>
+</div>
+<script>
+    var type = "";
+    var btnheight = "";
+function fnLayerView(url) {
+    if (btnheight == "") btnheight = $j(".con_footer").height();
+    if (type == "down") {
+        $j(".con_footer").css("height", btnheight + "px");
+        $j("#slide1").css("display", "none");
+        $j(".con_footer").css("background-color", "");
+        $j(".resbottom").css("background-color", "");
 
+        type = "";
+    } else {
+		$j("#ifrmView").attr("src", url);
+        $j(".con_footer").css("height", "100%");
+        $j("#slide1").css("display", "");
+        $j(".resbottom").css("height", "100%");
+        $j(".con_footer").css("background-color", "white");
+        $j(".resbottom").css("background-color", "white");
+
+        type = "down";
+    }
+}	
+</script>
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>

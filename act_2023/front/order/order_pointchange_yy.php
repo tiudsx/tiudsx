@@ -259,7 +259,6 @@ $sbusDate = $busData[1];
 <script type="text/javascript" src="/act_2023/<?=$channel_foldername?>/<?=$channel_name?>busday.js?v=<?=time()?>"></script>
 <script>
     var dayCode = "<?=$dayCode?>";
-    var businit = 0;
     var busrestype = "change";
     var buschannel = "<?=$couponseq?>";
     var busData = {};

@@ -1,9 +1,7 @@
 <? 
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/func.php';
-?>
 
-<?
 $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
 $num = $_REQUEST["num"];
 
@@ -59,29 +57,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $i++;    
 }
 ?>
-<div id="wrap">
-    <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<link rel="stylesheet" type="text/css" href="/act_2023/front/_css/default.css">
 
+<div id="wrap">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
     <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
 
     <div class="top_area_zone">
-        <section class="shoptitle">
-            <div style="padding:6px;">
-                <h1>액트립 셔틀버스 내좌석 정보</h1>
-            </div>
-        </section>
-
         <section class="notice">
-            <div class="vip-tabwrap">
-                <div id="tabnavi" class="fixed1" style="top: 49px;">
-                    <div class="vip-tabnavi">
-                        <ul>
-                            <li class="on"><a>내좌석 보기</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;">
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;">
                     <span id="resseatnum" style="font-size: medium;width:100%;text-align:center;display: block;"></span>
@@ -148,27 +132,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         </div>
                     </ul>
                 </div>
-                <div class="bd" style="padding:0 4px;" id="divConfirm">
-                    <div style="padding:10px;text-align:center;" id="divBtnRes">
-                    
-                        <div>
-                            <?
-                            if($num == 1){
-                                echo '<input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="메인으로" onclick="location.href=\'/\';" />';
-                            }else{
-                                echo '<input type="button" class="gg_btn gg_btn_grid" style="width:130px; height:40px;background:#3195db;color:#fff;" value="돌아가기" onclick="history.back();" />';
-                            }?>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     </div>
 </div>
 
 <iframe id="ifrmResize" name="ifrmResize" style="width:100%;height:400px;display:none;"></iframe>
-<? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
-
 
 <script type="text/javascript" src="/act_2023/front/_js/bus.js?v=1"></script>
 

@@ -466,7 +466,6 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
     fnBusPointList();
     
     var dayCode = "busseat";
-    var businit = 0;
     var busrestype = "none";
     var buschannel = "<?=$couponseq?>";
     var json_busData = {}; //셔틀버스 노선 이용가능 날짜 json

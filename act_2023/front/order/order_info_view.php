@@ -260,9 +260,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		?>
 <?if($shopseq != 14){?>
 	<div class="write_table" style="text-align:center;">
-	<input type="button" class="gg_btn gg_btn_grid large" style="width:100px; height:28px;color: #fff !important; background: #9326ff;display:;" value="내좌석 보기" onclick="location.href='/seatview?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
+	<input type="button" class="gg_btn gg_btn_grid large" style="width:100px; height:28px;color: #fff !important; background: #9326ff;display:;" value="내좌석 보기"  onclick="fnLayerView('/seatview?num=<?=$num?>&resNumber=<?=$row['res_num']?>');" />
 
-	<input type="button" class="gg_btn gg_btn_grid large" style="width:110px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경" onclick="location.href='/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>';" />
+	<input type="button" class="gg_btn gg_btn_grid large" style="width:110px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경" onclick="fnLayerView('/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>');" />
 	</div>
 <?}?>
 		<?
