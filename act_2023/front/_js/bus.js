@@ -520,12 +520,12 @@ function fnBusNext(step) {
         var selCntS = $j("#selBus_S tr[trseat]").length;
         var selCntE = $j("#selBus_E tr[trseat]").length;
         if (start_cnt > 0 && start_cnt != selCntS) {
-            alert("출발 좌석은  " + start_cnt + "자리 예약해주세요.");
+            alert("출발 좌석은  " + start_cnt + "자리를 예약해주세요.");
             return;
         }
 
         if (return_cnt > 0 && return_cnt != selCntE) {
-            alert("복귀 좌석은 " + return_cnt + "자리 예약해주세요.");
+            alert("복귀 좌석은 " + return_cnt + "자리를 예약해주세요.");
             return;
         }
 
@@ -554,6 +554,7 @@ function fnBusNext(step) {
 
 }
 
+let changeCnt = 0;
 /**
  * 셔틀예약 2단계 노선 버튼 클릭
  * @param {*} obj 
@@ -631,7 +632,6 @@ function fnBusSeatInit(obj, num) {
         }).fail(function(jqXHR, textStatus, errorThrown) {
     });
     
-    console.log("seatjson", seatjson)
     //예약 좌석 표시
     $j("#tbSeat .busSeatList").addClass("busSeatListN").removeClass("busSeatListY").removeClass("busSeatListC");
     seatjson.forEach(function(el) {
@@ -641,7 +641,9 @@ function fnBusSeatInit(obj, num) {
             if ($j("input[name=" + selObj.attr("bus_gubun") + "][value=" + el.seatnum + "]").length > 0) {
                 $j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").removeClass("busSeatListN").addClass("busSeatListY");
                 
-                $j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
+                if (changeCnt == 0) {
+                    $j("#tbSeat .busSeatList[busSeat=" + el.seatnum + "]").click();
+                }
             }
         }
     });
@@ -661,25 +663,7 @@ function fnBusSeatInit(obj, num) {
         }
     }
 
-    //정류장 변경시...
-    if (busrestype == "change") {
-        // if ($j("#bus_gubun").val() == "A") { //왕복
-        //     for (key in busResData) {
-        //         var arrVlu = busResData[key].split("/");
-        //         if (arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A") {
-        //             fnSeatChangeSelected(busResData[key]);
-        //         }
-        //     }
-        // }
-
-        // var forObj = $j("select[id=startLocation" + busType + "]");
-        // for (var i = 0; i < forObj.length; i++) {
-        //     var arrBus = busResData[busNum + "_" + forObj.eq(i).attr("seatnum")].split("/");
-
-        //     forObj.eq(i).val(arrBus[2]).change();
-        //     forObj.eq(i).next().val(arrBus[3]);
-        // }
-    }
+    changeCnt = 1;
 }
 
 /**
@@ -718,7 +702,7 @@ function fnSeatSelected(obj) {
             $j(`#selBus_${busType} [trseat=${objVlu}]`).remove();
         }
     } else { //예매 가능한 좌석
-        if (busrestype == "change") {
+        if (busrestype == "change") { //좌석, 정류장 변경
             var defaultCnt = $j("input[name=" + bus_gubun + "]").length;
             var selCnt = $j(`#selBus_${busType} tr[trseat]`).length + 1;
 
@@ -804,9 +788,13 @@ function fnSeatSelected(obj) {
             '						<input type="hidden" id="hidbusSeat' + busType + '" name="hidbusSeat' + busType + '[]" value="' + objVlu + '" />' +
             '						<input type="hidden" id="hidbusDate' + busType + '" name="hidbusDate' + busType + '[]" value="' + selDate + '" />' +
             '						<input type="hidden" id="hidbusNum' + busType + '" name="hidbusNum' + busType + '[]" value="' + bus_num + '" />' +
-            '						<input type="hidden" id="hidbusGubun' + busType + '" name="hidbusGubun' + busType + '[]" value="' + bus_gubun + '" />' +
-            '						<input type="hidden" id="hidbusPrice' + busType + '" value="' + bus_price + '" />' +
-            '					</td>' +
+            '						<input type="hidden" id="hidbusGubun' + busType + '" name="hidbusGubun' + busType + '[]" value="' + bus_gubun + '" />';
+
+        if(busrestype != "change"){
+            insHtml += '						<input type="hidden" id="hidbusPrice' + busType + '" value="' + bus_price + '" />';
+        }
+        
+            insHtml += '					</td>' +
             '					<td style="text-align:center;" onclick="fnSeatDel(this, \'' + busType + '\', ' + objVlu + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
             '				</tr>';
         if (tbCnt == 0) {
@@ -884,7 +872,10 @@ function fnSeatDel(obj, busGubun, num) {
         $j(obj).parents('tr').remove();
     }
 
-    fnPriceSum('', 1);
+    if (busrestype == "change") {
+    } else {
+        fnPriceSum('', 1);
+    }
 }
 
 /**
@@ -914,54 +905,60 @@ function fnBusSave() {
     var chk_endE = $j("select[id=endLocationE]").map(function() { return $j(this).val(); }).get();
 
     if (chk_startS.indexOf('N') != -1 || chk_endS.indexOf('N') != -1) {
-        alert('출발일 정류장을 선택해주세요.');
+        alert('출발 정류장을 선택해주세요.');
         return;
     }
     if (chk_startE.indexOf('N') != -1 || chk_endE.indexOf('N') != -1) {
-        alert('복귀일 정류장을 선택해주세요.');
+        alert('복귀 정류장을 선택해주세요.');
         return;
     }
 
     var submiturl = "/act_2023/front/bus/view_bus_save.php";
     if (busrestype == "change") {
         if ($j("#bus_gubun").val() != "A") { //편도
-            var defaultCnt = Object.keys(busResData).length;
-            var selCnt = $j("tr[trseat]").length;
-            if (defaultCnt != selCnt) {
-                alert("예약된 좌석수(" + defaultCnt + "자리)와 동일한 개수로 선택해주세요~");
+            /**선택된 노선 */
+            let selObj = $j(".busLineTab li[class=on]");
+            /**버스노선 */
+            let bus_gubun = selObj.attr("bus_gubun");
+
+            let busType = $j("#bus_gubun").val();
+            let defaultCnt = $j("input[name=" + bus_gubun + "]").length;
+            let selCnt = $j(`#selBus_${busType} tr[trseat]`).length + 1;
+
+            if (defaultCnt < selCnt) {
+                alert("좌석은 " + defaultCnt + "자리를 예약해주세요.");
+                
+                fnBusPrev(1);
                 return;
             }
         } else { //왕복
-            var defaultCntS = 0,
-                defaultCntE = 0;
+            let selObj = $j("ul[class=busLineTab] li");
+
+            let defaultCntS = $j("input[name=" + selObj.eq(0).attr("bus_gubun") + "]").length,
+                defaultCntE = $j("input[name=" + selObj.eq(1).attr("bus_gubun") + "]").length;
 
             //기본 양양행 왕복
-            var selCntS = $j("#selBus_S tr[trseat]").length;
-            var selCntE = $j("#selBus_E tr[trseat]").length;
-
-            for (key in busResData) {
-                var arrVlu = busResData[key].split("/");
-                if (arrVlu[0].substring(0, 1) == "S" || arrVlu[0].substring(0, 1) == "A") { //서울행
-                    defaultCntE++;
-                } else { //양양,동해행
-                    defaultCntS++;
-                }
-            }
+            let selCntS = $j("#selBus_S tr[trseat]").length;
+            let selCntE = $j("#selBus_E tr[trseat]").length;
 
             if (defaultCntS != selCntS) {
-                alert("예약된 좌석수(" + defaultCntS + "자리)와 동일한 개수로 선택해주세요~");
+                alert("출발 좌석은 " + defaultCntS + "자리를 예약해주세요.");
+                
+                fnBusPrev(1);
                 return;
             }
 
             if (defaultCntE != selCntE) {
-                alert("예약된 좌석수(" + defaultCntE + "자리)와 동일한 개수로 선택해주세요~");
+                alert("복귀 좌석은 " + defaultCntE + "자리를 예약해주세요.");
+                
+                fnBusPrev(1);
                 return;
             }
         }
 
         submiturl = "/act_2023/front/order/order_return.php";
 
-        if (!confirm("액트립 셔틀버스 예약건을 수정하시겠습니까?")) {
+        if (!confirm("좌석/정류장을 수정하시겠습니까?")) {
             return;
         }
     } else {
@@ -970,12 +967,12 @@ function fnBusSave() {
             var selCntE = $j("#selBus_E tr[trseat]").length;
 
             if (start_cnt > 0 && start_cnt != selCntS) {
-                alert("출발 좌석은  " + start_cnt + "자리 예약해주세요.");
+                alert("출발 좌석은  " + start_cnt + "자리를 예약해주세요.");
                 return;
             }
 
             if (return_cnt > 0 && return_cnt != selCntE) {
-                alert("복귀 좌석은 " + return_cnt + "자리 예약해주세요.");
+                alert("복귀 좌석은 " + return_cnt + "자리를 예약해주세요.");
                 return;
             }
         }
@@ -1005,7 +1002,7 @@ function fnBusSave() {
         }
     }
 
-    //$j('#divConfirm').block({ message: "신청하신 예약건 진행 중입니다." });
+    $j('#divConfirm').block({ message: "저장 중입니다." });
 
     setTimeout('$j("#frmRes").attr("action", "' + submiturl + '").submit();', 500);
 }

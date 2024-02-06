@@ -286,65 +286,96 @@ if($param == "RtnPrice"){
 }else if($param == "PointChange"){ //정류장 변경
     $ResNumber = $_REQUEST["MainNumber"];
     $shopseq = $_REQUEST["shopseq"];
-    $ressubseqs = $_REQUEST["ressubseqs"]; //셔틀버스 예약 시퀀스
-    $ressubseqe = $_REQUEST["ressubseqe"]; //셔틀버스 예약 시퀀스
-    $daytype = $_REQUEST["daytype"]; //편도 : 0, 왕복 : 1
     
     if($shopseq == 7){
-        $busTypeY = "Y";
-        $busTypeS = "S";
-        $busTitleName = "양양";
-        $resparam = "surfbus_yy";
+        $busTitleName = "양양"; 
     }else if($shopseq == 14){
-        $busTypeY = "E";
-        $busTypeS = "A";
-        $busTitleName = "동해"; 
-        $resparam = "surfbus_dh";
+        $busTitleName = "동해";    
     }
 
-	$SurfDateBusY = $_REQUEST["hidbusDate".$busTypeY]; //양양행 날짜
-    $SurfDateBusS = $_REQUEST["hidbusDate".$busTypeS]; //서울행 날짜
+	$SurfDateBusS = $_REQUEST["hidbusDateS"]; //출발 날짜
+    $SurfDateBusE = $_REQUEST["hidbusDateE"]; //복귀 날짜
     
-	$busNumY = $_REQUEST["hidbusNum".$busTypeY]; //양양행 버스번호
-    $busNumS = $_REQUEST["hidbusNum".$busTypeS]; //서울행 버스번호
-    
-	$arrSeatY = $_REQUEST["hidbusSeat".$busTypeY]; //양양행 좌석번호
-    $arrSeatS = $_REQUEST["hidbusSeat".$busTypeS]; //서울행 좌석번호
-    
-	$startLocationY = $_REQUEST["startLocation".$busTypeY]; //양양행 출발 정류장
-	$endLocationY = $_REQUEST["endLocation".$busTypeY]; //양양행 도착 정류장
-	$startLocationS = $_REQUEST["startLocation".$busTypeS]; //서울행 출발 정류장
-	$endLocationS = $_REQUEST["endLocation".$busTypeS]; //서울행 도착 정류장
+	$busGubunS = $_REQUEST["hidbusGubunS"]; //출발 버스노선
+    $busGubunE = $_REQUEST["hidbusGubunE"]; //복귀 버스노선
 
-    if(count($ressubseqs) != count($SurfDateBusY)){
-        echo '<script>alert("예약된 좌석수('.count($ressubseqs).'자리)와 동일한 개수로 선택해주세요~");parent.fnUnblock("#divConfirm");</script>';
+	$busNumS = $_REQUEST["hidbusNumS"]; //출발 버스번호
+    $busNumE = $_REQUEST["hidbusNumE"]; //복귀 버스번호
+    
+	$arrSeatS = $_REQUEST["hidbusSeatS"]; //출발 좌석번호
+    $arrSeatE = $_REQUEST["hidbusSeatE"]; //복귀 좌석번호
+    
+	$startLocationS = $_REQUEST["startLocationS"]; //출발 정류장
+	$endLocationS = $_REQUEST["endLocationS"]; //출발 도착 정류장
+	$startLocationE = $_REQUEST["startLocationE"]; //복귀 정류장
+	$endLocationE = $_REQUEST["endLocationE"]; //복귀 도착 정류장
+
+    $now = date("Y-m-d");
+    $select_query = "SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.bus_oper, b.res_confirm, b.ressubseq
+                        FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
+                            ON a.resnum = b.resnum 
+                        WHERE a.resnum = $ResNumber
+                            AND b.res_confirm IN (0,3,8)
+                        ORDER BY b.ressubseq";
+    $result_setlist = mysqli_query($conn, $select_query);
+    $count = mysqli_num_rows($result_setlist);
+    if($count == 0){
+        echo "<script>alert('예약된 정보가 없거나 이용일이 지났습니다.\\n\\n관리자에게 문의해주세요.');parent.fnUnblock('#divConfirm');</script>";
+        return;
+    }
+    $arrSeatInfoS = array();
+    $arrSeatInfoE = array();
+    
+    $start_cnt = 0;
+    $return_cnt = 0;
+    $TotalPrice = 0;
+    while ($row = mysqli_fetch_assoc($result_setlist)){
+        $userName = $row["user_name"];
+        $userPhone = $row["user_tel"];
+        $res_confirm = $row["res_confirm"];  
+        $ressubseq = $row["ressubseq"];
+
+        $bus_oper = $row["bus_oper"];
+        
+        $TotalPrice += $row["res_totalprice"];
+
+        if($bus_oper == "start"){ //서울 출발
+            array_push($arrSeatInfoS, $ressubseq);
+            $start_cnt++;
+        }else{ //복귀
+            array_push($arrSeatInfoE, $ressubseq);
+            $return_cnt++;
+        } 
+    }
+
+    if($start_cnt != count($SurfDateBusE)){
+        echo '<script>alert("예약된 좌석수('.$start_cnt.'자리)와 동일한 개수로 선택해주세요~");parent.fnUnblock("#divConfirm");</script>';
         return;
     }
 
-    if(count($ressubseqe) != count($SurfDateBusS)){
-        echo '<script>alert("예약된 좌석수('.count($ressubseqe).'자리)와 동일한 개수로 선택해주세요~");parent.fnUnblock("#divConfirm");</script>';
+    if($return_cnt != count($SurfDateBusE)){
+        echo '<script>alert("예약된 좌석수('.$return_cnt.'자리)와 동일한 개수로 선택해주세요~");parent.fnUnblock("#divConfirm");</script>';
         return;
     }
     
-    for($i = 0; $i < count($SurfDateBusY); $i++){
-        $select_query = 'SELECT res_spoint FROM AT_RES_SUB where res_date = "'.$SurfDateBusY[$i].'" AND res_bus = "'.$busNumY[$i].'" AND res_seat = "'.$arrSeatY[$i].'" AND res_confirm IN (0, 1, 2, 3) AND resnum != '.$ResNumber;
-        //echo $select_query;
+    for($i = 0; $i < count($SurfDateBusS); $i++){
+        $select_query = 'SELECT res_spoint FROM AT_RES_SUB WHERE seq = '.$shopseq.' AND res_date = "'.$SurfDateBusS[$i].'" AND bus_gubun = "'.$busGubunS[$i].'" AND bus_num = "'.$busNumS[$i].'" AND res_seat = "'.$arrSeatE[$i].'" AND res_confirm IN (0, 1, 2, 3) AND resnum != '.$ResNumber;
         $result_setlist = mysqli_query($conn, $select_query);
 		$count = mysqli_num_rows($result_setlist);
 
 		if($count > 0){
-			echo '<script>alert("['.$SurfDateBusY[$i].'] '.$arrSeatY[$i].'번 좌석은 이미 예약된 자리입니다.\n\n다른좌석을 선택해주세요.");parent.fnUnblock("#divConfirm");</script>';
+			echo '<script>alert("['.$SurfDateBusS[$i].'] '.$arrSeatS[$i].'번 좌석은 이미 예약된 자리입니다.\n\n다른좌석을 선택해주세요.");parent.fnUnblock("#divConfirm");</script>';
 			return;
 		}
 	}
 
-	for($i = 0; $i < count($SurfDateBusS); $i++){
-		$select_query = 'SELECT res_spoint FROM AT_RES_SUB where res_date = "'.$SurfDateBusS[$i].'" AND res_bus = "'.$busNumS[$i].'" AND res_seat = "'.$arrSeatS[$i].'" AND res_confirm IN (0, 1, 2, 3) AND resnum != '.$ResNumber;
+	for($i = 0; $i < count($SurfDateBusE); $i++){
+		$select_query = 'SELECT res_spoint FROM AT_RES_SUB WHERE seq = '.$shopseq.' AND res_date = "'.$SurfDateBusE[$i].'" AND bus_gubun = "'.$busGubunE[$i].'" AND bus_num = "'.$busNumE[$i].'" AND res_seat = "'.$arrSeatE[$i].'" AND res_confirm IN (0, 1, 2, 3) AND resnum != '.$ResNumber;
 		$result_setlist = mysqli_query($conn, $select_query);
 		$count = mysqli_num_rows($result_setlist);
 
 		if($count > 0){
-			echo '<script>alert("['.$SurfDateBusS[$i].'] '.$arrSeatS[$i].'번 좌석은 이미 예약된 자리입니다.\n\n다른좌석을 선택해주세요.");parent.fnUnblock("#divConfirm");</script>';
+			echo '<script>alert("['.$SurfDateBusE[$i].'] '.$arrSeatE[$i].'번 좌석은 이미 예약된 자리입니다.\n\n다른좌석을 선택해주세요.");parent.fnUnblock("#divConfirm");</script>';
 			return;
 		}
     }
@@ -352,206 +383,137 @@ if($param == "RtnPrice"){
 	mysqli_query($conn, "SET AUTOCOMMIT=0");
     mysqli_query($conn, "BEGIN");
 
-    $busSeatInfoS = "";
-    $busSeatInfoE = "";
-    $arrSeatInfoS = array();
-    $arrSeatInfoE = array();
+    $day_start = "-";
+    $day_return = "-";
     
-    //양양행 좌석예약
-    for($i = 0; $i < count($SurfDateBusY); $i++){
-        $select_query = "UPDATE AT_RES_SUB SET 
-                            res_seat = '$arrSeatY[$i]', 
-                            res_bus = '$busNumY[$i]', 
-                            res_busnum = '$busNumY[$i]', 
-                            res_spoint = '$startLocationY[$i]', 
-                            res_spointname = '$startLocationY[$i]', 
-                            res_epoint = '$endLocationY[$i]', 
-                            res_epointname = '$endLocationY[$i]', 
-                            upddate = now()
-                                WHERE ressubseq = ".$ressubseqs[$i];
-        $result_set = mysqli_query($conn, $select_query);
-        if(!$result_set) goto errGo;
-    
-        if($res_confirm == 0){ //입금대기
-            //$pointTime = ' -> '.$endLocationY[$i];
-            $pointTime = ' / '.explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]))[0];
-        }else{
-            $pointTime = ' / '.explode("|", fnBusPoint($startLocationY[$i], $busNumY[$i]))[0];
-        }
-
-        if(array_key_exists($SurfDateBusY[$i].$busNumY[$i], $arrSeatInfoS)){
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] .= '      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].$pointTime.')\n';
-        }else{
-            $arrSeatInfoS[$SurfDateBusY[$i].$busNumY[$i]] = '    ['.$SurfDateBusY[$i].'] '.fnBusNum($busNumY[$i]).'\n      - '.$arrSeatY[$i].'번 ('.$startLocationY[$i].$pointTime.')\n';
-        }
-    }
-    
-    //서울행 좌석예약
+    //출발 좌석예약
     for($i = 0; $i < count($SurfDateBusS); $i++){
         $select_query = "UPDATE AT_RES_SUB SET 
                             res_seat = '$arrSeatS[$i]', 
-                            res_bus = '$busNumS[$i]', 
-                            res_busnum = '$busNumS[$i]', 
                             res_spoint = '$startLocationS[$i]', 
                             res_spointname = '$startLocationS[$i]', 
                             res_epoint = '$endLocationS[$i]', 
                             res_epointname = '$endLocationS[$i]', 
                             upddate = now()
-                                WHERE ressubseq = ".$ressubseqe[$i];
+                                WHERE ressubseq = ".$arrSeatInfoS[$i];
+        $result_set = mysqli_query($conn, $select_query);
+        if(!$result_set) goto errGo;
+    
+        //출발일 정보
+        if($day_start == "-"){
+            $arrBus = fnBusNum2023($busGubunS[$i].$busNumS[$i]);
+            $day_start = '['.$SurfDateBusS[$i].'] '.$arrBus["point"].' '.$arrBus["num"];
+        }
+    }
+    
+    //서울행 좌석예약
+    for($i = 0; $i < count($SurfDateBusE); $i++){
+        $select_query = "UPDATE AT_RES_SUB SET 
+                            res_seat = '$arrSeatE[$i]', 
+                            res_spoint = '$startLocationE[$i]', 
+                            res_spointname = '$startLocationE[$i]', 
+                            res_epoint = '$endLocationE[$i]', 
+                            res_epointname = '$endLocationE[$i]', 
+                            upddate = now()
+                                WHERE ressubseq = ".$arrSeatInfoE[$i];
         $result_set = mysqli_query($conn, $select_query);
         if(!$result_set) goto errGo;
 
-        if($res_confirm == 0){ //입금대기
-            //$pointTime = ' -> '.$endLocationS[$i];
-            $pointTime = ' / '.explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]))[0];
-        }else{
-            $pointTime = ' / '.explode("|", fnBusPoint($startLocationS[$i], $busNumS[$i]))[0];
-        }
-
-        if(array_key_exists($SurfDateBusS[$i].$busNumS[$i], $arrSeatInfoE)){
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] .= '      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].$pointTime.')\n';
-        }else{
-            $arrSeatInfoE[$SurfDateBusS[$i].$busNumS[$i]] = '    ['.$SurfDateBusS[$i].'] '.fnBusNum($busNumS[$i]).'\n      - '.$arrSeatS[$i].'번 ('.$startLocationS[$i].$pointTime.')\n';
+        //복귀일 정보
+        if($day_return == "-"){
+            $arrBus = fnBusNum2023($busGubunE[$i].$busNumE[$i]);
+            $day_return = '['.$SurfDateBusE[$i].'] '.$arrBus["point"].' '.$arrBus["num"];
         }
     }
     
 	if(!$success){
         errGo:
 		mysqli_query($conn, "ROLLBACK");
-		echo '<script>alert("좌석/정류장 수정 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");parent.fnUnblock("#divConfirm");</script>';
+		echo '<script>alert("좌석/정류장 변경 중 오류가 발생하였습니다.\n\n관리자에게 문의해주세요.");parent.fnUnblock("#divConfirm");</script>';
 	}else{
-		// 예약좌석 정보 : 양양행
-		foreach($arrSeatInfoS as $x) {
-			$busSeatInfoS .= $x;
-		}
-
-		// 예약좌석 정보 : 서울행
-		foreach($arrSeatInfoE as $x) {
-			$busSeatInfoE .= $x;
-		}
-
-        $select_query = "SELECT a.user_name, a.user_tel, a.etc, a.user_email, b.* 
-                            FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
-                                ON a.resnum = b.resnum 
-                            WHERE a.resnum = $ResNumber
-                                AND b.res_confirm IN (0,3,8)
-                            ORDER BY b.ressubseq";
-        $result_setlist = mysqli_query($conn, $select_query);
-        $count = mysqli_num_rows($result_setlist);
-
-        $TotalPrice = 0;
-        while ($rowTime = mysqli_fetch_assoc($result_setlist)){
-            $userName = $rowTime['user_name'];
-            $userPhone = $rowTime['user_tel'];
-            $user_email = $rowTime['user_email'];
-            $sDate = $rowTime["res_date"];
-            $shopname = $rowTime['shopname'];
-            $etc = $rowTime["etc"];
-            $res_confirm = $rowTime["res_confirm"];
-            $TotalPrice += $rowTime["res_totalprice"];
-        }
-
-        $busSeatInfoTotal = " ▶ 좌석안내\n";
-        if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= $busSeatInfoS;
-        }
-        if($busSeatInfoE != ""){
-            if($busSeatInfoS != ""){
-                $busSeatInfoTotal .= "\n";
-            }
-            $busSeatInfoTotal .= $busSeatInfoE;
-        }
-        
-        if($res_confirm == 0){ //입금대기
-            $totalPrice = "\n ▶ 총 결제금액 : ".number_format($TotalPrice)."원\n";
-            
-            $tempName = "frip_bus03"; //입금대기
-            $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회/취소
-            $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //예약조회/취소
-            $btn_ResGPS = "";
-            $btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
-            $btn_Notice = "";
-            $btn_ResContent = ""; //예약 상세안내
-
-            $msgInfo = $busSeatInfoTotal.$totalPrice;
+        if($res_confirm == 0){
+            $kakao_gubun = "bus_stay";
+            $msgTitle = '액트립 셔틀버스 입금안내';
+            $PROD_NAME = "셔틀버스 입금대기";
         }else{
-            $tempName = "frip_bus02"; //예약확정
-            $btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
-            $btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
-            $btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
-            $btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
-            $btn_Notice = "";
-            $btn_ResContent = ""; //예약 상세안내
-
-            $msgInfo = $busSeatInfoTotal;
+            $kakao_gubun = "bus_confirm_change";
+            $msgTitle = '액트립 셔틀버스 변경안내';
+            $PROD_NAME = "셔틀버스 예약확정";
+            $link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
         }
 
-        // 고객 카카오톡 발송
-        $msgTitle = '액트립 서핑버스 변경신청 안내';
-
-        
-        $gubun_title = $busTitleName.' 서핑버스';
+        if($day_start != "-" && $day_return != "-"){ //왕복
+            $bus_line = "서울 ↔ $busTitleName";
+        }else if($day_start != "-"){ //서울 출발
+            $bus_line = "서울 → $busTitleName";
+        }else{ //서울 복귀
+            $bus_line = "$busTitleName → 서울";
+        }
+        //==========================카카오 메시지 발송 ==========================
+        //$msgTitle = '액트립 셔틀버스 입금안내';
+        $DebugInfo = array(
+            "PROD_NAME" => $PROD_NAME
+            , "PROD_TABLE" => "AT_RES_MAIN"
+            , "PROD_TYPE" => $kakao_gubun
+            , "RES_CONFIRM" => $res_confirm
+            , "resnum" => $ResNumber
+        );
         $arrKakao = array(
-            "gubun"=> "bus"
-            , "admin"=> "N"
-            , "tempName"=> $tempName
-            , "smsTitle"=> $msgTitle
+            "gubun"=> $kakao_gubun
             , "userName"=> $userName
             , "userPhone"=> $userPhone
-            , "shopname"=>$gubun_title
-            , "msgType"=>$msgType
-            , "MainNumber"=>$ResNumber
-            , "msgInfo"=>$msgInfo
-            , "btn_ResContent"=> $btn_ResContent
-            , "btn_ResSearch"=> $btn_ResSearch
-            , "btn_ResChange"=> $btn_ResChange
-            , "btn_ResGPS"=> $btn_ResGPS
-            , "btn_ResPoint"=> $btn_ResPoint
-            , "btn_Notice"=> $btn_Notice
-            , "smsOnly"=>"N"
-            , "PROD_NAME"=>"서핑버스 정류장변경"
-            , "PROD_URL"=>$shopseq
-            , "PROD_TYPE"=>"bus"
-            , "RES_CONFIRM"=>$res_confirm
+            , "userPrice"=> number_format($TotalPrice).'원'
+            , "bus_line"=> $bus_line
+            , "day_start"=> $day_start
+            , "day_return"=> $day_return
+            , "link1"=> $link1 //예약
+            , "DebugInfo"=> $DebugInfo
+        );	
+
+        $arryKakao[0] = $arrKakao;
+    
+        $arrKakao = array(
+            "arryData"=> $arryKakao
+            , "array"=> "true" //배열 여부
+            , "tempName"=> "actrip_info02" //템플릿 코드
+            , "title"=> $msgTitle //타이틀
+            , "smsOnly"=> "N" //문자발송 여부
         );
 
         $arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-        // 카카오 알림톡 DB 저장 START
-        $select_query = kakaoDebug($arrKakao, $arrRtn);
-        $result_set = mysqli_query($conn, $select_query);
-        if(!$result_set) goto errGo;
-        // 카카오 알림톡 DB 저장 END
-        
-        // 이메일 발송
-        if(strrpos($user_email, "@") > 0){
-            $to .= ','.$usermail;
-        }
+        $data = json_decode($arrRtn[0], true);
 
-        $arrMail = array(
-            "gubun"=> "bus"
-            , "gubun_step" => 9
-            , "gubun_title" => $shopname
-            , "mailto"=> $to
-            , "mailfrom"=> "surfbus_point@actrip.co.kr"
-            , "mailname"=> "actrip"
-            , "userName"=> $userName
-            , "ResNumber"=> $ResNumber
-            , "userPhone" => $userPhone
-            , "etc" => $etc
-            , "totalPrice1" => ""
-            , "totalPrice2" => ""
-            , "banknum" => ""
-            , "info1_title"=> $info1_title
-            , "info1"=> $info1
-            , "info2_title"=> $info2_title
-            , "info2"=> $info2
-        );
-        //sendMail($arrMail); //메일 발송
+        for ($i=0; $i < count($data); $i++) { 
+            //------- 알림톡 디버깅 -----
+            $code = $data[$i]["code"];
+            $msgid = $data[$i]["data"]["msgid"];
+            $message = $data[$i]["message"];
+            $originMessage = $data[$i]["originMessage"];
+            
+            $kakao_response = array(
+                "arrKakao"=> $arrKakao
+                , "item"=> $arryKakao[$i]
+                , "code"=> $code
+                , "msgid"=> $msgid
+                , "message"=> $message
+                , "originMessage"=> $originMessage
+            );
+    
+            // 카카오 알림톡 DB 저장 START
+            $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+            $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 END
+    
+            $errmsg = $select_query;
+            
+            $errCode = "06";
+            if(!$result_set) goto errGo;
+        }
         
 		mysqli_query($conn, "COMMIT");
         
-        echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.location.href="/orderview?num=0&resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("셔틀버스 예약건 변경이 완료되었습니다.");parent.parent.fnLayerView("");parent.parent.location.reload();</script>';
     }
 }
 ?>

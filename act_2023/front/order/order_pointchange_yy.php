@@ -220,7 +220,7 @@ $sbusDate = $busData[1];
                     </ul>
                 </div>
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
-                    <div style="padding:10px;display:; text-align:center;" id="divBtnRes">
+                    <div style="padding:10px;text-align:center;" id="divBtnRes">
                     
                         <div>
                             <?

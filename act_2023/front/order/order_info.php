@@ -29,7 +29,7 @@ if($gubun == 1){ //서핑샵
 							ON a.resnum = b.resnum 
 						LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
 						WHERE a.resnum = $resNumber
-							ORDER BY a.resnum, b.ressubseq";
+							ORDER BY b.bus_oper DESC, b.res_seat";
 }
 
 
@@ -166,6 +166,7 @@ if($count == 0){
 function fnLayerView(url) {
     if (btnheight == "") btnheight = $j(".con_footer").height();
     if (type == "down") {
+		$j("#ifrmView").css("display", "none");
         $j(".con_footer").css("height", btnheight + "px");
         $j("#slide1").css("display", "none");
         $j(".con_footer").css("background-color", "");
@@ -173,6 +174,7 @@ function fnLayerView(url) {
 
         type = "";
     } else {
+		$j("#ifrmView").css("display", "");
 		$j("#ifrmView").attr("src", url);
         $j(".con_footer").css("height", "100%");
         $j("#slide1").css("display", "");

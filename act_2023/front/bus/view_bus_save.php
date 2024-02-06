@@ -28,10 +28,8 @@ if($param == "BusI"){
     
     if($shopseq == 7){
         $busTitleName = "양양"; 
-        $resparam = "surfbus_yy";
     }else if($shopseq == 14){
         $busTitleName = "동해";    
-        $resparam = "surfbus_dh";	
     }
 
 	$SurfDateBusS = $_REQUEST["hidbusDateS"]; //출발 날짜
@@ -222,7 +220,7 @@ if($param == "BusI"){
 	if(!$success){
         errGo:
 		mysqli_query($conn, "ROLLBACK");
-        echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n['.$errCode.'] 관리자에게 문의해주세요.");</script>';
+        echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n['.$errCode.'] 관리자에게 문의해주세요.");parent.fnUnblock("#divConfirm");</script>';
 	}else{
 
         if($day_start != "-" && $day_return != "-"){ //왕복
@@ -333,7 +331,7 @@ if($param == "BusI"){
             ///sendMail($arrMail); //메일 발송
         }
         
-        echo '<script>alert("'.$busTitleName.' 서핑버스 예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
+        echo '<script>alert("'.$busTitleName.' 셔틀버스 예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';
 	}
 }
 

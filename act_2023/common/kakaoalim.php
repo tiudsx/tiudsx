@@ -252,6 +252,18 @@ function kakaoContent2024($arrKakao, $item){
 				
 			$title = "셔틀버스 예약확정";
 			$description = "예약정보 확인 후 이용해주세요~";
+		}else if($item["gubun"] == "bus_confirm_change"){
+			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+				.'\n좌석/정류장 정보를 변경 예약해주셔서 안내드립니다.'
+				.'\n변경된 정보는 아래 예약정보 링크를 클릭해주세요~ :)'
+				.'\n\n - 예약정보 : '.$item["link1"]
+				.'\n\n ▶ 안내사항'
+				.'\n    - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
+				.'\n    - 탑승시간 10분전에 예약하신 정류장으로 도착해주세요.';
+
+				
+			$title = "셔틀버스 좌석/정류장 변경";
+			$description = "예약정보 확인 후 이용해주세요~";
 		}
 
 

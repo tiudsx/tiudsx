@@ -18,8 +18,7 @@ $select_query = 'SELECT a.*, b.*, c.seat, d.couponseq, TIMESTAMPDIFF(MINUTE, b.i
                         ON b.res_coupon = d.coupon_code
                     WHERE a.resnum = "'.$resNumber.'" AND b.res_confirm IN (0,3,8)
                         AND b.res_date >= "'.$now.'"
-                    ORDER BY a.resnum, b.ressubseq';
-
+                    ORDER BY b.bus_oper DESC, b.res_seat';
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -33,13 +32,16 @@ $arrSeatList = "";
 
 $start_line = "";
 $return_line = "";
+
+$start_cnt = 0;
+$return_cnt = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
     if($i == 0){
         $user_name = $row["user_name"];
         $user_tel = $row["user_tel"];
         $shopseq = $row["seq"];
         $couponseq = $row["couponseq"];
-        $couponcode = $row["res_coupon"];
+        $couponcode = $row["res_coupon"];  
     }
     
     $bus_oper = $row["bus_oper"];
@@ -49,18 +51,37 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $seat = $row["seat"];
     $res_date = $row["res_date"];
     
+    $res_spoint = $row["res_spoint"];
+    $res_epoint = $row["res_epoint"];
+    
     if($bus_oper == "start"){ //서울 출발
         $start_line = '<li class="on" style="cursor:pointer;" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" seat="'.$seat.'"  caldate="'.$res_date.'" onclick="fnBusSeatInit(this, 0);">[출발] '.fnBusNum2023($row["bus_gubun"].$row["bus_num"])["full"].'</li>';
 
-        $arrSeatList .= "<input type='hidden' name='$bus_gubun' value='$res_seat'>";
+        $arrSeatList .= "<input type='hidden' name='$bus_gubun' value='$res_seat' spoint='$res_spoint' epoint='$res_epoint' busType='S'>";
+        $start_cnt++;
     }else{ //복귀
         $return_line = '<li style="cursor:pointer;" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" seat="'.$seat.'"  caldate="'.$res_date.'" onclick="fnBusSeatInit(this, 0);">[복귀] '.fnBusNum2023($row["bus_gubun"].$row["bus_num"])["full"].'</li>';
 
-        $arrSeatList .= "<input type='hidden' name='$bus_gubun' value='$res_seat'>";
+        $arrSeatList .= "<input type='hidden' name='$bus_gubun' value='$res_seat' spoint='$res_spoint' epoint='$res_epoint' busType='E'>";
+        $return_cnt++;
     }
 
     $i++;    
 }
+
+$bus_gubun = "S"; //편도 - 서울 출발
+if($start_cnt > 0 && $return_cnt > 0){
+    $bus_gubun = "A"; //왕복
+}else if($return_cnt > 0){
+    $bus_gubun = "E"; //편도 - 서울 복귀
+}
+
+$select_query = "SELECT * FROM AT_PROD_MAIN WHERE seq = $shopseq AND use_yn = 'Y'";
+$result = mysqli_query($conn, $select_query);
+$rowMain = mysqli_fetch_array($result);
+
+$busData = explode("|", $rowMain["sub_tag"]);
+$busgubun = $busData[0];
 ?>
 
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
@@ -73,17 +94,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
     <div class="top_area_zone">
         <section class="notice">
-            <div id="view_tab3" class="view_tab3" style="min-height: 800px;display:;">
+            <div id="view_tab3" class="view_tab3" style="min-height: 800px;padding-bottom:60px;">
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
                     <br>resparam<input type="text" id="resparam" name="resparam" value="PointChange" />
                     <br>userId<input type="text" id="userId" name="userId" value="<?=$user_id?>">
                     <br>shopseq<input type="text" id="shopseq" name="shopseq" value="<?=$shopseq?>">
-                    <br>편도/왕복<input type="text" id="daytype" name="daytype" value="<?=$daytype?>">
-                    <br>행성지<input type="text" id="busgubun" name="busgubun" value="<?=$busgubun?>">
+                    <br>편도/왕복<input type="text" id="bus_gubun" name="bus_gubun" value="<?=$bus_gubun?>">
+                    <br>행선지<input type="text" id="bus_line" name="bus_line" value="<?=$busgubun?>">
                     <br>MainNumber<input type="hidden" id="MainNumber" name="MainNumber" value="<?=$resNumber?>">
-                    <br>num<input type="hidden" id="num" name="num" value="<?=$num?>">
-                    <?=$resseq?>
                 </span>
 
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;">
@@ -95,9 +114,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     <?=$start_line?>
                     <?=$return_line?>
                 </div>
-                <div class="busOption02">
+                <div class="busOption02" id="bus_step1">
                     <ul class="busSeat">
-                        <div style="text-align:center">
+                        <div style="text-align:center" id="seatList">
                             <span style="font-size: 1.3em;">
                                 <img src="https://actrip.cdn1.cafe24.com/bus/bus_1.jpg" alt="">선택가능 &nbsp;&nbsp;
                                 <img src="https://actrip.cdn1.cafe24.com/bus/bus_2.jpg" alt="">선택불가 &nbsp;&nbsp;
@@ -161,7 +180,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                         <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="다음단계" onclick="fnBusNext(2);">
                     </div>
                 </div>
-                <div class="busOption01" id="bus_step2" style="display:;">
+                <div class="busOption01" id="bus_step2" style="display:none;">
                     <ul class="busLine">
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
                         <li id="selBusName_S" class="on"></li>
@@ -188,7 +207,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
                     <div style="padding:10px;text-align:center;" id="divBtnRes">
                         <input type="button" class="btnsurfadd" style="width:160px;font-size: 1.2em;" value="이전단계" onclick="fnBusPrev(1);">&nbsp;&nbsp;
-                        <input type="button" class="gg_btn gg_btn_grid gg_btn_color" style="width:130px; height:40px;" value="예약 변경하기" onclick="fnBusSave();" />
+                        <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="예약하기" onclick="fnBusSave();">
                     </div>
                 </div>
             </form>
@@ -205,50 +224,126 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     var shopseq = $j("#shopseq").val();
 </script>
 
-<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=2"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=7"></script>
 <script type="text/javascript" src="/act_2023/front/_js/busday.js?v=2"></script>
+<script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 
 <script>
     fnBusPointList();
+
+    var start_cnt = <?=$start_cnt?>;
+    var return_cnt = <?=$return_cnt?>;
 
     var dayCode = "busseat";
     var busrestype = "change";
     var buschannel = "<?=$couponseq?>";
     jQuery(function() {
-        //fnSeatLine();
-        $j(".busLineTab li").eq(0).click(); //첫번째 노선버튼 클릭
+        fnSeatLine();
     });
 
     function fnSeatLine(obj = null){
-        if(obj != null){
-            $j(".busLineTab li").removeClass("on");
-            $j(obj).addClass("on");
+        var selObj = $j("ul[class=busLineTab] li");
+
+        if($j("#bus_gubun").val() == "A"){ //출발
+            $j("#selBusName_S").text(selObj.eq(0).text().replace("[출발] ", ""));
+            $j("#selBusName_E").text(selObj.eq(1).text().replace("[복귀] ", ""));
+            
+            $j("#selBusDate_S").text(selObj.eq(0).attr("caldate").substring(5).replace('-', '/'));
+            $j("#selBusDate_E").text(selObj.eq(1).attr("caldate").substring(5).replace('-', '/'));
+        }else{
+            $j("#selBusName_" + $j("#bus_gubun").val()).text(selObj.eq(0).text().replace("[출발] ", "").replace("[복귀] ", ""));
+            $j("#selBusDate_" + $j("#bus_gubun").val()).text(selObj.eq(0).attr("caldate").substring(5).replace('-', '/'));
         }
+
+        $j(".busLineTab li").eq(0).click(); //첫번째 노선버튼 클릭
         
-        var selObj = $j("ul[class=busLineTab] li[class=on]");
-        if (selObj.attr("seat") == 44) {
-            busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
-                '<td>&nbsp;</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="43"><br>43</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>';
-        } else {
-            busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="43"><br>43</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="45"><br>45</td>';
-        }
-        $j("#busSeatLast").html(busSeatLast);
+        fnPointView($j("#bus_gubun").val(), selObj);
+    }
 
-        //좌석 초기화
-        $j("#tbSeat .busSeatList").removeClass("busSeatListC").addClass("busSeatListN");
+    function fnPointView(param_busType, selObj){
+        var objPoint = $j("#seatList input");
+        for (let i = 0; i < objPoint.length; i++) {
+            const el = objPoint[i];
 
-        var forObj = $j("input[name=" + selObj.attr("bus_gubun") + "]");
-        for (var i = 0; i < forObj.length; i++) {
-            //예약좌석 표시
-            $j("#tbSeat .busSeatList[busSeat=" + forObj.eq(i).val() + "]").removeClass("busSeatListN").addClass("busSeatListC");
+            var busType = el.attributes.bustype.value;
+            var objVlu = el.value;
+            var spoint = el.attributes.spoint.value;
+            var epoint = el.attributes.epoint.value;
+
+            if(param_busType == busType || (param_busType == "A" && busType == "S")){
+                $j("select[id=startLocation" + busType + "][seatnum=" + objVlu + "]").val(spoint);
+                $j("select[id=endLocation" + busType + "][seatnum=" + objVlu + "]").val(epoint);
+            }else{
+                var selDate = selObj.eq(1).attr("caldate"); //선택 날짜
+                var bus_num = selObj.eq(1).attr("bus_num"); //버스 호차
+                var bus_gubun = selObj.eq(1).attr("bus_gubun"); //버스 호차
+
+                var arrObj_S = eval("busPoint." + el.name); //출발 정류장
+                var sPoint = "<option value='N'>출발</option>";
+                arrObj_S.forEach(function(el, i) {           
+                    sPoint += "<option value='" + el.code + "'" + ((spoint == el.code) ? " selected" : "") + ">" + el.codename + "</option>";
+                });
+
+                var arrObj_E = eval("busPoint." + busType + "end");
+                var ePoint = "<option value='N'>도착</option>";
+                arrObj_E.forEach(function(el, i) {
+                    ePoint += "<option value='" + el.code + "'" + ((epoint == el.code) ? " selected" : "") + ">" + el.codename + "</option>"; 
+                });
+
+                var insHtml = "";
+                var bindObj = "";
+
+                var tbCnt = $j(`#selBus_${busType} > table`).length;
+                if (tbCnt == 0) {
+                    insHtml = '		<table class="et_vars exForm bd_tb " style="width:100%;margin-bottom:5px;">' +
+                        '			<colgroup>' +
+                        '				<col style="width:45px;">' +
+                        '				<col style="width:auto;">' +
+                        '				<col style="width:38px;">' +
+                        '			</colgroup>' +
+                        '			<tbody>' +
+                        '				<tr>' +
+                        '					<th>좌석</th>' +
+                        '					<th>탑승/하차 정류장</th>' +
+                        '					<th>취소</th>' +
+                        '				</tr>';
+                    bindObj = `#selBus_${busType}`;
+                }else{
+                    bindObj = `#selBus_${busType} > table tbody`;
+                }
+
+                insHtml += '				<tr id="' + busType + '_' + objVlu + '" trseat="' + objVlu + '">' +
+                    '					<th style="padding:4px 6px;text-align:center;">' + objVlu + '번</th>' +
+                    '					<td style="line-height:2;">' +
+                    '						<select id="startLocation' + busType + '" seatnum="' + objVlu + '" name="startLocation' + busType + '[]" class="select">' +
+                    '							' + sPoint +
+                    '						</select> →' +
+                    '						<select id="endLocation' + busType + '" seatnum="' + objVlu + '" name="endLocation' + busType + '[]" class="select">' +
+                    '							' + ePoint +
+                    '						</select><br>' +
+                    '						<span id="stopLocation"></span>' +
+                    '						<input type="hidden" id="hidbusSeat' + busType + '" name="hidbusSeat' + busType + '[]" value="' + objVlu + '" />' +
+                    '						<input type="hidden" id="hidbusDate' + busType + '" name="hidbusDate' + busType + '[]" value="' + selDate + '" />' +
+                    '						<input type="hidden" id="hidbusNum' + busType + '" name="hidbusNum' + busType + '[]" value="' + bus_num + '" />' +
+                    '						<input type="hidden" id="hidbusGubun' + busType + '" name="hidbusGubun' + busType + '[]" value="' + bus_gubun + '" />' +
+                    '					</td>' +
+                    '					<td style="text-align:center;" onclick="fnSeatDel(this, \'' + busType + '\', ' + objVlu + ');"><img src="/act_2023/images/button/close.png" style="width:18px;vertical-align:middle;" /></td>' +
+                    '				</tr>';
+                if (tbCnt == 0) {
+                    insHtml += '			</tbody>' +
+                        '		</table>';
+                }
+
+                $j(bindObj).append(insHtml);
+            }
         }
     }
 
+    //스크롤 이동
+    function fnMapView(objid, topCnt) {
+        var divLoc = $j(objid).offset();
+        $j('html, body').animate({
+            scrollTop: divLoc.top - topCnt
+        }, "slow");
+    }
 </script>
