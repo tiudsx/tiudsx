@@ -1,3 +1,24 @@
+function shareMessage(resNumber, bankUserName) {
+	let strMsg = "안녕하세요.\n액트립에서 안내드립니다.";
+	strMsg += "\n\n" + bankUserName + "님께서 예약하신 셔틀버스 정보를 공유해드립니다.\n\n예약정보에서 내용 확인 후 이용 부탁드려요~ :)";
+	Kakao.Share.sendDefault({
+		objectType: 'text',
+		text: strMsg,
+		link: {
+			// [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+			mobileWebUrl: 'https://actrip.co.kr',
+			webUrl: 'https://actrip.co.kr',
+		},
+		buttons: [{
+			title: '예약정보',
+			link: {
+				mobileWebUrl: 'https://actrip.co.kr/order_kakao?resNumber=' + resNumber,
+				webUrl: 'https://actrip.co.kr/order_kakao?resNumber=' + resNumber,
+			},
+		}],
+	});
+}
+
 function fnOrderSearch(num) {
     if ($j.trim($j("#resNumber").val()) == "") {
         alert("예약번호를 입력하세요.");

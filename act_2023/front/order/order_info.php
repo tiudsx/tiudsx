@@ -1,4 +1,18 @@
 <?php 
+$param_mid = $_REQUEST["mid"];
+
+if($param_mid == ""){
+	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
+
+	if (!empty(strpos($_SERVER["REQUEST_URI"], '?'))){
+		$param = substr($param, 0, strpos($_SERVER["REQUEST_URI"], '?') - 1);
+	}
+
+	$param = explode('_', $param)[0];
+}else{
+	$param = $param_mid;
+}
+
 $resNumber = str_replace(' ', '', $_REQUEST["resNumber"]);
 $num = $_REQUEST["num"];
 $gubun = substr($resNumber, 0, 1);
@@ -11,7 +25,6 @@ $dbTableSub = "`AT_RES_SUB`";
 
 include __DIR__.'/../../common/db.php';
 include __DIR__.$funUrl;
-
 
 if($gubun == 1){ //서핑샵
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.optcode, c.stay_day 
@@ -55,6 +68,12 @@ if($count == 0){
             <div style="padding:6px;">
                 <h1><?=$title?> 예약조회</h1>
             </div>
+			<div id="seatTab" class="busOption01" style="padding: 0px 10px;">
+				<ul class="busLineTab" style="display: block;">
+					<li class="on" style="cursor:pointer; font-size:1.1em; width:130px; text-align:left;" onclick="fnLayerView('/busgps');">실시간 위치조회</li>
+					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('/pointlist?num=1&resNumber=<?=$resNumber?>');">정류장 안내</li>
+				</ul>
+			</div>
         </section>
         <section class="notice">
             <div class="bd" style="padding:0 4px;min-height:300px;">
@@ -68,7 +87,7 @@ if($count == 0){
 				<?
 				include_once($infoUrl);
 				
-				if($gubun != 3){
+				if($gubun != 3 && $param == "orderview"){
 					if($cancelChk == "coupon"){
 						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;">';
 						echo '※ 취소/환불은 카카오채널 [액트립]으로 문의해주세요~<br>';
@@ -132,12 +151,14 @@ if($count == 0){
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="메인으로" onclick="location.href=\'/\';" />';
 						}else if($num == 2){
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="메인으로" onclick="location.href=\'/\';" />';
+						}else if($param == "order_kakao"){
+							
 						}else{
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="location.href=\'/ordersearch\';" />';
 						}?>
-						<?if($btnDisplay && $cancelChk != "coupon"){?>
+						<?if($btnDisplay && $cancelChk != "coupon" && $param == "orderview"){?>
 							&nbsp;<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;display:'.$cancelChk.';" value="취소/환불 신청" onclick="fnRefund(<?=$num?>);" />
-						<?}?>
+						<?}?>				
 					</div>
 				<?}?>
 			</form>
@@ -156,30 +177,66 @@ if($count == 0){
         </div>
     </div>
 </div>
+<div id="banner" class="on">
+	<img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" onclick="shareMessage('<?=$resNumber?>', '<?=$bankUserName?>');" alt="카카오톡 공유 보내기 버튼" style="width:50px;">	
+</div>
+<style>
+#banner {
+  position: fixed;
+  right: 20px;
+  bottom: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+#banner.on {
+  position: absolute;
+  bottom: 157px;
+}
+</style>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.2.0/kakao.min.js" integrity="sha384-x+WG2i7pOR+oWb6O5GV5f1KN2Ko6N7PTGPS7UlasYWNxZMKQA63Cj/B2lbUmUfuC" crossorigin="anonymous"></script>
 <script>
+	Kakao.init('15043b4ab2fd95556fa77e2c604d421e'); // 사용하려는 앱의 JavaScript 키 입력
     var type = "";
     var btnheight = "";
-function fnLayerView(url) {
-    if (btnheight == "") btnheight = $j(".con_footer").height();
-    if (type == "down") {
-		$j("#ifrmView").css("display", "none");
-        $j(".con_footer").css("height", btnheight + "px");
-        $j("#slide1").css("display", "none");
-        $j(".con_footer").css("background-color", "");
-        $j(".resbottom").css("background-color", "");
 
-        type = "";
-    } else {
-		$j("#ifrmView").attr("src", url);
-		$j("#ifrmView").css("display", "");
-        $j(".con_footer").css("height", "100%");
-        $j("#slide1").css("display", "");
-        $j(".resbottom").css("height", "100%");
-        $j(".con_footer").css("background-color", "white");
-        $j(".resbottom").css("background-color", "white");
+	$j(function() {
+		var $w = $j(window),
+			footerHei = $j('.footer_Util_wrap00').outerHeight(),
+			$banner = $j('#banner');
 
-        type = "down";
-    }
-}	
+		$w.on('scroll', function() {
+			var sT = $w.scrollTop();
+			var val = $j(document).height() - $w.height() - footerHei;
+			
+			if (sT >= val)
+				$banner.addClass('on')
+			else
+				$banner.removeClass('on')
+		});
+	});
+
+	function fnLayerView(url) {
+		if (btnheight == "") btnheight = $j(".con_footer").height();
+		if (type == "down") {
+			$j("#ifrmView").css("display", "none");
+			$j(".con_footer").css("height", btnheight + "px");
+			$j("#slide1").css("display", "none");
+			$j(".con_footer").css("background-color", "");
+			$j(".resbottom").css("background-color", "");
+
+			type = "";
+		} else {
+			$j("#ifrmView").attr("src", url);
+			$j("#ifrmView").css("display", "");
+			$j(".con_footer").css("height", "100%");
+			$j("#slide1").css("display", "");
+			$j(".resbottom").css("height", "100%");
+			$j(".con_footer").css("background-color", "white");
+			$j(".resbottom").css("background-color", "white");
+
+			type = "down";
+		}
+	}	
 </script>
 <? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>

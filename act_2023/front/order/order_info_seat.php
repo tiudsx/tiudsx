@@ -49,7 +49,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
         $arrSeatList .= "<input type='hidden' name='$bus_gubun' value='$res_seat'>";
     }else{ //복귀
-        $return_line = '<li style="cursor:pointer;" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" seat="'.$seat.'"  onclick="fnSeatLine(this);">[복귀] '.fnBusNum2023($row["bus_gubun"].$row["bus_num"])["full"].'</li>';
+        if($count == 1){
+            $default_tab = "class='on'";
+        }
+        $return_line = '<li '.$default_tab.' style="cursor:pointer;" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" seat="'.$seat.'"  onclick="fnSeatLine(this);">[복귀] '.fnBusNum2023($row["bus_gubun"].$row["bus_num"])["full"].'</li>';
 
         $arrSeatList .= "<input type='hidden' name='$bus_gubun' value='$res_seat'>";
     }
@@ -59,11 +62,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 ?>
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/default.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
+<link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
 
 <div id="wrap">
-    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
-    <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/bus.css">
-
     <div class="top_area_zone">
         <section class="notice">
             <div id="view_tab3" class="view_tab3" style="min-height: 800px;padding-bottom:30px;">
