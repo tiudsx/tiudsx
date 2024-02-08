@@ -71,7 +71,7 @@ if($count == 0){
 			<div id="seatTab" class="busOption01" style="padding: 0px 10px;">
 				<ul class="busLineTab" style="display: block;">
 					<li class="on" style="cursor:pointer; font-size:1.1em; width:130px; text-align:left;" onclick="fnLayerView('/busgps');">실시간 위치조회</li>
-					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('/pointlist?num=1&resNumber=<?=$resNumber?>');">정류장 안내</li>
+					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('/pointlist');">정류장 안내</li>
 				</ul>
 			</div>
         </section>
