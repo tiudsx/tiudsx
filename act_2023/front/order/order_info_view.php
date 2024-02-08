@@ -5,6 +5,8 @@ $totalPrice = 0;
 $shopbankview = 0;
 $PointChangeChk = 0;
 $shopseq = 0;
+$btnDisplay = false;
+$btnDisplay2 = false;
 while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 
@@ -61,6 +63,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$totalPrice += $row['res_price'];
 		$shopbankview++;
 		$PointChangeChk++;
+
+		$btnDisplay = true;
 	}else if($res_confirm == 1 || $res_confirm == 2){
 		$ResConfirm = "확인중";
 		$ResColor = "rescolor2";
@@ -76,6 +80,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$ResColor = "rescolor3";
 		$totalPrice += $row['res_price'];
 		$PointChangeChk++;
+		
+		$btnDisplay = true;
+		$btnDisplay2 = true;
 	}else if($res_confirm == 4){
 		$ResConfirm = "환불요청";
 		$ResColor = "rescolor1";
@@ -200,11 +207,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <td style="text-align:center;" rowspan="2">
 					<label>
 				<?if($chkView == 1){?>
-					<input type="checkbox" id="chkCancel" name="chkCancel[]" value="<?=$row['ressubseq']?>" style="vertical-align:-3px;" onclick="fnCancelSum(this, '<?=$row['code']?>', '<?=$row['res_num']?>');" />
+					<?if($res_confirm == 0){?>
+					<input type="checkbox" id="chkCancel" name="chkCancel[]" value="<?=$row['ressubseq']?>" checked="checked" style="vertical-align:-3px;display:none;" />
+					<?}else{?>
+					<input type="checkbox" id="chkCancel" name="chkCancel[]" value="<?=$row['ressubseq']?>" style="vertical-align:-3px;" onclick="fnCancelSum(this, '<?=$row['code']?>', '<?=$row['res_num']?>');" /><br>
+					<?}?>
 				<?}else{?>
-					<input type="checkbox" disabled="disabled" />
+					<input type="checkbox" disabled="disabled" style="display:none;"/>
 				<?}?>
-					<br><?=$row['res_date']?>
+					<?=$row['res_date']?>
 					</label>
 				</td>
 				<td><b><?=fnBusNum2023($row['bus_gubun'].$row['bus_num'])["full"]?> : <?=$row['res_seat']?>번</b><br><span style="padding-left:10px;"><?=$row['res_spointname']?> -> <?=$row['res_epointname']?></span></td>
@@ -258,13 +269,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		}
 		if($PointChangeChk > 0 && $row['code'] == "bus"){
 		?>
-<?if($shopseq != 14){?>
-	<div class="write_table" style="text-align:center;">
-	<input type="button" class="gg_btn gg_btn_grid large" style="width:100px; height:28px;color: #fff !important; background: #9326ff;display:;" value="내좌석 보기"  onclick="fnLayerView('/seatview?num=<?=$num?>&resNumber=<?=$row['res_num']?>');" />
+		<div class="write_table" style="text-align:center;">
+		<input type="button" class="gg_btn gg_btn_grid large" style="width:100px; height:28px;color: #fff !important; background: #9326ff;display:;" value="내좌석 보기"  onclick="fnLayerView('/seatview?num=<?=$num?>&resNumber=<?=$row['res_num']?>');" />
 
-	<input type="button" class="gg_btn gg_btn_grid large" style="width:110px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경" onclick="fnLayerView('/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>');" />
-	</div>
-<?}?>
+		<?if($btnDisplay2){?>
+		<input type="button" class="gg_btn gg_btn_grid large" style="width:110px; height:28px;color: #fff !important; background: #3195db;display:;" value="좌석/정류장 변경" onclick="fnLayerView('/pointchange?num=<?=$num?>&resNumber=<?=$row['res_num']?>');" />
+		<?}?>
+		</div>
 		<?
 		}
 
@@ -285,7 +296,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 			<?if($chkViewPrice == 1 && $res_totalprice > 0){?>
 			<tr>
                 <th scope="row">결제금액</th>
-                <td><b style="font-weight:700;color:red;"><?=number_format($res_totalprice)?>원</b> (<?=number_format($totalPrice)?>원 - 할인쿠폰:<?=number_format($totalPrice - $res_totalprice)?>원)</td>
+                <td>
+					<b style="font-weight:700;color:red;"><?=number_format($res_totalprice)?>원</b>
+					<?if(($totalPrice - $res_totalprice) > 0){?>
+				 	(<?=number_format($totalPrice)?>원 - 할인쿠폰:<?=number_format($totalPrice - $res_totalprice)?>원)
+					<?}?>
+				</td>
             </tr>
 			<?}?>
 			<?if($shopbankview > 0){?>

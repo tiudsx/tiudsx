@@ -923,7 +923,7 @@ function fnBusSave() {
 
             let busType = $j("#bus_gubun").val();
             let defaultCnt = $j("input[name=" + bus_gubun + "]").length;
-            let selCnt = $j(`#selBus_${busType} tr[trseat]`).length + 1;
+            let selCnt = $j(`#selBus_${busType} tr[trseat]`).length;
 
             if (defaultCnt < selCnt) {
                 alert("좌석은 " + defaultCnt + "자리를 예약해주세요.");

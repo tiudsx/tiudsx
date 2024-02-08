@@ -14,6 +14,7 @@ $select_query = 'SELECT a.*, b.*, c.seat, d.couponseq, TIMESTAMPDIFF(MINUTE, b.i
                             AND b.bus_gubun = c.bus_gubun
                             AND b.bus_num = c.bus_num
                             AND b.res_date = c.bus_date
+                            AND b.seq = c.shopseq
                     LEFT JOIN AT_COUPON_CODE as d
                         ON b.res_coupon = d.coupon_code
                     WHERE a.resnum = "'.$resNumber.'" AND b.res_confirm IN (0,3,8)
@@ -181,22 +182,22 @@ $busgubun = $busData[0];
                     </div>
                 </div>
                 <div class="busOption01" id="bus_step2" style="display:none;">
-                    <ul class="busLine">
+                    <ul class="busLine" style="display:none;">
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
                         <li id="selBusName_S" class="on"></li>
                     </ul>
-                    <ul class="busDate">
+                    <ul class="busDate" style="display:none;">
                         <li><img src="/act_2023/images/viewicon/calendar.svg" alt=""><span id="selBusDate_S"></span></li>
                         <li style="width:330px; height:auto;">
                             <div id="selBus_S" class="bd" style="padding-top:2px;">
                             </div>
                         </li>
                     </ul>
-                    <ul class="busLine">
+                    <ul class="busLine" style="display:none;">
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">복귀노선</li>
                         <li id="selBusName_E" class="on"></li>
                     </ul>
-                    <ul class="busDate">
+                    <ul class="busDate" style="display:none;">
                         <li><img src="/act_2023/images/viewicon/calendar.svg" alt=""><span id="selBusDate_E"></span></li>
                         <li style="width:330px; height:auto;">
                             <div id="selBus_E" class="bd" style="padding-top:2px;">
@@ -224,7 +225,7 @@ $busgubun = $busData[0];
     var shopseq = $j("#shopseq").val();
 </script>
 
-<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=7"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=11"></script>
 <script type="text/javascript" src="/act_2023/front/_js/busday.js?v=2"></script>
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 
@@ -257,6 +258,16 @@ $busgubun = $busData[0];
 
         $j(".busLineTab li").eq(0).click(); //첫번째 노선버튼 클릭
         
+        if($j("#bus_gubun").val() == "S"){
+            $j("#bus_step2 > ul").eq(0).css("display", "");
+            $j("#bus_step2 > ul").eq(1).css("display", "");
+        }else if($j("#bus_gubun").val() == "E"){
+            $j("#bus_step2 > ul").eq(2).css("display", "");
+            $j("#bus_step2 > ul").eq(3).css("display", "");
+        }else{
+            $j("#bus_step2 > ul").css("display", "");
+        }
+
         fnPointView($j("#bus_gubun").val(), selObj);
     }
 

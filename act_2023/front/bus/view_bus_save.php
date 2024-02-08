@@ -164,7 +164,6 @@ if($param == "BusI"){
         $kakao_gubun = "bus_confirm";
         $msgTitle = '액트립 셔틀버스 확정안내';
         $PROD_NAME = "셔틀버스 예약확정";
-        $link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
     }
     else
     {
@@ -174,6 +173,7 @@ if($param == "BusI"){
         $msgTitle = '액트립 셔틀버스 입금안내';
         $PROD_NAME = "셔틀버스 입금대기";
     }
+    $link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
     
     //출발 좌석예약
     for($i = 0; $i < count($SurfDateBusS); $i++){

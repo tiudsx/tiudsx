@@ -7,16 +7,6 @@ function fnOrderSearch(num) {
 	location.href = "/orderview?resNumber=" + $j.trim($j("#resNumber").val().replace(/ /g, ''));
 }
 
-function fnOrderDisplay(gubun) {
-	if(gubun == 1){
-		$j("#surfSel").css("display", "none");
-		$j("#surfSelOk").css("display", "");
-	}else{
-		$j("#surfSel").css("display", "");
-		$j("#surfSelOk").css("display", "none");		
-	}
-}
-
 //취소/환불 신청
 function fnRefund(gubun) {
 	if($j("input[id=chkCancel]:checked").length == 0){
@@ -36,7 +26,7 @@ function fnRefund(gubun) {
 		}
 	}
 
-	var msg = "신청 하시겠습니까?";
+	var msg = "취소/환불 신청 하시겠습니까?";
     if (confirm(msg)) {
 		$j('.top_area_zone').block({ message: "취소 및 환불신청 접수 중입니다." }); 
 		var formData = $j("#frmCancel").serializeArray();
@@ -57,7 +47,6 @@ function fnRefund(gubun) {
 
 function fnRtnMove(data, num){
 	if(fnRtnText(data, 0)){
-		//fnOrderSearch(num);
 		location.reload();
 		if(gubun == 1){
 			//window.location.href = "/";

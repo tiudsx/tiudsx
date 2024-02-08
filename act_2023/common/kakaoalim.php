@@ -232,6 +232,7 @@ function kakaoContent2024($arrKakao, $item){
 				.'\n\n - 계좌 : '.$bankText
 				.'\n - 예금주 : 이승철'
 				.'\n - 총금액 : '.$item["userPrice"]
+				.'\n\n - 예약정보 : '.$item["link1"]
 				.'\n\n ▶ 안내사항'
 				.'\n    - 1시간 이내 미입금시 자동취소됩니다.'
 				.'\n    - 최소인원(15명) 모집이 안 될 경우 운행이 취소될 수 있습니다.'

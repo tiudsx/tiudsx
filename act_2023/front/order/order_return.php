@@ -35,7 +35,7 @@ if($param == "RtnPrice"){
 		$count = mysqli_num_rows($resultSite);
 
 		if($count == 0){
-			echo $arrSeq[i];
+			echo $arrSeq[$i];
 			exit;
 		}
 
@@ -74,18 +74,18 @@ if($param == "RtnPrice"){
 	$chkCancel = $_REQUEST["chkCancel"];
 	$bankName = $_REQUEST["bankName"];
 	$bankNum = $_REQUEST["bankNum"];
-	$MainNumber = $_REQUEST["MainNumber"];
+	$ResNumber = $_REQUEST["MainNumber"];
 
     for($i = 0; $i < count($chkCancel); $i++){
         $ressubseq .= $chkCancel[$i].",";
     }
     $ressubseq .= '0';
-    $select_query = 'SELECT * FROM AT_RES_MAIN WHERE resnum = '.$MainNumber;
+    $select_query = 'SELECT * FROM AT_RES_MAIN WHERE resnum = '.$ResNumber;
 
     $result_setlist = mysqli_query($conn, $select_query);
     $row = mysqli_fetch_array($result_setlist);
 
-    $ResNumber = $row["resnum"];
+    $res_confirm = $row["res_confirm"];
     $userName = $row["user_name"];
     $InsUserID = $userName;
     $userPhone = $row["user_tel"];
@@ -97,7 +97,6 @@ if($param == "RtnPrice"){
         $FullBankText = $bankName."|".$bankNum."|".$userName;
     }
 
-    $arrSeatInfo = array();
     $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, confirmdate, now()) as timeM FROM AT_RES_SUB where res_confirm IN (0,1,2,3,6) AND ressubseq IN ('.$ressubseq.') AND resnum = '.$ResNumber;
     $resultSite = mysqli_query($conn, $select_query_sub);
     $chkSubCnt = mysqli_num_rows($resultSite); //체크 개수
@@ -113,7 +112,6 @@ if($param == "RtnPrice"){
     $TotalPrice = 0;
     $TotalFee = 0;
     $TotalOpt = 0;
-    $arrSeatInfo = array();
     while ($rowSub = mysqli_fetch_assoc($resultSite)){
         if($success){
             $arrOpt = 0;
@@ -161,11 +159,7 @@ if($param == "RtnPrice"){
                 $TotalFee +=$rtnFee;
 
                 if($code == "bus"){
-                    if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfo)){
-                        $arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번\n';
-                    }else{
-                        $arrSeatInfo[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번\n';
-                    }
+                   
                 }else{
                     $ResNum = "      - 인원 : ";
                     if($rowSub["res_m"] > 0){
@@ -196,11 +190,6 @@ if($param == "RtnPrice"){
 
         if($ressubseqInfo != ""){
             if($code == "bus"){
-                // 예약좌석 정보
-                foreach($arrSeatInfo as $x) {
-                    $msgInfo .= $x;
-                }
-
                 $rtnText = '\n ▶ 환불요청 안내'
                     .'\n       - 결제금액 : '.number_format($TotalPrice).'원'
                     .'\n       - 환불수수료 : '.number_format($TotalFee).'원'
@@ -439,8 +428,9 @@ if($param == "RtnPrice"){
             $kakao_gubun = "bus_confirm_change";
             $msgTitle = '액트립 셔틀버스 변경안내';
             $PROD_NAME = "셔틀버스 예약확정";
-            $link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
         }
+
+        $link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
 
         if($day_start != "-" && $day_return != "-"){ //왕복
             $bus_line = "서울 ↔ $busTitleName";

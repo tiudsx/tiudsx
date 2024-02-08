@@ -107,21 +107,21 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                                     if($i == 10){
                                 ?>
                                     <tr height="68" id="busSeatLast">
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num1?>"><br><?=$num1?></td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num2?>"><br><?=$num2?></td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num3?>"><br><?=$num3?></td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num4?>"><br><?=$num4?></td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num5?>"><br><?=$num5?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num1?>"><br><?=$num1?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num2?>"><br><?=$num2?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num3?>"><br><?=$num3?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num4?>"><br><?=$num4?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num5?>"><br><?=$num5?></td>
                                     </tr>
                                 <?
                                     }else{
                                 ?>
                                     <tr height="68">
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num1?>"><br><?=$num1?></td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num2?>"><br><?=$num2?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num1?>"><br><?=$num1?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num2?>"><br><?=$num2?></td>
                                         <td>&nbsp;</td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num3?>"><br><?=$num3?></td>
-                                        <td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="<?=$num4?>"><br><?=$num4?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num3?>"><br><?=$num3?></td>
+                                        <td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="<?=$num4?>"><br><?=$num4?></td>
                                     </tr>
                                 <?
                                     }
@@ -154,17 +154,17 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         
         var selObj = $j("ul[class=busLineTab] li[class=on]");
         if (selObj.attr("seat") == 44) {
-            busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
+            busSeatLast = '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="41"><br>41</td>' +
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="42"><br>42</td>' +
                 '<td>&nbsp;</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="43"><br>43</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>';
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="43"><br>43</td>' +
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="44"><br>44</td>';
         } else {
-            busSeatLast = '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="41"><br>41</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="42"><br>42</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="43"><br>43</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="44"><br>44</td>' +
-                '<td class="busSeatList busSeatListN" valign="top" onclick="fnSeatSelected(this);" style="font-weight: 700;" busSeat="45"><br>45</td>';
+            busSeatLast = '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="41"><br>41</td>' +
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="42"><br>42</td>' +
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="43"><br>43</td>' +
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="44"><br>44</td>' +
+                '<td class="busSeatList busSeatListN" valign="top" style="font-weight: 700;" busSeat="45"><br>45</td>';
         }
         $j("#busSeatLast").html(busSeatLast);
 

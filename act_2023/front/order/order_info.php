@@ -39,8 +39,6 @@ $count = mysqli_num_rows($result_setlist);
 if($count == 0){
 	echo "<script>alert('예약된 정보가 없습니다.');location.href='/ordersearch';</script>";
 	return;
-}else{
-	//echo "<script>fnOrderDisplay(1);</script>";
 }
 ?>
 
@@ -61,11 +59,17 @@ if($count == 0){
         <section class="notice">
             <div class="bd" style="padding:0 4px;min-height:300px;">
 			<form name="frmCancel" id="frmCancel" target="ifrmResize" autocomplete="off">
+				
+				<input type="hidden" id="gubun" name="gubun" value="">
+				<input type="hidden" id="hidtotalPrice" name="hidtotalPrice" value="0">
+				<input type="hidden" id="resparam" name="resparam" value="Cancel">
+				<input type="hidden" id="userId" name="userId" value="">
+				<input type="hidden" id="MainNumber" name="MainNumber" value="<?=$resNumber?>">
 				<?
 				include_once($infoUrl);
-
+				
 				if($gubun != 3){
-					if($res_totalprice == 0){
+					if($cancelChk == "coupon"){
 						echo '<div class="write_table" style="padding-top:2px;padding-bottom:15px;">';
 						echo '※ 취소/환불은 카카오채널 [액트립]으로 문의해주세요~<br>';
 						echo '<span style="font-weight:500;font-size:12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 이용일 4일 이전 취소 시 : 전액 환불<br>';
@@ -109,13 +113,10 @@ if($count == 0){
 								<th style="text-align:center;">계좌번호</th>
 							</tr>
 							<tr>
-								<td style="text-align:center;"><input type="hidden" id="bankUserName" name="bankUserName" value="<?=$bankUserName?>" class="itx" style="width:50px;"><?=$bankUserName?></td>
 								<td style="text-align:center;">
-									<input type="hidden" id="gubun" name="gubun" value="">
-									<input type="hidden" id="hidtotalPrice" name="hidtotalPrice" value="0">
-									<input type="hidden" id="resparam" name="resparam" value="Cancel">
-									<input type="hidden" id="userId" name="userId" value="">
-									<input type="hidden" id="MainNumber" name="MainNumber" value="">
+									<input type="hidden" id="bankUserName" name="bankUserName" value="<?=$bankUserName?>" class="itx" style="width:50px;"><?=$bankUserName?>
+								</td>
+								<td style="text-align:center;">
 									<input type="text" id="bankName" name="bankName" value="" class="itx" style="width:80px;">
 								</td>
 								<td style="text-align:center;"><input type="text" id="bankNum" name="bankNum" value="" class="itx" style="width:130px;"></td>
@@ -130,16 +131,11 @@ if($count == 0){
 						if($num == 1){
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="메인으로" onclick="location.href=\'/\';" />';
 						}else if($num == 2){
-							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />';
-							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="history.back();" />';
-							
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="메인으로" onclick="location.href=\'/\';" />';
 						}else{
-							//echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="fnOrderDisplay(0);" />';
 							echo '		<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:140px; height:40px;" value="돌아가기" onclick="location.href=\'/ordersearch\';" />';
 						}?>
-						<?if($cancelChk == "none" || $cancelChk == "coupon"){?>
-						<?}else{?>
+						<?if($btnDisplay && $cancelChk != "coupon"){?>
 							&nbsp;<input type="button" class="gg_btn gg_btn_grid large" style="width:140px; height:40px;color: #fff !important; background: #008000;display:'.$cancelChk.';" value="취소/환불 신청" onclick="fnRefund(<?=$num?>);" />
 						<?}?>
 					</div>
@@ -174,8 +170,8 @@ function fnLayerView(url) {
 
         type = "";
     } else {
-		$j("#ifrmView").css("display", "");
 		$j("#ifrmView").attr("src", url);
+		$j("#ifrmView").css("display", "");
         $j(".con_footer").css("height", "100%");
         $j("#slide1").css("display", "");
         $j(".resbottom").css("height", "100%");

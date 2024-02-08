@@ -3,7 +3,7 @@ include __DIR__.'/../common/db.php';
 include __DIR__.'/../common/kakaoalim.php';
 include __DIR__.'/../common/func.php';
 
-
+return;
 $success = true;
 $datetime = date('Y/m/d H:i'); 
 
