@@ -6,10 +6,10 @@ include __DIR__.'/../../common/func.php';
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
-$select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
-$result_set = mysqli_query($conn, $select_query);
+// $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
+// $result_set = mysqli_query($conn, $select_query);
 
-mysqli_query($conn, "COMMIT");
+// mysqli_query($conn, "COMMIT");
 
 $param_mid = $_REQUEST["mid"];
 

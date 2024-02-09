@@ -3,28 +3,43 @@ include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/func.php';
 
 $param = $_REQUEST["resparam"];
-$busgubun = $_REQUEST["busgubun"];
+$bus_gubun = $_REQUEST["bus_gubun"];
+$bus_num = $_REQUEST["bus_num"];
+$shopseq = $_REQUEST["shopseq"];
 
 if($param == "mappoint"){ //상세정보
-    $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
-    $result_set = mysqli_query($conn, $select_query);
+    // $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
+    // $result_set = mysqli_query($conn, $select_query);
 
-    $select_query = "SELECT b.gpsname, a.lat, a.lng, a.insdate, b.bus_gubun, b.bus_num, b.bus_gubun, b.bus_num, 
+    $select_query = "SELECT a.lat, a.lng, b.bus_gubun, b.bus_num, b.bus_oper, b.shopseq,
                             concat(b.bus_gubun, '', b.bus_num) AS busName,
                             CASE 
-                                WHEN LEFT(b.bus_num, 2) = 'Sa' THEN 1
-                                WHEN LEFT(b.bus_num, 2) = 'Jo' THEN 2
-                                WHEN LEFT(b.bus_num, 2) = 'Y2' THEN 3
-                                WHEN LEFT(b.bus_num, 2) = 'Y5' THEN 4
-                                WHEN LEFT(b.bus_num, 2) = 'E2' THEN 5
-                                WHEN LEFT(b.bus_num, 2) = 'E5' THEN 6
+                                WHEN b.bus_gubun = 'SA' THEN 1
+                                WHEN b.bus_gubun = 'JO' THEN 2
+                                WHEN b.bus_gubun = 'AM' THEN 3
+                                WHEN b.bus_gubun = 'PM' THEN 4
                             END AS ordernum
                         FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS_DAY b
                         ON a.user_name = b.gpsname
                             AND a.gpsdate = b.bus_date
-                        WHERE concat(b.bus_gubun, '', b.bus_num) = '$busgubun'
+                        WHERE concat(b.bus_gubun, '', b.bus_num) = '$bus_gubun.$bus_num'
                             AND b.useYN = 'Y'
-                        ORDER BY b.bus_gubun, ordernum, b.bus_num";
+                        ORDER BY ordernum, b.bus_num";
+
+    $select_query = "SELECT b.gpsname, a.lat, a.lng, a.insdate, b.bus_gubun, b.bus_num, b.bus_oper, b.shopseq, 
+                            concat(b.bus_gubun, '', b.bus_num) AS busName,
+                            CASE 
+                                WHEN b.bus_gubun = 'SA' THEN 1
+                                WHEN b.bus_gubun = 'JO' THEN 2
+                                WHEN b.bus_gubun = 'AM' THEN 3
+                                WHEN b.bus_gubun = 'PM' THEN 4
+                            END AS ordernum
+                        FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS_DAY b
+                            ON a.user_name = b.gpsname
+                                AND a.gpsdate = b.bus_date
+                        WHERE concat(b.bus_gubun, '', b.bus_num) = '$bus_gubun.$bus_num'
+                            AND b.useYN = 'Y'
+                        ORDER BY ordernum, b.bus_num";
     $result_setlist = mysqli_query($conn, $select_query);
     $count = mysqli_num_rows($result_setlist);
     
@@ -37,36 +52,18 @@ if($param == "mappoint"){ //상세정보
     $mapNum = 0;
 
     
-    $arrBusGubun = substr($busgubun, 0, 1);
-    $arrBusPoint = substr($busgubun, 1, 2);
     $arrBusData = array();
-    if($arrBusGubun == "E" || $arrBusGubun == "A"){
-        //동해 노선
-        $busDataJson = fnBusPoint2023("", "", 14);
-    }else{
-        //양양 노선
-        $busDataJson = fnBusPoint("", "");
-
-    }
+    $busDataJson = fnBusPoint2023("", "", $shopseq);
 
     foreach($busDataJson as $key => $value){
-        if($arrBusGubun == "E"){  //동해행
-            if("동해" == explode("_", $key)[0]){
-                $arrBusData[explode("_", $key)[1]] = $value;
-            }
-        }else if($arrBusGubun == "A"){ //동해 서울행
-            if("오후" == explode("_", $key)[0]){
-                $arrBusData[explode("_", $key)[1]] = $value;
-            }
-        }else{
-            //양양
-            if($arrBusPoint == substr($key, 1, 2)){
-                $arrBusData[explode("_", $key)[1]] = $value;
-            }
+        $key_data = explode("_", $key);
+    
+        if($bus_gubun == $key_data[0]){
+            $arrBusData[$key_data[1]] = $value;
         }
     }
 
-    if($arrBusPoint == "Sa" || $arrBusPoint == "Jo"){
+    if($bus_gubun == "SA" || $bus_gubun == "JO"){
         $MARKER_SPRITE_Y_OFFSET = "MARKER_SPRITE_Y_OFFSET*3";
     }else{
         $MARKER_SPRITE_Y_OFFSET = "0";
@@ -93,8 +90,8 @@ if($param == "mappoint"){ //상세정보
     while ($row = mysqli_fetch_assoc($result_setlist)){
         $busNum = $row['busName'];
         $busgubun = $row['bus_gubun'];
-        $busName = explode(" ", fnBusNum($busNum));
-        $busName = $busName[0]." ".$busName[1].(($busName[1] == "오후" || $busName[1] == "저녁") ? " 출발" : "");
+        $busName = fnBusNum2023($busNum)["full"];
+        //$busName = $busName[0]." ".$busName[1].(($busName[1] == "오후" || $busName[1] == "저녁") ? " 출발" : "");
         
         $lat = $row['lat'];
         $lng = $row['lng'];
