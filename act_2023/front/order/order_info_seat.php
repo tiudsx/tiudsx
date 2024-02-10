@@ -68,7 +68,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 <div id="wrap">
     <div class="top_area_zone">
         <section class="notice">
-            <div id="view_tab3" class="view_tab3" style="min-height: 800px;padding-bottom:30px;">
+            <div id="view_tab3" class="view_tab3" style="padding-bottom:30px;">
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;">
                     <span id="resseatnum" style="font-size: medium;width:100%;text-align:center;display: block;"></span>
                     <ul>

@@ -38,7 +38,7 @@ mysqli_query($conn, "BEGIN");
                 </div>
             </div>
             
-            <div id="view_tab2" style="min-height: 800px;">
+            <div id="view_tab2">
 
 <?
 $now = date("Y-m-d H:i:s");
@@ -54,8 +54,9 @@ if($nowTime > 0500 && $nowTime < 1300){
     $count = 0;
 }
 
+$arrMap_start = array();
+$arrMap_returbn = array();
 if($count == 1){
-    $arrMapList = array();
     $select_query = "SELECT a.lat, a.lng, b.bus_gubun, b.bus_num, b.bus_oper, b.shopseq,
                             concat(b.bus_gubun, '', b.bus_num) AS busName,
                             CASE 
@@ -72,8 +73,8 @@ if($count == 1){
                         ORDER BY ordernum, b.bus_num";
 
 //임시
-$select_query = "SELECT a.lat, a.lng, a.user_name
-                        FROM AT_PROD_BUS_GPS_LAST a";
+$select_query = "SELECT a.lat, a.lng, a.user_name, 7 AS shopseq
+                        FROM AT_PROD_BUS_GPS_LAST a order by user_name";
     $result_setlist = mysqli_query($conn, $select_query);
     $count = mysqli_num_rows($result_setlist);
 
@@ -84,26 +85,36 @@ $select_query = "SELECT a.lat, a.lng, a.user_name
         if($user_name == "양양 1호차"){
             $bus_gubun = "SA";
             $bus_num = 1;
+            $bus_oper = "start";
         }else if($user_name == "양양 2호차"){
             $bus_gubun = "JO";
             $bus_num = 1;
+            $bus_oper = "start";
         }else if($user_name == "양양 3호차"){
             $bus_gubun = "AM";
             $bus_num = 1;
+            $bus_oper = "return";
         }else if($user_name == "양양 5호차"){
             $bus_gubun = "PM";
             $bus_num = 1;
+            $bus_oper = "return";
         }
         $busNum = $bus_gubun.$bus_num;
+        // $bus_oper = $row["bus_oper"];
         // $busNum = $row['busName'];
         // $bus_gubun = $row["bus_gubun"];
         // $bus_num = $row["bus_num"];
-        $busName = fnBusNum2023($busNum)["full"];
+        $busName = fnBusNum2023($busNum)["point"];
         ///$busName = $busName[0]." ".$busName[1].(($busName[1] == "오후" || $busName[1] == "저녁") ? " 출발" : "");
 
         $lat = $row['lat'];
         $lng = $row['lng'];
-        $arrMapList[$bus_gubun] .= '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" onclick="fnBusGPSPoint(this);">&nbsp;';
+        $arrMap = '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" bus_oper="'.$bus_oper.'" onclick="fnBusGPSPoint(this);">&nbsp;';
+        if($bus_oper == "start"){
+            $arrMap_start[$bus_gubun] .= $arrMap;
+        }else{
+            $arrMap_return[$bus_gubun] .= $arrMap;
+        }
     }
 }
 ?>
@@ -113,11 +124,12 @@ var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50;
 
 var busGPSList = {}
-var MARKER_POINT = "", MARKER_ZOOM = 16;
+var MARKER_POINT = "", MARKER_ZOOM = 16, MARKER_SHOPSEQ = <?=$shopseq?>;
 var MARKER_SPRITE_POSITION2 = {};
 function fnBusGPSPoint(obj) {
     var bus_gubun = $j(obj).attr("bus_gubun");
     var bus_num = $j(obj).attr("bus_num");
+    var bus_oper = $j(obj).attr("bus_oper");
     var params = "resparam=mappoint&bus_gubun=" + bus_gubun + "&bus_num=" + bus_num + "&shopseq=<?=$shopseq?>";
     $j.ajax({
         type: "POST",
@@ -133,9 +145,8 @@ function fnBusGPSPoint(obj) {
                 alert("셔틀버스의 GPS정보가 조회되지 않습니다\n\n페이지가 새로고침 됩니다.");
                 setTimeout('window.location.reload();', 500);
             }else{
-                var gubun = busnum.substring(0, 1);
-                MARKER_POINT = busnum;
-                if(gubun == "S" || gubun == "A"){
+                MARKER_POINT = bus_gubun + bus_num;
+                if(bus_oper == "start"){
                     MARKER_ZOOM = 17;
                 }else{
                     MARKER_ZOOM = 17;
@@ -180,31 +191,32 @@ function fnBusGPSPoint(obj) {
                         <h1 style='font-size:12px;height:50px;padding-top:20px;'>현재 서핑버스는 운행중이지 않습니다.</h1>
                     </td>
                 </tr>
-            <?}else{?>
-                <?
-                foreach ($arrMapList as $key => $value) {
+            <?}else{
+                if(count($arrMap_start) > 0)
+                {
                     echo "<tr>
-                            <th>[출발] 사당선</th>
-                            <td style='line-height:3;'>
-                            $value / $key
-                            </td>
+                                <th>서울 출발</th>
+                                <td style='line-height:3;'>";
+                                
+                    foreach ($arrMap_start as $key => $value) {
+                        echo $value;
+                    }
+
+                    echo "  </td>
                         </tr>";
-                }    
-                ?>
-                <?if($arrMapList["SA"]){?>
-                
-                <?
                 }
-                
-                if($arrMapList["S"]){
-                ?>
-                <tr>
-                    <th>양양 → 서울행</th>
-                    <td style="line-height:3;">
-                        <?=$arrMapList["S"]?>
-                    </td>
-                </tr>
-                <?
+
+                if(count($arrMap_return) > 0)
+                {
+                    echo "<tr>
+                                <th>서울 복귀</th>
+                                <td style='line-height:3;'>";
+                    foreach ($arrMap_return as $key => $value) {
+                        echo $value;
+                    }
+
+                    echo "  </td>
+                        </tr>";
                 }
             }
             ?>
@@ -224,5 +236,3 @@ function fnBusGPSPoint(obj) {
         setTimeout('$j("input[type=button]").eq(0).click();', 500);
     });
 </script>
-
-<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=<?=time()?>"></script>

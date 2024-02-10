@@ -95,7 +95,7 @@ $busgubun = $busData[0];
 
     <div class="top_area_zone">
         <section class="notice">
-            <div id="view_tab3" class="view_tab3" style="min-height: 800px;padding-bottom:60px;">
+            <div id="view_tab3" class="view_tab3" style="padding-bottom:60px;">
             <form id="frmRes" method="post" target="ifrmResize" autocomplete="off">
                 <span style="display:none;">
                     <br>resparam<input type="text" id="resparam" name="resparam" value="PointChange" />

@@ -36,6 +36,7 @@ var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_POSITION = parent.MARKER_SPRITE_POSITION2;
 
 var vlu = parent.MARKER_POINT;
+var shopseq = parent.MARKER_SHOPSEQ;
 var map = new naver.maps.Map('map', {
             useStyleMap: true,
             center: new naver.maps.LatLng(MARKER_SPRITE_POSITION[vlu][2], MARKER_SPRITE_POSITION[vlu][3]),
@@ -61,12 +62,14 @@ for (var key in MARKER_SPRITE_POSITION) {
         var marker = new naver.maps.Marker({
             map: map,
             position: position,
-            title: key,
+            bus_point: "bus",
             icon: {
-                url: 'https://actrip.cdn1.cafe24.com/bus/sp_pins_spot_v3.png',
-                size: new naver.maps.Size(24, 37),
-                anchor: new naver.maps.Point(12, 37),
-                origin: new naver.maps.Point(MARKER_SPRITE_POSITION[key][0], MARKER_SPRITE_POSITION[key][1])
+                url: '/act_2023/images/icon/bus_icon.png',
+                //url: 'https://actrip.cdn1.cafe24.com/bus/sp_pins_spot_v3.png',
+                // size: new naver.maps.Size(24, 37),
+                //size: new naver.maps.Size(24, 24),
+                anchor: new naver.maps.Point(20, 8),
+                //origin: new naver.maps.Point(MARKER_SPRITE_POSITION[key][0], MARKER_SPRITE_POSITION[key][1])
             },
             zIndex: 90
         });
@@ -81,9 +84,9 @@ for (var key in MARKER_SPRITE_POSITION) {
             '        <li class="up">' +
             '            <span class="title">' + MARKER_SPRITE_POSITION[key][6] + '</span><span id="reloadtime"></span>' +
             '        </li>' +
-            '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;margin-top:5px;padding-top:5px;padding-bottom:5px;" onclick="fnShopViewMove();">' +
-            '            <span class="title">정류장 목록보기</span>' +
-            '        </li>' +
+            // '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;margin-top:5px;padding-top:5px;padding-bottom:5px;" onclick="fnShopViewMove();">' +
+            // '            <span class="title">정류장 목록보기</span>' +
+            // '        </li>' +
             '    </ul>' +
             '</div>';
 
@@ -94,21 +97,26 @@ for (var key in MARKER_SPRITE_POSITION) {
             borderWidth: 0,
             disableAnchor: false,
             anchorSize: new naver.maps.Size(0, 0),
-            anchorColor: ""
+            anchorColor: "",
+            bus_point: "bus"
         });
     }else{
         var marker = new naver.maps.Marker({
             map: map,
             position: position,
-            title: key,
+            bus_point: key,
             icon: {
-                url: 'https://ssl.pstatic.net/static/maps/mantle/1x/marker-default.png'
+                url: 'https://actrip.cdn1.cafe24.com/bus/sp_pins_spot_v3.png',
+                size: new naver.maps.Size(24, 37),
+                anchor: new naver.maps.Point(12, 32),
+                origin: new naver.maps.Point(MARKER_SPRITE_POSITION[key][0], MARKER_SPRITE_POSITION[key][1])
             },
             zIndex: 80
         });
 
         var infoWindow = new naver.maps.InfoWindow({
-            content: '<div style="width:230px;text-align:left;padding:10px;line-height:1.5;"><b>'+ key.replace("2", "") +'</b><br/>&nbsp;&nbsp;&nbsp;' + MARKER_SPRITE_POSITION[key][4] + '<br/>&nbsp;&nbsp;&nbsp;' + MARKER_SPRITE_POSITION[key][5] + "</div>"
+            content: '<div style="width:230px;text-align:left;padding:10px;line-height:1.5;"><b>'+ key.replace("2", "") +'</b><br/>&nbsp;&nbsp;&nbsp;' + MARKER_SPRITE_POSITION[key][4] + '<br/>&nbsp;&nbsp;&nbsp;' + MARKER_SPRITE_POSITION[key][5] + "</div>",
+            bus_point: key
         });
     }
     markers.push(marker);
@@ -129,19 +137,30 @@ function getClickHandler(seq) {
     return function(e) {
         var marker = markers[seq],
             infoWindow = infoWindows[seq];
-        if (infoWindow.getMap()) {
-            infoWindow.close();
-        } else {
-            infoWindow.open(map, marker);
 
-            var position = new naver.maps.LatLng(marker["position"]["y"] + 0.0005,marker["position"]["x"]);
-            //map.panTo(position);
+            // console.log(infoWindow)
+            // alert(markers[seq].bus_point + '/' +infoWindows[seq].bus_point + '/' + infoWindow.getMap())
+        if (infoWindow.getMap()) {
+            //if(markers[seq].bus_point != infoWindows[seq].bus_point){
+                infoWindow.close();
+            //}
+        } else {
+            if(marker.icon.url == "/act_2023/images/icon/bus_icon.png"){
+                marker.icon.anchor.x = 20;
+                marker.icon.anchor.y = 0;
+            }
+            // }else{
+                infoWindow.open(map, marker);
+
+                var position = new naver.maps.LatLng(marker["position"]["y"] + 0.0005,marker["position"]["x"]);
+                //map.panTo(position);
+            //}
         }
     }
 }
 var pointx = 0;
 function getPointMove(){
-    var params = "resparam=mappoint&busgubun=" + vlu;
+    var params = "resparam=mappoint&bus_gubun=" + vlu.substring(0, 2) + "&bus_num=" + vlu.substring(2) + "&shopseq=" + shopseq;
     $.ajax({
         type: "POST",
         url: "/act_2023/front/bus/bus_gps_json.php",
@@ -172,11 +191,6 @@ function getPointMove(){
 
                 // var position = new naver.maps.LatLng((parseFloat(arrdata[2]) - tmppoint).toFixed(7), (parseFloat(arrdata[3]) - tmppoint).toFixed(7));
                 // map.panTo(position);
-                if(arrdata[8] == "사당선 1호차"){
-                    arrdata[8] = "사당선 1, 3호차";
-                }else if(arrdata[8] == "종로선 2호차"){
-                    arrdata[8] = "종로선 2, 4호차";
-                }
 
                 gpsNowTime = 61 - parseInt(arrdata[6].split("초")[0], 10);
                 var busbox = '<div class="overlaybox">' +
@@ -188,9 +202,9 @@ function getPointMove(){
                     '        <li class="up">' +
                     '            <span class="title">' + arrdata[6] + '</span><span id="reloadtime"></span>' +
                     '        </li>' +
-                    '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;margin-top:5px;padding-top:5px;padding-bottom:5px;" onclick="fnShopViewMove();">' +
-                    '            <span class="title">정류장 목록보기</span>' +
-                    '        </li>' +
+                    // '        <li style="background:#d24545;color:#fff;text-align:center;font-size:15px;cursor:pointer;margin-top:5px;padding-top:5px;padding-bottom:5px;" onclick="fnShopViewMove();">' +
+                    // '            <span class="title">정류장 목록보기</span>' +
+                    // '        </li>' +
                     '    </ul>' +
                     '</div>';
 
@@ -201,9 +215,13 @@ function getPointMove(){
                     borderWidth: 0,
                     disableAnchor: false,
                     anchorSize: new naver.maps.Size(0, 0),
-                    anchorColor: ""
+                    anchorColor: "",
+                    bus_point: "bus"
                 });
                 infoWindows.push(infoWindow);
+                marker.icon.anchor.x = 20;
+                marker.icon.anchor.y = 0;
+                // console.log(marker)
                 infoWindow.open(map, marker);
             }
         }

@@ -173,7 +173,7 @@ if($count == 0){
     <div class="fixedwidth resbottom">
 		<input type="button" class="btnsurfdel" id="slide1" style="width:120px; height:40px;display:none;" value="창닫기" onclick="fnLayerView('');" >
         <div id="sildeing" style="display:block;height:100%;padding-top:5px;">
-            <iframe frameborder="0" id="ifrmView" name="ifrmView" style="width:100%;height:100%;" scrolling="auto"></iframe>
+            <iframe frameborder="0" id="ifrmView" name="ifrmView" style="width:100%;height:92%;" scrolling="auto"></iframe>
         </div>
     </div>
 </div>
@@ -220,6 +220,7 @@ if($count == 0){
 		if (btnheight == "") btnheight = $j(".con_footer").height();
 		if (type == "down") {
 			$j("#ifrmView").css("display", "none");
+			$j("#ifrmView").attr("src", "about:blank");
 			$j(".con_footer").css("height", btnheight + "px");
 			$j("#slide1").css("display", "none");
 			$j(".con_footer").css("background-color", "");

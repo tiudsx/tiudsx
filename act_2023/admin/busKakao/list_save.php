@@ -74,8 +74,10 @@ if($param == "reskakaodel"){ //예약건 삭제
 	}else{
 		if($start_bus_gubun == "SA"){
 			$bus_gubun = "사당선";
-		}else{
+		}else if($start_bus_gubun == "JO"){
 			$bus_gubun = "종로선";
+		}else {
+			$bus_gubun = "출발";
 		}
 		$day_start = "[$start_day] $bus_gubun $start_cnt"."자리";
 	}
@@ -87,8 +89,10 @@ if($param == "reskakaodel"){ //예약건 삭제
 	}else{		
 		if($return_bus_gubun == "AM"){
 			$bus_gubun = "오후";
-		}else{
+		}else if($return_bus_gubun == "AM"){
 			$bus_gubun = "저녁";
+		}else{
+			$bus_gubun = "복귀";
 		}
 
 		$day_return = "[$return_day] $bus_gubun $return_cnt"."자리";

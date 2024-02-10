@@ -68,7 +68,7 @@ $sbusDate = $busData[1];
                 </div>
             </div>
             
-            <div id="view_tab2" style="min-height: 800px;padding-bottom:20px;">
+            <div id="view_tab2" style="padding-bottom:20px;">
                 <? include $pointurl; ?>
             </div>
         </section>
