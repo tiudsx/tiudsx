@@ -28,7 +28,7 @@ $to = "lud1@naver.com";
 //$to = "lud1@naver.com";
 
 if($bankname == "신한"){
-	//ex : https://actrip.co.kr/act_2023/callback/bank.php?content=[Web발신]@신한 04/09 14:20@389-02-188735@입금 35100@이승철&keyword=신한@입금
+	//ex : https://actrip.co.kr/act_2023/callback/bank.php?content=[Web발신]@신한 04/09 14:20@389-02-188735@입금 76000@이승철&keyword=신한@입금
 	//[Web발신]@신한 04/09 14:20@389-02-188735@입금         34@이승철
 	$banknum = $arrSMS[2];
 
@@ -55,6 +55,8 @@ if($bankname == "신한"){
 $select_query = "INSERT INTO `AT_CALL_BANK`(`smscontent`, `keyword`, `shopSeq`, `bankprice`, `bankname`, `banknum`, `bankuser`, `insdate`) VALUES ('$content', '$keyword', 0, '$bankprice', '$bankname', '$banknum', '$bankuser', now())";
 $result_set = mysqli_query($conn, $select_query);
 $seq = mysqli_insert_id($conn);
+
+$errCode = "01";
 if(!$result_set) goto errGo;
 //echo $select_query.'<br>';
 
@@ -86,130 +88,112 @@ if($count == 1){
 		$busSeatInfoS = "";
 		$busSeatInfoE = "";
 		$ressubseq = "";
+		
 		$arrSeatInfoS = array();
 		$arrSeatInfoE = array();
 
+		$day_start = "-";
+		$day_return = "-";
 		while ($rowSub = mysqli_fetch_assoc($resultSite)){
-			$shopname = $rowSub['shopname'];
 			$ressubseq .= $rowSub['ressubseq'].',';
-			$busGubun = substr($rowSub['res_bus'], 0, 1);
+	
+			$res_date = $row["res_date"];
 
-
-			if($shopseq == 14){
-				if($busGubun == "E"){ //동해
-					$pointTime = fnBusPointArr2023("동해_".$rowSub['res_spointname'], $shopseq, 1);
-
-					if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoS)){
-						$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}else{
-						$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}
-				}else{
-					$pointTime = fnBusPointArr2023("오후_".$rowSub['res_spointname'], $shopseq, 1);
-
-					if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoE)){
-						$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}else{
-						$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}
-				}
-
-			}else{
-				$pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
-
-				if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
-					if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoS)){
-						$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}else{
-						$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}
-				}else{
-					if(array_key_exists($rowSub['res_date'].$rowSub['res_bus'], $arrSeatInfoE)){
-						$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}else{
-						$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_bus']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_bus']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-					}
-				}
+			$bus_oper = $row["bus_oper"];
+			$bus_gubun = $row["bus_gubun"];
+			$bus_num = $row["bus_num"];
+	
+			$arrBus = fnBusNum2023($bus_gubun[$i].$bus_num[$i]);
+			$bus_line = '['.$res_date.'] '.$arrBus["point"].' '.$arrBus["num"];
+			if($bus_oper == "start"){ //서울 출발
+				$day_start = $bus_line;
+			}else{ //복귀
+				$day_return = $bus_line;
 			}
 		}
+		
 		$ressubseq .= '0';
-
-		// 예약좌석 정보 : 양양행
-		foreach($arrSeatInfoS as $x) {
-			$busSeatInfoS .= $x;
-		}
-
-		// 예약좌석 정보 : 서울행
-		foreach($arrSeatInfoE as $x) {
-			$busSeatInfoE .= $x;
-		}
-
-        $busSeatInfoTotal = " ▶ 좌석안내\n";
-        if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= $busSeatInfoS;
-        }
-        if($busSeatInfoE != ""){
-            if($busSeatInfoS != ""){
-                $busSeatInfoTotal .= "\n";
-            }
-            $busSeatInfoTotal .= $busSeatInfoE;
-        }
+		
+		$link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
 
 		if($shopseq == 7){
-			$busTypeY = "Y";
-			$busTypeS = "S";
-			$busTitleName = "양양";
-			$resparam = "surfbus_yy";
+			$busTitleName = "양양"; 
 		}else if($shopseq == 14){
-			$busTypeY = "E";
-			$busTypeS = "A";    
 			$busTitleName = "동해";    
-			$resparam = "surfbus_dh";	
 		}
-        $gubun_title = $busTitleName.' 서핑버스';
 
-		$tempName = "frip_bus02"; //예약확정
-		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
-		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
-		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
-		$btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
-		$btn_Notice = "";
-		$btn_ResContent = ""; //예약 상세안내
+        if($day_start != "-" && $day_return != "-"){ //왕복
+            $bus_line = "서울 ↔ $busTitleName";
+        }else if($day_start != "-"){ //서울 출발
+            $bus_line = "서울 → $busTitleName";
+        }else{ //서울 복귀
+            $bus_line = "$busTitleName → 서울";
+        }
+		
+        $kakao_gubun = "bus_confirm";
+        $msgTitle = '액트립 셔틀버스 확정안내';
+		$PROD_NAME = "셔틀버스 예약확정";
 
-		$msgInfo = $busSeatInfoTotal;
-
-        // 고객 카카오톡 발송
-        $msgTitle = '액트립 서핑버스 예약안내';
-		$arrKakao = array(
-            "gubun"=> "bus"
-            , "admin"=> "N"
-            , "tempName"=> $tempName
-            , "smsTitle"=> $msgTitle
+        //==========================카카오 메시지 발송 ==========================
+        $DebugInfo = array(
+            "PROD_NAME" => $PROD_NAME
+            , "PROD_TABLE" => "AT_RES_MAIN"
+            , "PROD_TYPE" => $kakao_gubun
+            , "RES_CONFIRM" => $res_confirm
+            , "resnum" => $ResNumber
+        );
+        $arrKakao = array(
+            "gubun"=> $kakao_gubun
             , "userName"=> $userName
             , "userPhone"=> $userPhone
-            , "msgType"=>$msgType
-            , "shopname"=>$gubun_title
-            , "MainNumber"=>$ResNumber
-            , "msgInfo"=>$msgInfo
-            , "btn_ResContent"=> $btn_ResContent
-            , "btn_ResSearch"=> $btn_ResSearch
-            , "btn_ResChange"=> $btn_ResChange
-            , "btn_ResGPS"=> $btn_ResGPS
-            , "btn_ResPoint"=> $btn_ResPoint
-            , "btn_Notice"=> $btn_Notice
-            , "smsOnly"=>"N"
-            , "PROD_NAME"=>"서핑버스"
-            , "PROD_URL"=>$shopseq
-            , "PROD_TYPE"=>"bus"
-            , "RES_CONFIRM"=>"3"
+            , "bus_line"=> $bus_line
+            , "day_start"=> $day_start
+            , "day_return"=> $day_return
+            , "link1"=> $link1 //예약
+            , "DebugInfo"=> $DebugInfo
+        );	
+
+        $arryKakao[0] = $arrKakao;
+    
+        $arrKakao = array(
+            "arryData"=> $arryKakao
+            , "array"=> "true" //배열 여부
+            , "tempName"=> "actrip_info02" //템플릿 코드
+            , "title"=> $msgTitle //타이틀
+            , "smsOnly"=> "N" //문자발송 여부
         );
+
+        $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+        $data = json_decode($arrRtn[0], true);
+
+        for ($i=0; $i < count($data); $i++) { 
+            //------- 알림톡 디버깅 -----
+            $code = $data[$i]["code"];
+            $msgid = $data[$i]["data"]["msgid"];
+            $message = $data[$i]["message"];
+            $originMessage = $data[$i]["originMessage"];
+            
+            $kakao_response = array(
+                "arrKakao"=> $arrKakao
+                , "item"=> $arryKakao[$i]
+                , "code"=> $code
+                , "msgid"=> $msgid
+                , "message"=> $message
+                , "originMessage"=> $originMessage
+            );
+    
+            // 카카오 알림톡 DB 저장 START
+            $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+            $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 END
+    
+            $errmsg = $select_query;
+            
+			$errCode = "02";
+            if(!$result_set) goto errGo;
+        }
 		
-		$arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);
-		$result_set = mysqli_query($conn, $select_query);
-
 		// 이메일 발송
 		//$to = "lud1@naver.com";
 		if(strrpos($usermail, "@") > 0){
@@ -240,119 +224,8 @@ if($count == 1){
 			, "info2_title"=> $info2_title
 			, "info2"=> $info2
 		);
-		sendMail($arrMail); //메일 발송
+		//sendMail($arrMail); //메일 발송
 
-	}else{	//서핑샵
-		$res_confirm = 8;
-		$surfshopMsg .= "";
-		$ressubseq = "";
-
-		while ($rowSub = mysqli_fetch_assoc($resultSite)){
-			$shopname = $rowSub['shopname'];
-			$ressubseq .= $rowSub['ressubseq'].',';
-
-			$TimeDate = '';
-			if(($rowSub['sub_title'] == "lesson" || $rowSub['sub_title'] == "pkg") && $rowSub['res_time'] != ""){
-				$TimeDate = '      - 강습시간 : '.$resTime[$i].'\n';
-			}
-	
-			$ResNum = '      - 인원 : ';
-			if($rowSub['res_m'] > 0){
-				$ResNum .= '남:'.$rowSub['res_m'].'명';
-			}
-			if($rowSub['res_m'] > 0 && $rowSub['res_w'] > 0){
-				$ResNum .= ',';
-			}
-			if($rowSub['res_w'] > 0){
-				$ResNum .= '여:'.$rowSub['res_w'].'명';
-			}
-			$ResNum .= '\n';
-	
-			$ResOptInfo = "";
-			$ResOptStay = "";
-			$optname = $rowSub["optname"];
-			$optinfo = $rowSub['optsubname'];
-			if($rowSub['sub_title'] == "lesson"){
-				$stayPlus = $rowSub['res_bus']; //숙박 여부
-				
-				$arrdate = explode("-", $rowSub['res_date']); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
-				$s_Y=$arrdate[0]; // 지정된 년도 
-				$s_m=$arrdate[1]; // 지정된 월
-				$s_d=$arrdate[2]; // 지정된 요일
-				
-				//이전일 요일구하기
-				$preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
-				$nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
-				if($stayPlus == 0){
-					$ResOptStay = '      - 숙박일 : '.$rowSub['res_date'].'(1박)\n';
-				}else if($stayPlus == 1){
-					$ResOptStay = '      - 숙박일 : '.$preDate.'(1박)\n';
-				}else if($stayPlus == 2){
-					$ResOptStay = '      - 숙박일 : '.$preDate.'(2박)\n';
-				}else{
-					//$ResOptInfo = '      - 안내 : '.$arrOptInfo[$optseq].'\n';
-				}
-			}else if($rowSub['sub_title'] == "rent"){
-	
-			}else if($rowSub['sub_title'] == "pkg"){
-				$ResOptInfo = '      - '.$optinfo.'\n';
-			}
-			$surfshopMsg .= '    ['.$optname.']\n      - 예약일 : '.$rowSub['res_date'].'\n'.$ResOptStay.$ResNum.'\n'.$ResOptInfo;	
-		}
-		$ressubseq .= '0';
-
-		$msgTitle = '액트립 예약안내';
-		$arrKakao = array(
-			"gubun"=> $code
-			, "admin"=> "N"
-			, "tempName"=> "at_surf_step1"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "userPhone"=> $userPhone
-			, "MainNumber"=>$ResNumber
-            , "msgInfo"=>$surfshopMsgg
-			, "link1"=>"orderview?num=1&resNumber=".$ResNumber //예약조회/취소
-			, "link2"=>"surflocation?seq=".$shopseq //위치안내
-			, "link3"=>"event" //공지사항
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=>$shopname
-			, "PROD_URL"=>$shopseq
-			, "PROD_TYPE"=>"surf_user"
-			, "RES_CONFIRM"=>$res_confirm
-		);
-		
-		$arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);            
-		$result_set = mysqli_query($conn, $select_query);
-
-
-		$info1_title = "신청목록";
-        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $surfshopMsg));
-        $info2_title = "";
-        $info2 = "";
-
-		$arrMail = array(
-			"gubun"=> "surf"
-			, "gubun_step" => 8
-			, "gubun_title" => $shopname
-            , "mailto"=> $to
-			, "mailfrom"=> "surfshop_res@actrip.co.kr"
-			, "mailname"=> "actrip"
-			, "userName"=> $userName
-			, "ResNumber"=> $ResNumber
-			, "userPhone" => $userPhone
-			, "etc" => $etc
-			, "totalPrice1" => ""
-			, "totalPrice2" => ""
-			, "banknum" => ""
-			, "info1_title"=> $info1_title
-			, "info1"=> $info1
-			, "info2_title"=> $info2_title
-			, "info2"=> $info2
-		);
-		sendMail($arrMail); //메일 발송
 	}
 
 	$select_query = "UPDATE `AT_RES_SUB` 
@@ -361,15 +234,18 @@ if($count == 1){
 							,confirmdate = now()
 							,upduserid = 'autobank'
 						WHERE ressubseq IN (".$ressubseq.")";
-	$result_set = mysqli_query($conn, $select_query);
-	if(!$result_set) goto errGo;
+	// $result_set = mysqli_query($conn, $select_query);
+	// if(!$result_set) goto errGo;
 	
 	$select_query = "INSERT INTO `AT_CALL_BANK_HISTORY`(`smscontent`, `keyword`, `shopSeq`, `goodstype`, `bankprice`, `bankname`, `banknum`, `bankuser`, `MainNumber`, `insdate`) VALUES ('$content', '$keyword', $shopseq, '$code', '$bankprice', '$bankname', '$banknum', '$bankuser', $ResNumber, now())";
 	$result_set = mysqli_query($conn, $select_query);
+	echo $select_query;
+	$errCode = "03";
 	if(!$result_set) goto errGo;
 
-	$select_query = "DELETE FROM `AT_CALL_BANK` WHERE seq = ".$seq;
+	$select_query = "DELETE FROM `AT_CALL_BANK` WHERE seq = $seq";
 	$result_set = mysqli_query($conn, $select_query);
+	$errCode = "04";
 	if(!$result_set) goto errGo;
 
 }else if($count > 1){ //같은 금액, 같은 이름 2명 이상
@@ -596,7 +472,7 @@ if($count == 1){
 if(!$success){
 	errGo:
 	mysqli_query($conn, "ROLLBACK");
-	echo 'err';
+	echo $errCode;
 }else{
 	mysqli_query($conn, "COMMIT");
 	echo '0';

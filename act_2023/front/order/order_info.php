@@ -28,7 +28,7 @@ include __DIR__.$funUrl;
 
 if($gubun == 1){ //서핑샵
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, c.optcode, c.stay_day 
-						FROM ".$dbTableMain." a INNER JOIN ".$dbTableSub." as b 
+						FROM $dbTableMain a INNER JOIN $dbTableSub as b 
 							ON a.resnum = b.resnum
 								AND b.code = 'surf'
 						INNER JOIN `AT_PROD_OPT` c
@@ -38,13 +38,17 @@ if($gubun == 1){ //서핑샵
 
 }else{ //셔틀버스
 	$select_query = "SELECT a.*, b.*, a.resnum as res_num, TIMESTAMPDIFF(MINUTE, b.insdate, now()) as timeM, TIMESTAMPDIFF(MINUTE, b.confirmdate, now()) as timeM2, d.couponseq
-						FROM ".$dbTableMain." a INNER JOIN ".$dbTableSub." as b 
+						FROM $dbTableMain a INNER JOIN $dbTableSub as b 
 							ON a.resnum = b.resnum 
 						LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
 						WHERE a.resnum = $resNumber
 							ORDER BY b.bus_oper DESC, b.res_seat";
-}
 
+	
+	$select_row_query = "SELECT a.res_confirm
+							FROM $dbTableSub a 
+							WHERE a.resnum = $resNumber AND res_confirm = 3";
+}
 
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
@@ -53,6 +57,9 @@ if($count == 0){
 	echo "<script>alert('예약된 정보가 없습니다.');location.href='/ordersearch';</script>";
 	return;
 }
+
+$result_row = mysqli_query($conn, $select_row_query);
+$count_row = mysqli_num_rows($result_row);
 ?>
 
 <script type="text/javascript" src="/act_2023/front/_js/ordersearch.js?v=<?=time()?>"></script>
@@ -70,7 +77,9 @@ if($count == 0){
             </div>
 			<div id="seatTab" class="busOption01" style="padding: 0px 10px;">
 				<ul class="busLineTab" style="display: block;">
+				<?if($count_row > 0){?>
 					<li class="on" style="cursor:pointer; font-size:1.1em; width:130px; text-align:left;" onclick="fnLayerView('/busgps');">실시간 위치조회</li>
+				<?}?>
 					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('/pointlist');">정류장 안내</li>
 				</ul>
 			</div>

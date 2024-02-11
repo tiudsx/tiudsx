@@ -334,7 +334,7 @@ if($param == "RtnPrice"){
         }else{ //복귀
             array_push($arrSeatInfoE, $ressubseq);
             $return_cnt++;
-        } 
+        }
     }
 
     if($start_cnt != count($SurfDateBusE)){
