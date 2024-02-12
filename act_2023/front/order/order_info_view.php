@@ -1,6 +1,7 @@
 <?
 $i = 1;
 $couponPrice = 0;
+$Price = 0;
 $totalPrice = 0;
 $shopbankview = 0;
 $PointChangeChk = 0;
@@ -60,7 +61,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
 	if($res_confirm == 0){
 		$ResConfirm = "미입금";
-		$totalPrice += $row['res_price'];
+		$Price += $row['res_price'];
+		$totalPrice += $row['res_totalprice'];
 		$shopbankview++;
 		$PointChangeChk++;
 
@@ -68,17 +70,20 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	}else if($res_confirm == 1 || $res_confirm == 2){
 		$ResConfirm = "확인중";
 		$ResColor = "rescolor2";
-		$totalPrice += $row['res_price'];
+		$Price += $row['res_price'];
+		$totalPrice += $row['res_totalprice'];
 		$PointChangeChk++;
 	}else if($res_confirm == 6 || $res_confirm == 8){
 		$ResConfirm = "입금완료";
 		$ResColor = "rescolor2";
-		$totalPrice += $row['res_price'];
+		$Price += $row['res_price'];
+		$totalPrice += $row['res_totalprice'];
 		$PointChangeChk++;
 	}else if($res_confirm == 3){
 		$ResConfirm = "확정";
 		$ResColor = "rescolor3";
-		$totalPrice += $row['res_price'];
+		$Price += $row['res_price'];
+		$totalPrice += $row['res_totalprice'];
 		$PointChangeChk++;
 		
 		$btnDisplay = true;
@@ -86,13 +91,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	}else if($res_confirm == 4){
 		$ResConfirm = "환불요청";
 		$ResColor = "rescolor1";
-        $totalPrice += $row['res_price'];
+		$Price += $row['res_price'];
+        $totalPrice += $row['res_totalprice'];
         
         $RtnTotalPrice += $row['rtn_totalprice']; //환불금액 표시
 	}else if($res_confirm == 5){
 		$ResConfirm = "환불완료";
 		$ResCss = "rescss";
-		$totalPrice += $row['res_price'];
+		$Price += $row['res_price'];
+		$totalPrice += $row['res_totalprice'];
 	}else if($res_confirm == 7){
 		$ResConfirm = "취소";
 		$ResCss = "rescss";
@@ -278,28 +285,16 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		</div>
 		<?
 		}
-
-		if($row['res_price_coupon'] > 0){
-			$res_price_coupon = $row['res_price_coupon'];
-	
-			if($res_price_coupon <= 100){ //퍼센트 할인
-				$res_totalprice = $totalPrice * (1 - ($res_price_coupon / 100));
-			}else{ //금액할인
-				$res_totalprice = $totalPrice - $res_price_coupon;
-			}
-		}else{
-			$res_totalprice = $totalPrice;
-		}
 		?>
 				</td>
 			</tr>
-			<?if($chkViewPrice == 1 && $res_totalprice > 0){?>
+			<?if($chkViewPrice == 1 && $totalPrice > 0){?>
 			<tr>
                 <th scope="row">결제금액</th>
                 <td>
-					<b style="font-weight:700;color:red;"><?=number_format($res_totalprice)?>원</b>
-					<?if(($totalPrice - $res_totalprice) > 0){?>
-				 	(<?=number_format($totalPrice)?>원 - 할인쿠폰:<?=number_format($totalPrice - $res_totalprice)?>원)
+					<b style="font-weight:700;color:red;"><?=number_format($totalPrice)?>원</b>
+					<?if(($Price - $totalPrice) > 0){?>
+				 	(할인쿠폰 : <?=number_format($Price - $totalPrice)?>원)
 					<?}?>
 				</td>
             </tr>
