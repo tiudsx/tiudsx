@@ -362,8 +362,8 @@ function fnBusSearchDate(selectedDate, objID, bus_gubun = "ALL") {
     $j.post("/act_2023/front/bus/view_bus_day.php", formData,
         function(data, textStatus, jqXHR) {
             data.forEach(function(el, i) {
-                if (el.seat <= el.seatcnt && !(busrestype == "change")) { //매진
-                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + bus_name + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.bus_name + '</li>');
+                if (parseInt(el.seat) <= parseInt(el.seatcnt) && !(busrestype == "change")) { //매진
+                    $j("ul[class=busLine]").eq(eqnum).append('<li onclick="alert(\'선택하신 [' + el.bus_name + ']는 좌석이 매진되었습니다.\\n\\n취소 좌석이 발생할 경우 예매가능합니다.\');" style="cursor:pointer;text-decoration:line-through;">' + el.bus_name + '</li>');
                 }else{
                     $j("ul[class=busLine]").eq(eqnum).append('<li onclick="fnPointList(this);" seat="' + el.seat + '" bus_gubun="' + el.bus_gubun + '" bus_num="' + el.bus_num + '" bus_price="' + el.bus_price + '" style="cursor:pointer;">' + el.bus_name + '</li>');
                 }
@@ -730,26 +730,34 @@ function fnSeatSelected(obj) {
         var selVlu = "";
         if(buschannel == 17 || buschannel == 26){ //마린서프
             selVlu = "기사문해변";
-        }else if(buschannel == 20 || buschannel == 24 || buschannel == 27){ //인구서프, 엉클 프립
+        }else if(buschannel == 20 || buschannel == 27){ //인구서프, 엉클 프립
             selVlu = "인구해변";
         }else if(buschannel == 21 || buschannel == 28){ //서프팩토리
             selVlu = "대진해변";
         }else if(buschannel == 22 || buschannel == 29){ //솔게하
             selVlu = "솔.동해점";
         }else if(buschannel == 23 || buschannel == 25){ //브라보서프, 금진 프립
-            selVlu = "금진해변";
+            selVlu = "브라보서프";
         }
         
         var arrObj_S = eval("busPoint." + bus_gubun); //출발 정류장
         var sPoint = "<option value='N'>출발</option>";
         arrObj_S.forEach(function(el, i) {
-            sPoint += "<option value='" + el.code + "'>" + el.codename + "</option>";
+            let sel = "";
+            if(el.codename == selVlu){
+                sel = "selected";
+            }
+            sPoint += "<option value='" + el.code + "' " + sel + ">" + el.codename + "</option>";
         });
 
         var arrObj_E = eval("busPoint." + busType + "end");
         var ePoint = "<option value='N'>도착</option>";
         arrObj_E.forEach(function(el, i) {
-            ePoint += "<option value='" + el.code + "'>" + el.codename + "</option>"; 
+            let sel = "";
+            if(el.codename == selVlu){
+                sel = "selected";
+            }
+            ePoint += "<option value='" + el.code + "' " + sel + ">" + el.codename + "</option>"; 
         });
 
         var insHtml = "";

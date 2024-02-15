@@ -3,7 +3,6 @@ include __DIR__.'/../common/db.php';
 include __DIR__.'/../common/kakaoalim.php';
 include __DIR__.'/../common/func.php';
 
-return;
 $success = true;
 $datetime = date('Y/m/d H:i'); 
 
@@ -34,101 +33,103 @@ $countChk = "";
 
 //==== 액트립 예약건 자동취소 : 1시간 체크 ====
 $ressubseq = "";
-$select_query = 'SELECT a.user_name, a.user_tel, a.etc, b.* 
+$select_query = 'SELECT a.user_name, a.user_tel, b.seq, a.resnum
                     FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
                         ON a.resnum = b.resnum 
                     WHERE b.res_confirm = 0
                         AND TIMESTAMPDIFF(MINUTE, b.insdate, now()) > 60
-                    ORDER BY b.resnum, b.res_date, b.ressubseq';
+                    GROUP BY a.user_name, a.user_tel, b.seq, a.resnum';
 $query_log .= '
                 조회 AT_RES_SUB : '.$select_query;
 
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
-$k = 0;
 if($count > 0){
-	$x = 0;
-	$PreMainNumber = "";
+	$i = 0;
+	$ResNumberList = "";
 	while ($rowTime = mysqli_fetch_assoc($result_setlist)){
-		$MainNumber = $rowTime['resnum'];
+		$ResNumber = $rowTime['resnum'];
+		$userName = $rowTime["user_name"];
+		$userPhone = $rowTime["user_tel"];
+		$shopseq = $rowTime["seq"];
 
-//============================ 실행 단계 ============================
-		if($MainNumber != $PreMainNumber && $x > 0){        
-            $msgTitle = '액트립 자동취소 안내';        
-            $arrKakao = array(
-                "gubun"=> $code
-                , "admin"=> "N"
-                , "tempName"=> "at_res_step4"
-                , "smsTitle"=> $msgTitle
-                , "userName"=> $userName
-                , "userPhone"=> $userPhone
-                , "shopname"=> $shopname
-                , "MainNumber"=> $MainNumber
-                , "smsOnly"=>"N"
-                , "PROD_NAME"=>"자동취소"
-                , "PROD_URL"=>$shopseq
-                , "PROD_TYPE"=> $code."_cancel"
-                , "RES_CONFIRM"=>"7"
-            );
-            $arrRtn = sendKakao($arrKakao); //알림톡 발송
-        
-            // 카카오 알림톡 DB 저장 START
-            $select_query = kakaoDebug($arrKakao, $arrRtn);
-            $result_set = mysqli_query($conn, $select_query);
-            // 카카오 알림톡 DB 저장 END
+		$ResNumberList .= $ResNumber.",";
 
-            $k++;
-		}
-//============================ 실행 단계 ============================
-		$code = $rowTime['code'];
-		$userName = $rowTime['user_name'];
-		$userPhone = $rowTime['user_tel'];
-		$sDate = $rowTime["res_date"];
-        $shopname = $rowTime['shopname'];
-        $optname = $rowTime["optname"];
-        $shopseq = $rowTime["seq"];
+		//==========================카카오 메시지 발송 ==========================
+        if($shopseq == 7){
+            $busTitleName = "양양"; 
+        }else if($shopseq == 14){
+            $busTitleName = "동해";    
+        }
 
-        $x++;
+        $kakao_gubun = "bus_autocancel";
+        $msgTitle = "액트립 자동취소 안내";
+        $PROD_NAME = "셔틀버스 자동취소";
+    
+        $DebugInfo = array(
+            "PROD_NAME" => $PROD_NAME
+            , "PROD_TABLE" => "AT_RES_MAIN"
+            , "PROD_TYPE" => $kakao_gubun
+            , "RES_CONFIRM" => 3
+            , "resnum" => $ResNumber
+        );
+        $arrKakao = array(
+            "gubun"=> $kakao_gubun
+            , "userName"=> $userName
+            , "userPhone"=> $userPhone
+            , "link1"=> shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber) //예약
+            , "DebugInfo"=> $DebugInfo
+        );
 
-		$PreMainNumber = $rowTime['resnum'];
-		$ressubseq .= $rowTime['ressubseq'].',';
+		$arryKakao[$i] = $arrKakao;
+		//==========================카카오 메시지 발송 ==========================
+
+        $i++;
 	}
-	$ressubseq .= '0';
+    
+	$ResNumberList .= "0";
 
-//============================ 실행 단계 ============================
-    $msgTitle = '액트립 자동취소 안내';        
     $arrKakao = array(
-        "gubun"=> $code
-        , "admin"=> "N"
-        , "tempName"=> "at_res_step4"
-        , "smsTitle"=> $msgTitle
-        , "userName"=> $userName
-        , "userPhone"=> $userPhone
-        , "shopname"=> $shopname
-        , "MainNumber"=> $MainNumber
-        , "smsOnly"=>"N"
-        , "PROD_NAME"=>"자동취소"
-        , "PROD_URL"=>$shopseq
-        , "PROD_TYPE"=> $code."_cancel"
-        , "RES_CONFIRM"=>"7"
-    );
-    $arrRtn = sendKakao($arrKakao); //알림톡 발송
+		"arryData"=> $arryKakao
+		, "array"=> "true" //배열 여부
+		, "tempName"=> "actrip_info03" //템플릿 코드
+		, "title"=> $msgTitle //타이틀
+		, "smsOnly"=> "N" //문자발송 여부
+	);
 
-    // 카카오 알림톡 DB 저장 START
-    $select_query = kakaoDebug($arrKakao, $arrRtn);
-    $result_set = mysqli_query($conn, $select_query);
-    // 카카오 알림톡 DB 저장 END
+	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-	$k++;
-//============================ 실행 단계 ============================
+	$data = json_decode($arrRtn[0], true);
+
+	for ($i=0; $i < count($data); $i++) { 
+		//------- 알림톡 디버깅 -----
+		$code = $data[$i]["code"];
+		$msgid = $data[$i]["data"]["msgid"];
+		$message = $data[$i]["message"];
+		$originMessage = $data[$i]["originMessage"];
+		
+		$kakao_response = array(
+			"arrKakao"=> $arrKakao
+			, "item"=> $arryKakao[$i]
+			, "code"=> $code
+			, "msgid"=> $msgid
+			, "message"=> $message
+			, "originMessage"=> $originMessage
+		);
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
+	}
 
 	$success = true;
 	$select_query = "UPDATE `AT_RES_SUB` 
                         SET res_confirm = 7
                             ,upddate = now()
                             ,upduserid = 'timeover'
-                        WHERE ressubseq IN (".$ressubseq.")";
+                        WHERE resnum IN (".$ResNumberList.") AND res_confirm = 0";
 
 	$query_log .= '
                     자동취소 AT_RES_SUB : '.str_replace("'", '"',$select_query);
@@ -138,12 +139,8 @@ if($count > 0){
 	$errChk .= "|07";
     if(!$result_set) $success = false;
     
-    $countChk .= "@".$code."|".$k;   
+    $countChk .= "@bus|".$i;   
 }
-
-//==== 서핑버스 예약건 알림톡 발송 시작 ====
-
-//==== 서핑버스 예약건 알림톡 발송 종료 ====
 
 
 //==== 솔게하 예약건 알림톡 발송 시작 ====
@@ -155,72 +152,147 @@ if(date("H") >= 9 && $count == 0){
     $select_query = "INSERT INTO AT_CALL_TIMEOVER(`user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`, `sqlquery`) VALUES ('솔알림톡', $weeknum, $timenum, now(), 'OK', $timestart, $timeend, DATE_FORMAT(NOW(), '%Y-%m-%d'))";
     $result_set = mysqli_query($conn, $select_query);
 
-    $select_querySol = "SELECT a.resseq FROM AT_SOL_RES_MAIN a INNER JOIN AT_SOL_RES_SUB b 
+    $select_querySol = "SELECT a.resseq, a.resnum, a.user_name, a.user_tel FROM AT_SOL_RES_MAIN a INNER JOIN AT_SOL_RES_SUB b 
                                 ON a.resseq = b.resseq
-                            WHERE a.res_kakao = 0 AND a.res_kakao_chk = 'N' 
+                            WHERE a.res_kakao_chk = 'N' 
                                 AND (DATE_ADD(b.sdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d') OR DATE_ADD(b.resdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d'))
                                 AND a.res_confirm = '확정'
-                                GROUP BY a.resseq";
+                                GROUP BY a.resseq, a.resnum, a.user_name, a.user_tel";
     $query_log .= '
                     솔 카톡발송 AT_SOL_RES_MAIN : '.str_replace("'", '"',$select_querySol);
-
     $result_setlist = mysqli_query($conn, $select_querySol);
     $count = mysqli_num_rows($result_setlist);
 
     if($count > 0){
+        $i = 0;
         while ($rowSol = mysqli_fetch_assoc($result_setlist)){
-            $resseq = $rowSol['resseq'];
+            $seq = $rowSol['resseq'];
+            $resnum = $rowSol['resnum'];
+            $userName = $rowSol["user_name"];
+            $userPhone = $rowSol["user_tel"];
 
-            $select_query = "SELECT user_name, user_tel FROM `AT_SOL_RES_MAIN` WHERE resseq = $resseq";
+            $select_query = "SELECT 
+                                MIN(CASE 
+                                        WHEN sdate = '0000-00-00' THEN NULL 
+                                        ELSE sdate END) AS sdate
+                                , MAX(CASE 
+                                        WHEN edate = '0000-00-00' THEN NULL 
+                                        ELSE edate END) AS edate
+                                , MAX(CASE 
+                                        WHEN resdate = '0000-00-00' THEN NULL 
+                                        ELSE resdate END) AS resdate_max
+                                , MIN(CASE 
+                                        WHEN resdate = '0000-00-00' THEN NULL 
+                                        ELSE resdate END) AS resdate_min
+                            FROM AT_SOL_RES_SUB WHERE resseq = $seq";
             $result = mysqli_query($conn, $select_query);
-            $rowMain = mysqli_fetch_array($result);
-        
-            $userName = $rowMain["user_name"];
-            $userPhone = $rowMain["user_tel"];
-        
+            $rowSub = mysqli_fetch_array($result);
+
+            $sdate = $rowSub["sdate"];
+            $edate = $rowSub["edate"];
+            $resdate_max = $rowSub["resdate_max"];
+            $resdate_min = $rowSub["resdate_min"];
+
+            $date_start = "";
+            $date_end = "";
+            if($sdate == null){ //숙박일이 없는 경우 : 바베큐 또는 강습이용일
+                $date_start = $resdate_min;
+                $date_end = $resdate_max;
+            }else{ //숙박일이 있는 경우
+                if($resdate_min == null){ //바베큐 또는 강습일이 없는 경우
+                    $date_start = $sdate;
+                    $date_end = $edate;
+                }else{
+                    if($sdate >= $resdate_min){
+                        $date_start = $resdate_min;
+                    }else{
+                        $date_start = $sdate;
+                    }
+                    
+                    if($edate <= $resdate_max){
+                        $date_end = $resdate_max;
+                    }else{
+                        $date_end = $edate;
+                    }
+                }
+            }
+
+            $userDate = ($date_start == $date_end) ? $date_start : "$date_start ~ $date_end";
+
             //==========================카카오 메시지 발송 ==========================
-            $select_query_sub = "SELECT * FROM AT_SOL_RES_SUB WHERE resseq = $resseq ORDER BY ressubseq";
-            $resultSite = mysqli_query($conn, $select_query_sub);
-    
-			$msgTitle = '솔게스트하우스&솔서프 예약안내';
-            $arrKakao = array(
-                "gubun"=> $code
-                , "admin"=> "N"
-                , "tempName"=> "at_surf_step3"
-				, "smsTitle"=> $msgTitle
-                , "userName"=> $userName
-                , "userPhone"=> $userPhone
-                , "link1"=>"sol_kakao?num=1&seq=".urlencode(encrypt($resseq)) //예약조회/취소
-                , "link2"=>"sol_location?seq=".urlencode(encrypt($resseq)) //지도로 위치보기
-                , "link3"=>"sol_location?seq=".urlencode(encrypt($resseq)) //이벤트
-                , "smsOnly"=>"N"
-                , "PROD_NAME"=>"솔게하"
-                , "PROD_URL"=>""
-                , "PROD_TYPE"=>"sol_complete"
-                , "RES_CONFIRM"=>"-1"
+            $DebugInfo = array(
+                "PROD_NAME" => "솔게하"
+                , "PROD_TABLE" => "AT_SOL_RES_MAIN"
+                , "PROD_TYPE" => "sol_complete"
+                , "RES_CONFIRM" => "-1"
+                , "resnum" => $resnum
+                , "resseq"=> $seq
             );
-    
-            $arrRtn = sendKakao($arrKakao); //알림톡 발송
-    
-            //------- 쿠폰코드 입력 -----
-            $data = json_decode($arrRtn[0], true);
-            $kakao_code = $data[0]["code"];
-            $kakao_type = $data[0]["data"]["type"];
-            $kakao_msgid = $data[0]["data"]["msgid"];
-            $kakao_message = $data[0]["message"];
-            $kakao_originMessage = $data[0]["originMessage"];
-    
-            $userinfo = "$userName|$userPhone|$datetime||||$kakao_code|$kakao_type|$kakao_message|$kakao_originMessage|$kakao_msgid";
-    
-            // 카카오 알림톡 DB 저장 START
-            $select_query = kakaoDebug($arrKakao, $arrRtn);            
-            $result_set = mysqli_query($conn, $select_query);
-            // 카카오 알림톡 DB 저장 END
-    
-            $select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$userinfo."' WHERE resseq = $resseq";
-            $result_set = mysqli_query($conn, $select_query);
-            if(!$result_set) $success = false;
+
+            $arrKakao = array(
+                "gubun"=> "timeover"
+                , "userName"=> $userName
+                , "userPhone"=> "01944370009"//$userPhone
+                , "userDate"=> $userDate
+                , "link1"=>shortURL("https://actrip.co.kr/sol_kakao?num=1&seq=".urlencode(encrypt($seq))) //예약조회/취소
+                , "DebugInfo"=> $DebugInfo
+            );	
+        
+            $arryKakao[$i] = $arrKakao;
+            $i++;
         }
+        
+        //==========================카카오 메시지 발송 ==========================
+        $msgTitle = '솔게하&솔서프 동해점';
+
+        $total_page = ceil(count($arryKakao) / 100);
+        for ($x=0; $x < $total_page; $x++) {
+            $arryKakao2 = array_filter($arryKakao, function($k) use ($x) {
+                $page_cnt = ($x * 100);
+                $start_cnt = 0 + $page_cnt;
+                $end_cnt = 100 + $page_cnt;
+                return $k >= $start_cnt && $k < $end_cnt;
+            }, ARRAY_FILTER_USE_KEY);            
+            
+            $arrKakao = array(
+                "arryData"=> $arryKakao2
+                , "array"=> "true" //배열 여부
+                , "tempName"=> "sol_info02" //템플릿 코드
+                , "title"=> $msgTitle //타이틀
+                , "smsOnly"=> "N" //문자발송 여부
+            );
+
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+            $data = json_decode($arrRtn[0], true);
+
+            for ($i=0; $i < count($data); $i++) { 
+                //------- 알림톡 디버깅 -----
+                $code = $data[$i]["code"];
+                $msgid = $data[$i]["data"]["msgid"];
+                $message = $data[$i]["message"];
+                $originMessage = $data[$i]["originMessage"];
+                
+                $kakao_response = array(
+                    "arrKakao"=> $arrKakao
+                    , "item"=> $arryKakao[($i + ($x * 100))]
+                    , "code"=> $code
+                    , "msgid"=> $msgid
+                    , "message"=> $message
+                    , "originMessage"=> $originMessage
+                );
+        
+                // 카카오 알림톡 DB 저장 START
+                $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+                $result_set = mysqli_query($conn, $select_query);
+                // 카카오 알림톡 DB 저장 END
+        
+                $resseq = $arryKakao[($i + ($x * 100))]["DebugInfo"]["resseq"];
+                $select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', res_kakao = res_kakao + 1, userinfo = '".$msgid."' WHERE resseq = $resseq";
+                $result_set = mysqli_query($conn, $select_query);
+            }
+        }
+
     }
 }
 //==== 솔게하 예약건 알림톡 발송 종료 ====
@@ -236,7 +308,4 @@ if(!$success){
 	mysqli_query($conn, "COMMIT");
 	$success = 'ok';
 }
-// $query_log = '';
-
-//mysqli_query($conn, "COMMIT");
 ?>

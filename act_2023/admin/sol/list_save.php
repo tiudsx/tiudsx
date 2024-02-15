@@ -78,7 +78,6 @@ if($param == "solkakaoAll"){
 		$userDate = ($date_start == $date_end) ? $date_start : "$date_start ~ $date_end";
 	
 		//==========================카카오 메시지 발송 ==========================
-		$msgTitle = '솔게하&솔서프 동해점';
 		$DebugInfo = array(
 			"PROD_NAME" => "솔게하"
 			, "PROD_TABLE" => "AT_SOL_RES_MAIN"
@@ -100,47 +99,60 @@ if($param == "solkakaoAll"){
 		$arryKakao[$i] = $arrKakao;
 	}
 
-	$arrKakao = array(
-		"arryData"=> $arryKakao
-		, "array"=> "true" //배열 여부
-		, "tempName"=> "sol_info02" //템플릿 코드
-		, "title"=> $msgTitle //타이틀
-		, "smsOnly"=> "N" //문자발송 여부
-	);
-	
-	$arrRtn = sendKakao($arrKakao); //알림톡 발송
+	//==========================카카오 메시지 발송 ==========================
+	$msgTitle = '솔게하&솔서프 동해점';
 
-	$data = json_decode($arrRtn[0], true);
-
-	for ($i=0; $i < count($data); $i++) { 
-		//------- 알림톡 디버깅 -----
-		$code = $data[$i]["code"];
-		$msgid = $data[$i]["data"]["msgid"];
-		$message = $data[$i]["message"];
-		$originMessage = $data[$i]["originMessage"];
+	$total_page = ceil(count($arryKakao) / 100);
+	for ($x=0; $x < $total_page; $x++) {
+		$arryKakao2 = array_filter($arryKakao, function($k) use ($x) {
+			$page_cnt = ($x * 100);
+			$start_cnt = 0 + $page_cnt;
+			$end_cnt = 100 + $page_cnt;
+			return $k >= $start_cnt && $k < $end_cnt;
+		}, ARRAY_FILTER_USE_KEY);            
 		
-		$kakao_response = array(
-			"arrKakao"=> $arrKakao
-			, "item"=> $arryKakao[$i]
-			, "code"=> $code
-			, "msgid"=> $msgid
-			, "message"=> $message
-			, "originMessage"=> $originMessage
+		$arrKakao = array(
+			"arryData"=> $arryKakao2
+			, "array"=> "true" //배열 여부
+			, "tempName"=> "sol_info02" //템플릿 코드
+			, "title"=> $msgTitle //타이틀
+			, "smsOnly"=> "N" //문자발송 여부
 		);
 
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
-		$result_set = mysqli_query($conn, $select_query);
-		// 카카오 알림톡 DB 저장 END
+		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-		$resseq = $arryKakao[$i]["DebugInfo"]["resseq"];
-		$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakao = res_kakao + 1, userinfo = '".$msgid."' WHERE resseq = ".$resseq;
-		$result_set = mysqli_query($conn, $select_query);
+		$data = json_decode($arrRtn[0], true);
 
-		$errmsg = $select_query;
-		if(!$result_set) goto errGo;
+		for ($i=0; $i < count($data); $i++) { 
+			//------- 알림톡 디버깅 -----
+			$code = $data[$i]["code"];
+			$msgid = $data[$i]["data"]["msgid"];
+			$message = $data[$i]["message"];
+			$originMessage = $data[$i]["originMessage"];
+			
+			$kakao_response = array(
+				"arrKakao"=> $arrKakao
+				, "item"=> $arryKakao[($i + ($x * 100))]
+				, "code"=> $code
+				, "msgid"=> $msgid
+				, "message"=> $message
+				, "originMessage"=> $originMessage
+			);
+	
+			// 카카오 알림톡 DB 저장 START
+			$select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+			$result_set = mysqli_query($conn, $select_query);
+			// 카카오 알림톡 DB 저장 END
+	
+			$resseq = $arryKakao[($i + ($x * 100))]["DebugInfo"]["resseq"];
+			$select_query = "UPDATE `AT_SOL_RES_MAIN` SET res_kakaoinfo = 'Y', res_kakao = res_kakao + 1, userinfo = '".$msgid."' WHERE resseq = $resseq";
+			$result_set = mysqli_query($conn, $select_query);
+
+			$errmsg = $select_query;
+			if(!$result_set) goto errGo;
+		}
 	}
-		
+	
 	mysqli_query($conn, "COMMIT");
 	//==========================카카오 메시지 발송 End ==========================
 }else if($param == "solrentyn"){ //렌탈 상태여부 변경

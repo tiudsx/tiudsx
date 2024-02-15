@@ -267,7 +267,6 @@ function kakaoContent2024($arrKakao, $item){
 			$description = "예약정보 확인 후 이용해주세요~";
 		}
 
-
 		$items = '
 		,"items": {
 			"item": {
@@ -299,6 +298,21 @@ function kakaoContent2024($arrKakao, $item){
 		.'\n\n이용노선 : '.$item["bus_line"]
 		.'\n출발일 : '.$item["day_start"]
 		.'\n복귀일 : '.$item["day_return"]
+		.'\n\n';
+	}else if($arrKakao["tempName"] == "actrip_info03"){ //액트립 버스 자동취소
+		if($item["gubun"] == "bus_autocancel"){
+			//자동 취소 안내
+			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+				.'\n예약하신 셔틀버스 이용관련하여 안내 말씀드립니다.'
+				.'\n예약건에 대해 입금마감시간이 지나서 자동취소가 되었습니다.'
+				.'\n\n - 예약정보 : '.$item["link1"]
+				.'\n\n이용을 원하실 경우 다시 예약해주세요.';
+		}
+
+		$items = '';
+
+		//디버깅용 아이템리스트
+		$items_text = $arrKakao["title"]
 		.'\n\n';
 	}
 

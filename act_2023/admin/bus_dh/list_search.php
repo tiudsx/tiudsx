@@ -102,7 +102,6 @@ if($count == 0){
             <col width="5%" />
             <col width="4%" />
             <col width="6%" />
-            <col width="6%" />
             <col width="8%" />
             <col width="6%" />
             <col width="5%" />
@@ -114,7 +113,6 @@ if($count == 0){
                 <th rowspan="2">이름/연락처</th>
                 <th colspan="6">예약항목</th>
                 <th rowspan="2">승인처리</th>
-                <th rowspan="2">정류장변경</th>
                 <th rowspan="2">결제금액</th>
                 <th rowspan="2">환불금액</th>
                 <th rowspan="2">요청사항</th>
@@ -174,9 +172,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:25px;" value="상태변경" onclick="fnBusModify(<?=$resseq?>);" />  
-                </td>
-                <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
                 </td>
                 <td <?=$rowspan?>>                    
                     <?if($TotalDisPrice > 0){?>
@@ -442,9 +437,6 @@ if(($i % 2) == 0 && $i > 0){
                 <?=$reslist?>
                 <td style="text-align: center;" <?=$rowspan?>>
                     <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:60px; height:25px;" value="상태변경" onclick="fnBusModify(<?=$resseq?>);" />  
-                </td>
-                <td style="text-align: center;" <?=$rowspan?>>
-                    <input type="button" class="gg_btn res_btn_color2" style="width:70px; height:25px;" value="정류장변경" onclick="fnBusPointModify(<?=$PreMainNumber?>);" />  
                 </td>
                 <td <?=$rowspan?>>
                     <?if($TotalDisPrice > 0){?>

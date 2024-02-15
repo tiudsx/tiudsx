@@ -710,8 +710,6 @@ function fnKakao_Bank($conn, $arryKakao, $msgTitle){
 		$select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
 		$result_set = mysqli_query($conn, $select_query);
 		// 카카오 알림톡 DB 저장 END
-
-		return $result_set;
 	}
 }
 ?>

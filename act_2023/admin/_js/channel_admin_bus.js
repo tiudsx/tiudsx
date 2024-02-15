@@ -102,10 +102,6 @@ function fnBusChannelDel(seq){
     });
 }
 
-function fnBusPointModify(resnum) {
-    window.open("/pointchange?num=&resNumber=" + resnum);
-}
-
 function fnChkBusAll(obj, gubun) {
     $j('input[id=chkbusNum' + gubun + ']').prop('checked', $j(obj).is(":checked"));
 }

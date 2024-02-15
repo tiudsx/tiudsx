@@ -29,25 +29,29 @@ $select_query = "
     SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
         b.ressubseq, b.res_type, b.prod_name, b.sdate, b.edate, '' as resdate, b.staysex, b.stayM, b.stayroom, b.staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk 
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE 
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-                ON a.resseq = b.resseq 
+                    ON a.resseq = b.resseq 
+                LEFT JOIN AT_KAKAO_HISTORY as c
+                    ON a.userinfo = c.msgid
                 WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
                         OR b.resdate = '$selDate')
                     AND res_type = 'stay'
                     AND a.res_confirm IN ($confirmText)
         UNION ALL
-        SELECT 
-            a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
-            b.ressubseq, b.res_type, 
-            CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
-            '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-            DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk 
-                FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
+    SELECT 
+        a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
+        b.ressubseq, b.res_type, 
+        CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
+        '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE 
+            FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
-                    WHERE b.resdate = '$selDate'                    
-                        AND a.res_confirm IN ($confirmText)
-                        AND res_type = 'surf'
+                LEFT JOIN AT_KAKAO_HISTORY as c
+                    ON a.userinfo = c.msgid
+                WHERE b.resdate = '$selDate'                    
+                    AND a.res_confirm IN ($confirmText)
+                    AND res_type = 'surf'
         ORDER BY resseq, ressubseq";
                    
 $result_setlist = mysqli_query($conn, $select_query);
@@ -219,6 +223,9 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $bbq = $row['bbq'];
     $eDay = $row['eDay'];
     $res_bankchk = $row['res_bankchk'];
+    
+    $response = $row['response'];
+    $KAKAO_DATE = $row['KAKAO_DATE'];
 
     $memoYN = "";
     if($memo != "" || $memo2 != ""){
@@ -309,37 +316,56 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     if($res_kakao == "0"){
         $rtnText = '<span class="btn_view" seq="40'.$c.'">X</span><span style="display:none;"><b><a href="/sol_kakao?chk=1&seq='.$resseq.'" target="_blank">[알림톡 보기]<a></b></span>';
     }else{
-        $userinfo = $row['userinfo'];
-        $arrChk = explode("|", $userinfo);
+        if($response == ""){
+        }else{
+            $data = json_decode($response, true);
 
-        $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b> (".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";  
-        $rtnMessage = "<b>".$rtnText."</b>";
-    
-        if($arrChk[8] != ""){
-            $mesCode = substr($arrChk[8], 0, 4);
-            $rtnTextCode .= $mesCode;
-            //$rtnText .= "_".$arrChk[8];
+            $code = $data["code"];
+            $msgid = $data["data"]["msgid"];
+            $type = $data["data"]["type"];
+            $message = $data["message"];
+            $originMessage = $data["originMessage"];
 
-            if($mesCode == "M001"){
-                $data = json_decode(getKakaoSearch($arrChk[10]), true);
-                $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".substr($data["message"], 0, 4)." : ".fnMessageText(substr($data["message"], 0, 4));
-            }else{
-                $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesCode." : ".fnMessageText($mesCode);
-            }
-        }
+            
+            $rtnText_0 = "<b>".(($code == "fail") ? "실패" : "성공")."</b>";
+            $rtnText_1 = "(".(($type == "AT") ? "알림톡" : "문자").")";  
+            $rtnMessage = "<b>$rtnText_0 $rtnText_1</b>";
         
-        if($arrChk[9] != ""){
-            $mesOriCode = substr($arrChk[9], 0, 4);
-            $rtnTextCode .= " / ".$mesOriCode;
+            $rtnMessage .= " : <a href='https://alimtalk-api.bizmsg.kr/codeList.html' target=_blank>오류코드 목록</a>";
+            if($message != ""){
+                $mesCode = substr($message, 0, 4);
+                $rtnTextCode .= $mesCode;
 
-            $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesOriCode." : ".fnMessageText($mesOriCode);
+                if($mesCode == "M001"){
+                    $kakao_data = getKakaoSearch($msgid);
+                    $kakao_json = json_decode($kakao_data, true);
+                    $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$kakao_json["message"]." : ".fnMessageText($kakao_json["message"]);
+
+                    if($kakao_json["message"] != $mesCode){
+                        $select_query = "UPDATE AT_KAKAO_HISTORY 
+                                            SET response = '".$kakao_data."'
+                                                ,code = '".$kakao_json["code"]."'
+                                                ,message = '".$kakao_json["message"]."'
+                                                ,originMessage = '".$kakao_json["originMessage"]."'
+                                        WHERE msgid = ".$msgid;
+                        $result_set = mysqli_query($conn, $select_query);
+                    }
+                }else{
+                    $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesCode." : ".fnMessageText($mesCode);
+                }
+            }
+            
+            if($originMessage != ""){
+                $mesOriCode = substr($originMessage, 0, 4);
+                $rtnTextCode .= " / ".$mesOriCode;
+
+                $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesOriCode." : ".fnMessageText($mesOriCode);
+            }
+
+            $rtnTextCode = $res_kakao.'회';
+            
+            $rtnText = "<span class='btn_view' seq='40$c'>$rtnText_0<br>$rtnText_1</span><span style='display:none;'><b>$KAKAO_DATE <a href='/sol_kakao?chk=1&seq=$resseq' target='_blank'>[알림톡 보기]<a></b><br><br>$rtnMessage</span>";
         }
-
-        //$rtnTextCode = '<span class="btn_view" seq="30'.$c.'">'.$res_kakao.'회</span><span style="display:none;"><b>'.$arrChk[2].'</b><br><br>'.$rtnMessage.'</span>';
-        $rtnTextCode = $res_kakao.'회';
-
-        $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b><br>(".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";  
-        $rtnText = '<span class="btn_view" seq="40'.$c.'">'.$rtnText.'</span><span style="display:none;"><b>'.$arrChk[2].' <a href="/sol_kakao?chk=1&seq='.$resseq.'" target="_blank">[알림톡 보기]<a></b><br><br>'.$rtnMessage.'</span>';
     }
 ?>
     <tr>

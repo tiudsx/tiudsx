@@ -30,7 +30,7 @@ if($count_sub == 0){
         $dbdata = array();
         $i = 0;
         while ( $row = $result->fetch_assoc()){
-            $row["res_couponname"] = coupontype("admin", $row["couponseq"], $row["res_coupon"]);
+            $row["res_couponname"] = fnCouponCode($row["couponseq"])["prod_name"];
             $dbdata[$i] = $row;
             $i++;
         }

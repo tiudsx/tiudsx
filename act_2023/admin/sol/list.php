@@ -34,7 +34,7 @@ include __DIR__.'/../../common/logininfo.php';
     <div class="gg_first" style="margin-top:0px;">예약정보 등록
 	 <!-- (<span id="insdate"></span>) -->
 	</div>
-    <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
+    <table class="et_vars exForm bd_tb" style="width:100%;" id="infomodify">
         <colgroup>
             <col width="8%" />
             <col width="12%" />

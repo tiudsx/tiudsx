@@ -64,10 +64,6 @@ function fnBusDataDel(){
     }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
-function fnBusPointModify(resnum) {
-    window.open("/pointchange?num=&resNumber=" + resnum);
-}
-
 function fnChkBusAll(obj, gubun) {
     $j('input[id=chkbusNum' + gubun + ']').prop('checked', $j(obj).is(":checked"));
 }
@@ -219,8 +215,6 @@ function fnSelChange(obj, num) {
 }
 
 function fnBusModify(resseq) {
-    //alert("작업 예정");
-    return;
     var params = "resparam=busview&resseq=" + resseq;
     $j.ajax({
         type: "POST",

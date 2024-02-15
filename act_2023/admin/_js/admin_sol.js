@@ -313,8 +313,10 @@ function fnSolModify(resseq, num) {
 
                     if (data[i].prod_name != "N") {
                         objTr.find("#res_stayshop" + num).val(data[i].prod_name);
-                        objTr.find("input[calid=res_staysdate" + num + "]").val(data[i].sdate);
-                        objTr.find("input[calid=res_stayedate" + num + "]").val(data[i].edate);
+                        objTr.find("input[calid=res_staysdate" + num + "]").val(data[i].sdate).attr("disabled", false);
+                        objTr.find("input[calid=res_stayedate" + num + "]").val(data[i].edate).attr("disabled", false);
+
+                        
 
                         if (data[i].stayroom != "") {
                             objTr.find("#res_stayroom" + num).val(data[i].stayroom);
@@ -827,9 +829,9 @@ function fnKakaoSend(resseq, selBool) {
 
     $j.post("/act_2023/admin/sol/list_save.php", formData,
         function(data, textStatus, jqXHR) {
-            //alert("알림톡 발송이 완료되었습니다.");
-            console.log("알림톡 : ", data, textStatus, jqXHR);
-            //$j("calbox[sel='yes']").click();
+            alert("알림톡 발송이 완료되었습니다.");
+            //console.log("알림톡 : ", data, textStatus, jqXHR);
+            $j("calbox[sel='yes']").click();
         }).fail(function(jqXHR, textStatus, errorThrown) {
         alert(textStatus);
     });
