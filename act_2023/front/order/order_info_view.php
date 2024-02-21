@@ -100,6 +100,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		$ResCss = "rescss";
 		$Price += $row['res_price'];
 		$totalPrice += $row['res_totalprice'];
+		
+        $RtnTotalPrice += $row['rtn_totalprice']; //환불금액 표시
 	}else if($res_confirm == 7){
 		$ResConfirm = "취소";
 		$ResCss = "rescss";
@@ -111,62 +113,12 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	}
 
 	//============= 환불금액 구역 =============
-	if($row['code'] == "bus"){
-		//셔틀버스 탑승 정보
-		
-		$arrPoint = fnBusPointArr2023($row['bus_gubun']."_".$row['res_spointname'], $shopseq, 0);
-		$arrTime = fnBusPointArr2023($row['bus_gubun']."_".$row['res_spointname'], $shopseq, 1);
+	//셔틀버스 탑승 정보
+	$arrPoint = fnBusPointArr2023($row['bus_gubun']."_".$row['res_spointname'], $shopseq, 0);
+	$arrTime = fnBusPointArr2023($row['bus_gubun']."_".$row['res_spointname'], $shopseq, 1);
 
-		$RtnBank = "탑승시간 : ".$arrTime." (".$arrPoint.")";
-		$ResNum = "구매수:".$row['res_ea'];
-	}else{
-		$RtnBank = '';
-		
-		//============= 예약항목 구역 =============
-		$TimeDate = "";
-		if(($row['optcode'] == "lesson" || $row['optcode'] == "pkg") && $row['res_time'] != ""){
-			$TimeDate = '강습시간 : '.$row['res_time'];
-		}
-		
-		$ResNum = "";
-		if($row['res_m'] > 0){
-			$ResNum = "남:".$row['res_m']."명";
-		}
-		if($row['res_m'] > 0 && $row['res_w'] > 0){
-            $ResNum .= ",";
-        }
-		if($row['res_w'] > 0){
-			$ResNum .= "여:".$row['res_w']."명";
-		}
-
-		$ResOptInfo = "";
-		$optinfo = $row['optsubname'];
-        if($row['optcode'] == "lesson"){
-			$arrdate = explode("-", $row['res_date']); // 들어온 날짜를 년,월,일로 분할해 변수로 저장합니다.
-			$s_Y=$arrdate[0]; // 지정된 년도 
-			$s_m=$arrdate[1]; // 지정된 월
-			$s_d=$arrdate[2]; // 지정된 요일
-		
-            $stayPlus = $row['stay_day']; //숙박 여부
-            //이전일 요일구하기
-            $preDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." -1 day"));
-            $nextDate = date("Y-m-d", strtotime(date("Y-m-d",mktime(0,0,0,$s_m,$s_d,$s_Y))." +1 day"));
-            if($stayPlus == 0){
-                $ResOptInfo = "숙박일 : ".$row['res_date']."(1박)";
-            }else if($stayPlus == 1){
-                $ResOptInfo = "숙박일 : $preDate(1박)";
-            }else if($stayPlus == 2){
-                $ResOptInfo = "숙박일 : $preDate(2박)";
-            }else{
-            }
-        }else if($row['optcode'] == "rent"){
-
-        }else if($row['optcode'] == "pkg"){
-			$ResOptInfo = $optinfo;
-        }else if($row['optcode'] == "bbq"){
-			$ResOptInfo = $optinfo;
-        }
-	}
+	$RtnBank = "탑승시간 : ".$arrTime." (".$arrPoint.")";
+	$ResNum = "구매수:".$row['res_ea'];
 
 	// 환불금액 표시
 	if($res_confirm == 4 || $res_confirm == 5){
@@ -257,23 +209,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 		</tbody>
 	</table>
 
+		
 		<?
-		if($RtnTotalPrice > 0){
-		?>
-    <table class="et_vars exForm bd_tb" style="width:100%">
-        <tbody>
-			<colgroup>
-				<col style="width:100px;">
-				<col style="width:auto;">
-			</colgroup>
-			<tr>
-                <th style="text-align:center;">총 환불금액</th>
-                <td style="text-align:left;padding-left:10px;" colspan="3"><b><?=number_format($RtnTotalPrice).'원'?></b></td>
-            </tr>
-		</tbody>
-	</table>
-		<?
-		}
 		if($PointChangeChk > 0 && $row['code'] == "bus" && $count_row > 0){
 		?>
 		<div class="write_table" style="text-align:center;">
@@ -298,8 +235,18 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 					<?}?>
 				</td>
             </tr>
-			<?}?>
-			<?if($shopbankview > 0){?>
+			<?}
+			
+			if($RtnTotalPrice > 0){
+			?>
+			<tr>
+				<th scope="row">총 환불금액</th>
+				<td><b><?=number_format($RtnTotalPrice).'원'?></b></td>
+			</tr>
+
+			<?}
+			
+			if($shopbankview > 0){?>
 			<tr>
                 <th scope="row">입금계좌</th>
                 <td>

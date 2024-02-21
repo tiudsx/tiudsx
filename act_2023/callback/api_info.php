@@ -102,11 +102,6 @@ if($param == "mohaeng1"){
          if(!$result_set) goto errGo;
         //------- 쿠폰코드 입력 -----
     
-        // 카카오 알림톡 DB 저장 START
-        $select_query = kakaoDebug($arrKakao, $arrRtn);            
-        $result_set = mysqli_query($conn, $select_query);
-        // 카카오 알림톡 DB 저장 END
-    
         mysqli_query($conn, "COMMIT");
         $success = true;
 

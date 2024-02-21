@@ -93,11 +93,15 @@ if($param == "RtnPrice"){
     $etc = $row["etc"];
 
     $FullBankText = "";
+    $BankNum = "";
+    $BankUser = "";
     if($bankNum != ""){
         $FullBankText = $bankName."|".$bankNum."|".$userName;
+        $BankNum = $bankName." / ".$bankNum;
+        $BankUser = $userName;
     }
 
-    $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, confirmdate, now()) as timeM FROM AT_RES_SUB where res_confirm IN (0,1,2,3,6) AND ressubseq IN ('.$ressubseq.') AND resnum = '.$ResNumber;
+    $select_query_sub = 'SELECT *, TIMESTAMPDIFF(MINUTE, confirmdate, now()) as timeM FROM AT_RES_SUB WHERE res_confirm IN (0,1,2,3,6) AND ressubseq IN ('.$ressubseq.') AND resnum = '.$ResNumber;
     $resultSite = mysqli_query($conn, $select_query_sub);
     $chkSubCnt = mysqli_num_rows($resultSite); //체크 개수
     if($chkSubCnt == 0){
@@ -157,25 +161,6 @@ if($param == "RtnPrice"){
 
                 $TotalPrice +=($ResPrice + $arrOpt);
                 $TotalFee +=$rtnFee;
-
-                if($code == "bus"){
-                   
-                }else{
-                    $ResNum = "      - 인원 : ";
-                    if($rowSub["res_m"] > 0){
-                        $ResNum .= "남:".$rowSub["res_m"].'명';
-                    }
-                    if($row['res_m'] > 0 && $row['res_w'] > 0){
-                        $ResNum .= ",";
-                    }
-                    if($rowSub["res_w"] > 0){
-                        $ResNum .= "여:".$rowSub["res_w"].'명';
-                    }
-                    $ResNum .= '\n';
-
-                    $optname = $rowSub["optname"];
-                    $surfMsg .= '    ['.$optname.']\n      - 예약일 : '.$sDate.'\n'.$ResNum.'\n';
-                }
             }else{
                 $success = false;
             }
@@ -189,44 +174,72 @@ if($param == "RtnPrice"){
     }else{
 
         if($ressubseqInfo != ""){
-            if($code == "bus"){
-                $rtnText = '\n ▶ 환불요청 안내'
-                    .'\n       - 결제금액 : '.number_format($TotalPrice).'원'
-                    .'\n       - 환불수수료 : '.number_format($TotalFee).'원'
-                    .'\n       - 환불금액 : '.number_format($TotalPrice-$TotalFee).'원'
-                    .'\n  ▶환불계좌\n       - '.str_replace('|', ' / ', $FullBankText).'\n';
+            $link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
 
-                $msgInfo = " ▶ 좌석안내\n".$msgInfo.$rtnText;
-                $mailmsgInfo = $msgInfo;
-                $shopname = '서핑버스';
-            }else{
-                $msgInfo = " ▶ 신청목록\n".$surfMsg;
-                $mailmsgInfo = $surfMsg;
-            }
-
-            $msgTitle = '액트립 '.$shopname.' 환불안내';
+            //==========================카카오 메시지 발송 ==========================
+            $msgTitle = '액트립 셔틀버스 환불신청 안내';
+            $PROD_NAME = "셔틀버스 환불신청";
+            $kakao_gubun = "bus_return";
+            $DebugInfo = array(
+                "PROD_NAME" => $PROD_NAME
+                , "PROD_TABLE" => "AT_RES_MAIN"
+                , "PROD_TYPE" => $kakao_gubun
+                , "RES_CONFIRM" => "4"
+                , "resnum" => $ResNumber
+            );
             $arrKakao = array(
-                "gubun"=> $code
-                , "admin"=> "N"
-                , "tempName"=> "at_res_step4"
-                , "smsTitle"=> $msgTitle
+                "gubun"=> $kakao_gubun
                 , "userName"=> $userName
                 , "userPhone"=> $userPhone
-                , "shopname"=> $shopname
-                , "MainNumber"=> $ResNumber
-                , "msgInfo"=>$msgInfo
-                , "smsOnly"=>"N"
-                , "PROD_NAME"=>"취소/환불요청"
-                , "PROD_URL"=>$shopseq
-                , "PROD_TYPE"=> $code."_return"
-                , "RES_CONFIRM"=>"4"
+                , "userPrice"=> number_format($TotalPrice).'원'
+                , "BankNum"=> $BankNum
+                , "BankUser"=> $BankUser
+                , "TotalFee"=> '-'.number_format($TotalFee).'원'
+                , "TotalPrice"=> number_format($TotalPrice-$TotalFee).'원'
+                , "link1"=> $link1 //예약
+                , "DebugInfo"=> $DebugInfo
+            );	
+    
+            $arryKakao[0] = $arrKakao;
+        
+            $arrKakao = array(
+                "arryData"=> $arryKakao
+                , "array"=> "true" //배열 여부
+                , "tempName"=> "actrip_info03" //템플릿 코드
+                , "title"=> $msgTitle //타이틀
+                , "smsOnly"=> "N" //문자발송 여부
             );
+    
             $arrRtn = sendKakao($arrKakao); //알림톡 발송
-
-            // 카카오 알림톡 DB 저장 START
-            $select_query = kakaoDebug($arrKakao, $arrRtn);
-            $result_set = mysqli_query($conn, $select_query);
-            // 카카오 알림톡 DB 저장 END
+    
+            $data = json_decode($arrRtn[0], true);
+    
+            for ($i=0; $i < count($data); $i++) { 
+                //------- 알림톡 디버깅 -----
+                $code = $data[$i]["code"];
+                $msgid = $data[$i]["data"]["msgid"];
+                $message = $data[$i]["message"];
+                $originMessage = $data[$i]["originMessage"];
+                
+                $kakao_response = array(
+                    "arrKakao"=> $arrKakao
+                    , "item"=> $arryKakao[$i]
+                    , "code"=> $code
+                    , "msgid"=> $msgid
+                    , "message"=> $message
+                    , "originMessage"=> $originMessage
+                );
+        
+                // 카카오 알림톡 DB 저장 START
+                $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+                $result_set = mysqli_query($conn, $select_query);
+                // 카카오 알림톡 DB 저장 END
+        
+                $errmsg = $select_query;
+                
+                $errCode = "06";
+                if(!$result_set) goto errGo;
+            }
 
             // 이메일 발송
             if(strrpos($user_email, "@") > 0){
@@ -264,7 +277,7 @@ if($param == "RtnPrice"){
                 , "info2"=> $info2
             );
             
-            sendMail($arrMail); //메일 발송
+            //sendMail($arrMail); //메일 발송
         }
         
         mysqli_query($conn, "COMMIT");

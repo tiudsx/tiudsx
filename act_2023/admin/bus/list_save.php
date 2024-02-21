@@ -200,9 +200,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
         );
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);            
-		$result_set = mysqli_query($conn, $select_query);
 
         if(strrpos($usermail, "@") > 0){
             // $to .= ','.$usermail;
@@ -314,10 +311,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-	// 카카오 알림톡 DB 저장 START
-	$select_query = kakaoDebug($arryKakao[0], $arrRtn);
-	$result_set = mysqli_query($conn, $select_query);
-	// 카카오 알림톡 DB 저장 END
 
 	mysqli_query($conn, "COMMIT");
 }else if($param == "busKakaoInfo"){ //버스 카톡 안내
@@ -369,10 +362,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arrKakao, $arrRtn);            
-		$result_set = mysqli_query($conn, $select_query);
-		// 카카오 알림톡 DB 저장 END
 	}else{
 		$inResType .= '"99"';
 
@@ -573,11 +562,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		);
 		$arrRtn = sendKakao($arrKakao); //알림톡 발송
 		
-		// 카카오 알림톡 DB 저장 START
-		$select_query = kakaoDebug($arryKakao[$i], $arrRtn);            
-		$result_set = mysqli_query($conn, $select_query);
-		// 카카오 알림톡 DB 저장 END
-
 		if(count($arryKakao2) > 0){
 			//배열 발송
 			$arrKakao = array(
@@ -585,11 +569,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 				, "array"=> "true"
 			);
 			$arrRtn = sendKakao($arrKakao); //알림톡 발송
-			
-			// 카카오 알림톡 DB 저장 START
-			$select_query = kakaoDebug($arryKakao2[$i], $arrRtn);            
-			$result_set = mysqli_query($conn, $select_query);
-			// 카카오 알림톡 DB 저장 END
 			
 		}
 	}

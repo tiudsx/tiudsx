@@ -46,8 +46,8 @@ if($gubun == 1){ //서핑샵
 
 	
 	$select_row_query = "SELECT a.res_confirm
-							FROM $dbTableSub a 
-							WHERE a.resnum = $resNumber AND res_confirm = 3";
+							FROM $dbTableSub a
+							WHERE a.resnum = $resNumber AND a.res_confirm = 3 AND a.res_date > DATE_FORMAT(now(), '%Y-%m-%d')";
 }
 
 $result_setlist = mysqli_query($conn, $select_query);
