@@ -237,11 +237,11 @@ function kakaoContent2024($arrKakao, $item){
 				
 			$title = "셔틀버스 예약대기";
 			$description = "아래 안내된 계좌로 입금해주세요.";
-		}else if($item["gubun"] == "bus_confirm"){
+		}else if($item["gubun"] == "bus_confirm"){			
 			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
 				.'\n액트립 셔틀버스를 예약해주셔서 감사합니다.'
 				.'\n이용에 불편함이 없도록 예약정보 확인 후 이용해주세요~ :)'
-				.'\n\n - 예약정보 : '.$item["link1"]
+				.'\n\n - 예약정보 : '.$item["link1"].$item["link2"]
 				.'\n\n ▶ 안내사항'
 				.'\n    - 교통상황으로 인해 지연 도착할 수 있으니 양해부탁드립니다.'
 				.'\n    - 탑승시간 10분전에 예약하신 정류장으로 도착해주세요.';

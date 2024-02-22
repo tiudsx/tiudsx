@@ -25,13 +25,8 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$user_email = $_REQUEST["user_email"];
 	$memo = $_REQUEST["memo"]; //직원메모
 	//$etc = $_REQUEST["etc"]; //요청사항
-	$res_price_coupon = $rowSub['res_price_coupon'];
-	$coupon = $rowSub['res_coupon'];
-	$res_price = $_REQUEST["res_price"];
-	$res_disprice = $_REQUEST["res_disprice"];
 	$insdate = $_REQUEST["insdate"];
 	$confirmdate = $_REQUEST["confirmdate"];
-	$res_cooperate = $_REQUEST["res_cooperate"];
 	$InsUserID = "admin";
 
 	//배열 컬럼
@@ -106,99 +101,94 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 			$shopname = $rowSub['shopname'];
 			$coupon = $rowSub['res_coupon'];
 			$busGubun = substr($rowSub['res_bus'], 0, 1);
+        }
 
-			//$arrPoint = explode("|", fnBusPoint($row['res_spointname'], $row['res_bus']));
-			//$RtnBank = "탑승시간 : ".$arrPoint[0]." (".$arrPoint[1].")";
-
-			// $pointTime = explode("|", fnBusPoint($rowSub['res_spointname'], $rowSub['res_bus']))[0];
-
-			// if($busGubun == "Y" || $busGubun == "E"){ //양양, 동해
-			// 	if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoS)){
-			// 		$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-			// 	}else{
-			// 		$arrSeatInfoS[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-			// 	}
-			// }else{
-			// 	if(array_key_exists($rowSub['res_date'].$rowSub['res_busnum'], $arrSeatInfoE)){
-			// 		$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] .= '      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-			// 	}else{
-			// 		$arrSeatInfoE[$rowSub['res_date'].$rowSub['res_busnum']] = '    ['.$rowSub['res_date'].'] '.fnBusNum($rowSub['res_busnum']).'\n      - '.$rowSub['res_seat'].'번 ('.$rowSub['res_spointname'].' / '.$pointTime.')\n';
-			// 	}
-			// }
+		$res_confirm = 3; //확정
+		$InsUserID = $coupon;
+		$msgType = 1; //100% 할인 쿠폰
+		$kakao_gubun = "bus_confirm";
+		$msgTitle = '액트립 셔틀버스 확정안내';
+		$PROD_NAME = "셔틀버스 예약확정";
+		$link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
+		
+		if($item["couponseq"] == 17 || $item["couponseq"] == 26){ //마린서프
+            $link2 = '\n\n - 마린서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_gisa.html");
+        }else if($item["couponseq"] == 20 || $item["couponseq"] == 27){ //인구서프, 엉클 프립
+            $link2 = '\n\n - 인구서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_ingu.html");
+        }else if($item["couponseq"] == 22 || $item["couponseq"] == 29){ //솔게하
+            $link2 = '\n\n - 솔게하 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_dh.html");
         }
         
-		// 예약좌석 정보 : 양양행
-		foreach($arrSeatInfoS as $x) {
-			$busSeatInfoS .= $x;
-		}
-
-		// 예약좌석 정보 : 서울행
-		foreach($arrSeatInfoE as $x) {
-			$busSeatInfoE .= $x;
-		}
-
-        $busSeatInfoTotal = " ▶ 좌석안내\n";
-        if($busSeatInfoS != ""){
-            $busSeatInfoTotal .= $busSeatInfoS;
-        }
-        if($busSeatInfoE != ""){
-            if($busSeatInfoS != ""){
-                $busSeatInfoTotal .= "\n";
-            }
-            $busSeatInfoTotal .= $busSeatInfoE;
+        if($day_start != "-" && $day_return != "-"){ //왕복
+            $bus_line = "서울 ↔ $busTitleName";
+        }else if($day_start != "-"){ //서울 출발
+            $bus_line = "서울 → $busTitleName";
+        }else{ //서울 복귀
+            $bus_line = "$busTitleName → 서울";
         }
 
-        $busSeatInfo = $busSeatInfo;
-
-		if($shopseq == 7){
-			$busTypeY = "Y";
-			$busTypeS = "S";
-			$busTitleName = "양양";
-			$resparam = "surfbus_yy";
-		}else if($shopseq == 14){
-			$busTypeY = "E";
-			$busTypeS = "A";    
-			$busTitleName = "동해";    
-			$resparam = "surfbus_dh";	
-		}
-        $gubun_title = $busTitleName.' 서핑버스';
-
-		$tempName = "frip_bus02"; //예약확정
-		$btn_ResSearch = "orderview?num=1&resNumber=".$ResNumber; //예약조회
-		$btn_ResChange = "pointchange?num=1&resNumber=".$ResNumber; //좌석/정류장 변경
-		$btn_ResGPS = "surfbusgps"; //서핑버스 실시간위치 조회
-		$btn_ResPoint = "pointlist?num=1&resNumber=".$ResNumber; //탑승시간/위치안내
-		$btn_Notice = "";
-		$btn_ResContent = ""; //예약 상세안내
-
-		$msgInfo = $busSeatInfoTotal;
-
-		// 고객 카카오톡 발송
-        $msgTitle = '액트립 서핑버스 예약안내';
-		$arrKakao = array(
-            "gubun"=> "bus"
-            , "admin"=> "N"
-            , "tempName"=> $tempName
-            , "smsTitle"=> $msgTitle
+		//==========================카카오 메시지 발송 ==========================
+        $DebugInfo = array(
+            "PROD_NAME" => $PROD_NAME
+            , "PROD_TABLE" => "AT_RES_MAIN"
+            , "PROD_TYPE" => $kakao_gubun
+            , "RES_CONFIRM" => $res_confirm
+            , "resnum" => $ResNumber
+        );
+        $arrKakao = array(
+            "gubun"=> $kakao_gubun
             , "userName"=> $userName
             , "userPhone"=> $userPhone
-            , "msgType"=>$msgType
-            , "shopname"=>$gubun_title
-            , "MainNumber"=>$ResNumber
-            , "msgInfo"=>$msgInfo
-            , "btn_ResContent"=> $btn_ResContent
-            , "btn_ResSearch"=> $btn_ResSearch
-            , "btn_ResChange"=> $btn_ResChange
-            , "btn_ResGPS"=> $btn_ResGPS
-            , "btn_ResPoint"=> $btn_ResPoint
-            , "btn_Notice"=> $btn_Notice
-            , "smsOnly"=>"N"
-            , "PROD_NAME"=>"서핑버스"
-            , "PROD_URL"=>$shopseq
-            , "PROD_TYPE"=>"bus"
-            , "RES_CONFIRM"=>"3"
+            , "userPrice"=> number_format($TotalPrice).'원'
+            , "couponseq"=> $couponseq
+            , "bus_line"=> $bus_line
+            , "day_start"=> $day_start
+            , "day_return"=> $day_return
+            , "link1"=> $link1 //예약
+            , "link2"=> $link2 //패키지 안내링크
+            , "DebugInfo"=> $DebugInfo
+        );	
+
+        $arryKakao[0] = $arrKakao;
+    
+        $arrKakao = array(
+            "arryData"=> $arryKakao
+            , "array"=> "true" //배열 여부
+            , "tempName"=> "actrip_info02" //템플릿 코드
+            , "title"=> $msgTitle //타이틀
+            , "smsOnly"=> "N" //문자발송 여부
         );
-		$arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+        $arrRtn = sendKakao($arrKakao); //알림톡 발송
+
+        $data = json_decode($arrRtn[0], true);
+
+        for ($i=0; $i < count($data); $i++) { 
+            //------- 알림톡 디버깅 -----
+            $code = $data[$i]["code"];
+            $msgid = $data[$i]["data"]["msgid"];
+            $message = $data[$i]["message"];
+            $originMessage = $data[$i]["originMessage"];
+            
+            $kakao_response = array(
+                "arrKakao"=> $arrKakao
+                , "item"=> $arryKakao[$i]
+                , "code"=> $code
+                , "msgid"=> $msgid
+                , "message"=> $message
+                , "originMessage"=> $originMessage
+            );
+    
+            // 카카오 알림톡 DB 저장 START
+            $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+            $result_set = mysqli_query($conn, $select_query);
+            // 카카오 알림톡 DB 저장 END
+    
+            $errmsg = $select_query;
+            
+            $errCode = "06";
+            if(!$result_set) goto errGo;
+        }
 
 
         if(strrpos($usermail, "@") > 0){
@@ -229,7 +219,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 				, "info2_title"=> $info2_title
 				, "info2"=> $info2
 			);
-			sendMail($arrMail); //메일 발송
+			//sendMail($arrMail); //메일 발송
 		}
     }
 

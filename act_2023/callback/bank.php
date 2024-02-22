@@ -668,6 +668,7 @@ function fnKakao_Array($shopseq, $day_start, $day_return, $ResNumber, $userName,
 		, "day_start"=> $day_start
 		, "day_return"=> $day_return
 		, "link1"=> shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber) //예약
+		, "link2"=> "" //패키지 안내링크
 		, "DebugInfo"=> $DebugInfo
 	);	
 

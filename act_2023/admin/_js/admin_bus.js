@@ -175,13 +175,18 @@ function fnBusDel(obj){
 }
 
 
-function fnBusPointSel2(obj, objVlu, sname, ename, num) {
+function fnBusPointSel2(obj, bus_oper, bus_gubun, bus_num, sname, ename, num) {
     var sPoint = "";
     var ePoint = "";
 
 
-    var arrObjs = eval("busPoint.sPoint" + objVlu.substring(0, 2));
-    var arrObje = eval("busPoint.ePoint" + objVlu.substring(0, 1) + "end");
+    var arrObjs = eval("busPoint." + bus_gubun);
+    var busType = "S";
+    if(bus_oper == "start"){
+        busType = "E";
+    }
+    
+    var arrObje = eval("busPoint." + busType + "end");
     arrObjs.forEach(function(el) {
         if (sname == el.code) {
             sPoint += "<option value='" + el.code + "' selected>" + el.codename + "</option>";
@@ -230,33 +235,36 @@ function fnBusModify(resseq) {
                 RtnTotalPrice = 0;
             for (let i = 0; i < data.length; i++) {
                 if (i == 0) {
-                    $j("#resseq").val(data[i].resseq);
-                    $j("#user_name").val(data[i].user_name);
-                    $j("#user_tel").val(data[i].user_tel);
+                    $j("#span_resnum").html(data[i].resnum);
                     $j("#resnum").val(data[i].resnum);
-                    $j("#insdate").val(data[i].insdate);
-                    $j("#confirmdate").val(data[i].confirmdate);
-                    $j("#res_coupon").val(data[i].res_coupon);
-                    $j("#res_price_coupon").val(data[i].res_price_coupon);
+
+                    $j("#user_tel").val(data[i].user_tel);
+                    $j("#user_name").val(data[i].user_name);
+
+                    $j("#resseq").val(data[i].resseq); //seq
+                    $j("#insdate").val(data[i].insdate); //신청일
+                    $j("#confirmdate").val(data[i].confirmdate); //확정일
                     $j("#etc").val(data[i].etc);
                     $j("#memo").val(data[i].memo);
                     $j("#user_email").val(data[i].user_email);
 
-                    //쿠폰채널
-                    $j("#res_cooperate").val(data[i].res_couponname);
+                    if(data[i].res_couponname != ""){
+                        $j("#span_res_cooperate").html(" / " + data[i].res_couponname); //쿠폰채널
+                    }
                 }
 
                 fnBusAdd('trbus');
 
                 var objTr = $j("tr[id=trbus]:last");
-                objTr.find("#res_confirm").val(data[i].res_confirm);
-                objTr.find("#res_confirmText").text(objTr.find("#res_confirm option:selected").text());
-                objTr.find("#rtn_charge_yn").val(data[i].rtn_charge_yn);
-                objTr.find("#res_seat").val(data[i].res_seat);
-                objTr.find("input[calid=res_date]").val(data[i].res_date);
+                objTr.find("#res_confirm").val(data[i].res_confirm); //예약상태
+                objTr.find("#res_confirmText").text(objTr.find("#res_confirm option:selected").text()); //예약상태 변경
+                objTr.find("#rtn_charge_yn").val(data[i].rtn_charge_yn); //수수료
+                objTr.find("#res_seat").val(data[i].res_seat); //좌석
+                objTr.find("input[calid=res_date]").val(data[i].res_date); //이용일
                 objTr.find("#ressubseq").val(data[i].ressubseq);
-                objTr.find("#res_busnum").val(data[i].res_busnum);
-                fnBusPointSel2(objTr, data[i].res_busnum, data[i].res_spointname, data[i].res_epointname, 1);
+
+                objTr.find("#res_busline").val(data[i].bus_gubun + data[i].bus_num);
+                fnBusPointSel2(objTr, data[i].bus_oper, data[i].bus_gubun, data[i].bus_num, data[i].res_spointname, data[i].res_epointname, 1);
 
                 var res_price = parseInt(data[i].res_price, 10);
                 var res_totalprice = parseInt(data[i].res_totalprice, 10);
@@ -289,8 +297,8 @@ function fnBusModify(resseq) {
                 }
             }
 
-            $j("#res_price").val(TotalDisPrice);
-            $j("#res_disprice").val(TotalPrice - TotalDisPrice);
+            $j("#span_res_price").html(commify(TotalDisPrice) + "원");
+            $j("#span_res_disprice").html(commify(TotalPrice - TotalDisPrice) + "원");
         }
     });
 }

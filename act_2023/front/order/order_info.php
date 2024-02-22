@@ -45,8 +45,9 @@ if($gubun == 1){ //서핑샵
 							ORDER BY b.bus_oper DESC, b.res_seat";
 
 	
-	$select_row_query = "SELECT a.res_confirm
-							FROM $dbTableSub a
+	$select_row_query = "SELECT a.res_confirm, d.couponseq
+							FROM $dbTableSub a LEFT JOIN AT_COUPON_CODE d 
+								ON a.res_coupon = d.coupon_code
 							WHERE a.resnum = $resNumber AND a.res_confirm = 3 AND a.res_date > DATE_FORMAT(now(), '%Y-%m-%d')";
 }
 
@@ -60,6 +61,16 @@ if($count == 0){
 
 $result_row = mysqli_query($conn, $select_row_query);
 $count_row = mysqli_num_rows($result_row);
+$rowMain = mysqli_fetch_array($result_row);
+
+$pkg_btn = "";
+if($rowMain["couponseq"] == 17 || $rowMain["couponseq"] == 26){ //마린서프
+	$pkg_btn = "/act_2023/front/bus_pkg/surf_gisa.html";
+}else if($rowMain["couponseq"] == 20 || $rowMain["couponseq"] == 27){ //인구서프, 엉클 프립
+	$pkg_btn = "/act_2023/front/bus_pkg/surf_ingu.html";
+}else if($rowMain["couponseq"] == 22 || $rowMain["couponseq"] == 29){ //솔게하
+	$pkg_btn = "/act_2023/front/bus_pkg/surf_dh.html";
+}
 ?>
 
 <script type="text/javascript" src="/act_2023/front/_js/ordersearch.js?v=<?=time()?>"></script>
@@ -81,6 +92,9 @@ $count_row = mysqli_num_rows($result_row);
 					<li class="on" style="cursor:pointer; font-size:1.1em; width:130px; text-align:left;" onclick="fnLayerView('/busgps');">실시간 위치조회</li>
 				<?}?>
 					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('/pointlist');">정류장 안내</li>
+				<?if($pkg_btn != ""){?>
+					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('<?=$pkg_btn?>');">패키지 안내</li>
+				<?}?>
 				</ul>
 			</div>
         </section>

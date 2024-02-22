@@ -24,6 +24,10 @@ if($param == "busadmin"){ //양양 셔틀버스
     $bus_type = "동해"; 
 }
 ?>
+<script>
+    var shopseq = <?=$shopseq?>;
+</script>
+
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_bus.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_common.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
@@ -31,6 +35,7 @@ if($param == "busadmin"){ //양양 셔틀버스
 
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_package.js?v=<?=time()?>"></script>
@@ -176,9 +181,16 @@ if($param == "busadmin"){ //양양 셔틀버스
 
 <div id="res_modify" style="display:none;padding:5px;height: 600px;overflow-y: auto;"> 
     <form name="frmModify" id="frmModify" autocomplete="off">
-    <div class="gg_first" style="margin-top:0px;">액트립 서핑버스</div>
-    <table class="et_vars exForm bd_tb" style="width:100%;display:;" id="infomodify">
-        <colgroup>
+    <div class="gg_first" style="margin-top:0px;">
+        액트립 서핑버스 (예약번호 : <span id="span_resnum"></span>)
+        <input type="hidden" id="resnum" name="resnum" size="12" value="" class="itx" readonly="readonly">
+        <input type="hidden" id="user_email" name="user_email" value="" class="itx" size="18">
+        <input type="hidden" id="resparam" name="resparam" size="10" value="changeConfirmNew" class="itx">
+        <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
+    </div>
+        
+    <table class="et_vars exForm bd_tb" style="width:100%;" id="infomodify">
+        <!-- <colgroup>
             <col width="8%" />
             <col width="17%" />
             <col width="8%" />
@@ -187,38 +199,24 @@ if($param == "busadmin"){ //양양 셔틀버스
             <col width="17%" />
             <col width="8%" />
             <col width="17%" />
-        </colgroup>
+        </colgroup> -->
         <tbody>
 			<tr>
-				<th>예약번호</th>
-				<td><input type="text" id="resnum" name="resnum" size="12" value="" class="itx" readonly="readonly"></td>
-                <th>예약자</th>
-                <td>
+				<th>예약자</th>
+				<td>
                     <input type="text" id="user_name" name="user_name" size="5" value="" class="itx">
                     <input type="text" id="user_tel" name="user_tel" size="12" value="" class="itx">
-                    <input type="hidden" id="user_email" name="user_email" value="" class="itx" size="18">
                 </td>
                 <th>결제금액</th>
-                <td>
-                    <input type="text" id="res_price" name="res_price" size="4" value="" class="itx"> 
-                </td>
+                <td><span id="span_res_price"></span></td>
 				<th>할인쿠폰</th>
-				<td>
-                    <input type="text" id="res_price_coupon" name="res_price_coupon" value="" class="itx" size="6"> / 
-                    <input type="text" id="res_coupon" name="res_coupon" value="" class="itx" size="8">
-                </td>
+                <td><span id="span_res_disprice"></span><span id="span_res_couponname"></span></td>
             </tr>
             <tr>
                 <th>신청일</th>
                 <td><input type="text" id="insdate" name="insdate" size="16" value="" class="itx"></td>
                 <th>확정일</th>
                 <td><input type="text" id="confirmdate" name="confirmdate" size="16" value="" class="itx"></td>
-                <th>할인금액</th>
-                <td>
-                    <input type="text" id="res_disprice" name="res_disprice" size="4" value="" class="itx">
-                </td>
-                <th>제휴업체</th>
-                <td><input type="text" id="res_cooperate" name="res_cooperate" size="10" value="" class="itx" readonly="readonly"></td>
 			</tr>
 			<tr>
                 <th>예약정보</th>
@@ -272,31 +270,19 @@ if($param == "busadmin"){ //양양 셔틀버스
                                 <td><input type="text" calid="res_date" name="res_date[]" cal="date" size="10" class="itx" readonly="readonly" disabled="disabled"></td>
 								<td>
 									<input type="hidden" id="ressubseq" name="ressubseq[]" >
-                                    <select id="res_busnum" name="res_busnum" class="select" onchange="fnBusPointSel2(this, this.value, '', '', 2);" disabled="disabled">
-                                        <option value="YSa1">양양행(사당선) 1호차</option>
-                                        <option value="YSa2">양양행(사당선) 2호차</option>
-                                        <option value="YSa3">양양행(사당선) 3호차</option>
-                                        <option value="YJo1">양양행(종로선) 1호차</option>
-                                        <option value="YJo2">양양행(종로선) 2호차</option>
-                                        <option value="YJo3">양양행(종로선) 3호차</option>
-                                        <option value="SY21">양양>서울행 오후 1호차</option>
-                                        <option value="SY22">양양>서울행 오후 2호차</option>
-                                        <option value="SY23">양양>서울행 오후 3호차</option>
-                                        <option value="SY51">양양>서울행 저녁 1호차</option>
-                                        <option value="SY52">양양>서울행 저녁 2호차</option>
-                                        <option value="SY53">양양>서울행 저녁 3호차</option>
-                                        <option value="ESa1">동해행(사당선) 1호차</option>
-                                        <option value="ESa2">동해행(사당선) 2호차</option>
-                                        <option value="ESa3">동해행(사당선) 3호차</option>
-                                        <option value="EJo1">동해행(종로선) 1호차</option>
-                                        <option value="EJo2">동해행(종로선) 2호차</option>
-                                        <option value="EJo3">동해행(종로선) 3호차</option>
-                                        <option value="AE21">동해>서울행 오후 1호차</option>
-                                        <option value="AE22">동해>서울행 오후 2호차</option>
-                                        <option value="AE23">동해>서울행 오후 3호차</option>
-                                        <option value="AE51">동해>서울행 저녁 1호차</option>
-                                        <option value="AE52">동해>서울행 저녁 2호차</option>
-                                        <option value="AE53">동해>서울행 저녁 3호차</option>
+                                    <select id="res_busline" name="res_busline" class="select" disabled="disabled">
+                                        <option value="SA1">출발 - 사당선 1호차</option>
+                                        <option value="SA2">출발 - 사당선 2호차</option>
+                                        <option value="SA3">출발 - 사당선 3호차</option>
+                                        <option value="JO1">출발 - 종로선 1호차</option>
+                                        <option value="JO2">출발 - 종로선 2호차</option>
+                                        <option value="JO3">출발 - 종로선 3호차</option>
+                                        <option value="AM1">복귀 - 오후 1호차</option>
+                                        <option value="AM2">복귀 - 오후 2호차</option>
+                                        <option value="AM3">복귀 - 오후 3호차</option>
+                                        <option value="PM1">복귀 - 저녁 1호차</option>
+                                        <option value="PM2">복귀 - 저녁 2호차</option>
+                                        <option value="PM3">복귀 - 저녁 3호차</option>
                                     </select>
 								</td>
 								<td style="line-height:2.3em">
@@ -354,8 +340,6 @@ if($param == "busadmin"){ //양양 셔틀버스
 			</tr>
             <tr>
 				<td class="col-02" style="text-align:center;" colspan="7">
-                    <input type="hidden" id="resparam" name="resparam" size="10" value="changeConfirmNew" class="itx">
-                    <input type="hidden" id="resseq" name="resseq" size="10" value="" class="itx">
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="수정" onclick="fnBusDataAdd();" id="SolModify" />&nbsp;
 					<input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="닫기" onclick="fnBlockClose();fnBusPopupReset();" />
                 </td>
@@ -370,6 +354,8 @@ if($param == "busadmin"){ //양양 셔틀버스
 
 
 <script>
+fnBusPointList();
+
 $j(document).ready(function(){
 	fnSearchAdmin('bus/list_search.php');
 });

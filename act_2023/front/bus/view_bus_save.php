@@ -222,7 +222,15 @@ if($param == "BusI"){
 		mysqli_query($conn, "ROLLBACK");
         echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n['.$errCode.'] 관리자에게 문의해주세요.");parent.fnUnblock("#divConfirm");</script>';
 	}else{
-
+        $link2 = "";
+        if($item["couponseq"] == 17 || $item["couponseq"] == 26){ //마린서프
+            $link2 = '\n\n - 마린서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_gisa.html");
+        }else if($item["couponseq"] == 20 || $item["couponseq"] == 27){ //인구서프, 엉클 프립
+            $link2 = '\n\n - 인구서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_ingu.html");
+        }else if($item["couponseq"] == 22 || $item["couponseq"] == 29){ //솔게하
+            $link2 = '\n\n - 솔게하 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_dh.html");
+        }
+        
         if($day_start != "-" && $day_return != "-"){ //왕복
             $bus_line = "서울 ↔ $busTitleName";
         }else if($day_start != "-"){ //서울 출발
@@ -244,10 +252,12 @@ if($param == "BusI"){
             , "userName"=> $userName
             , "userPhone"=> $userPhone
             , "userPrice"=> number_format($TotalPrice).'원'
+            , "couponseq"=> $couponseq
             , "bus_line"=> $bus_line
             , "day_start"=> $day_start
             , "day_return"=> $day_return
             , "link1"=> $link1 //예약
+            , "link2"=> $link2 //패키지 안내링크
             , "DebugInfo"=> $DebugInfo
         );	
 
