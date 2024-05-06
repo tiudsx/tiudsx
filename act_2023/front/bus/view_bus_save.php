@@ -223,11 +223,11 @@ if($param == "BusI"){
         echo '<script>alert("예약진행 중 오류가 발생하였습니다.\n\n['.$errCode.'] 관리자에게 문의해주세요.");parent.fnUnblock("#divConfirm");</script>';
 	}else{
         $link2 = "";
-        if($item["couponseq"] == 17 || $item["couponseq"] == 26){ //마린서프
+        if($couponseq == 17 || $couponseq == 26){ //마린서프
             $link2 = '\n\n - 마린서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_gisa.html");
-        }else if($item["couponseq"] == 20 || $item["couponseq"] == 27){ //인구서프, 엉클 프립
+        }else if($couponseq == 20 || $couponseq == 27){ //인구서프, 엉클 프립
             $link2 = '\n\n - 인구서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_ingu.html");
-        }else if($item["couponseq"] == 22 || $item["couponseq"] == 29){ //솔게하
+        }else if($couponseq == 22 || $couponseq == 29){ //솔게하
             $link2 = '\n\n - 솔게하 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_dh.html");
         }
         
@@ -304,22 +304,22 @@ if($param == "BusI"){
 
 		mysqli_query($conn, "COMMIT");
 
-        // 이메일 발송
-		//$to = "lud1@naver.com";
+        // 예약건 메일 발송
         $to = "lud1@naver.com";
         if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
         }
 
-        $info1_title = "좌석안내";
+        $info1_title = ""; //좌석안내
         $info1 = "";
-        $info2_title = "탑승시간/<br>위치 안내";
-        $info2 = "https://actrip.co.kr/pointlist";
+        $info2_title = ""; //탑승시간/<br>위치 안내
+        $info2 = "";
 
         $arrMail = array(
             "gubun"=> "bus"
+			, "mail_html"=> "../../common/mail.html"
             , "gubun_step" => $res_confirm
-            , "gubun_title" => $gubun_title
+            , "gubun_title" => $busTitleName." 셔틀버스"
             , "mailto"=> $to
             , "mailfrom"=> "surfbus_res@actrip.co.kr"
             , "mailname"=> "actrip"
@@ -338,7 +338,7 @@ if($param == "BusI"){
 
         //네이버예약, 네이버쇼핑 알림톡 제외
         if($msgType > 0){
-            ///sendMail($arrMail); //메일 발송
+            sendMail($arrMail); //메일 발송
         }
         
         echo '<script>alert("'.$busTitleName.' 셔틀버스 예약이 완료되었습니다.");parent.location.href="/orderview?num=2&resNumber='.$ResNumber.'";</script>';

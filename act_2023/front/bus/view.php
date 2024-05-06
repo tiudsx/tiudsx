@@ -79,7 +79,7 @@ if($arrChannel != ""){
     $return_cnt = $rowMain["return_cnt"]; //복귀인원
 
 
-    if(date("Y-m-d") > $start_day || date("Y-m-d") > $return_day){
+    if((date("Y-m-d") > $start_day && $start_cnt > 0) || (date("Y-m-d") > $return_day && $return_cnt > 0)){
         echo "<script>alert('이용일이 지난 예약건입니다.');location.href='/';</script>";
         return;
     }
@@ -234,7 +234,13 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </span>
                 
                 <div id="resStep1">
-                    
+                    <div class="busOption01" style="text-align:center;display:none;">
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="일정 선택">
+                         >
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="좌석 선택">
+                         >
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="정류장 및 예약정보 입력">
+                    </div>
                     <div class="busOption01" style="padding-bottom: 0px;" id="route">
                         <ul class="destination" id="ulroute" style="margin-bottom: 0px;">
                             <li><img src="/act_2023/images/viewicon/route.svg" alt="">일정</li>
@@ -272,6 +278,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
 
                 <div id="seatTab" class="busOption01" style="padding-top: 10px;display:none;">
+                    <div class="busOption01" style="text-align:center;display:none;">
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="일정 선택">
+                         >
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="좌석 선택">
+                         >
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="정류장 및 예약정보 입력">
+                    </div>
+
                     <span id="resseatnum" style="font-size: medium;width:100%;text-align:center;display: block;"></span>
                     <ul>
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">노선선택</li>
@@ -348,6 +362,14 @@ if(Mobile::isMobileCheckByAgent()) $inputtype = "number"; else $inputtype = "tex
                 </div>
 
                 <div class="busOption01" id="bus_step2" style="display:none;">
+                
+                    <div class="busOption01" style="text-align:center;display:none;">
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="일정 선택">
+                         >
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="좌석 선택">
+                         >
+                        <input type="button" class="btnsurfdel" style="width:100px;font-size: 1.2em;" value="정류장 및 예약정보 입력">
+                    </div>
                     <ul class="busLine">
                         <li><img src="/act_2023/images/viewicon/bus.svg" alt="">출발노선</li>
                         <li id="selBusName_S" class="on"></li>

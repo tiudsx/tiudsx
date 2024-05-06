@@ -37,7 +37,7 @@ $select_query = 'SELECT a.user_name, a.user_tel, b.seq, a.resnum
                     FROM AT_RES_MAIN as a INNER JOIN AT_RES_SUB as b 
                         ON a.resnum = b.resnum 
                     WHERE b.res_confirm = 0
-                        AND TIMESTAMPDIFF(MINUTE, b.insdate, now()) > 60
+                        AND TIMESTAMPDIFF(MINUTE, a.insdate, now()) > 60
                     GROUP BY a.user_name, a.user_tel, b.seq, a.resnum';
 $query_log .= '
                 조회 AT_RES_SUB : '.$select_query;

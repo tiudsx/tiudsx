@@ -89,25 +89,24 @@ function fnBusChannelDel(seq){
 //편도, 왕복 구분
 function fnAdminBusGubun(obj, type){
     if(type == 1){
-        $j("#resDate1").val("");
-        $j("#resDate2").val("");
-        $j("#resbusseat1").val(0);
-        $j("#resbusseat2").val(0);
+        $j("#start_day").val("");
+        $j("#return_day").val("");
+        $j("#start_cnt").val(0);
+        $j("#return_cnt").val(0);
     }else{
-        if($j("#busgubun").val() == 1){ //1박 왕복
-            $j("#resbusseat2").val($j("#resbusseat1").val());
-        }else if($j("#busgubun").val() == 2){  //당일 왕복
-            $j("#resbusseat2").val($j("#resbusseat1").val());
-        }else{
-
-        }
+        
     }
 }
 
 //======== 데이터 맵핑 =============
-function fnseatcheck(obj){
-    if($j(obj).val() == 0){
-        //$j(obj).prev().val("");
+function fnseatcheck(obj, type){
+    if($j("#busgubun").val() != 3){ //1박 왕복, 당일 왕복
+        if(type == 1){
+            $j("#return_cnt").val($j("#start_cnt").val());
+        }else{
+            //$j("#start_cnt").val($j("#return_cnt").val());
+        }
+
     }
 }
 

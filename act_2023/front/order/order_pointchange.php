@@ -208,7 +208,7 @@ $busgubun = $busData[0];
                 <div class="bd" style="padding:0 4px;display:none;" id="divConfirm">
                     <div style="padding:10px;text-align:center;" id="divBtnRes">
                         <input type="button" class="btnsurfadd" style="width:160px;font-size: 1.2em;" value="이전단계" onclick="fnBusPrev(1);">&nbsp;&nbsp;
-                        <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="예약하기" onclick="fnBusSave();">
+                        <input type="button" class="btnsurfdel" style="width:160px;font-size: 1.2em;" value="변경신청" onclick="fnBusSave();">
                     </div>
                 </div>
             </form>

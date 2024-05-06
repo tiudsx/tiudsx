@@ -210,36 +210,36 @@ if($param == "RtnPrice"){
                 , "smsOnly"=> "N" //문자발송 여부
             );
     
-            $arrRtn = sendKakao($arrKakao); //알림톡 발송
+            // $arrRtn = sendKakao($arrKakao); //알림톡 발송
     
-            $data = json_decode($arrRtn[0], true);
+            // $data = json_decode($arrRtn[0], true);
     
-            for ($i=0; $i < count($data); $i++) { 
-                //------- 알림톡 디버깅 -----
-                $code = $data[$i]["code"];
-                $msgid = $data[$i]["data"]["msgid"];
-                $message = $data[$i]["message"];
-                $originMessage = $data[$i]["originMessage"];
+            // for ($i=0; $i < count($data); $i++) { 
+            //     //------- 알림톡 디버깅 -----
+            //     $code = $data[$i]["code"];
+            //     $msgid = $data[$i]["data"]["msgid"];
+            //     $message = $data[$i]["message"];
+            //     $originMessage = $data[$i]["originMessage"];
                 
-                $kakao_response = array(
-                    "arrKakao"=> $arrKakao
-                    , "item"=> $arryKakao[$i]
-                    , "code"=> $code
-                    , "msgid"=> $msgid
-                    , "message"=> $message
-                    , "originMessage"=> $originMessage
-                );
+            //     $kakao_response = array(
+            //         "arrKakao"=> $arrKakao
+            //         , "item"=> $arryKakao[$i]
+            //         , "code"=> $code
+            //         , "msgid"=> $msgid
+            //         , "message"=> $message
+            //         , "originMessage"=> $originMessage
+            //     );
         
-                // 카카오 알림톡 DB 저장 START
-                $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
-                $result_set = mysqli_query($conn, $select_query);
-                // 카카오 알림톡 DB 저장 END
+            //     // 카카오 알림톡 DB 저장 START
+            //     $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+            //     $result_set = mysqli_query($conn, $select_query);
+            //     // 카카오 알림톡 DB 저장 END
         
-                $errmsg = $select_query;
+            //     $errmsg = $select_query;
                 
-                $errCode = "06";
-                if(!$result_set) goto errGo;
-            }
+            //     $errCode = "06";
+            //     if(!$result_set) goto errGo;
+            // }
 
             // 이메일 발송
             if(strrpos($user_email, "@") > 0){
@@ -259,6 +259,7 @@ if($param == "RtnPrice"){
 
             $arrMail = array(
                 "gubun"=> $code
+				, "mail_html"=> "../../common/mail.html"
                 , "gubun_step" => 4
                 , "gubun_title" => $shopname
                 , "mailto"=> $to
@@ -277,7 +278,7 @@ if($param == "RtnPrice"){
                 , "info2"=> $info2
             );
             
-            //sendMail($arrMail); //메일 발송
+            sendMail($arrMail); //메일 발송
         }
         
         mysqli_query($conn, "COMMIT");
@@ -350,7 +351,7 @@ if($param == "RtnPrice"){
         }
     }
 
-    if($start_cnt != count($SurfDateBusE)){
+    if($start_cnt != count($SurfDateBusS)){
         echo '<script>alert("예약된 좌석수('.$start_cnt.'자리)와 동일한 개수로 선택해주세요~");parent.fnUnblock("#divConfirm");</script>';
         return;
     }

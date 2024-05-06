@@ -2,7 +2,7 @@
 $reqDate = $_REQUEST["selDate"];
 if($reqDate != ""){
 	include __DIR__.'/../../common/db.php';
-	$shopseq = $_REQUEST["seq"];
+	$shopseq = $_REQUEST["shopseq"];
 }
 
 include __DIR__.'/../../common/func.php';
@@ -47,13 +47,10 @@ echo ("
 	<div class='tour_calendar_header'>
 ");
 if($selMonth > 202003){
-	echo "<a href='javascript:fnCalMoveAdminList(\"$p_m\", 0, -3);' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
+	echo "<a href='javascript:fnCalMove_BusMng(\"$p_m\", 0, \"$shopseq\");' class='tour_calendar_prev'><span class='cal_ico'></span>이전</a>";
 }
 
-//if($selMonth < date("Ym", strtotime($nowMonth." +3 month"))){
-// if($selMonth < 202012){
-	echo "<a href='javascript:fnCalMoveAdminList(\"$n_m\", 0, -3);' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
-// }
+echo "<a href='javascript:fnCalMove_BusMng(\"$n_m\", 0, \"$shopseq\");' class='tour_calendar_next'><span class='cal_ico'></span>다음</a>";
 
 echo ("
 		<div class='tour_calendar_title'>
@@ -75,16 +72,41 @@ echo ("
 		<tbody>
 	");
 	
-$select_query_cal = 'SELECT COUNT(*) AS Cnt, res_date, DAY(res_date) AS sDay, res_confirm FROM `AT_RES_SUB`
-			WHERE code = "bus"			
-				AND seq = 7
-				AND (Year(res_date) = '.$Year.' AND Month(res_date) = '.$Mon.')
-			GROUP BY res_date, res_confirm';
+$select_query_cal = "SELECT A.bus_date, IFNULL(B.Cnt, 0) AS Cnt, A.sDay, B.res_confirm, B.bus_oper FROM 
+		(SELECT bus_date, DAY(bus_date) AS sDay FROM `AT_PROD_BUS_DAY`  
+			WHERE shopseq = $shopseq AND useYN = 'Y'
+				AND (Year(bus_date) = $Year AND Month(bus_date) = $Mon)
+			GROUP BY bus_date) AS A
+
+		LEFT JOIN 
+
+		(SELECT COUNT(*) AS Cnt, res_date, res_confirm, bus_oper FROM `AT_RES_SUB`
+				WHERE code = 'bus'			
+					AND (Year(res_date) = $Year AND Month(res_date) = $Mon)
+					AND res_confirm = 3
+					AND seq = $shopseq
+				GROUP BY res_date, res_confirm, bus_oper) AS B
+		ON A.bus_date = B.res_date
+		ORDER BY A.bus_date, B.res_confirm";
+
 $result_setlist_cal = mysqli_query($conn, $select_query_cal);
 
+$arrNoCount = array();
 $arrResCount = array();
+$arrStartConfirm = array();
+$arrReturnConfirm = array();
 while ($rowCal = mysqli_fetch_assoc($result_setlist_cal)){
-	$arrResCount[$rowCal['res_confirm']][$rowCal['sDay']] = $rowCal['Cnt'];
+	if($rowCal['Cnt'] == 0){
+		$arrNoCount[$rowCal['sDay']] = 1;
+	}else{
+		if($rowCal['res_confirm'] == 3 && $rowCal['bus_oper'] == "start"){ //확정 - 출발
+			$arrStartConfirm[$rowCal['res_bus']][$rowCal['sDay']] = $rowCal['Cnt'];
+		}else if($rowCal['res_confirm'] == 3 && $rowCal['bus_oper'] == "return"){ //확정 - 복귀
+			$arrReturnConfirm[$rowCal['res_bus']][$rowCal['sDay']] = $rowCal['Cnt'];
+		}
+		
+		$arrResCount[$rowCal['res_confirm']][$rowCal['sDay']] = $rowCal['Cnt'];
+	}
 }
 
 /*
@@ -108,7 +130,7 @@ for($r=0;$r<=$ra;$r++){
 		$rv=7*$r+$z; $ru=$rv-$l; // 칸에 번호를 매겨줍니다. 1일이 되기전 공백들 부터 마이너스 값으로 채운 뒤 ~ 
 
 		if($ru<=0 || $ru>$s_t){ 
-			echo "<td><span class='tour_td_block' style='min-height:50px;'><span class='tour_cal_day'>&nbsp;</span></span></td>";
+			echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day'>&nbsp;</span></span></td>";
 		}else{
 			$s = date("Y-m-d",mktime(0,0,0,$s_m,$ru,$s_Y)); // 현재칸의 날짜
 			$h = date("H");
@@ -124,25 +146,45 @@ for($r=0;$r<=$ra;$r++){
 			
 			$adminText = "";
 			$gubunChk = "";
-			
-			if($arrResCount[3][$ru] != ""){
-				$adminText .= "<br><font color='red'><b>".$arrResCount[3][$ru]."명 예약</b></font>";
-				$gubunChk .= "3,";
-			}
-
-			$gubunChk .= "99";
 
 			$selYN = 'no';
 			$selYNbg = '';
+			$noCnt = '';
 			if($selDay == $ru){
 				$selYN = 'yes';
-				$selYNbg = 'background:#efefef;';
+				$selYNbg = 'background:#ffb18c;'; //오늘날짜
 			}
-			
-			if($gubunChk == "99"){
-				echo "<td><span class='tour_td_block' style='min-height:50px;'><span class='tour_cal_day' $holidayChk>$ru</span></span></td>";
+
+			if($arrNoCount[$ru] == 1){ //예약건 없는 이용 가능날짜
+				$noCnt = "nocount";
 			}else{
-				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:50px;$selYNbg' class='tour_td_block' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnPassengerAdmin(this, -3);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+				$noCnt = "nocount";
+				if($arrResCount[3][$ru] != ""){
+					$cnt = 0;
+					foreach ($arrStartConfirm as $key => $value) {
+						$cnt += $value[$ru];
+					}
+					if($cnt > 0){
+						$adminText .= "<br><font color='red'>출발 ".$cnt."명</font>";
+					}
+	
+					$cnt = 0;
+					foreach ($arrReturnConfirm as $key => $value) {
+						$cnt += $value[$ru];
+					}
+					if($cnt > 0){
+						$adminText .= "<br><font color='red'>복귀 ".$cnt."명</font>";
+					}
+					$gubunChk .= "3,";
+				}
+				$gubunChk .= "99";
+			}
+
+			if($gubunChk == "99"){
+				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day' $holidayChk>$ru</span></span></td>";
+			}else{
+				$selYNbg = 'background:#e2e2e2;';
+				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block $noCnt' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnDaySelected(this, $shopseq, \"busDrive\");'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 			}
 		}
 	}

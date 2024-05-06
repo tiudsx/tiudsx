@@ -38,11 +38,7 @@ function fnBusDataDel(){
         if (data == 0) {
             alert("정상적으로 삭제되었습니다.");
 
-            if (calObj.attr("value") == null) {
-                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
-            } else {
-                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
-            }
+            fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), shopseq);
 
             if ($j("input[name=buspoint]").length > 0) {
                 if ($j("input[name=buspoint]").filter(".buson").length > 0) {
@@ -242,7 +238,7 @@ function fnBusModify(resseq) {
                     $j("#user_name").val(data[i].user_name);
 
                     $j("#resseq").val(data[i].resseq); //seq
-                    $j("#insdate").val(data[i].insdate); //신청일
+                    $j("#insdate").val(data[i].insertdate); //신청일
                     $j("#confirmdate").val(data[i].confirmdate); //확정일
                     $j("#etc").val(data[i].etc);
                     $j("#memo").val(data[i].memo);
@@ -352,12 +348,8 @@ function fnBusDataAdd() {
         function(data, textStatus, jqXHR) {
             if (data == 0) {
                 alert("정상적으로 처리되었습니다.");
-
-                if (calObj.attr("value") == null) {
-                    fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), 99, 0);
-                } else {
-                    fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), calObj.attr("value").split('-')[2], 0);
-                }
+                
+                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), shopseq);
 
                 if ($j("input[name=buspoint]").length > 0) {
                     if ($j("input[name=buspoint]").filter(".buson").length > 0) {
@@ -551,7 +543,7 @@ function fnCalMoveAdminCal(selDate, day) {
  * 달력 날짜 클릭
  * @param {*} obj 
  */
-function fnDaySelected(obj, seq) {
+function fnDaySelected(obj, seq, folrder) {
     var selDate = obj.attributes.value.value;
     
     $j("#right_article3 calBox").not(".nocount").css("background", "white");
@@ -574,7 +566,7 @@ function fnDaySelected(obj, seq) {
     $j('#chkBusY2').prop('checked', true);
     $j('#chkGubun').prop('checked', false);
 
-    $j("#divResList").load("/act_2023/admin/bus/list_mng.php?selDate=" + selDate + "&seq=" + seq);
+    $j("#divResList").load("/act_2023/admin/" + folrder + "/list_mng.php?selDate=" + selDate + "&seq=" + seq);
     $j("#initText2").css("display", "none");
 
     $j("input[id=chkResConfirm]").prop("checked", false);
@@ -584,7 +576,7 @@ function fnDaySelected(obj, seq) {
         $j("input[id=chkResConfirm][value=" + arrGubun[i] + "]").prop('checked', true);
     }
 
-    fnSearchAdmin("bus/list_search.php");
+    fnSearchAdmin(folrder + "/list_search.php");
 }
 
 /**
@@ -592,13 +584,13 @@ function fnDaySelected(obj, seq) {
  * @param {*} selDate 
  * @param {*} shopseq 
  */
-function fnCalMove_Bus(selDate, shopseq) {
+function fnCalMove_Bus(selDate, shopseq, folrder) {
     var nowDate = new Date();
 
     $j("#divResList").html("");
     $j("#initText2").css("display", "");
 
-    $j("#right_article3").load("/act_2023/admin/bus/_calendar.php?selDate=" + selDate + "&shopseq=" + shopseq + "&t=" + nowDate.getTime());
+    $j("#right_article3").load("/act_2023/admin/" + folrder + "/_calendar.php?selDate=" + selDate + "&shopseq=" + shopseq + "&t=" + nowDate.getTime());
 }
 
 /**
@@ -607,21 +599,19 @@ function fnCalMove_Bus(selDate, shopseq) {
  * @param {*} day 
  * @param {*} seq 
  */
-function fnCalMove_BusMng(selDate, day, seq) {
+function fnCalMove_BusMng(selDate, selDay, shopseq) {
     var nowDate = new Date();
 
-    if (seq == -2 || seq == -3) { //서핑버스
-        $j("#divResList").html("");
-        $j("#initText2").css("display", "");
+    $j("#divResList").html("");
+    $j("#initText2").css("display", "");
 
-        if (seq == -2) { //서핑버스 등록관리
-            var calurl = "busMng/_calendar.php";
-        }else if (seq == -3) { //서핑버스 등록관리
-            var calurl = "busDrive/_calendar.php";
-        }
+    if (shopseq == -2) { //서핑버스 등록관리
+        var calurl = "busMng/_calendar.php";
+    }else { //서핑버스 등록관리
+        var calurl = "busDrive/_calendar.php";
     }
 
-    $j("#right_article3").load("/act_2023/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + day + "&seq=" + seq + "&t=" + nowDate.getTime());
+    $j("#right_article3").load("/act_2023/admin/" + calurl + "?selDate=" + selDate + "&selDay=" + selDay + "&shopseq=" + shopseq + "&t=" + nowDate.getTime());
 }
 
 /**

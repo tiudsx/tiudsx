@@ -6,6 +6,8 @@
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/func.php';
 
+$couponseq = 0;
+
 $resseq = $_REQUEST["seq"];
 $chk = $_REQUEST["chk"];
 if($resseq == ""){
@@ -234,7 +236,7 @@ if($count_sub == 0){
                         <?}
                         if($tablist2 != ""){ //바베큐 이용안내?> 
                         <p class="restitle" style="font-size:22px;">바베큐 이용안내</p>
-                        <p class="info">✔ 이용시간 : 18:50 ~ 21:30</p>
+                        <p class="info">✔ 이용시간 : 18:50 ~ 21:00</p>
                         <p class="info">✔ 18:50까지 지하 1층으로 오세요~</p>
                         <?}
                         if($tablist3 != "" || $tablist4 != ""){ //서핑강습 이용안내?> 

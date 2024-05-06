@@ -37,7 +37,7 @@ function fnRefund(gubun) {
 
 	if($j("#hidtotalPrice").val() > 0){
 		if($j("#bankName").val() == ""){
-			alert("은행이름을 입력하세요.");
+			alert("은행명을 입력하세요.");
 			return;
 		}
 

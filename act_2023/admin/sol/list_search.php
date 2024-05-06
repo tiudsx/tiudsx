@@ -388,8 +388,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <!-- <td style="<?=$fontcolor?>"><?=$bbqText?></td> -->
         <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
         <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
-        <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
-        <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
+        <td style="<?=$fontcolor?>"></td>
+        <td style="<?=$fontcolor.$css_table_right?>"></td>
         <td style="<?=$fontcolor?>"><?=$surfText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
@@ -415,21 +415,62 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 }
 $rowlist .= $b."|";
 ?>
-            <tr style="background-color:#ffa87d;">
-                <td colspan="3"><strong>합 계</strong></td>
+            <tr style="background-color:#ffc1a4;">
+                <td colspan="3" rowspan="3"><strong>합 계</strong></td>
                 <td colspan="3">
-                    <strong>숙박</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
-                    <br><strong>총 : <?=$TotalstayM+$TotalstayW."명"?></strong>
+                    숙박 인원
+                </td>
+                <td colspan="2">
+                    바베큐
+                </td>
+                <td colspan="2">
+                    2차
+                </td>
+                <td colspan="4">
+                    서핑강습
                 </td>
                 <td colspan="3">
-                    <strong>바베큐</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?> / 여 : <?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?>
-                    <br><strong>총 : <?=$TotalbbqM+$TotalbbqW."명"?></strong>
+                    렌탈
                 </td>
-                <td colspan="6">
-                    <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
-                    <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
+                <td colspan="7"></td>
+            </tr>
+            <tr style="background-color:#ffc1a4;">
+                <td colspan="3">
+                    <strong>남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
                 </td>
-                <td colspan="9"></td>
+                <td>
+                    <strong><?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?></strong>
+                </td>
+                <td>
+                    <strong><?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?></strong>
+                </td>
+                <td>
+                    <strong><?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?></strong>
+                </td>
+                <td>
+                    <strong><?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?></strong>
+                </td>
+                <td colspan="4">
+                    <strong>남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?></strong>
+                </td>
+                <td colspan="3"><strong></strong></td>
+                <td colspan="7"></td>
+            </tr>
+            <tr style="background-color:#ffc1a4;">
+                <td colspan="3">
+                    총 : <?=$TotalstayM+$TotalstayW."명"?>
+                </td>
+                <td colspan="2">
+                    총 : <?=$TotalbbqM+$TotalbbqW."명"?>
+                </td>
+                <td colspan="2">
+                    총 : <?=$TotalbbqM+$TotalbbqW."명"?>
+                </td>
+                <td colspan="4">
+                    총 : <?=$TotalsurfM+$TotalsurfW."명"?>
+                </td>
+                <td colspan="3"></td>
+                <td colspan="7"></td>
             </tr>
 		</tbody>
     </table>

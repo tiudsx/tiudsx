@@ -61,6 +61,19 @@ $errCode = "01";
 if(!$result_set) goto errGo;
 //echo $select_query.'<br>';
 
+/*
+예약상태
+    0 : 미입금
+    1 : 예약대기
+    2 : 임시확정
+    3 : 확정
+    4 : 환불요청
+    5 : 환불완료
+    6 : 임시취소
+    7 : 취소
+    8 : 입금완료
+*/
+
 //주문내역과 문자내역의 이름/금액 매칭
 $select_query = "SELECT a.user_name, a.user_tel, a.user_email, a.etc, b.* 
 					FROM AT_RES_MAIN as a INNER JOIN (SELECT resnum, SUM(res_totalprice) as price, MAX(seq) as shopSeq, MAX(shopname) as shopname, MAX(code) as code FROM AT_RES_SUB WHERE res_confirm IN (0, 1) GROUP BY resnum) as b 
@@ -78,6 +91,7 @@ if($count == 1){
 		$userPhone = $row["user_tel"];
 		$usermail = $row["user_email"];
 		$shopseq = $row["shopSeq"];
+		$shopname = $row["shopname"];
 		$code = $row['code'];
 	}
 
@@ -86,8 +100,6 @@ if($count == 1){
 
 	if($code == "bus"){
 		$res_confirm = 3;
-		$busSeatInfoS = "";
-		$busSeatInfoE = "";
 		$ressubseq = "";
 		
 		$arrSeatInfoS = array();
@@ -127,14 +139,15 @@ if($count == 1){
 		if(strrpos($usermail, "@") > 0){
             $to .= ','.$usermail;
 		}
-
-		$info1_title = "좌석안내";
-        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-        $info2_title = "탑승시간/위치 안내";			
-		$info2 = "&nbsp;&nbsp;&nbsp;<a href=\"https://actrip.co.kr/pointlist\" target=\"_blank\" style=\"text-decoration:underline;color:#009e25\" rel=\"noreferrer noopener\">[안내사항 보기]</a>";
+		
+        $info1_title = ""; //좌석안내
+        $info1 = "";
+        $info2_title = ""; //탑승시간/<br>위치 안내
+        $info2 = "";
 
 		$arrMail = array(
 			"gubun"=> "bus"
+			, "mail_html"=> "../common/mail.html"
 			, "gubun_step" => 3
 			, "gubun_title" => $shopname
             , "mailto"=> $to
@@ -152,7 +165,8 @@ if($count == 1){
 			, "info2_title"=> $info2_title
 			, "info2"=> $info2
 		);
-		//sendMail($arrMail); //메일 발송
+
+		sendMail($arrMail); //메일 발송
 	}
 
 	$select_query = "UPDATE `AT_RES_SUB` 
@@ -278,13 +292,14 @@ if($count == 1){
             $to .= ','.$usermail;
 		}
 
-		$info1_title = "좌석안내";
-        $info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-        $info2_title = "탑승시간/위치 안내";			
-		$info2 = "&nbsp;&nbsp;&nbsp;<a href=\"https://actrip.co.kr/pointlist\" target=\"_blank\" style=\"text-decoration:underline;color:#009e25\" rel=\"noreferrer noopener\">[안내사항 보기]</a>";
+        $info1_title = ""; //좌석안내
+        $info1 = "";
+        $info2_title = ""; //탑승시간/<br>위치 안내  https://actrip.co.kr/pointlist
+        $info2 = "";
 
 		$arrMail = array(
 			"gubun"=> "bus"
+			, "mail_html"=> "../common/mail.html"
 			, "gubun_step" => 3
 			, "gubun_title" => $shopname
             , "mailto"=> $to
@@ -302,7 +317,8 @@ if($count == 1){
 			, "info2_title"=> $info2_title
 			, "info2"=> $info2
 		);
-		//sendMail($arrMail); //메일 발송
+
+		sendMail($arrMail); //메일 발송
 	}else{
 		$select_query = "UPDATE `AT_CALL_BANK` SET 
 								goodstype = 'bus'
@@ -334,6 +350,7 @@ if($count == 1){
 
 		$arrMail = array(
 			"gubun"=> "bank"
+			, "mail_html"=> "../common/mail.html"
 			, "gubun_step" => 0
 			, "gubun_title" => "액트립 입금처리 오류"
 			, "mailto"=> $to
@@ -352,7 +369,7 @@ if($count == 1){
 			, "info2"=> $info2
 		);
 
-		//sendMail($arrMail); //메일 발송
+		sendMail($arrMail); //메일 발송
 	}
 
 }else if ($count == 0){ //금액, 이름이 없을 경우
@@ -417,6 +434,7 @@ if($count == 1){
 
 		$arrMail = array(
 			"gubun"=> "bank"
+			, "mail_html"=> "../common/mail.html"
 			, "gubun_step" => 1
 			, "gubun_title" => "액트립 입금처리 오류"
 			, "mailto"=> $to
@@ -435,7 +453,7 @@ if($count == 1){
 			, "info2"=> $info2
 		);
 
-		//sendMail($arrMail); //메일 발송
+		sendMail($arrMail); //메일 발송
 	}else{
 		$select_query = "SELECT a.user_name, a.user_tel, a.user_email, b.* 
 		FROM AT_RES_MAIN as a INNER JOIN (SELECT resnum, SUM(res_totalprice) as price, MAX(seq) as shopSeq, MAX(shopname) as shopname, MAX(code) as code FROM AT_RES_SUB WHERE res_confirm IN (0, 1) GROUP BY resnum) as b 
@@ -504,7 +522,7 @@ if($count == 1){
 
 			$banktotal_price = 0;
 			while ($row = mysqli_fetch_assoc($result_Bank)){
-			$banktotal_price += $row['bankprice'];
+				$banktotal_price += $row['bankprice'];
 			}
 			$banktotal_price += $bankprice;
 
@@ -565,6 +583,7 @@ if($count == 1){
 
 			$arrMail = array(
 				"gubun"=> "bank"
+				, "mail_html"=> "../common/mail.html"
 				, "gubun_step" => 2
 				, "gubun_title" => "액트립 입금처리 오류"
 				, "mailto"=> $to
@@ -583,7 +602,7 @@ if($count == 1){
 				, "info2"=> $info2
 			);
 
-			// sendMail($arrMail); //메일 발송
+			sendMail($arrMail); //메일 발송
 		}else{ // 금액, 이름동일 정보 하나도 없음
 
 			noDataGo:
@@ -595,6 +614,7 @@ if($count == 1){
 
 			$arrMail = array(
 				"gubun"=> "bank"
+				, "mail_html"=> "../common/mail.html"
 				, "gubun_step" => 3
 				, "gubun_title" => "액트립 입금처리 오류"
 				, "mailto"=> $to
@@ -613,7 +633,7 @@ if($count == 1){
 				, "info2"=> $info2
 			);
 
-			// sendMail($arrMail); //메일 발송
+			sendMail($arrMail); //메일 발송
 			$select_query = "UPDATE `AT_CALL_BANK` SET goodstype = 'bus', MainNumberList = '$ResNumberList' WHERE seq = ".$seq;
 			$result_set = mysqli_query($conn, $select_query);
 			// echo $select_query;

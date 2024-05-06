@@ -93,7 +93,7 @@ if($rowMain["couponseq"] == 17 || $rowMain["couponseq"] == 26){ //마린서프
 				<?}?>
 					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('/pointlist');">정류장 안내</li>
 				<?if($pkg_btn != ""){?>
-					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;" onclick="fnLayerView('<?=$pkg_btn?>');">패키지 안내</li>
+					<li class="on" style="cursor:pointer; font-size:1.1em; width:105px; text-align:left;display:;" onclick="fnLayerView('<?=$pkg_btn?>');">패키지 안내</li>
 				<?}?>
 				</ul>
 			</div>
@@ -151,7 +151,7 @@ if($rowMain["couponseq"] == 17 || $rowMain["couponseq"] == 26){ //마린서프
 						<tbody>
 							<tr>
 								<th style="text-align:center;">예금자명</th>
-								<th style="text-align:center;">은행이름</th>
+								<th style="text-align:center;">은행명</th>
 								<th style="text-align:center;">계좌번호</th>
 							</tr>
 							<tr>

@@ -1,21 +1,47 @@
 <?php 
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/logininfo.php';
-$shopseq = -3;
+
+$param_mid = $_REQUEST["mid"];
+
+if($param_mid == ""){
+	$param = str_replace("/", "", $_SERVER["REQUEST_URI"]);
+
+	if (!empty(strpos($_SERVER["REQUEST_URI"], '?'))){
+		$param = substr($param, 0, strpos($_SERVER["REQUEST_URI"], '?') - 1);
+	}
+
+	$param = explode('_', $param)[0];
+}else{
+	$param = $param_mid;
+}
+
+if($param == "mbus"){ //양양 셔틀버스
+    $shopseq = 7;
+    $bus_type = "양양";
+}else if($param == "mbus_dh"){ //동해 셔틀버스
+    $shopseq = 14;
+    $bus_type = "동해"; 
+}
 ?>
+<script>
+    var shopseq = <?=$shopseq?>;
+</script>
+
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_bus.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/admin/_css/admin_common.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
+
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
-<script type="text/javascript" src="/act_2023/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_bus.js?v=<?=time()?>"></script>
 
 <div class="bd_tl" style="width:100%;">
-	<h1 class="ngeb clear"><i class="bg_color"></i>양양 셔틀버스 예약현황</h1>
+	<h1 class="ngeb clear"><i class="bg_color"></i><?=$bus_type?> 셔틀버스 예약현황</h1>
 </div>
 
 <div class="container" id="contenttop">

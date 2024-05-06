@@ -11,7 +11,7 @@ if($param == "busview"){ //상세정보
     $arrType = true;
     $resseq = $_REQUEST["resseq"];
 
-    $select_query = "SELECT a.*, b.*, d.couponseq FROM AT_RES_MAIN as a 
+    $select_query = "SELECT a.*, b.*, d.couponseq, a.insdate as insertdate FROM AT_RES_MAIN as a 
                         INNER JOIN AT_RES_SUB as b 
                             ON a.resnum  = b.resnum  
                         LEFT JOIN AT_COUPON_CODE d 

@@ -3,25 +3,25 @@ include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/func.php';
 
 $selDate = $_REQUEST["selDate"];
+$shopseq = $_REQUEST["seq"];
 
-$select_query_bus = "SELECT seq, shopname, res_busnum, res_confirm, COUNT(*) AS CntBus,
-						(CASE WHEN LEFT(res_busnum, 3) = 'YSa'
-									THEN '10' + RIGHT(res_busnum, 1)
-								WHEN LEFT(res_busnum, 3) = 'YJo'
-									THEN '20' + RIGHT(res_busnum, 1)
-								WHEN LEFT(res_busnum, 3) = 'SY2'
-									THEN '30' + RIGHT(res_busnum, 1)
-								WHEN LEFT(res_busnum, 3) = 'SY5'
-									THEN '40' + RIGHT(res_busnum, 1)
-								ELSE res_busnum END) AS orderby FROM `AT_RES_SUB` 
+$select_query_bus = "SELECT seq, bus_oper, bus_gubun, bus_num, res_confirm, COUNT(*) AS CntBus,
+						(CASE WHEN bus_gubun = 'SA'
+									THEN '10' + RIGHT(bus_num, 1)
+								WHEN bus_gubun = 'JO'
+									THEN '20' + RIGHT(bus_num, 1)
+								WHEN bus_gubun = 'AM'
+									THEN '30' + RIGHT(bus_num, 1)
+								WHEN bus_gubun = 'PM'
+									THEN '40' + RIGHT(bus_num, 1)
+								ELSE bus_num END) AS orderby FROM `AT_RES_SUB` 
 						WHERE code = 'bus'
 							AND res_date = '$selDate' 
 							AND res_confirm = 3 
-						GROUP BY seq, shopname, 
-							(CASE WHEN LEFT(res_busnum, 1) = 'Y'  OR LEFT(res_busnum, 1) = 'E' 
-								THEN RIGHT(res_busnum, 3) 
-								ELSE RIGHT(res_busnum, 2) END), res_confirm
+							AND seq = $shopseq
+						GROUP BY seq, bus_oper, bus_gubun, bus_num, res_confirm
 						ORDER BY orderby ASC";
+						
 $result_bus = mysqli_query($conn, $select_query_bus);
 $count = mysqli_num_rows($result_bus);
 
@@ -35,7 +35,7 @@ if($count == 0){
 		</colgroup>
 		<tbody>
 			<tr>
-				<td style="text-align:center;height:50px;">
+				<td colspan="5" style="text-align:center;height:50px;">
 				<b>확정 예약된 목록이 없습니다.</b>
 				</td>
 			</tr>
@@ -48,49 +48,62 @@ if($count == 0){
 }
 
 $arrBus = array();
-$arrBusY = array(); //양양행
-$arrBusS = array(); //양양 서울행
-$arrBusE = array(); //동해행
-$arrBusA = array(); //동해 서울행
+$arrBus_Start = array(); //서울 출발
+$arrBus_Return = array(); //서울 복귀
 while ($rowSub = mysqli_fetch_assoc($result_bus)){
-	$bus = substr($rowSub['res_busnum'], 0, 1);
-	if($bus == "Y"){
-		$arrBusY[$rowSub['res_busnum']] = $rowSub['CntBus'];
-	}else if($bus == "S"){
-		$arrBusS[$rowSub['res_busnum']] = $rowSub['CntBus'];
-	}else if($bus == "E"){
-		$arrBusE[$rowSub['res_busnum']] = $rowSub['CntBus'];
-	}else if($bus == "A"){
-		$arrBusA[$rowSub['res_busnum']] = $rowSub['CntBus'];
+	if($rowSub['bus_oper'] == "start"){
+		$arrBus_Start[$rowSub['bus_gubun'].$rowSub['bus_num']] = $rowSub['CntBus'];
+	}else if($rowSub['bus_oper'] == "return"){
+		$arrBus_Return[$rowSub['bus_gubun'].$rowSub['bus_num']] = $rowSub['CntBus'];
 	}
 
-	$arrBus[$rowSub['res_busnum']][$rowSub['res_confirm']] = $rowSub['CntBus'];
+	$arrBus[$rowSub['bus_gubun'].$rowSub['bus_num']][$rowSub['res_confirm']] = $rowSub['CntBus'];
 }
+
+
+$arrBus = fnBusUrl($shopseq);
+
+$bus_type = $arrBus["type"]; //양양, 동해
 ?>
 
 <form name="frmDaySearch" id="frmDaySearch" autocomplete="off">
 
 <input type="hidden" id="selDate" name="selDate" value="<?=$selDate?>">
-<input type="hidden" id="busNum" name="busNum" value="">
+<input type="hidden" id="seq" name="seq" value="<?=$shopseq?>">
+<input type="hidden" id="bus_gubun" name="bus_gubun" value="">
+<input type="hidden" id="bus_num" name="bus_num" value="">
 
 <div class="gg_first" style="margin-top:0px;">셔틀버스 예약정보</div>
-<table class='et_vars exForm bd_tb' style="width:100%;display:;">
+<table class='et_vars exForm bd_tb' style="width:100%;">
 	<colgroup>
-		<col style="width:15%;">
+		<col style="width:10%;">
+		<col style="width:10%;">
 		<col style="width:auto;">
 	</colgroup>
 	<tr>
-		<th rowspan="2">서울 <> 양양</th>
+		<th rowspan="2"><?=$bus_type?>행</th>
+		<th>서울 출발</th>
 		<td>
-			<?foreach($arrBusY as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this, 'busDrive');" />
+			<?
+			foreach($arrBus_Start as $key=>$value){
+				$arrBusName = fnBusNum2023($key);
+				$gubun = $arrBusName["gubun"];
+				$num = $arrBusName["bus_num"];
+			?>
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=$arrBusName["full"]?> [<?=$value?>명]" onclick="fnDayList('<?=$gubun?>', '<?=$num?>', this, 'busDrive');" />
 			<?}?>
 		</td>
 	</tr>
 	<tr>
+		<th>서울 복귀</th>
 		<td>
-			<?foreach($arrBusS as $key=>$value){?>
-				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=fnBusNum($key)?> [<?=$value?>명]" onclick="fnDayList('<?=$key?>', this, 'busDrive');" />
+			<?
+			foreach($arrBus_Return as $key=>$value){
+				$arrBusName = fnBusNum2023($key);
+				$gubun = $arrBusName["gubun"];
+				$num = $arrBusName["bus_num"];
+			?>
+				<input type="button" name="buspoint" class="bd_btn" busgubun="<?=$key?>" style="padding-top:4px;font-family: gulim,Tahoma,Arial,Sans-serif;" value="<?=$arrBusName["full"]?> [<?=$value?>명]" onclick="fnDayList('<?=$gubun?>', '<?=$num?>', this, 'busDrive');" />
 			<?}?>
 		</td>
 	</tr>

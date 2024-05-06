@@ -44,6 +44,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
                         ,memo = '".$memo."'
                         ,user_tel = '".$user_tel."'
                         ,user_email = '".$user_email."'
+                        ,insdate = '".$insdate."'
                 WHERE resnum = '".$resnum."';";
     $result_set = mysqli_query($conn, $select_query);
     if(!$result_set) goto errGo;
@@ -93,14 +94,33 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
 	//==========================카카오 메시지 발송 ==========================
     if($intseq3 != "0"){ //예약 확정처리 : 고객발송
-        $select_query_sub = "SELECT * FROM AT_RES_SUB WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
+        $select_query_sub = "SELECT a.*, b.couponseq FROM AT_RES_SUB AS a LEFT JOIN AT_COUPON_CODE AS b
+									ON a.res_coupon = b.coupon_code
+								WHERE ressubseq IN ($intseq3) ORDER BY res_date, ressubseq";
         $resultSite = mysqli_query($conn, $select_query_sub);
 
+		$day_start = "-";
+		$day_return = "-";
         while ($rowSub = mysqli_fetch_assoc($resultSite)){
             $shopseq = $rowSub['seq'];
 			$shopname = $rowSub['shopname'];
 			$coupon = $rowSub['res_coupon'];
 			$busGubun = substr($rowSub['res_bus'], 0, 1);
+			$couponseq = $rowSub["couponseq"]; //채널
+
+			$res_date = $rowSub["res_date"];
+			
+			$bus_oper = $rowSub["bus_oper"];
+			$bus_gubun = $rowSub["bus_gubun"];
+			$bus_num = $rowSub["bus_num"];
+	
+			$arrBus = fnBusNum2023($bus_gubun.$bus_num);
+			$bus_line = '['.$res_date.'] '.$arrBus["point"].' '.$arrBus["num"];
+			if($bus_oper == "start"){ //서울 출발
+				$day_start = $bus_line;
+			}else{ //복귀
+				$day_return = $bus_line;
+			}
         }
 
 		$res_confirm = 3; //확정
@@ -111,14 +131,20 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$PROD_NAME = "셔틀버스 예약확정";
 		$link1 = shortURL("https://actrip.co.kr/orderview?num=1&resNumber=".$ResNumber);
 		
-		if($item["couponseq"] == 17 || $item["couponseq"] == 26){ //마린서프
+		if($couponseq == 17 || $couponseq == 26){ //마린서프
             $link2 = '\n\n - 마린서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_gisa.html");
-        }else if($item["couponseq"] == 20 || $item["couponseq"] == 27){ //인구서프, 엉클 프립
+        }else if($couponseq == 20 || $couponseq == 27){ //인구서프, 엉클 프립
             $link2 = '\n\n - 인구서프 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_ingu.html");
-        }else if($item["couponseq"] == 22 || $item["couponseq"] == 29){ //솔게하
+        }else if($couponseq == 22 || $couponseq == 29){ //솔게하
             $link2 = '\n\n - 솔게하 안내 : '.shortURL("https://actrip.co.kr/act_2023/front/bus_pkg/surf_dh.html");
         }
-        
+
+        if($shopseq == 7){ //양양행
+			$busTitleName = "양양";
+		}else{ //동해행
+			$busTitleName = "동해";
+		}
+
         if($day_start != "-" && $day_return != "-"){ //왕복
             $bus_line = "서울 ↔ $busTitleName";
         }else if($day_start != "-"){ //서울 출발
@@ -189,38 +215,6 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
             $errCode = "06";
             if(!$result_set) goto errGo;
         }
-
-
-        if(strrpos($usermail, "@") > 0){
-            // $to .= ','.$usermail;
-			$to = $usermail;
-
-			$info1_title = "좌석안내";
-			$info1 = str_replace('      -', '&nbsp;&nbsp;&nbsp;-', str_replace('\n', '<br>', $busSeatInfo));
-			$info2_title = "탑승시간/위치 안내";			
-			$info2 = "&nbsp;&nbsp;&nbsp;<a href=\"https://actrip.co.kr/pointlist\" target=\"_blank\" style=\"text-decoration:underline;color:#009e25\" rel=\"noreferrer noopener\">[안내사항 보기]</a>";
-
-			$arrMail = array(
-				"gubun"=> "bus"
-				, "gubun_step" => 3
-				, "gubun_title" => $shopname
-				, "mailto"=> $to
-				, "mailfrom"=> "surfbus_res@actrip.co.kr"
-				, "mailname"=> "actrip"
-				, "userName"=> $userName
-				, "ResNumber"=> $ResNumber
-				, "userPhone" => $userPhone
-				, "etc" => $etc
-				, "totalPrice1" => ""
-				, "totalPrice2" => ""
-				, "banknum" => ""
-				, "info1_title"=> $info1_title
-				, "info1"=> $info1
-				, "info2_title"=> $info2_title
-				, "info2"=> $info2
-			);
-			//sendMail($arrMail); //메일 발송
-		}
     }
 
 	mysqli_query($conn, "COMMIT");

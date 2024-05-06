@@ -232,7 +232,7 @@ for($r=0;$r<=$ra;$r++){
 				echo "<td><span class='tour_td_block' style='min-height:90px;'><span class='tour_cal_day' $holidayChk>$ru</span></span></td>";
 			}else{
 				$selYNbg = 'background:#e2e2e2;';
-				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block $noCnt' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnDaySelected(this, $shopseq);'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
+				echo "<td class='cal_type2'><calBox sel='$selYN' style='min-height:90px;$selYNbg' class='tour_td_block $noCnt' value='$s' weekNum='$weeknum' gubunchk='$gubunChk' onclick='fnDaySelected(this, $shopseq, \"bus\");'><span class='tour_cal_day' $holidayChk>$ru</span><span class='tour_cal_pay'>$adminText</span></calBox></td>";
 			}
 		}
 	}

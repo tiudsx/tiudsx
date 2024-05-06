@@ -104,7 +104,7 @@ $j(document).ready(function(){
                                 <option value="JO">종로선</option>
                             </select>
                             <input type="text" id="start_day" name="start_day" cal="sdate2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
-                            <select id="start_cnt" name="start_cnt" onchange="fnAdminBusGubun(this, 2);fnseatcheck(this);">
+                            <select id="start_cnt" name="start_cnt" onchange="fnseatcheck(this, 1);">
                             <?for ($i=0; $i < 20; $i++) { 
                                 echo '<option value="'.$i.'">'.$i.'명</option>';
                             }?>
@@ -117,7 +117,7 @@ $j(document).ready(function(){
                                 <option value="PM">저녁 출발</option>
                             </select>
                             <input type="text" id="return_day" name="return_day" cal="edate2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
-                            <select id="return_cnt" name="return_cnt" onchange="fnseatcheck(this);">
+                            <select id="return_cnt" name="return_cnt" onchange="fnseatcheck(this. 2);">
                             <?for ($i=0; $i < 20; $i++) { 
                                 echo '<option value="'.$i.'">'.$i.'명</option>';
                             }?>
@@ -127,13 +127,15 @@ $j(document).ready(function(){
                     <tr>
                         <td colspan="7" style="text-align:center;">
                             <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:120px; height:40px;" value="알림톡 발송" onclick="fnResKakaoAdmin();" />
+                            &nbsp; &nbsp;
+                            <input type="button" class="gg_btn res_btn_color2" style="width:80px; height:40px;" value="초기화" onclick='$j("#frmResKakao")[0].reset();' />
                         </td>
                     </tr>
                 </table>
                 </form>
 
                 <div class="gg_first">알림톡 발송 정보 <input type="button" class="gg_btn gg_btn_grid large gg_btn_color" style="width:40px; height:20px;" value="조회" onclick="fnSearchAdmin('busKakao/list_search_channel.php', '#mngKakaoSearch', 'N');" /></div>
-                <div id="mngKakaoSearch"> (https://alimtalk-api.bizmsg.kr/codeList.html)</div>
+                <div id="mngKakaoSearch"></div>
             </div>
 
             <!-- #tab2 -->
