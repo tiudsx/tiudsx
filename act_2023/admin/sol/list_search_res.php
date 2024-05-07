@@ -2,24 +2,34 @@
 include __DIR__.'/../../common/db.php';
 include __DIR__.'/../../common/kakaoalim.php';
 
-$sdate = $_REQUEST["sdate"];
-$edate = $_REQUEST["edate"];
+$schText = $_REQUEST["schText"];
+$sDate = $_REQUEST["sDate"];
+$eDate = $_REQUEST["eDate"];
 
 $chkResConfirm = $_REQUEST["chkResConfirm"];
 for($b = 0; $b < count($chkResConfirm); $b++){
-    $res_confirm .= "'".$chkResConfirm[$b]."',";
+    $confirmText .= "'".$chkResConfirm[$b]."',";
 }
-$res_confirm .= "'99'";
+$confirmText .= "'99'";
 
 $selDate = "";
 if($sDate == "" && $eDate == ""){
 }else{
     if($sDate != "" && $eDate != ""){
-        $selDate = ' AND (resdate BETWEEN CAST("'.$sDate.'" AS DATE) AND CAST("'.$eDate.'" AS DATE))';
+        $eDate2 = date("Y-m-d", strtotime($eDate." -1 day"));
+        $selDate = " AND ((b.resdate BETWEEN CAST('$sDate' AS DATE) AND CAST('$eDate' AS DATE)) 
+                        OR 
+                        (('$sDate' BETWEEN b.sdate AND DATE_ADD(b.edate, INTERVAL -1 DAY) OR '$eDate2' BETWEEN b.sdate AND DATE_ADD(b.edate, INTERVAL -1 DAY))
+                        OR (b.sdate BETWEEN '$sDate' AND '$eDate2' OR DATE_ADD(b.edate, INTERVAL -1 DAY) BETWEEN '$sDate' AND '$eDate2')))";
     }else if($sDate != ""){
-        $selDate = ' AND resdate >= CAST("'.$sDate.'" AS DATE)';
+        $selDate = " AND (b.resdate >= CAST('$sDate' AS DATE)
+                        OR
+                        (b.sdate >= CAST('$sDate' AS DATE) OR b.edate >= CAST('$sDate' AS DATE)))";
     }else if($eDate != ""){
-        $selDate = ' AND resdate <= CAST("'.$eDate.'" AS DATE)';
+        $selDate = " AND (b.resdate <= CAST('$eDate' AS DATE)
+                        OR
+                        (b.sdate <= CAST('$eDate' AS DATE) OR b.edate <= CAST('$eDate' AS DATE)))
+                        AND (b.sdate != '0000-00-00' AND b.edate != '0000-00-00' AND b.resdate != '0000-00-00')";
     }
 }
 
@@ -27,102 +37,62 @@ if($schText != ""){
     $schText = ' AND (a.user_name like "%'.$schText.'%" OR a.user_tel like "%'.$schText.'%")';
 }
 
-$select_query = 'SELECT a.resseq, a.user_name, a.user_tel, a.etc, a.user_email, a.memo, b.*, d.couponseq FROM `AT_RES_MAIN` as a INNER JOIN `AT_RES_SUB` as b 
-                    ON a.resnum = b.resnum 
-                    INNER JOIN AT_PROD_MAIN as c ON b.seq = c.seq 
-                    LEFT JOIN AT_COUPON_CODE d ON b.res_coupon = d.coupon_code
-                    WHERE b.res_confirm IN ('.$res_confirm.')
-                        AND b.code = "bus"
-                        AND b.res_busnum IN ('.$inResType.')'.$busDate.$schText.' 
-                        ORDER BY b.resnum, b.res_date, b.ressubseq';
-                        
-$select_query = "
-    SELECT 
+$select_query = "SELECT a.resseq FROM AT_SOL_RES_MAIN as a 
+                    INNER JOIN AT_SOL_RES_SUB as b 
+                        ON a.resseq = b.resseq 
+                    WHERE 1=1 
+                        $selDate
+                        $schText
+                    GROUP BY b.resseq";
+                    
+$select_query = "SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
         b.ressubseq, b.res_type, b.prod_name, b.sdate, b.edate, '' as resdate, b.staysex, b.stayM, b.stayroom, b.staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo 
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE, 
+            CASE WHEN staysex = '남' AND (party IN ('ALL', 'BBQ')) THEN 1
+                ELSE 0 END AS BBQ_M,
+            CASE WHEN staysex = '여' AND (party IN ('ALL', 'BBQ')) THEN 1
+                ELSE 0 END AS BBQ_W,
+            CASE WHEN staysex = '남' AND (party IN ('ALL', 'PUB')) THEN 1
+                ELSE 0 END AS PUB_M,
+            CASE WHEN staysex = '여' AND (party IN ('ALL', 'PUB')) THEN 1
+                ELSE 0 END AS PUB_W
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-                ON a.resseq = b.resseq 
-                WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
-                        OR b.resdate = '$selDate')
-                    AND res_type = 'stay'
+                    ON a.resseq = b.resseq 
+                LEFT JOIN AT_KAKAO_HISTORY as c
+                    ON a.userinfo = c.msgid
+                WHERE b.res_type = 'stay'
                     AND a.res_confirm IN ($confirmText)
-                    $schText
-    UNION ALL
+                    AND a.resseq IN ($select_query)
+        UNION ALL
     SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
         b.ressubseq, b.res_type, 
         CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
         '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo 
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE,
+        0 AS BBQ_M, 0 AS BBQ_W, 0 AS PUB_M, 0 AS PUB_W 
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-                ON a.resseq = b.resseq 
+                    ON a.resseq = b.resseq 
+                LEFT JOIN AT_KAKAO_HISTORY as c
+                    ON a.userinfo = c.msgid
                 WHERE a.res_confirm IN ($confirmText)
-                    AND res_type = 'surf'
-                    $selDate
-                    $schText
+                    AND b.res_type = 'surf'
+                    AND a.resseq IN ($select_query)
         ORDER BY resseq, ressubseq";
-                   
+        
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
 if($count == 0){
 ?>
  <div class="contentimg bd">
-    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
-        
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
+    <div class="gg_first">예약 현황 (<span id="listdate"></span>)
     </div>
-    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;" id="tbSolList">
-        <colgroup>
-            <col width="9%" />
-            <col width="9%" />
-            <col width="6%" />
-            <col width="*" />
-            <col width="4%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="8%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="5%" />
-            <col width="5%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="8%" />
-            <col width="7%" />
-        </colgroup>
+    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:5px;width:100%;" id="tbSolSearch">
         <tbody>
             <tr>
-                <th rowspan="2">이름</th>
-                <th rowspan="2">연락처</th>
-                <th rowspan="2">구분</th>
-                <th rowspan="2">예약정보</th>
-                <th colspan="3">강습</th>
-                <th colspan="2">렌탈</th>
-                <th colspan="3">숙박&파티</th>
-                <th rowspan="2">요청사항</th>
-                <th rowspan="2">직원메모</th>
-                <th rowspan="2">입실</th>
-                <th rowspan="2">상태</th>
-                <th rowspan="2">알림톡</th>
-                <th rowspan="2">예약업체</th>
-            </tr>
-            <tr>
-                <th>시간</th>
-                <th>남</th>
-                <th>여</th>
-                <th>남</th>
-                <th>여</th>
-                <th>파티</th>
-                <th>남</th>
-                <th>여</th>
-            </tr>
-            <tr>
-                <td colspan="18" style="text-align:center;height:50px;">
+                <td style="text-align:center;height:50px;">
                     <b>예약된 목록이 없습니다. 달력에서 다른 날짜를 선택하세요.</b>
                 </td>
             </tr>
@@ -140,45 +110,42 @@ $css_table_right = " border-right:2px solid #c0c0c0";
 
 <div class="contentimg bd">
 <form name="frmConfirm" id="frmConfirm" autocomplete="off">
-    <div class="gg_first">예약 현황 (<span id="listdate"><?=$selDate?></span>) : <?=$confirmText?>
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large gg_btn_color" style="width:80px; height:20px;" value="전체" onclick="fnListTab('all', this);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="숙박&바베큐" onclick="fnListTab('stay', this);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large " style="width:80px; height:20px;" value="강습&렌탈" onclick="fnListTab('surf', this);" />
-
-        <input type="button" class="gg_btn res_btn_color2" style="width:120px; height:22px;" value="카톡 선택발송" onclick="fnKakaoSend(null, true);" />
-        <input type="button" name="listtab" class="gg_btn gg_btn_grid large" style="width:80px; height:20px;" value="취소건" onclick="fnListTab('cancel', this);" />
+    <div class="gg_first">예약 현황 (<span id="listdate"></span>)
     </div>
-    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolList">
+    <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:100%;" id="tbSolSearch">
         <colgroup>
-            <col width="4%" />
-            <col width="*" />
-            <col width="5%" />
-            <col width="8%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="7%" />
-            <col width="4%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="6%" />
-            <col width="3%" />
-            <col width="3%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="4%" />
-            <col width="5%" />
-            <col width="7%" />
-            <col width="6%" />
+            <col width="44px" />
+            <col width="110px" />
+            <col width="60px" />
+            <col width="100px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="85px" />
+            <col width="45px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="75px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="62px" />
+            <col width="82px" />
+            <col width="auto" />
         </colgroup>
         <tbody>
             <tr>
-                <th style="<?=$css_table?>" rowspan="2"><label><input type="checkbox" onclick="fnAllChk(this);"></label></th>
+                <th style="<?=$css_table?>" rowspan="2"></th>
                 <th style="<?=$css_table?>" rowspan="2" colspan="2">예약자</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="3">숙박정보</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="2">바베큐</th>
+                <th style="<?=$css_table.$css_table_right?>" colspan="2">2차</th>
                 <th style="<?=$css_table?>" rowspan="2">서핑샵</th>
                 <th style="<?=$css_table.$css_table_right?>" colspan="3">서핑강습</th>
                 <th style="<?=$css_table?>" colspan="3">렌탈</th>
@@ -190,6 +157,8 @@ $css_table_right = " border-right:2px solid #c0c0c0";
             </tr>
             <tr>
                 <th style="<?=$css_table?>">숙박일</th>
+                <th style="<?=$css_table?>">남</th>
+                <th style="<?=$css_table.$css_table_right?>">여</th>
                 <th style="<?=$css_table?>">남</th>
                 <th style="<?=$css_table.$css_table_right?>">여</th>
                 <th style="<?=$css_table?>">남</th>
@@ -216,8 +185,10 @@ $TotalsurfM = 0;
 $TotalsurfW = 0;
 $TotalstayM = 0;
 $TotalstayW = 0;
-$TotalbbqM = 0;
-$TotalbbqW = 0;
+$partyBBQ_M = 0;
+$partyBBQ_W = 0;
+$partyPUB_M = 0;
+$partyPUB_W = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
     $prod_name = str_replace("솔게스트하우스", "솔게하", $row['prod_name']);
     $sdate = $row['sdate'];
@@ -268,6 +239,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $surfrentW = $row['surfrentW'];
     $bbq = $row['bbq'];
     $eDay = $row['eDay'];
+    $res_bankchk = $row['res_bankchk'];
+    
+    $response = $row['response'];
+    $KAKAO_DATE = $row['KAKAO_DATE'];
 
     $memoYN = "";
     if($memo != "" || $memo2 != ""){
@@ -277,85 +252,68 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $stayText = "";
     $surfText = "";
     $stayInfo = "";
-    $bbqText = "";
     $surfrentText = "";
-    $resText = "";
     $stayMText = "";
     $stayWText = "";
-    $bbqMText = "";
-    $bbqWText = "";
+    $BBQ_M = "";
+    $BBQ_W = "";
+    $PUB_M = "";
+    $PUB_W = "";
     if($row['res_type'] == "stay"){ //숙박&바베큐
         if($prod_name == "N"){
             $res_room_chk = "";
         }else{
-            if($row['sMonth'] == $Mon || $row['eMonth'] == $Mon){
-                if(!((int)$Day == $eDay)){
-                    $resText = "숙박";
-                    //$stayText = $prod_name." (".str_replace("-", ".", substr($sdate, 5, 10))."~".str_replace("-", ".", substr($edate, 5, 10)).")";
-                    $stayText = str_replace("-", ".", substr($sdate, 5, 10))." ~ ".str_replace("-", ".", substr($edate, 5, 10));
+            $stayText = str_replace("-", ".", substr($sdate, 5, 10))." ~ ".str_replace("-", ".", substr($edate, 5, 10));
 
-                    if($res_confirm == "확정" || $res_confirm == "대기"){
-                        $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
-                    }
-
-                    if($staysex == "남"){
-                        $stayMText = $stayMem.(($stayMem == "")? "" : "명");
-                        $TotalstayM += $stayMem;
-                    }else{
-                        $stayWText = $stayMem.(($stayMem == "")? "" : "명");
-                        $TotalstayW += $stayMem;
-                    }
-                }
+            if($res_confirm == "확정" || $res_confirm == "대기"){
+                $stayInfo = "stayinfo2='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
             }
-        }
 
-        if($Day == $row['resDay']){
-            $resText .= (($resText == "") ? "" : "/")."파티";
-            // $stayText .= (($stayText == "") ? "$bbq" : " / $bbq");
-            $bbqText = $bbq;
-            
             if($staysex == "남"){
-                $bbqMText = $stayMem.(($stayMem == "")? "" : "명");
-                $TotalbbqM += $stayMem;
+                $stayMText = $stayMem.(($stayMem == "")? "" : "명");
+                $TotalstayM += $stayMem;
             }else{
-                $bbqWText = $stayMem.(($stayMem == "")? "" : "명");
-                $TotalbbqW += $stayMem;
+                $stayWText = $stayMem.(($stayMem == "")? "" : "명");
+                $TotalstayW += $stayMem;
             }
         }
 
-        // if(($bbq != "N" && $prod_name == "N") || $prod_name != "솔게하"){
-            // if($staysex == "남"){
-            //     $stayMText = $stayMem.(($stayMem == "")? "" : "명");
-            // }else{
-            //     $stayWText = $stayMem.(($stayMem == "")? "" : "명");
-            // }
-        // }
+        $BBQ_M = ($row['BBQ_M'] == 0) ? "" : $row['BBQ_M'].'명';
+        $BBQ_W = ($row['BBQ_W'] == 0) ? "" : $row['BBQ_W'].'명';
+        $PUB_M = ($row['PUB_M'] == 0) ? "" : $row['PUB_M'].'명';
+        $PUB_W = ($row['PUB_W'] == 0) ? "" : $row['PUB_W'].'명';
+
+        $partyBBQ_M += $BBQ_M;
+        $partyBBQ_W += $BBQ_W;
+        $partyPUB_M += $PUB_M;
+        $partyPUB_W += $PUB_W;
     }else{ //강습&렌탈
         $res_room_chk = "";
-        if($Day == $row['resDay']){
-            if($prod_name != "N"){
-                $resText = "강습";
-                $surfText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
+        if($prod_name != "N"){
+            $surfText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
 
-                $TotalsurfM += $surfM;
-                $TotalsurfW += $surfW;
-            }
+            $TotalsurfM += $surfM;
+            $TotalsurfW += $surfW;
+        }
 
-            if($surfrent != "N"){            
-                $resText .= (($resText == "") ? "" : "/")."렌탈";
-                // $surfrentText .= (($surfText == "") ? "" : " / ").$surfrent;
-                $surfrentText = $surfrent;
-            }
-
-            //$surfText .= (($surfText == "") ? "" : " ($resdate)");
+        if($surfrent != "N"){            
+            $surfrentText = $surfrent;
         }
     }
 
     $fontcolor = "";
+    $bankchk = "";
     if($res_confirm == "대기"){
+        if($res_bankchk == "N"){
+            $bankchk = "미발송";
+        }else if($res_bankchk == "0"){
+            $bankchk = "일반계좌";
+        }else{
+            $bankchk = number_format($res_bankchk)."원";            
+        }
+        $bankchk = "<br><span style='color:black;'><b>".$bankchk."</b></span>";
         $fontcolor = "color:#c0c0c0;";
     }else if($res_confirm == "취소"){
-        //$fontcolor = "color:#c0c0c0;";
     }else{
         if($row['res_type'] == "stay" && $prod_name != "N" && $prod_name != "솔게하"){
             $fontcolor = "color:#8080ff;";
@@ -367,49 +325,29 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     if($res_kakao == "0"){
         $rtnText = '<span class="btn_view" seq="40'.$c.'">X</span><span style="display:none;"><b><a href="/sol_kakao?chk=1&seq='.$resseq.'" target="_blank">[알림톡 보기]<a></b></span>';
     }else{
-        $userinfo = $row['userinfo'];
-        $arrChk = explode("|", $userinfo);
+        if($response == ""){
+        }else{
+            $data = json_decode($response, true);
 
-        $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b> (".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";  
-        $rtnMessage = "<b>".$rtnText."</b>";
-    
-        if($arrChk[8] != ""){
-            $mesCode = substr($arrChk[8], 0, 4);
-            $rtnTextCode .= $mesCode;
-            //$rtnText .= "_".$arrChk[8];
+            $code = $data["code"];
+            $msgid = $data["data"]["msgid"];
+            $type = $data["data"]["type"];
+            $message = $data["message"];
+            $originMessage = $data["originMessage"];
 
-            if($mesCode == "M001"){
-                $data = json_decode(getKakaoSearch($arrChk[10]), true);
-                $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".substr($data["message"], 0, 4)." : ".fnMessageText(substr($data["message"], 0, 4));
-            }else{
-                $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesCode." : ".fnMessageText($mesCode);
-            }
+            
+            $rtnText_0 = "<b>".(($code == "fail") ? "실패" : "성공")."</b>";
+            $rtnText_1 = "(".(($type == "AT") ? "알림톡" : "문자").")";  
+            $rtnMessage = "<b>$rtnText_0 $rtnText_1</b>";
+            
+            $rtnTextCode = $res_kakao.'회';
+            
+            $rtnText = "<span class='btn_view' seq='40$c'>$rtnText_0<br>$rtnText_1</span><span style='display:none;'><b>$KAKAO_DATE <a href='/sol_kakao?chk=1&seq=$resseq' target='_blank'>[알림톡 보기]<a></b><br><br>$rtnMessage</span>";
         }
-        
-        if($arrChk[9] != ""){
-            $mesOriCode = substr($arrChk[9], 0, 4);
-            $rtnTextCode .= " / ".$mesOriCode;
-
-            $rtnMessage .= "<br>&nbsp;&nbsp;&nbsp; - ".$mesOriCode." : ".fnMessageText($mesOriCode);
-        }
-
-        //$rtnTextCode = '<span class="btn_view" seq="30'.$c.'">'.$res_kakao.'회</span><span style="display:none;"><b>'.$arrChk[2].'</b><br><br>'.$rtnMessage.'</span>';
-        $rtnTextCode = $res_kakao.'회';
-
-        $rtnText = "<b>".(($arrChk[6] == "fail") ? "실패" : "성공")."</b><br>(".(($arrChk[7] == "AT") ? "알림톡" : "문자").")";  
-        $rtnText = '<span class="btn_view" seq="40'.$c.'">'.$rtnText.'</span><span style="display:none;"><b>'.$arrChk[2].' <a href="/sol_kakao?chk=1&seq='.$resseq.'" target="_blank">[알림톡 보기]<a></b><br><br>'.$rtnMessage.'</span>';
     }
 ?>
     <tr>
-        <td style="<?=$fontcolor?>">
-        <label>
-        <?if($res_confirm == "확정"){?>
-            <input type="checkbox" id="chkresseq" name="chkresseq[]" value="<?=$resseq?>">
-        <?}else{?>
-            <input type="checkbox" id="chkresseq" name="chkresseq[]" disabled>
-        <?}?>
-            <br><?=$resseq?></label>
-        </td>
+        <td style="<?=$fontcolor?>"><label><?=$resseq?></label></td>
         <td style="cursor:pointer;<?=$fontcolor?>" onclick="fnSolModify(<?=$resseq?>, '_2');"><b><?=$user_name?><br><?=$user_tel?></b></td>
         <td style="<?=$fontcolor?>">
             <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="수정" onclick="fnSolModify(<?=$resseq?>);" />
@@ -417,9 +355,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
         <td style="<?=$fontcolor?>"><?=$stayMText?></td>
         <td style="<?=$fontcolor.$css_table_right?>"><?=$stayWText?></td>
-        <!-- <td style="<?=$fontcolor?>"><?=$bbqText?></td> -->
-        <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
-        <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
+        <td style="<?=$fontcolor?>"><?=$BBQ_M?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$BBQ_W?></td>
+        <td style="<?=$fontcolor?>"><?=$PUB_M?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$PUB_W?></td>
         <td style="<?=$fontcolor?>"><?=$surfText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
@@ -433,9 +372,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>"><?if($res_kakao_chk == "Y"){echo "읽음";}else{echo "X";}?></td>
         <td style="<?=$fontcolor?>"><?=$rtnText?></td>
         <td style="<?=$fontcolor?>"><?=$rtnTextCode?>
-            <?if($res_confirm == "확정"){?>
-            <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>, false);" />
-            <?}?>
+            <?=$bankchk?>
         </td>
         <td style="<?=$fontcolor?>"><?=$res_company?></td>
     </tr>
@@ -444,64 +381,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 }
 $rowlist .= $b."|";
 ?>
-            <tr style="background-color:#ffa87d;">
-                <td colspan="3"><strong>합 계</strong></td>
-                <td colspan="3">
-                    <strong>숙박</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
-                    <br><strong>총 : <?=$TotalstayM+$TotalstayW."명"?></strong>
-                </td>
-                <td colspan="3">
-                    <strong>바베큐</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?> / 여 : <?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?>
-                    <br><strong>총 : <?=$TotalbbqM+$TotalbbqW."명"?></strong>
-                </td>
-                <td colspan="6">
-                    <strong>서핑강습</strong>&nbsp;&nbsp;&nbsp;남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?>
-                    <br><strong>총 : <?=$TotalsurfM+$TotalsurfW."명"?></strong>
-                </td>
-                <td colspan="7"></td>
-            </tr>
 		</tbody>
     </table>
-    <input type="hidden" id="hidrowcnt" value="<?=$rowlist?>" />
-    <input type="hidden" id="resparam" name="resparam" value="solkakaoAll" />
-    <input type="hidden" id="selDate" name="selDate" value="<?=$selDate?>" />
+    <input type="hidden" id="hidrowcnt2" value="<?=$rowlist?>" />
 </form>
-<form name="frmConfirmSel" id="frmConfirmSel" style="display:none;"></form>
-</div>
-
-<script type="text/javascript">
-$j(document).ready(function(){
-	$j(".btn_view[seq]").mouseover(function(e){ //조회 버튼 마우스 오버시
-		var seq = $j(this).attr("seq");
-		var obj = $j(".btn_view[seq="+seq+"]");
-		var tX = (obj.position().left)-354; //조회 버튼의 X 위치 - 레이어팝업의 크기만 큼 빼서 위치 조절
-		var tY = (obj.position().top - 20);  //조회 버튼의 Y 위치
-		
-
-		if($j(this).find(".box_layer").length > 0){
-			if($j(this).find(".box_layer").css("display") == "none"){
-				$j(this).find(".box_layer").css({
-					"top" : tY
-					,"left" : tX
-					,"position" : "absolute"
-				}).show();
-			}
-		}else{
-				$j(".btn_view[seq="+seq+"]").append('<div class="box_layer"></div>');
-				$j(".btn_view[seq="+seq+"]").find(".box_layer").html($j(".btn_view[seq="+seq+"]").next().html());
-				$j(".btn_view[seq="+seq+"]").find(".box_layer").css({
-					"top" : tY
-					,"left" : tX
-					,"position" : "absolute"
-				}).show();
-		}		
-	});
-	
-	$j(".btn_view[seq]").mouseout(function(e){
-			$j(this).find(".box_layer").css("display","none");
-	});
-
-    $j("calbox[value=" + $j("#selDate").val() + "]").css("background", "#efefef");
-    $j("calbox[value=" + $j("#selDate").val() + "]").attr("sel", "yes");
-}); 
-</script>

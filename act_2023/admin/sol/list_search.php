@@ -25,11 +25,18 @@ if($gubun == "cancel"){
     $tabColor2 = "";
 }
 
-$select_query = "
-    SELECT 
+$select_query = "SELECT 
         a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
         b.ressubseq, b.res_type, b.prod_name, b.sdate, b.edate, '' as resdate, b.staysex, b.stayM, b.stayroom, b.staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE 
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE, 
+            CASE WHEN staysex = '남' AND (party IN ('ALL', 'BBQ')) THEN 1
+                ELSE 0 END AS BBQ_M,
+            CASE WHEN staysex = '여' AND (party IN ('ALL', 'BBQ')) THEN 1
+                ELSE 0 END AS BBQ_W,
+            CASE WHEN staysex = '남' AND (party IN ('ALL', 'PUB')) THEN 1
+                ELSE 0 END AS PUB_M,
+            CASE WHEN staysex = '여' AND (party IN ('ALL', 'PUB')) THEN 1
+                ELSE 0 END AS PUB_W
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
                 LEFT JOIN AT_KAKAO_HISTORY as c
@@ -44,7 +51,8 @@ $select_query = "
         b.ressubseq, b.res_type, 
         CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
         '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE 
+        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE,
+        0 AS BBQ_M, 0 AS BBQ_W, 0 AS PUB_M, 0 AS PUB_W 
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
                     ON a.resseq = b.resseq 
                 LEFT JOIN AT_KAKAO_HISTORY as c
@@ -53,7 +61,7 @@ $select_query = "
                     AND a.res_confirm IN ($confirmText)
                     AND res_type = 'surf'
         ORDER BY resseq, ressubseq";
-                   
+           
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
 
@@ -170,8 +178,10 @@ $TotalsurfM = 0;
 $TotalsurfW = 0;
 $TotalstayM = 0;
 $TotalstayW = 0;
-$TotalbbqM = 0;
-$TotalbbqW = 0;
+$partyBBQ_M = 0;
+$partyBBQ_W = 0;
+$partyPUB_M = 0;
+$partyPUB_W = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
     $prod_name = str_replace("솔게스트하우스", "솔게하", $row['prod_name']);
     $sdate = $row['sdate'];
@@ -235,12 +245,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $stayText = "";
     $surfText = "";
     $stayInfo = "";
-    $bbqText = "";
     $surfrentText = "";
     $stayMText = "";
     $stayWText = "";
-    $bbqMText = "";
-    $bbqWText = "";
+    $BBQ_M = "";
+    $BBQ_W = "";
+    $PUB_M = "";
+    $PUB_W = "";
     if($row['res_type'] == "stay"){ //숙박&바베큐
         if($prod_name == "N"){
             $res_room_chk = "";
@@ -264,17 +275,15 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
             }
         }
 
-        if($Day == $row['resDay']){
-            $bbqText = $bbq;
-            
-            if($staysex == "남"){
-                $bbqMText = $stayMem.(($stayMem == "")? "" : "명");
-                $TotalbbqM += $stayMem;
-            }else{
-                $bbqWText = $stayMem.(($stayMem == "")? "" : "명");
-                $TotalbbqW += $stayMem;
-            }
-        }
+        $BBQ_M = ($row['BBQ_M'] == 0) ? "" : $row['BBQ_M'].'명';
+        $BBQ_W = ($row['BBQ_W'] == 0) ? "" : $row['BBQ_W'].'명';
+        $PUB_M = ($row['PUB_M'] == 0) ? "" : $row['PUB_M'].'명';
+        $PUB_W = ($row['PUB_W'] == 0) ? "" : $row['PUB_W'].'명';
+
+        $partyBBQ_M += $BBQ_M;
+        $partyBBQ_W += $BBQ_W;
+        $partyPUB_M += $PUB_M;
+        $partyPUB_W += $PUB_W;
     }else{ //강습&렌탈
         $res_room_chk = "";
         if($Day == $row['resDay']){
@@ -385,11 +394,10 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>" <?=$stayInfo?>><?=$stayText?></td>
         <td style="<?=$fontcolor?>"><?=$stayMText?></td>
         <td style="<?=$fontcolor.$css_table_right?>"><?=$stayWText?></td>
-        <!-- <td style="<?=$fontcolor?>"><?=$bbqText?></td> -->
-        <td style="<?=$fontcolor?>"><?=$bbqMText?></td>
-        <td style="<?=$fontcolor.$css_table_right?>"><?=$bbqWText?></td>
-        <td style="<?=$fontcolor?>"></td>
-        <td style="<?=$fontcolor.$css_table_right?>"></td>
+        <td style="<?=$fontcolor?>"><?=$BBQ_M?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$BBQ_W?></td>
+        <td style="<?=$fontcolor?>"><?=$PUB_M?></td>
+        <td style="<?=$fontcolor.$css_table_right?>"><?=$PUB_W?></td>
         <td style="<?=$fontcolor?>"><?=$surfText?></td>
         <td style="<?=$fontcolor?>"><?=($restime == 0) ? "" : $restime?></td>
         <td style="<?=$fontcolor?>"><?=($surfM == 0) ? "" : $surfM."명"?></td>
@@ -430,7 +438,6 @@ $rowlist .= $b."|";
                     서핑강습
                 </td>
                 <td colspan="3">
-                    렌탈
                 </td>
                 <td colspan="7"></td>
             </tr>
@@ -439,16 +446,16 @@ $rowlist .= $b."|";
                     <strong>남 : <?=($TotalstayM == 0) ? "" : $TotalstayM."명"?> / 여 : <?=($TotalstayW == 0) ? "" : $TotalstayW."명"?>
                 </td>
                 <td>
-                    <strong><?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?></strong>
+                    <strong><?=($partyBBQ_M == 0) ? "" : $partyBBQ_M."명"?></strong>
                 </td>
                 <td>
-                    <strong><?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?></strong>
+                    <strong><?=($partyBBQ_W == 0) ? "" : $partyBBQ_W."명"?></strong>
                 </td>
                 <td>
-                    <strong><?=($TotalbbqM == 0) ? "" : $TotalbbqM."명"?></strong>
+                    <strong><?=($partyPUB_M == 0) ? "" : $partyPUB_M."명"?></strong>
                 </td>
                 <td>
-                    <strong><?=($TotalbbqW == 0) ? "" : $TotalbbqW."명"?></strong>
+                    <strong><?=($partyPUB_W == 0) ? "" : $partyPUB_W."명"?></strong>
                 </td>
                 <td colspan="4">
                     <strong>남 : <?=($TotalsurfM == 0) ? "" : $TotalsurfM."명"?> / 여 : <?=($TotalsurfW == 0) ? "" : $TotalsurfW."명"?></strong>
@@ -461,10 +468,10 @@ $rowlist .= $b."|";
                     총 : <?=$TotalstayM+$TotalstayW."명"?>
                 </td>
                 <td colspan="2">
-                    총 : <?=$TotalbbqM+$TotalbbqW."명"?>
+                    총 : <?=$partyBBQ_M+$partyBBQ_W."명"?>
                 </td>
                 <td colspan="2">
-                    총 : <?=$TotalbbqM+$TotalbbqW."명"?>
+                    총 : <?=$partyPUB_M+$partyPUB_W."명"?>
                 </td>
                 <td colspan="4">
                     총 : <?=$TotalsurfM+$TotalsurfW."명"?>

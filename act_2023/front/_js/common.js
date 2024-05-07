@@ -14,7 +14,7 @@ jQuery(function() {
         minDate: new Date("2020-04-01"),
         beforeShow: function(date) {
             if(jQuery(this).next().val() == ""){
-
+                jQuery(this).datepicker("option", "maxDate", null);
             }else{
                 var date = jQuery(this).next().datepicker('getDate');
 
@@ -41,7 +41,7 @@ jQuery(function() {
         minDate: new Date("2020-05-01"),
         beforeShow: function(date) {
             if(jQuery(this).prev().val() == ""){
-
+                jQuery(this).datepicker("option", "minDate", null);
             }else{
                 var date = jQuery(this).prev().datepicker('getDate');
 
@@ -71,10 +71,12 @@ jQuery(function() {
             if(calObj.val() == ""){
                 jQuery(this).datepicker("option", "maxDate", null);
             }else{
-                var date = calObj.datepicker('getDate');
+                if($j("#busgubun").length == 0){
+                    var date = calObj.datepicker('getDate');
 
-                date.setDate(date.getDate()); // Add 7 days
-                jQuery(this).datepicker("option", "maxDate", date);
+                    date.setDate(date.getDate()); // Add 7 days
+                    jQuery(this).datepicker("option", "maxDate", date);
+                }
             }
         },
         onClose: function(selectedDate) {
@@ -82,7 +84,7 @@ jQuery(function() {
             // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
             var calObj = jQuery(this).parents("tr").find("[cal=edate2]");
             if(jQuery(this).val() == ""){
-
+                jQuery(this).datepicker("option", "minDate", null);
             }else{
                 var date = jQuery(this).datepicker('getDate');
 
@@ -108,17 +110,19 @@ jQuery(function() {
             if(jQuery(this).parents("tr").find("[cal=sdate2]").val() == ""){
                 jQuery(this).datepicker("option", "minDate", null);
             }else{
-                var date = jQuery(this).parents("tr").find("[cal=sdate2]").datepicker('getDate');
+                if($j("#busgubun").length == 0){
+                    var date = jQuery(this).parents("tr").find("[cal=sdate2]").datepicker('getDate');
 
-                date.setDate(date.getDate()); // Add 7 days
-                jQuery(this).datepicker("option", "minDate", date);
+                    date.setDate(date.getDate()); // Add 7 days
+                    jQuery(this).datepicker("option", "minDate", date);
+                }
             }
         },
         onClose: function(selectedDate) {
             // 시작일(fromDate) datepicker가 닫힐때
             // 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정 
             if(jQuery(this).val() == ""){
-
+                jQuery(this).datepicker("option", "maxDate", null);
             }else{
                 var date = jQuery(this).datepicker('getDate');
 

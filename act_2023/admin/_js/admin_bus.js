@@ -38,7 +38,7 @@ function fnBusDataDel(){
         if (data == 0) {
             alert("정상적으로 삭제되었습니다.");
 
-            fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), shopseq);
+            fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), shopseq, "bus");
 
             if ($j("input[name=buspoint]").length > 0) {
                 if ($j("input[name=buspoint]").filter(".buson").length > 0) {
@@ -349,7 +349,7 @@ function fnBusDataAdd() {
             if (data == 0) {
                 alert("정상적으로 처리되었습니다.");
                 
-                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), shopseq);
+                fnCalMove_Bus($j(".tour_calendar_month").text().replace('.', ''), shopseq, "bus");
 
                 if ($j("input[name=buspoint]").length > 0) {
                     if ($j("input[name=buspoint]").filter(".buson").length > 0) {
@@ -583,6 +583,7 @@ function fnDaySelected(obj, seq, folrder) {
  * 달력 월 이동 : 양양, 동해 셔틀버스 예약관리
  * @param {*} selDate 
  * @param {*} shopseq 
+ * @param {*} folrder 
  */
 function fnCalMove_Bus(selDate, shopseq, folrder) {
     var nowDate = new Date();
@@ -596,8 +597,8 @@ function fnCalMove_Bus(selDate, shopseq, folrder) {
 /**
  * 달력 월 이동 : 버스등록
  * @param {*} selDate 
- * @param {*} day 
- * @param {*} seq 
+ * @param {*} selDay 
+ * @param {*} shopseq 
  */
 function fnCalMove_BusMng(selDate, selDay, shopseq) {
     var nowDate = new Date();

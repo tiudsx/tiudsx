@@ -41,6 +41,15 @@ $j(document).ready(function(){
                 <input type="hidden" id="resparam" name="resparam" value="reskakao">
 
                 <table class='et_vars exForm bd_tb'>
+                    <colgroup>
+                        <col style="width: 170px;">
+                        <col style="width: auto;">
+                        <col style="width: 100px;">
+                        <col style="width: 100px;">
+                        <col style="width: 140px;">
+                        <col style="width: 260px;">
+                        <col style="width: 260px;">
+                    </colgroup>
                     <tr>
                         <td colspan="7">
                             알림톡 발송 번호
@@ -110,7 +119,7 @@ $j(document).ready(function(){
                             }?>
                             </select>
                         </td>
-                        <td>
+                        <td id="td_return">
                             <select id="return_bus_gubun" name="return_bus_gubun" class="select" sel="">
                                 <option value="ALL">전체</option>
                                 <option value="AM">오후 출발</option>

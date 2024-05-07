@@ -15,7 +15,7 @@
         <p class="noticesub">※ 양양 → 서울행 운행 안내</p>
 
         <img src="https://shop-phinf.pstatic.net/20230703_220/1688363776534y2oMo_JPEG/1.jpg?type=w860" class="placeholder">
-        <img src="https://shop-phinf.pstatic.net/20240429_253/1714364521651BJUT5_JPEG/%EC%9A%B4%ED%96%89%EB%85%B8%EC%84%A0%EB%8F%84_%EC%96%91%EC%96%91%EC%84%9C%EC%9A%B8.jpg?type=w860" class="placeholder">
+        <img src="https://shop-phinf.pstatic.net/20240507_175/1715070331438lLE7k_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8%ED%86%B5%ED%95%A9_%EC%96%91%EC%96%91_22.jpg?type=w860" class="placeholder">
         
         <?if($arrChannel == ""){?>
         <img src="https://shop-phinf.pstatic.net/20230228_140/1677547409989O2Qw3_JPEG/2023_%EB%B2%84%EC%8A%A4%EC%83%81%EC%84%B8_4_%EC%88%98%EC%A0%95.jpg?type=w860" class="placeholder">

@@ -546,7 +546,7 @@ function fnRoomNum(obj, val) {
     //alert(sdate + " / " + edate + " / " + $j(obj).val() + " / " + $j(obj).attr("sel") + " / " + objNext.attr("sel"))
 
     var roomnum = 0;
-    var coldnum = 0;
+    var coldnum = 0, coldnum2 = 0;
     switch ($j(obj).val()) {
         case "201":
             roomnum = 8;
@@ -565,9 +565,10 @@ function fnRoomNum(obj, val) {
             coldnum = 6;
             break;
         case "301":
-            roomnum = 6;
+            //roomnum = 6;
             coldnum = 2;
-            //roomnum = 12;
+            coldnum2 = 8;
+            roomnum = 12;
             break;
         case "302":
             roomnum = 8;
@@ -583,7 +584,7 @@ function fnRoomNum(obj, val) {
     if (roomnum == 0) {} else {
         for (var i = 1; i <= roomnum; i++) {
             var coldbad = "";
-            if(coldnum == i){
+            if(coldnum == i || coldnum2 == i){
                 coldbad = ":에어컨";
             }
             var roombad = "번 (2층)";
@@ -899,6 +900,51 @@ function fnSearchAdminSol(url, objid) {
     $j.post("/act_2023/admin/" + url, formData,
         function(data, textStatus, jqXHR) {
             $j("#" + objid).html(data);
+
+            if ($j("#hidrowcnt2").length > 0 && $j("#hidrowcnt2").val() != "") {
+                var arrRowCnt = $j("#hidrowcnt2").val().split('|');
+                var nextrowCnt = 2;
+                for (let i = 0; i < (arrRowCnt.length - 1); i++) {
+                    var rowCnt = arrRowCnt[i];
+    
+                    if ((i % 2) == 1) {
+                        $j("#tbSolSearch tr").eq(nextrowCnt).attr("class", "selTr2");
+                    }
+    
+                    if (rowCnt > 1) {
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(0).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(1).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(2).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(17).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(18).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(19).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(20).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(21).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(22).attr("rowspan", rowCnt);
+                        $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(23).attr("rowspan", rowCnt);
+    
+    
+                        for (let x = 1; x < rowCnt; x++) {
+                            nextrowCnt++;
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(23).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(22).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(21).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(20).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(19).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(18).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(17).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(2).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(1).remove();
+                            $j("#tbSolSearch tr").eq(nextrowCnt).find('td').eq(0).remove();
+    
+                            if ((i % 2) == 1) {
+                                $j("#tbSolSearch tr").eq(nextrowCnt).attr("class", "selTr2");
+                            }
+                        }
+                    }
+                    nextrowCnt++;
+                }
+            }
         }).fail(function(jqXHR, textStatus, errorThrown) {
 
     });
@@ -919,7 +965,7 @@ function fnConfirm(vlu){
 }
 
 function fnSolChef(obj){
-    if($j(obj).attr("rel") == "tab1"){
+    if($j(obj).attr("rel") == "tab1" || $j(obj).attr("rel") == "tab2"){
         $j("#click").show();
     }else{
         $j("#click").hide();

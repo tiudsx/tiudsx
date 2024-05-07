@@ -247,7 +247,7 @@ if($param == "reskakaodel"){ //예약건 삭제
                         SET use_yn = 'Y'
                         ,user_ip = '$user_ip'
                         ,use_date = now()
-                    WHERE (add_date < '$add_date' AND add_date IS NOT NULL) AND use_yn = 'N';";
+                    WHERE (add_date < now() AND add_date IS NOT NULL) AND use_yn = 'N';";
     $result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 	

@@ -370,7 +370,7 @@ include __DIR__.'/../../common/logininfo.php';
 								</tr>	
 								<?}?>
 								<tr>
-									<th colspan="4">301호(6명)</th>
+									<th colspan="4">301호(12명)</th>
 									<th colspan="2">302호(8명)</td>
 									<th colspan="2">303호(10명)</td>
 								</tr>
@@ -384,8 +384,8 @@ include __DIR__.'/../../common/logininfo.php';
 											<td room="301" id="301<?=$i?>"></td>
 										<?}?>
 										<?if($i > 6){ echo "<td></td><td></td>"; }else{?>
-											<!-- <td><?=$i + 6?>번(<?=(($i % 2) == 1) ? "1" : "2"?>층)</td> -->
-											<td></td>
+											<?$cold = "";if($i == 2){$cold = "<br>에어컨";}?>
+											<td><?=$i + 6?>번(<?=(($i % 2) == 1) ? "1" : "2"?>층)<?=$cold?></td>
 											<td room="301" id="301<?=$i + 6?>"></td>
 											<?}?>
 										<?if($i > 8){ echo "<td></td><td></td>"; }else{?>
@@ -423,7 +423,7 @@ include __DIR__.'/../../common/logininfo.php';
 					<tr>
 						<th>구분</th>
 						<td>
-							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="대기" checked="checked" style="vertical-align:-3px;" />대기</label>
+							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="대기" style="vertical-align:-3px;" />대기</label>
 							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="확정" checked="checked" style="vertical-align:-3px;" />확정</label>
 							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="환불" style="vertical-align:-3px;" />환불</label>
 							<label><input type="checkbox" id="chkResConfirm" name="chkResConfirm[]" value="취소" style="vertical-align:-3px;" />취소</label>

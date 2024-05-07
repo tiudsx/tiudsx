@@ -93,6 +93,18 @@ function fnAdminBusGubun(obj, type){
         $j("#return_day").val("");
         $j("#start_cnt").val(0);
         $j("#return_cnt").val(0);
+
+        $j("#start_bus_gubun").val("ALL");
+        if($j(obj).val() == 1){ //1박 왕복
+            $j("#return_bus_gubun").val("AM");
+            $j("#td_return").hide();
+        }else if($j(obj).val() == 2){ //당일 왕복
+            $j("#return_bus_gubun").val("PM");
+            $j("#td_return").hide();
+        }else{
+            $j("#return_bus_gubun").val("ALL");
+            $j("#td_return").show();
+        }
     }else{
         
     }

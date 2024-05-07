@@ -142,7 +142,9 @@ function kakaoContent2024($arrKakao, $item){
 		$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
 			.'\n솔게하&솔서프 동해점을 예약해주셔서 감사합니다.'
 			.'\n예약하신 정보를 안내드립니다.'
-			.'\n\n예약안내 : '.$item["link1"]
+			.'\n\n예약안내 : 객실, 서핑강습 조회는 아래 링크에서 확인가능합니다.'
+			.'\n\n # 객실, 서핑강습 조회'
+			.'\n   - '.$item["link1"]
 			.'\n\n▶ 안내사항'
 			.'\n - 숙박 고객님은 입실시간 확인 후 셀프 체크인 부탁드려요~';
 			//.'\n - 기타 자세한 내용은 예약안내 링크에서 확인가능합니다.';
@@ -173,6 +175,20 @@ function kakaoContent2024($arrKakao, $item){
 		.'\n아래 예약안내 링크를 확인해주세요.'
 		.'\n\n예약자 : '.$item["userName"]
 		.'\n이용일 : '.$item["userDate"]
+		.'\n\n';
+	}else if($arrKakao["tempName"] == "sol_info04"){ //솔게하 공지안내
+		$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+			.'\n예약하신 솔게하&솔서프 이용관련하여 안내 말씀드립니다.'
+			.'\n객실, 서핑강습 조회는 아래 링크에서 확인가능합니다.'
+			.'\n\n # 클릭하세요! '
+			.'\n   - '.$item["link1"]
+			.'\n\n▶ 안내사항'
+			.'\n - 숙박 고객님은 입실시간 확인 후 셀프 체크인 부탁드려요~';
+
+		$items = '';
+
+		//디버깅용 아이템리스트
+		$items_text = $arrKakao["title"]
 		.'\n\n';
 	}else if($arrKakao["tempName"] == "actrip_info01"){ //액트립 버스예약
 		//알림톡 내용
