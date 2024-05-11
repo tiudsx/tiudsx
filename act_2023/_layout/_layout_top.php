@@ -10,15 +10,15 @@
 
 <header id="headerWrap">
 	<div class="headerBox">
-	<?if($couponseq == "" || $param == "orderview"){?>
+	<?if($couponseq == -1){?>
+		<h1 id="logo">
+			<a><img src="/act_2023/images/logo140.jpg" alt="액트립 로고"></a>
+		</h1>
+	<?}else{?>
 		<h1 id="logo">
 			<a href="/"><img src="/act_2023/images/logo140.jpg" alt="액트립 로고"></a>
 		</h1>
 		<div class="shopIcon"><a href="/ordersearch"><img src="/act_2023/images/icon/checkg.svg" alt=""><p>예약조회</p></a></div>
-	<?}else{?>
-		<h1 id="logo">
-			<a><img src="/act_2023/images/logo140.jpg" alt="액트립 로고"></a>
-		</h1>
 	<?}?>
 	</div>
 </header>

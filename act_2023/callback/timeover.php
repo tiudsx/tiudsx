@@ -232,7 +232,7 @@ if(date("H") >= 9 && $count == 0){
             $arrKakao = array(
                 "gubun"=> "timeover"
                 , "userName"=> $userName
-                , "userPhone"=> "01944370009"//$userPhone
+                , "userPhone"=> $userPhone
                 , "userDate"=> $userDate
                 , "link1"=>shortURL("https://actrip.co.kr/sol_kakao?num=1&seq=".urlencode(encrypt($seq))) //예약조회/취소
                 , "DebugInfo"=> $DebugInfo

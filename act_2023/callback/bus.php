@@ -33,10 +33,10 @@ $timeend = trim($_REQUEST["timeend"]);
 	$result_set = mysqli_query($conn, $select_query);
 	if(!$result_set) goto errGo;
 
-	// // 셔틀버스 마지막정보 제외 삭제
-	// $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE user_name = '$user_name'";
-	// $result_set = mysqli_query($conn, $select_query);
-	// if(!$result_set) goto errGo;
+	// 셔틀버스 마지막정보 제외 삭제
+	$select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE user_name = '$user_name'";
+	$result_set = mysqli_query($conn, $select_query);
+	if(!$result_set) goto errGo;
 
 	// 셔틀버스 최종 정보 입력
 	$select_query = "INSERT INTO AT_PROD_BUS_GPS_LAST(`lat`, `lng`, `user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`, `gpsdate`) VALUES ('$lat', '$lng', '$user_name', $weeknum, $timenum, now(), '$stats', $timestart, $timeend, '$datetime')";
