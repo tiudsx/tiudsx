@@ -8,8 +8,9 @@ $bus_num = $_REQUEST["bus_num"];
 $shopseq = $_REQUEST["shopseq"];
 
 if($param == "mappoint"){ //상세정보
-    // $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
-    // $result_set = mysqli_query($conn, $select_query);
+    $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
+    $result_set = mysqli_query($conn, $select_query);
+    
     $select_query = "SELECT b.gpsname, a.lat, a.lng, a.insdate, b.bus_gubun, b.bus_num, b.bus_oper, b.shopseq, 
                             concat(b.bus_gubun, '', b.bus_num) AS busName,
                             CASE 
@@ -20,15 +21,12 @@ if($param == "mappoint"){ //상세정보
                             END AS ordernum
                         FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS_DAY b
                             ON a.user_name = b.gpsname
-                                AND a.gpsdate = b.bus_date
-                        WHERE concat(b.bus_gubun, '', b.bus_num) = '$bus_gubun.$bus_num'
+                        WHERE concat(b.bus_gubun, '', b.bus_num) = '$bus_gubun$bus_num'
                             AND b.useYN = 'Y'
+                            AND b.bus_date = '".date("Y-m-d")."'
+                            AND b.shopseq = $shopseq
                         ORDER BY ordernum, b.bus_num";
                         
-    //임시
-    $select_query = "SELECT a.lat, a.lng, a.user_name
-    FROM AT_PROD_BUS_GPS_LAST a where user_name = '양양 1호차'";
-
     $result_setlist = mysqli_query($conn, $select_query);
     $count = mysqli_num_rows($result_setlist);
     
@@ -89,28 +87,17 @@ if($param == "mappoint"){ //상세정보
         $lng = $row['lng'];
         $insdate = $row['insdate'];
 
-        //임시
-        if($bus_gubun == "SA"){
-            $bus_oper = "start";
-        }else if($bus_gubun == "JO"){
-            $bus_oper = "start";
-        }else if($bus_gubun == "AM"){
-            $bus_oper = "return";
-        }else if($bus_gubun == "PM"){
-            $bus_oper = "return";
-        }
-
         $todayTime = date("h시 i분", strtotime($insdate));
 
         $todayDate = date("Y-m-d H:i:s", strtotime($insdate));
         $toNow = (strtotime($now)-strtotime($todayDate));
 
-        $gpsTime = $toNow."초 전";
+        $gpsTime = $toNow."초 전...";
         if($toNow > 60){
             $toNowMin = (int)((strtotime($now)-strtotime($todayDate)) / 60);
             $toNowS = $toNow - ($toNowMin * 60);
 
-            $gpsTime = $toNowMin."분 ".$toNowS."초 전";
+            $gpsTime = $toNowMin."분 ".$toNowS."초 전...";
         }
 
         if($bus_oper == "start"){
@@ -122,8 +109,9 @@ if($param == "mappoint"){ //상세정보
         $busNumImg = "Y1";
 
         $mappoint .= ($mappoint == "") ? "" : ",";
-        $busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=1|";
-        $busGPS .= "busGPSList.bus = {".$mappoint." '$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime 위치', '$locationname', '$busName', '$bus_gubun']}";
+        //$busImg = "https://actrip.cdn1.cafe24.com/act_bus/surfbus_".$busNumImg.".jpg?v=1|";
+        $busImg = "https://actrip.cdn1.cafe24.com/logo/weblogo01.png?v=1|";
+        $busGPS .= "busGPSList.bus = {".$mappoint." '$busNum': [MARKER_SPRITE_X_OFFSET*$mapNum, MARKER_SPRITE_Y_OFFSET*4, '$lat', '$lng', '$busImg', '$insdate', '$gpsTime', '$locationname', '$busName', '$bus_gubun']}";
         $mapNum++;
     }
 

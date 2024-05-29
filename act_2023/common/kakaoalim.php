@@ -331,6 +331,10 @@ function kakaoContent2024($arrKakao, $item){
 				.'\n\n - 예약정보 : '.$item["link1"]
 				.'\n\n환불처리기간은 1~7일정도 소요됩니다.'
 				.'\n계좌번호를 잘못 입력하신 경우 채팅으로 문의주세요.';
+		}else if($item["gubun"] == "bus_notice"){ //안내톡 발송
+			$kakaoMsg = '안녕하세요. '.$item["userName"].'님'
+				.'\n예약하신 '.$item["channel"].'셔틀버스 이용관련하여 안내 말씀드립니다.'
+				.'\n\n'.$item["notice"];
 		}
 
 		$items = '';

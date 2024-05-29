@@ -452,8 +452,21 @@ function fnBusMngCopy(selDate){
         }).fail(function(jqXHR, textStatus, errorThrown) {});
 }
 
+function fnNoticeText(obj){
+    if($j(obj).val() == "일정변경"){
+        $j("#html_1").val("셔틀버스 운행 변경안내");
+        $j("#html_2").val($j("#hid_html1").val());
+    }else if($j(obj).val() == "운행취소"){
+        $j("#html_1").val("셔틀버스 운행 취소안내");
+        $j("#html_2").val($j("#hid_html2").val());
+    }else{
+        $j("#html_1").val("");
+        $j("#html_2").val("");
+    }
+}
+
 function fnBusCancel() {
-    if (!confirm("취소안내를 발송 하시겠습니까?")) {
+    if (!confirm("카카오톡 발송 하시겠습니까?")) {
         return;
     }
 

@@ -121,7 +121,7 @@ for($r=0;$r<=$ra;$r++){
 			}
 
 			if($arrResCount[$ru][2] != ""){
-				$adminText .= "<br><font color='black'>".$arrResCount[$ru][1]."대 취소</font>";
+				$adminText .= "<br><font color='black'>취소 ".$arrResCount[$ru][2]."대</font>";
 			}
 
 			$selYN = 'no';

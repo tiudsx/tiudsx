@@ -126,7 +126,7 @@ if($param == "RtnPrice"){
             $ResPrice = $rowSub['res_totalprice'];
             $shopname = $rowSub['shopname'];
             $shopSeq = $rowSub['seq']; //입점샵 seq
-            $code = $rowSub['code'];
+            $code_type = $rowSub['code'];
             $rtn_charge_yn = $rowSub['rtn_charge_yn'];
 
 
@@ -210,43 +210,43 @@ if($param == "RtnPrice"){
                 , "smsOnly"=> "N" //문자발송 여부
             );
     
-            // $arrRtn = sendKakao($arrKakao); //알림톡 발송
+            $arrRtn = sendKakao($arrKakao); //알림톡 발송
     
-            // $data = json_decode($arrRtn[0], true);
+            $data = json_decode($arrRtn[0], true);
     
-            // for ($i=0; $i < count($data); $i++) { 
-            //     //------- 알림톡 디버깅 -----
-            //     $code = $data[$i]["code"];
-            //     $msgid = $data[$i]["data"]["msgid"];
-            //     $message = $data[$i]["message"];
-            //     $originMessage = $data[$i]["originMessage"];
+            for ($i=0; $i < count($data); $i++) { 
+                //------- 알림톡 디버깅 -----
+                $code = $data[$i]["code"];
+                $msgid = $data[$i]["data"]["msgid"];
+                $message = $data[$i]["message"];
+                $originMessage = $data[$i]["originMessage"];
                 
-            //     $kakao_response = array(
-            //         "arrKakao"=> $arrKakao
-            //         , "item"=> $arryKakao[$i]
-            //         , "code"=> $code
-            //         , "msgid"=> $msgid
-            //         , "message"=> $message
-            //         , "originMessage"=> $originMessage
-            //     );
+                $kakao_response = array(
+                    "arrKakao"=> $arrKakao
+                    , "item"=> $arryKakao[$i]
+                    , "code"=> $code
+                    , "msgid"=> $msgid
+                    , "message"=> $message
+                    , "originMessage"=> $originMessage
+                );
         
-            //     // 카카오 알림톡 DB 저장 START
-            //     $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
-            //     $result_set = mysqli_query($conn, $select_query);
-            //     // 카카오 알림톡 DB 저장 END
+                // 카카오 알림톡 DB 저장 START
+                $select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+                $result_set = mysqli_query($conn, $select_query);
+                // 카카오 알림톡 DB 저장 END
         
-            //     $errmsg = $select_query;
+                $errmsg = $select_query;
                 
-            //     $errCode = "06";
-            //     if(!$result_set) goto errGo;
-            // }
+                $errCode = "06";
+                if(!$result_set) goto errGo;
+            }
 
             // 이메일 발송
             if(strrpos($user_email, "@") > 0){
                 $to .= ','.$usermail;
             }
 
-            if($code == "bus"){
+            if($code_type == "bus"){
                 $info1_title = "좌석안내";
                 $mailform = "surfbus_return@actrip.co.kr";
             }else{
@@ -258,7 +258,7 @@ if($param == "RtnPrice"){
             $info2 = "";
 
             $arrMail = array(
-                "gubun"=> $code
+                "gubun"=> $code_type
 				, "mail_html"=> "../../common/mail.html"
                 , "gubun_step" => 4
                 , "gubun_title" => $shopname

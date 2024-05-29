@@ -175,7 +175,7 @@ if($param == "reskakaodel"){ //예약건 삭제
 	mysqli_query($conn, "COMMIT");
 	
 }else if($param == "reskakao"){ //버스 예약안내 카톡 : 타채널예약건
-    $resbus = $_REQUEST["resbus"]; //행선지
+    $resbus = $_REQUEST["bus_line"]; //행선지
     $userName = $_REQUEST["username"]; //이름
     $userPhone = str_replace('-', '', $_REQUEST["userphone"]); //연락처
     $couponseq = $_REQUEST["reschannel"]; //채널

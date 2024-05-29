@@ -357,38 +357,37 @@ function fnCouponCode($seq){
 		$name = "프립";
 	}else if($seq == 15){ //서프존
 		$name = "서프존";
+		$prod_name = "서프존 셔틀버스";
 	}else if($seq == 16){ //클룩
 		$name = "클룩";
+		$prod_name = "클룩 셔틀버스";
 	}else if($seq == 23){ //브라보서프
 		$name = "브라보서프";
+		$prod_name = "브라보서프 (1박)";
 	}else if($seq == 26 || $seq == 27 || $seq == 29){ //네이버
 		$name = "네이버 액트립";
 	}else if($seq == 31){ //모행
 		$name = "모행";
+		$prod_name = "모행";
+	}else if($seq == 32){ //고고양양
+		$name = "고고양양";
+		$prod_name = "고고양양";
 	}
 
 	if($seq == 11){ //프립
 		$prod_name = "프립 셔틀버스";
-	}else if($seq == 15){ //서프존
-		$prod_name = "서프존 셔틀버스";
-	}else if($seq == 16){ //클룩
-		$prod_name = "클룩 셔틀버스";
 	}else if($seq == 17){ //프립 마린 당일
 		$prod_name = "당일 마린서프 패키지";
 	}else if($seq == 20){ //프립 인구 당일
 		$prod_name = "당일 인구서프 패키지";
 	}else if($seq == 22){ //프립 솔게하
 		$prod_name = "동해 힐링캠프 (1박)";
-	}else if($seq == 23){ //브라보서프
-		$prod_name = "브라보서프 (1박)";
 	}else if($seq == 26){ //네이버 마린 당일
 		$prod_name = "당일 마린서프 패키지";
 	}else if($seq == 27){ //네이버 인구 당일
 		$prod_name = "당일 인구서프 패키지";
 	}else if($seq == 29){ //네이버 솔게하
 		$prod_name = "동해 힐링캠프 (1박)";
-	}else if($seq == 31){ //모행
-		$prod_name = "모행";
 	}
 
 	if($prod_name == ""){

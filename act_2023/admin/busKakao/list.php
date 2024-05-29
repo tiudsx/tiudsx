@@ -8,16 +8,23 @@ $shopseq = 0;
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/surfview.css">
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/jquery-ui.css" />
 
+<script>
+var shopseq = 7;
+$j(document).ready(function(){
+	fnSearchAdmin('busKakao/list_search_channel.php', '#mngKakaoSearch', 'N');
+    
+    
+    fnBusDate(14, "DH"); //버스 예약 가능한 날짜
+    fnBusDate(7, "YY"); //버스 예약 가능한 날짜
+});
+</script>
+
 <script type="text/javascript" src="/act_2023/front/_js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/act_2023/front/_js/bus.js?v=<?=time()?>"></script>
+<script type="text/javascript" src="/act_2023/front/_js/busday.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/common.js?v=<?=time()?>"></script>
 <script type="text/javascript" src="/act_2023/admin/_js/admin_busKakao.js?v=<?=time()?>"></script>
-
-<script>
-$j(document).ready(function(){
-	fnSearchAdmin('busKakao/list_search_channel.php', '#mngKakaoSearch', 'N');
-});
-</script>
 
 <div class="bd_tl" style="width:100%;">
 	<h1 class="ngeb clear"><i class="bg_color"></i>액트립 셔틀버스 타채널관리</h1>
@@ -85,21 +92,20 @@ $j(document).ready(function(){
                                 <option value="21" kakaoUrl="https://open.kakao.com/o/g58J34ff">프립-서팩 동해</option>
                                 <option value="22" kakaoUrl="https://open.kakao.com/o/g15tGdBf">프립-힐링캠프</option>
                                 <option value="16">클룩</option>
+                                <option value="32">고고양양</option>
                                 <option value="7">네이버쇼핑</option>
                                 <option value="15">서프존</option>
                                 <option value="10">네이버예약</option>
-                                <option value="12">마이리얼트립</option>
                                 <option value="26" kakaoUrl="https://open.kakao.com/o/goYwKe5e">네이버-마린</option>
                                 <option value="27" kakaoUrl="https://open.kakao.com/o/gf4LMe5e">네이버-인구</option>
                                 <option value="28" kakaoUrl="https://open.kakao.com/o/g58J34ff">네이버-서팩 동해</option>
                                 <option value="29" kakaoUrl="https://open.kakao.com/o/g15tGdBf">네이버-힐링캠프</option>
                                 <option value="23">금진 브라보</option>
-                                <option value="30">엑스크루</option>
                                 <option value="31">모행</option>
                             </select>
                         </td>
                         <td style="text-align:center;">
-                            <select id="resbus" name="resbus">
+                            <select id="bus_line" name="bus_line">
                                 <option value="YY">-- 양양 --</option>
                                 <option value="DH">-- 동해 --</option>
                             </select>
@@ -112,7 +118,7 @@ $j(document).ready(function(){
                                 <option value="SA">사당선</option>
                                 <option value="JO">종로선</option>
                             </select>
-                            <input type="text" id="start_day" name="start_day" cal="sdate2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+                            <input type="text" id="bus_start" name="start_day" cal="busdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
                             <select id="start_cnt" name="start_cnt" onchange="fnseatcheck(this, 1);">
                             <?for ($i=0; $i < 20; $i++) { 
                                 echo '<option value="'.$i.'">'.$i.'명</option>';
@@ -125,7 +131,7 @@ $j(document).ready(function(){
                                 <option value="AM">오후 출발</option>
                                 <option value="PM">저녁 출발</option>
                             </select>
-                            <input type="text" id="return_day" name="return_day" cal="edate2" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
+                            <input type="text" id="bus_return" name="return_day" cal="busdate" readonly="readonly" style="width:66px;" value="" class="itx2" maxlength="7" >
                             <select id="return_cnt" name="return_cnt" onchange="fnseatcheck(this. 2);">
                             <?for ($i=0; $i < 20; $i++) { 
                                 echo '<option value="'.$i.'">'.$i.'명</option>';
@@ -214,7 +220,7 @@ $j(document).ready(function(){
             
             <!-- #tab3 -->
             <div id="tab3" class="tab_content" style="display:none;">
-                <?include 'list_cal.php'?>
+                <?//include 'list_cal.php'?>
             </div>
         </div>
         <!-- .tab_container -->

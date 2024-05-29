@@ -74,7 +74,7 @@ echo ("
 	
 $select_query_cal = "SELECT A.bus_date, IFNULL(B.Cnt, 0) AS Cnt, A.sDay, B.res_confirm, B.bus_oper FROM 
 		(SELECT bus_date, DAY(bus_date) AS sDay FROM `AT_PROD_BUS_DAY`  
-			WHERE shopseq = $shopseq AND useYN = 'Y'
+			WHERE shopseq = $shopseq 
 				AND (Year(bus_date) = $Year AND Month(bus_date) = $Mon)
 			GROUP BY bus_date) AS A
 

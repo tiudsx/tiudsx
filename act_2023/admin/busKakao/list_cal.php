@@ -149,7 +149,6 @@ $now = date("Y-m-d A h:i:s");
 	$arrResKlookCount = array();
 	$arrResFripCount = array();
 	$arrResSurfxCount = array();
-	$arrResMyCount = array();
 	$arrResMangCount = array();
 	$arrResMangPrice = array();
 	$arrResNaverCount = array();
@@ -162,8 +161,6 @@ $now = date("Y-m-d A h:i:s");
             $arrResFripCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "서프존"){
             $arrResSurfxCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
-        }else if($row['title'] == "MYTRIP"){
-            $arrResMyCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "네이버"){
             $arrResNaverCount[$row['res_confirm']][$row['sDay']] = $row['total_price'];
         }else if($row['title'] == "망고"){
@@ -244,13 +241,6 @@ $now = date("Y-m-d A h:i:s");
                 if($arrResSurfxCount[3][$ru] != ""){
 					$daySum += $arrResSurfxCount[3][$ru];
 					$adminText .= '<br><font color="black">서프존:'.number_format($arrResSurfxCount[3][$ru])."원</font>";
-				}
-
-
-				//마이리얼트립
-                if($arrResMyCount[3][$ru] != ""){
-					$daySum += $arrResMyCount[3][$ru];
-					$adminText .= '<br><font color="black">마이리얼:'.number_format($arrResMyCount[3][$ru])."원</font>";
 				}
 
 				//클룩

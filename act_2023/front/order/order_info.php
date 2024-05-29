@@ -48,7 +48,7 @@ if($gubun == 1){ //서핑샵
 	$select_row_query = "SELECT a.res_confirm, d.couponseq
 							FROM $dbTableSub a LEFT JOIN AT_COUPON_CODE d 
 								ON a.res_coupon = d.coupon_code
-							WHERE a.resnum = $resNumber AND a.res_confirm = 3 AND a.res_date > DATE_FORMAT(now(), '%Y-%m-%d')";
+							WHERE a.resnum = $resNumber AND a.res_confirm = 3 AND a.res_date = DATE_FORMAT(now(), '%Y-%m-%d')";
 }
 
 $result_setlist = mysqli_query($conn, $select_query);

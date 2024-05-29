@@ -29,8 +29,8 @@ function fnResKakaoAdmin(){
                 if($j("#datareset").val() == "0"){
 
                 }else if($j("#datareset").val() == "1"){
-                    $j("#start_day").val("");
-                    $j("#return_day").val("");
+                    $j("#bus_start").val("");
+                    $j("#bus_return").val("");
                     $j("#start_cnt").val(0);
                     $j("#return_cnt").val(0);
                 }else{
@@ -89,8 +89,8 @@ function fnBusChannelDel(seq){
 //편도, 왕복 구분
 function fnAdminBusGubun(obj, type){
     if(type == 1){
-        $j("#start_day").val("");
-        $j("#return_day").val("");
+        $j("#bus_start").val("");
+        $j("#bus_return").val("");
         $j("#start_cnt").val(0);
         $j("#return_cnt").val(0);
 
@@ -124,14 +124,14 @@ function fnseatcheck(obj, type){
 
 //노선 선택
 function fnChannel(obj){
-    $j("#resbus option").show();
+    $j("#bus_line option").show();
 
     if(obj.value == "17" || obj.value == "20"){ //양양
-        $j("#resbus option").eq(1).hide();
-        $j("#resbus").val("YY");
+        $j("#bus_line option").eq(1).hide();
+        $j("#bus_line").val("YY");
     }else if(obj.value == "21" || obj.value == "22" || obj.value == "23"){ //동해
-        $j("#resbus option").eq(0).hide();
-        $j("#resbus").val("DH");
+        $j("#bus_line option").eq(0).hide();
+        $j("#bus_line").val("DH");
     }
 }
 

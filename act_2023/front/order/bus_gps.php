@@ -6,10 +6,10 @@ include __DIR__.'/../../common/func.php';
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
-// $select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
-// $result_set = mysqli_query($conn, $select_query);
+$select_query = "DELETE FROM AT_PROD_BUS_GPS_LAST WHERE TIMESTAMPDIFF(MINUTE, insdate, now()) > 30";
+$result_set = mysqli_query($conn, $select_query);
 
-// mysqli_query($conn, "COMMIT");
+mysqli_query($conn, "COMMIT");
 ?>
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 <link rel="stylesheet" type="text/css" href="/act_2023/front/_css/default.css">
@@ -41,23 +41,28 @@ mysqli_query($conn, "BEGIN");
             <div id="view_tab2">
 
 <?
+$admin_use = $_REQUEST["admin"];
+
 $now = date("Y-m-d H:i:s");
 $weekNum = date("w", strtotime($now));
 $nowTime = date("Hi", strtotime($now));
 
 $count = 1;
-if($nowTime > 0500 && $nowTime < 1300){
+if($nowTime > 0500 && $nowTime < 1200){
     $busList = "start";
-}else if($nowTime >= 1300 && $nowTime < 2300){
+    $busLine_TitleYY = "서울 → 양양";
+    $busLine_TitleDH = "서울 → 동해";
+}else if($nowTime >= 1200 && $nowTime < 2300){
     $busList = "return";
+    $busLine_TitleYY = "양양 → 서울";
+    $busLine_TitleDH = "동해 → 양양";
 }else{
     $count = 0;
 }
 
-$arrMap_start = array();
-$arrMap_returbn = array();
+$arrMapList = array();
 if($count == 1){
-    $select_query = "SELECT a.lat, a.lng, b.bus_gubun, b.bus_num, b.bus_oper, b.shopseq,
+    $select_query = "SELECT a.lat, a.lng, b.bus_line, b.bus_gubun, b.bus_num, b.bus_oper, b.shopseq,
                             concat(b.bus_gubun, '', b.bus_num) AS busName,
                             CASE 
                                 WHEN b.bus_gubun = 'SA' THEN 1
@@ -67,54 +72,33 @@ if($count == 1){
                             END AS ordernum
                         FROM AT_PROD_BUS_GPS_LAST a INNER JOIN AT_PROD_BUS_DAY b
                         ON a.user_name = b.gpsname
-                            AND a.gpsdate = b.bus_date
                         WHERE b.bus_oper = '$busList'
                             AND b.useYN = 'Y'
+                            AND b.bus_date = '".date("Y-m-d")."'
                         ORDER BY ordernum, b.bus_num";
 
-//임시
-$select_query = "SELECT a.lat, a.lng, a.user_name, 7 AS shopseq
-                        FROM AT_PROD_BUS_GPS_LAST a order by user_name";
     $result_setlist = mysqli_query($conn, $select_query);
     $count = mysqli_num_rows($result_setlist);
 
     while ($row = mysqli_fetch_assoc($result_setlist)){        
         $user_name = $row["user_name"];
         $shopseq = $row["shopseq"];
-
-        if($user_name == "양양 1호차"){
-            $bus_gubun = "SA";
-            $bus_num = 1;
-            $bus_oper = "start";
-        }else if($user_name == "양양 2호차"){
-            $bus_gubun = "JO";
-            $bus_num = 1;
-            $bus_oper = "start";
-        }else if($user_name == "양양 3호차"){
-            $bus_gubun = "AM";
-            $bus_num = 1;
-            $bus_oper = "return";
-        }else if($user_name == "양양 5호차"){
-            $bus_gubun = "PM";
-            $bus_num = 1;
-            $bus_oper = "return";
-        }
-        $busNum = $bus_gubun.$bus_num;
-        // $bus_oper = $row["bus_oper"];
-        // $busNum = $row['busName'];
-        // $bus_gubun = $row["bus_gubun"];
-        // $bus_num = $row["bus_num"];
+        
+        $bus_oper = $row["bus_oper"];
+        $busNum = $row['busName'];
+        $bus_gubun = $row["bus_gubun"];
+        $bus_num = $row["bus_num"];
         $busName = fnBusNum2023($busNum)["point"];
+        if($busList == "return"){
+            $busName .= " 복귀";
+        }
         ///$busName = $busName[0]." ".$busName[1].(($busName[1] == "오후" || $busName[1] == "저녁") ? " 출발" : "");
 
         $lat = $row['lat'];
         $lng = $row['lng'];
-        $arrMap = '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" bus_oper="'.$bus_oper.'" onclick="fnBusGPSPoint(this);">&nbsp;';
-        if($bus_oper == "start"){
-            $arrMap_start[$bus_gubun] .= $arrMap;
-        }else{
-            $arrMap_return[$bus_gubun] .= $arrMap;
-        }
+        $arrMap = '<input type="button" class="bd_btn" btnpoint="point" style="padding-top:4px;" value="'.$busName.'" bus_gubun="'.$bus_gubun.'" bus_num="'.$bus_num.'" bus_oper="'.$bus_oper.'" shopseq="'.$shopseq.'" onclick="fnBusGPSPoint(this);">&nbsp;';
+        
+        $arrMapList[$row['bus_line']] .= $arrMap;
     }
 }
 ?>
@@ -124,13 +108,15 @@ var MARKER_SPRITE_X_OFFSET = 29,
     MARKER_SPRITE_Y_OFFSET = 50;
 
 var busGPSList = {}
-var MARKER_POINT = "", MARKER_ZOOM = 16, MARKER_SHOPSEQ = <?=$shopseq?>;
+var MARKER_POINT = "", MARKER_ZOOM = 16, MARKER_SHOPSEQ;
 var MARKER_SPRITE_POSITION2 = {};
 function fnBusGPSPoint(obj) {
     var bus_gubun = $j(obj).attr("bus_gubun");
     var bus_num = $j(obj).attr("bus_num");
     var bus_oper = $j(obj).attr("bus_oper");
-    var params = "resparam=mappoint&bus_gubun=" + bus_gubun + "&bus_num=" + bus_num + "&shopseq=<?=$shopseq?>";
+    var shopseq = $j(obj).attr("shopseq");
+    MARKER_SHOPSEQ = shopseq;
+    var params = "resparam=mappoint&bus_gubun=" + bus_gubun + "&bus_num=" + bus_num + "&shopseq=" + shopseq;
     $j.ajax({
         type: "POST",
         url: "/act_2023/front/bus/bus_gps_json.php",
@@ -142,8 +128,8 @@ function fnBusGPSPoint(obj) {
             $j(obj).attr("on", "Y");
 
             if(data == 0){
-                alert("셔틀버스의 GPS정보가 조회되지 않습니다\n\n페이지가 새로고침 됩니다.");
-                setTimeout('window.location.reload();', 500);
+                alert("셔틀버스의 GPS정보가 조회되지 않습니다.\n\n고객센터에 문의주세요");
+                //setTimeout('window.location.reload();', 500);
             }else{
                 MARKER_POINT = bus_gubun + bus_num;
                 if(bus_oper == "start"){
@@ -163,6 +149,47 @@ function fnBusGPSPoint(obj) {
 </script>
             
     <div class="bd" style="padding-top:5px;">
+        <?if($admin_use == 1){?>
+        <table class="et_vars">
+            <colgroup>
+                <col style="width:110px;">
+                <col style="width:auto;">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th>호차</th>
+                    <th>시간</th>
+                </tr>
+                <?
+                    $select_query = "SELECT * FROM AT_PROD_BUS_GPS_LAST
+                                        ORDER BY user_name";
+                    $result_setlist = mysqli_query($conn, $select_query);
+                    $count = mysqli_num_rows($result_setlist);
+
+                    while ($row = mysqli_fetch_assoc($result_setlist)){
+                        $user_name = $row['user_name'];
+                        $insdate = $row['insdate'];
+
+                        $todayTime = date("h시 i분", strtotime($insdate));
+
+                        $todayDate = date("Y-m-d H:i:s", strtotime($insdate));
+                        $toNow = (strtotime($now)-strtotime($todayDate));
+
+                        $gpsTime = $toNow."초 전";
+                        if($toNow > 60){
+                            $toNowMin = (int)((strtotime($now)-strtotime($todayDate)) / 60);
+                            $toNowS = $toNow - ($toNowMin * 60);
+
+                            $gpsTime = $toNowMin."분 ".$toNowS."초 전";
+                        }
+
+                        echo "<tr><td>$user_name</td><td>$gpsTime</td></tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+        <?}?>
+
         <table class="et_vars">
             <colgroup>
                 <col style="width:110px;">
@@ -188,39 +215,33 @@ function fnBusGPSPoint(obj) {
             <?if($count == 0){?>
                 <tr>
                     <td style="text-align:center;line-height:3;" colspan="2">
-                        <h1 style='font-size:12px;height:50px;padding-top:20px;'>현재 서핑버스는 운행중이지 않습니다.</h1>
+                        <h1 style='font-size:12px;height:50px;padding-top:20px;'>현재 셔틀버스는 운행중이지 않습니다.</h1>
                     </td>
                 </tr>
             <?}else{
-                if(count($arrMap_start) > 0)
-                {
-                    echo "<tr>
-                                <th>서울 출발</th>
-                                <td style='line-height:3;'>";
-                                
-                    foreach ($arrMap_start as $key => $value) {
-                        echo $value;
+                if($arrMapList["YY"]){?>
+                    <tr>
+                        <th><?=$busLine_TitleYY?></th>
+                        <td style="line-height:3;">
+                            <?=$arrMapList["YY"]?>
+                        </td>
+                    </tr>
+                    <?
                     }
-
-                    echo "  </td>
-                        </tr>";
+    
+                    if($arrMapList["DH"]){
+                    ?>
+                    <tr>
+                        <th><?=$busLine_TitleDH?></th>
+                        <td style="line-height:3;">
+                            <?=$arrMapList["DH"]?>
+                        </td>
+                    </tr>
+                    <?
+                    }                      
                 }
-
-                if(count($arrMap_return) > 0)
-                {
-                    echo "<tr>
-                                <th>서울 복귀</th>
-                                <td style='line-height:3;'>";
-                    foreach ($arrMap_return as $key => $value) {
-                        echo $value;
-                    }
-
-                    echo "  </td>
-                        </tr>";
-                }
-            }
-            ?>
-            </tbody>
+                ?>
+                </tbody>
         </table>
     </div>
 

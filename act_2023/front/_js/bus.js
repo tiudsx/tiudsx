@@ -67,7 +67,18 @@ jQuery(function() {
         maxDate: new Date((new Date()).getFullYear() + '-12-31'),
         
         onSelect: function(selectedDate) {
-            fnBusSearchDate(selectedDate, $j(this).attr("id"));
+            //버스 구분
+            if($j("#busgubun").length > 0 && $j(this).attr("id") == "bus_start"){
+                var calObj = jQuery(this).parents("tr").find("[id=bus_return]");
+                var date = jQuery(this).datepicker('getDate');
+                if($j("#busgubun").val() == 1){ //1박 왕복
+                    calObj.val(plusDate(date.yyyymmdd(), 1));
+                }else if($j("#busgubun").val() == 2){ //당일 왕복
+                    calObj.val(plusDate(date.yyyymmdd(), 0));
+                }
+            }else{
+                fnBusSearchDate(selectedDate, $j(this).attr("id"));
+            }
         },
         beforeShowDay: function(date) {
             var busLine = $j("#bus_line").val();

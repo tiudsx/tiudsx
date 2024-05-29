@@ -56,8 +56,8 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 
 		$insdate1 = "";
 		if($res_confirm[$i] == 3){
-			$insdate1 = ",confirmdate = now()";
-
+			//$insdate1 = ",confirmdate = now()";
+			$insdate1 = ",confirmdate = '".$confirmdate."'";
 			if($res_kakao[$i] == "Y"){
 				$intseq3 .= $chkCancel[$i].",";
 			}
@@ -239,12 +239,9 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 	$user_name = $_REQUEST["user_name"]; //이름
 	$user_tel = $_REQUEST["user_tel"]; //전화번호
 	$user_channel = $_REQUEST["user_channel"]; //예약채널
-	$html_1 = $_REQUEST["html_1"]; //상단타이틀
-	$html_2 = $_REQUEST["html_2"]; //상단안내
-	$html_3 = $_REQUEST["html_3"]; //안내내용
-	$html_4 = $_REQUEST["html_4"]; //안내사항
+	$html_1 = $_REQUEST["html_1"]; //타이틀
+	$html_2 = $_REQUEST["html_2"]; //안내
 
-	$msgTitle = $html_1;
 	$arryKakao = array();
 	for($i = 1; $i < count($user_name); $i++){
 		$userName = $user_name[$i];
@@ -252,49 +249,86 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		$userchannel = $user_channel[$i];
 		
 		$channelText = "";
+		$channelTitle = "";
 		if($userchannel == "안내공지"){
-			$channelText = $html_4;
+
 		}else{
 			if($userchannel == "프립"){
-				$channelText = "  - 예약건은 프립에서 취소 및 전액환불됩니다.";
+				$channelTitle = "액트립x프립 ";
+				$channelText = "  - 영업일 기준으로 1일 이내에 취소완료 됩니다.";
 			}else if($userchannel == "액트립"){
-				$channelText = "  - 예약자명, 환불계좌를 카카오채널로 보내주시면, 전액환불 진행됩니다.";
+				$channelText = "  - 예약자명, 환불계좌를 채널톡으로 보내주세요~";
 			}else if($userchannel == "클룩"){
-				$channelText = "  - 예약건은 클룩에서 취소 및 전액환불됩니다.";
+				$channelTitle = "액트립x클룩 ";
+				$channelText = "  - 영업일 기준으로 3일 이내에 취소완료 됩니다.";
 			}else if($userchannel == "네이버쇼핑"){
-				$channelText = "  - 예약건은 네이버쇼핑에서 취소 및 전액환불됩니다.";
-			}
-
-			$channelText .= '\n  - 왕복으로 예약하셔서 모두 취소 원하실 경우 알려주시면 같이 취소 진행하겠습니다.'
-						.'\n  - 이용에 불편드려 죄송합니다.';
+				$channelText = "  - 영업일 기준으로 1일 이내에 취소완료 됩니다.";
+			} 
+			
+			$channelText = "\n\n ▶ 안내사항\n". $channelText;
 		}
 
-		$arrKakao = array(
-			"gubun"=> "bus"
-			, "admin"=> "N"
-			, "tempName"=> "at_res_step4"
-			, "smsTitle"=> $msgTitle
-			, "userName"=> $userName
-			, "userPhone"=> $userPhone
-			, "shopname"=> $html_2
-			, "smsOnly"=>"N"
-			, "PROD_NAME"=> $html_3
-			, "PROD_URL"=> $channelText
-			, "PROD_TYPE"=>"bus_cancelinfo"
-			, "RES_CONFIRM"=>"-1"
-		);
+		// $channelText .= '\n  - 왕복으로 예약하셔서 모두 취소 원하실 경우 알려주시면 같이 취소 진행하겠습니다.'
+		// 			.'\n  - 이용에 불편드려 죄송합니다.';
 
-		$arryKakao[($i - 1)] = $arrKakao;
+		//==========================카카오 메시지 발송 ==========================
+        $kakao_gubun = "bus_notice";
+		$msgTitle = $html_1;
+        $PROD_NAME = $html_1;
+    
+        $DebugInfo = array(
+            "PROD_NAME" => $PROD_NAME
+            , "PROD_TABLE" => "AT_RES_MAIN"
+            , "PROD_TYPE" => $kakao_gubun
+            , "RES_CONFIRM" => 4
+            , "resnum" => $user_tel
+        );
+        $arrKakao = array(
+            "gubun"=> $kakao_gubun
+            , "userName"=> $userName
+            , "userPhone"=> $userPhone
+			, "channel"=> $channelTitle
+			, "notice"=> $html_2.$channelText
+            , "DebugInfo"=> $DebugInfo
+        );
+
+		$arryKakao[$i] = $arrKakao;
+		//==========================카카오 메시지 발송 ==========================
 	}
 
-	
-	$arrKakao = array(
+    $arrKakao = array(
 		"arryData"=> $arryKakao
-		, "array"=> "true"
+		, "array"=> "true" //배열 여부
+		, "tempName"=> "actrip_info03" //템플릿 코드
+		, "title"=> $msgTitle //타이틀
+		, "smsOnly"=> "N" //문자발송 여부
 	);
 
 	$arrRtn = sendKakao($arrKakao); //알림톡 발송
 
+	$data = json_decode($arrRtn[0], true);
+
+	for ($i=0; $i < count($data); $i++) { 
+		//------- 알림톡 디버깅 -----
+		$code = $data[$i]["code"];
+		$msgid = $data[$i]["data"]["msgid"];
+		$message = $data[$i]["message"];
+		$originMessage = $data[$i]["originMessage"];
+		
+		$kakao_response = array(
+			"arrKakao"=> $arrKakao
+			, "item"=> $arryKakao[$i]
+			, "code"=> $code
+			, "msgid"=> $msgid
+			, "message"=> $message
+			, "originMessage"=> $originMessage
+		);
+
+		// 카카오 알림톡 DB 저장 START
+		$select_query = kakaoDebug2024($kakao_response, json_encode($data[$i]));
+		$result_set = mysqli_query($conn, $select_query);
+		// 카카오 알림톡 DB 저장 END
+	}
 
 	mysqli_query($conn, "COMMIT");
 }else if($param == "busKakaoInfo"){ //버스 카톡 안내

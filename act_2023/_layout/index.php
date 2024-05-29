@@ -31,7 +31,7 @@
 				
 				<a class="visual" href="https://smartstore.naver.com/actrip/products/8161272178" target="_blank"><img src=/act_2023/images/banner/main_banner_ingo.jpg class="placeholder"></a>
 				
-				<a class="visual" href="https://smartstore.naver.com/actrip/products/8161581680" target="_blank"><img src=/act_2023/images/banner/main_banner_sol.jpg class="placeholder"></a>
+				<!-- <a class="visual" href="https://smartstore.naver.com/actrip/products/8161581680" target="_blank"><img src=/act_2023/images/banner/main_banner_sol.jpg class="placeholder"></a> -->
 				
 				<a class="visual" href="https://open.kakao.com/o/g1xumy9e" target="_blank"><img src=/act_2023/images/banner/main_banner_bali.jpg class="placeholder"></a>
 			</section>

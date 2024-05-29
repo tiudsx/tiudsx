@@ -122,7 +122,11 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
 	// 환불금액 표시
 	if($res_confirm == 4 || $res_confirm == 5){
-		$RtnBank = '<b style="color:#e34a00">환불금액 : '.number_format($row['rtn_totalprice']).'원</b> ('.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).')';
+		if($row['rtn_totalprice'] == 0){ //관리자 환불처리
+			$RtnBank = "";
+		}else{
+			$RtnBank = '<b style="color:#e34a00">환불금액 : '.number_format($row['rtn_totalprice']).'원</b> ('.str_replace('|', '&nbsp ', $row['rtn_bankinfo']).')';
+		}
 	}
 
 	if($i == 1){

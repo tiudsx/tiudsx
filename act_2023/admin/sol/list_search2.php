@@ -15,8 +15,6 @@ $Year = $arrDate[0];
 $Mon = $arrDate[1];
 $Day = $arrDate[2];
 
-$diffDate = date("Y-m-d", strtotime(date("Y-m-d")." -3 day"));
-
 if($gubun == "cancel"){
     $confirmText = "'취소'";
     $tabColor1 = "";
@@ -27,42 +25,61 @@ if($gubun == "cancel"){
     $tabColor2 = "";
 }
 
-$select_query = "SELECT 
-        a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
-        b.ressubseq, b.res_type, b.prod_name, b.sdate, b.edate, '' as resdate, b.staysex, b.stayM, b.stayroom, b.staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE, 
-            CASE WHEN staysex = '남' AND (party IN ('ALL', 'BBQ')) AND resdate = '$selDate' THEN 1
-                ELSE 0 END AS BBQ_M,
-            CASE WHEN staysex = '여' AND (party IN ('ALL', 'BBQ')) AND resdate = '$selDate' THEN 1
-                ELSE 0 END AS BBQ_W,
-            CASE WHEN staysex = '남' AND (party IN ('ALL', 'PUB')) AND resdate = '$selDate' THEN 1
-                ELSE 0 END AS PUB_M,
-            CASE WHEN staysex = '여' AND (party IN ('ALL', 'PUB')) AND resdate = '$selDate' THEN 1
-                ELSE 0 END AS PUB_W
+
+$select_query = "SELECT a1.*, 
+            b1.stay_name, b1.sdate, b1.edate, b1.STAY_M, b1.STAY_W, b1.eDateDiff,
+            c1.BBQ_M, c1.BBQ_W, c1.PUB_M, c1.PUB_W, 
+            d1.prod_name, d1.surf_W_9,d1.surf_M_11, d1.surf_W_11, d1.surf_M_13, d1.surf_W_13, d1.surf_M_15, d1.surf_W_15, d1.rent_M_all, d1.rent_W_all, d1.rent_M_board, d1.rent_W_board, d1.rent_W_suit, d1.rent_M_suit
+        FROM (SELECT a.resseq, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.res_bankchk, c.response, c.KAKAO_DATE
             FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-                    ON a.resseq = b.resseq 
+                    ON a.resseq = b.resseq
+                        AND a.res_confirm IN ($confirmText)
                 LEFT JOIN AT_KAKAO_HISTORY as c
                     ON a.userinfo = c.msgid
-                WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate')
-                        OR b.resdate = '$selDate')
-                    AND res_type = 'stay'
-                    AND a.res_confirm IN ($confirmText)
-        UNION ALL
-    SELECT 
-        a.resseq, a.resnum, a.admin_user, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.insdate, 
-        b.ressubseq, b.res_type, 
-        CASE WHEN b.res_type = 'stay' THEN 'N' ELSE b.prod_name END as prod_name, 
-        '' as sdate, '' as edate, b.resdate, b.staysex, b.stayM, null as stayroom, null as staynum, b.restime, b.surfM, b.surfW, b.surfrent, b.surfrentM, b.surfrentW, b.surfrentYN,
-        DAY(b.sdate) AS sDay, DAY(b.edate) AS eDay, DAY(b.resdate) AS resDay, MONTH(b.sdate) AS sMonth, MONTH(b.edate) AS eMonth, MONTH(b.resdate) AS resMonth, DATEDIFF(b.edate, b.sdate) as eDateDiff, a.userinfo, a.res_bankchk, c.response, c.KAKAO_DATE,
-        0 AS BBQ_M, 0 AS BBQ_W, 0 AS PUB_M, 0 AS PUB_W 
-            FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as b 
-                    ON a.resseq = b.resseq 
-                LEFT JOIN AT_KAKAO_HISTORY as c
-                    ON a.userinfo = c.msgid
-                WHERE b.resdate = '$selDate'                    
-                    AND a.res_confirm IN ($confirmText)
-                    AND res_type = 'surf'
-        ORDER BY resseq, ressubseq";
+            WHERE ((b.sdate <= '$selDate' AND DATE_ADD(b.edate, INTERVAL -1 DAY) >= '$selDate') 
+                        OR b.resdate = '$selDate' )
+            GROUP BY a.resseq, a.res_confirm, a.res_kakao, a.res_kakao_chk, a.res_room_chk, a.res_company, a.user_name, a.user_tel, a.memo, a.memo2, a.history, a.res_bankchk
+        ORDER BY a.resseq               
+    ) as a1 
+	LEFT JOIN (SELECT resseq, prod_name as stay_name, (sdate + edate) as stay_date, sdate, edate,
+                    SUM(CASE WHEN staysex = '남' THEN 1 ELSE 0 END) AS STAY_M,
+                    SUM(CASE WHEN staysex = '여' THEN 1 ELSE 0 END) AS STAY_W, 
+                    DATEDIFF(b.edate, b.sdate) as eDateDiff
+                FROM AT_SOL_RES_SUB
+                WHERE (res_type = 'stay' AND (sdate <= '$selDate' AND DATE_ADD(edate, INTERVAL -1 DAY) >= '$selDate')  )
+                GROUP BY resseq, stay_date
+    ) as b1
+		ON a1.resseq = b1.resseq
+    LEFT JOIN (SELECT resseq, 
+                SUM(CASE WHEN staysex = '남' AND (party IN ('ALL', 'BBQ')) THEN 1 ELSE 0 END) AS BBQ_M,
+                SUM(CASE WHEN staysex = '여' AND (party IN ('ALL', 'BBQ')) THEN 1 ELSE 0 END) AS BBQ_W,
+                SUM(CASE WHEN staysex = '남' AND (party IN ('ALL', 'PUB')) THEN 1 ELSE 0 END) AS PUB_M,
+                SUM(CASE WHEN staysex = '여' AND (party IN ('ALL', 'PUB')) THEN 1 ELSE 0 END) AS PUB_W
+                FROM AT_SOL_RES_SUB
+                WHERE res_type = 'stay' AND resdate = '$selDate' AND party != 'N'
+                GROUP BY resseq
+    ) as c1
+		ON a1.resseq = c1.resseq
+	LEFT JOIN (SELECT resseq, prod_name,
+                    SUM(CASE WHEN restime = '9시' THEN surfM ELSE 0 END) AS surf_M_9,
+                    SUM(CASE WHEN restime = '9시' THEN surfW ELSE 0 END) AS surf_W_9,
+                    SUM(CASE WHEN restime = '11시' THEN surfM ELSE 0 END) AS surf_M_11,
+                    SUM(CASE WHEN restime = '11시' THEN surfW ELSE 0 END) AS surf_W_11,
+                    SUM(CASE WHEN restime = '13시' THEN surfM ELSE 0 END) AS surf_M_13,
+                    SUM(CASE WHEN restime = '13시' THEN surfW ELSE 0 END) AS surf_W_13,
+                    SUM(CASE WHEN restime = '15시' THEN surfM ELSE 0 END) AS surf_M_15,
+                    SUM(CASE WHEN restime = '15시' THEN surfW ELSE 0 END) AS surf_W_15,
+                    SUM(CASE WHEN surfrent = '보드,슈트' THEN surfrentM ELSE 0 END) AS rent_M_all,
+                    SUM(CASE WHEN surfrent = '보드,슈트' THEN surfrentW ELSE 0 END) AS rent_W_all,
+                    SUM(CASE WHEN surfrent = '보드' THEN surfrentM ELSE 0 END) AS rent_M_board,
+                    SUM(CASE WHEN surfrent = '보드' THEN surfrentW ELSE 0 END) AS rent_W_board,
+                    SUM(CASE WHEN surfrent = '슈트' THEN surfrentM ELSE 0 END) AS rent_M_suit,
+                    SUM(CASE WHEN surfrent = '슈트' THEN surfrentW ELSE 0 END) AS rent_W_suit
+                        FROM AT_SOL_RES_SUB
+                        WHERE res_type = 'surf' AND resdate = '$selDate'
+                GROUP BY resseq, prod_name
+        ) as d1
+		ON a1.resseq = d1.resseq";
            
 $result_setlist = mysqli_query($conn, $select_query);
 $count = mysqli_num_rows($result_setlist);
@@ -113,12 +130,12 @@ $css_table_right = " border-right:2px solid #c0c0c0";
             <col width="110px" />
             <col width="60px" />
             <col width="100px" />
-            <col width="40px" />
-            <col width="40px" />
-            <col width="40px" />
-            <col width="40px" />
-            <col width="40px" />
-            <col width="40px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
+            <col width="35px" />
             <col width="85px" />
             <col width="45px" />
             <col width="35px" />
@@ -126,12 +143,12 @@ $css_table_right = " border-right:2px solid #c0c0c0";
             <col width="75px" />
             <col width="35px" />
             <col width="35px" />
-            <col width="40px" />
-            <col width="40px" />
-            <col width="40px" />
-            <col width="40px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="42px" />
+            <col width="42px" />
             <col width="62px" />
-            <col width="45px" />
+            <col width="82px" />
             <col width="auto" />
         </colgroup>
         <tbody>
@@ -170,8 +187,6 @@ $css_table_right = " border-right:2px solid #c0c0c0";
             </tr>
 
 <?
-$i = 0;
-
 $b = 1;
 $c = 0;
 $PreSeq = "";
@@ -185,13 +200,8 @@ $partyBBQ_W = 0;
 $partyPUB_M = 0;
 $partyPUB_W = 0;
 while ($row = mysqli_fetch_assoc($result_setlist)){
-    $prod_name = str_replace("솔게스트하우스", "솔게하", $row['prod_name']);
     $sdate = $row['sdate'];
-    $edate = $row['edate'];
-    
-    if($prod_name == "N" && $sdate == ""){
-        //continue;
-    }
+    $edate = $row['edate'];    
 
     $MainSeq = $row['resseq'];
     if($MainSeq == $PreSeq){
@@ -209,7 +219,6 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 	$now = date("Y-m-d");
 
     $resseq = $row['resseq'];
-    $admin_user = $row['admin_user'];
     $res_confirm = $row['res_confirm'];
 	$res_kakao = $row['res_kakao'];
 	$res_kakao_chk = $row['res_kakao_chk'];
@@ -219,43 +228,61 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     $user_tel = $row['user_tel'];
     $memo = $row['memo'];
     $memo2 = $row['memo2'];
-    $ressubseq = $row['ressubseq'];
-    $res_type = $row['res_type'];
-    $resdate = $row['resdate'];
-    $staysex = $row['staysex'];
-    $stayMem = $row['stayM'];
-    $stayroom = $row['stayroom'];
-    $staynum = $row['staynum'];
-    $restime = $row['restime'];
-    $surfM = $row['surfM'];
-    $surfW = $row['surfW'];
-    $surfrent = $row['surfrent'];
-    $surfrentM = $row['surfrentM'];
-    $surfrentW = $row['surfrentW'];
-    $bbq = $row['bbq'];
-    $eDay = $row['eDay'];
     $res_bankchk = $row['res_bankchk'];
     
     $response = $row['response'];
     $KAKAO_DATE = $row['KAKAO_DATE'];
+
+    $sdate = $row['sdate'];
+    $edate = $row['edate'];
+    $STAY_M = $row['STAY_M'];
+    $STAY_W = $row['STAY_W'];
+    $BBQ_M = $row['BBQ_M'];
+    $BBQ_W = $row['BBQ_W'];
+    $PUB_M = $row['PUB_M'];
+    $PUB_W = $row['PUB_W'];
+    $prod_name = $row['prod_name'];
+    $surf_M_9 = $row['surf_M_9'];
+    $surf_W_9 = $row['surf_W_9'];
+    $surf_M_11 = $row['surf_M_11'];
+    $surf_W_11 = $row['surf_W_11'];
+    $surf_M_13 = $row['surf_M_13'];
+    $surf_W_13 = $row['surf_W_13'];
+    $surf_M_15 = $row['surf_M_15'];
+    $surf_W_15 = $row['surf_W_15'];
+    $rent_M_all = $row['rent_M_all'];
+    $rent_W_all = $row['rent_W_all'];
+    $rent_M_board = $row['rent_M_board'];
+    $rent_W_board = $row['rent_W_board'];
+    $rent_W_suit = $row['rent_W_suit'];
+    $rent_M_suit = $row['rent_M_suit'];
 
     $memoYN = "";
     if($memo != "" || $memo2 != ""){
         $memoYN = "있음";
     }
 
-    $stayText = "";
-    $surfText = "";
-    $stayInfo = "";
-    $surfrentText = "";
-    $stayMText = "";
-    $stayWText = "";
-    $BBQ_M = "";
-    $BBQ_W = "";
-    $PUB_M = "";
-    $PUB_W = "";
+    //숙박
+    if(is_null($row['stay_name'])){
+        $stay_name = str_replace("솔게스트하우스", "솔게하", $row['stay_name']);
+
+        $stayText = str_replace("-", ".", substr($sdate, 5, 10))." ~ ".str_replace("-", ".", substr($edate, 5, 10));
+        if($res_confirm == "확정" || $res_confirm == "대기"){
+            $stayInfo = "stayinfo='$user_name|$stay_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
+        }
+
+        if($staysex == "남"){
+            $stayMText = $stayMem.(($stayMem == "")? "" : "명");
+            $TotalstayM += $stayMem;
+        }else{
+            $stayWText = $stayMem.(($stayMem == "")? "" : "명");
+            $TotalstayW += $stayMem;
+        }
+
+    }
+
     if($row['res_type'] == "stay"){ //숙박&바베큐
-        if($prod_name == "N"){
+        if($stay_name == "N"){
             $res_room_chk = "";
         }else{
             if($row['sMonth'] == $Mon || $row['eMonth'] == $Mon){
@@ -263,7 +290,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
                     $stayText = str_replace("-", ".", substr($sdate, 5, 10))." ~ ".str_replace("-", ".", substr($edate, 5, 10));
 
                     if($res_confirm == "확정" || $res_confirm == "대기"){
-                        $stayInfo = "stayinfo='$user_name|$user_name|$prod_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
+                        $stayInfo = "stayinfo='$user_name|$user_name|$stay_name|$staysex|$stayroom|$staynum|".$row['eDateDiff']."|$eDay|$resseq|$res_confirm'";
                     }
 
                     if($staysex == "남"){
@@ -289,8 +316,8 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else{ //강습&렌탈
         $res_room_chk = "";
         if($Day == $row['resDay']){
-            if($prod_name != "N"){
-                $surfText = str_replace("솔게스트하우스", "솔.동해점", $row['prod_name']);
+            if($stay_name != "N"){
+                $surfText = str_replace("솔게스트하우스", "솔.동해점", $row['stay_name']);
 
                 $TotalsurfM += $surfM;
                 $TotalsurfW += $surfW;
@@ -317,7 +344,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
     }else if($res_confirm == "취소"){
         //$fontcolor = "color:#c0c0c0;";
     }else{
-        if($row['res_type'] == "stay" && $prod_name != "N" && $prod_name != "솔게하"){
+        if($row['res_type'] == "stay" && $stay_name != "N" && $stay_name != "솔게하"){
             $fontcolor = "color:#8080ff;";
         }
     }
@@ -407,14 +434,13 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
         <td style="<?=$fontcolor?>"><?=$surfrentText?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentM == 0) ? "" : $surfrentM."명"?></td>
         <td style="<?=$fontcolor?>"><?=($surfrentW == 0) ? "" : $surfrentW."명"?></td>
-        <td style="<?=$fontcolor?>"><span class="btn_view" seq="10<?=$c?>"><?=$memoYN?></span><span style='display:none;'><b>직원메모</b><br><?=$memo2?></td>
+        <td style="<?=$fontcolor?>"><span class="btn_view" seq="10<?=$c?>"><?=$memoYN?></span><span style='display:none;'><b>요청사항</b><br><?=$memo?><br><br><b>직원메모</b><br><?=$memo2?></td>
         <td style="<?=$fontcolor?>"><?if($res_room_chk == "Y"){echo "입실";}?></td>
         <td style="<?=$fontcolor?>"><?=$res_confirm?></td>
         <td style="<?=$fontcolor?>"><?if($res_kakao_chk == "Y"){echo "읽음";}else{echo "X";}?></td>
         <td style="<?=$fontcolor?>"><?=$rtnText?></td>
         <td style="<?=$fontcolor?>"><?=$rtnTextCode?>
-            <?if($res_confirm == "확정" && $selDate >= $diffDate){?>
-            <br>
+            <?if($res_confirm == "확정"){?>
             <input type="button" class="gg_btn res_btn_color2" style="width:40px; height:22px;" value="발송" onclick="fnKakaoSend(<?=$resseq?>, false);" />
             <?}?>
             <?=$bankchk?>
