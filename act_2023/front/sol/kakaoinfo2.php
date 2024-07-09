@@ -78,7 +78,7 @@ if($count_sub == 0){
                     $pw = "3308";
                 }
 
-                $arrStay[$row['ressubseq']] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw";
+                $arrStay[$row['ressubseq']] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw*";
             }
 
             if($bbq != "N"){ //바베큐 신청

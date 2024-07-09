@@ -317,7 +317,7 @@ if($param == "changeConfirmNew"){ //셔틀버스 정보 업데이트
 		
 		$kakao_response = array(
 			"arrKakao"=> $arrKakao
-			, "item"=> $arryKakao[$i]
+			, "item"=> $arryKakao[$i + 1]
 			, "code"=> $code
 			, "msgid"=> $msgid
 			, "message"=> $message

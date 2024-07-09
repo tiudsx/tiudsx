@@ -84,7 +84,7 @@ if($param == "solview"){ //상세정보
                     $pw = "3308";
                 }
 
-                $arrStay[$i] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw";
+                $arrStay[$i] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw*";
                 $i++;
 
                 if($daychk > 0){

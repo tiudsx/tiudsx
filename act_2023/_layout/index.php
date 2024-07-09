@@ -27,8 +27,8 @@
 
 			<section id="promo">
 				<h2>서핑 기획전</h2>
-				<a class="visual" href="https://smartstore.naver.com/actrip/products/8097417382" target="_blank"><img src=/act_2023/images/banner/main_banner_gisa.jpg class="placeholder"></a>
-				
+				<!-- <a class="visual" href="https://smartstore.naver.com/actrip/products/8097417382" target="_blank"><img src=/act_2023/images/banner/main_banner_gisa.jpg class="placeholder"></a>
+				 -->
 				<a class="visual" href="https://smartstore.naver.com/actrip/products/8161272178" target="_blank"><img src=/act_2023/images/banner/main_banner_ingo.jpg class="placeholder"></a>
 				
 				<!-- <a class="visual" href="https://smartstore.naver.com/actrip/products/8161581680" target="_blank"><img src=/act_2023/images/banner/main_banner_sol.jpg class="placeholder"></a> -->

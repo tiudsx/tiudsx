@@ -35,7 +35,7 @@ $select_query = "SELECT * FROM AT_SOL_RES_MAIN as a INNER JOIN AT_SOL_RES_SUB as
 $result = mysqli_query($conn, $select_query);
 $count_sub = mysqli_num_rows($result);
 if($count_sub == 0){
-    echo "<script>alert('예약된 정보가 없습니다.');location.href='https://actrip.co.kr';</script>";
+    echo "<script>alert('예약된 정보가 없습니다.');location.href='/sol_order';</script>";
     return;
 }else{
 
@@ -82,7 +82,7 @@ if($count_sub == 0){
                     $pw = "3308";
                 }
 
-                $arrStay[$row['ressubseq']] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw";
+                $arrStay[$row['ressubseq']] = $row['staysex']."|".$row['sdate']."|".$row['edate']."|".$row['stayroom']."|".$row['staynum']."|$pw*";
             }
 
             if($party == "ALL"){ //바베큐 신청
@@ -123,7 +123,7 @@ if($tablistALL == "N" && $tablistBBQ == "N" && $tablistPUB == "N"){
 ?>
 
 <div id="wrap">
-    <? include __DIR__.'/../../_layout/_layout_top.php'; ?>
+    <? include __DIR__.'/../../_layout/_layout_top_sol.php'; ?>
 
     <link rel="stylesheet" href="/act_2023/front/_css/surfview.css">
 
@@ -365,8 +365,7 @@ if($tablistALL == "N" && $tablistBBQ == "N" && $tablistPUB == "N"){
 </div>
 
 
-<? include __DIR__.'/../../_layout/_layout_bottom.php'; ?>
-
+<script type="text/javascript" src="/act_2023/front/_js/common.js?v=<?=time()?>"></script>
 <script src="/act_2023/front/_js/sol.js?v=<?=time()?>"></script>
 
 <style>

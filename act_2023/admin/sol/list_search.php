@@ -18,7 +18,7 @@ $Day = $arrDate[2];
 $diffDate = date("Y-m-d", strtotime(date("Y-m-d")." -3 day"));
 
 if($gubun == "cancel"){
-    $confirmText = "'취소'";
+    $confirmText = "'취소', '환불'";
     $tabColor1 = "";
     $tabColor2 = "gg_btn_color";
 }else{

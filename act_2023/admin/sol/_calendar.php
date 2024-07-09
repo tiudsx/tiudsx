@@ -142,6 +142,10 @@ for($r=0;$r<=$ra;$r++){
 				$adminText = "<font color='#808080'>취소</font>";
 			}
 
+			if($arrResCount["환불"][$ru] != ""){
+				$adminText .= (($adminText == "") ? "" : "/")."<font color='#808080'>환불</font>";
+			}
+
 			if($arrResCount["대기"][$ru] != ""){
 				$adminText .= (($adminText == "") ? "" : "<br>")."<font color='#575757'>대기</font>";
 			}

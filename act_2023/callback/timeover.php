@@ -151,11 +151,10 @@ $count = mysqli_num_rows($result_setlist);
 if(date("H") >= 9 && $count == 0){
     $select_query = "INSERT INTO AT_CALL_TIMEOVER(`user_name`, `weeknum`, `timenum`, `insdate`, `stats`, `timestart`, `timeend`, `sqlquery`) VALUES ('솔알림톡', $weeknum, $timenum, now(), 'OK', $timestart, $timeend, DATE_FORMAT(NOW(), '%Y-%m-%d'))";
     $result_set = mysqli_query($conn, $select_query);
-
+//a.res_kakao_chk = 'N' AND 
     $select_querySol = "SELECT a.resseq, a.resnum, a.user_name, a.user_tel FROM AT_SOL_RES_MAIN a INNER JOIN AT_SOL_RES_SUB b 
                                 ON a.resseq = b.resseq
-                            WHERE a.res_kakao_chk = 'N' 
-                                AND (DATE_ADD(b.sdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d') OR DATE_ADD(b.resdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d'))
+                            WHERE (DATE_ADD(b.sdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d') OR DATE_ADD(b.resdate, INTERVAL -1 DAY) = DATE_FORMAT(NOW(), '%Y-%m-%d'))
                                 AND a.res_confirm = '확정'
                                 GROUP BY a.resseq, a.resnum, a.user_name, a.user_tel";
     $query_log .= '
