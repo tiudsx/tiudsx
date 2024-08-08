@@ -1,9 +1,19 @@
 <?
 include_once $_SERVER['DOCUMENT_ROOT'].'/_api/db.php';
 
+$http_origin = $_SERVER['HTTP_ORIGIN']; 
+if ($http_origin == "http://localhost:5173") { 
+    header("Access-Control-Allow-Origin: $http_origin"); 
+}
+// header("Access-Control-Allow-Origin: *"); 
+header('Access-Control-Allow-Credentials: true');
+header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+header("Content-type:text/html;charset=utf-8");
+
 header('Content-Type: application/json');
-header("HTTP/1.1 200 OK");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
+
+
 $time = date("Y-m-d H시i분");
 $type = $_REQUEST["type"]; //호출 URL
 $code = $_REQUEST["code"]; //호출 구분코드

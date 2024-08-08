@@ -3,7 +3,7 @@
 if($code == "bus"){
     $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' ORDER BY bus_date, bus_gubun";
 }else if($code == "point"){ //정류장 조회
-    $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' ORDER BY bus_date, bus_gubun limit 1";
+    $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson, bus_date as createAt, price as title, gpsname as content FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' ORDER BY bus_date, bus_gubun limit 6";
 }
 
 //SQL 실행 및 결과
