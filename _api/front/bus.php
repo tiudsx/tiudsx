@@ -1,4 +1,4 @@
-<?
+<?php
 //버스 조회
 if($code == "bus"){
     $select_query = "SELECT *, REPLACE(RIGHT(bus_date, 5), '-', '') as busjson FROM `AT_PROD_BUS_DAY` WHERE useYN = 'Y' ORDER BY bus_date, bus_gubun";
