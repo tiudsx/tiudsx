@@ -54,7 +54,7 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 
     $staylist_text = "
                 <tr>
-                    <td>$user_name</td>
+                    <td><input type='checkbox' id='user_name' name='user_name[]' value='$user_name' checked style='display:none;'><input type='checkbox' id='user_tel' name='user_tel[]' value='$user_tel' checked style='display:none;'>$user_name</td>
                     <td>$user_tel</td>
                     <td>$BBQ_M</td>
                     <td>$BBQ_W</td>
@@ -74,7 +74,31 @@ while ($row = mysqli_fetch_assoc($result_setlist)){
 //while end
 }
 ?>
+<script>
+    function bbqKakao(){
+        var formData = [{ "name": "resparam", "value": "solkakaoBBQ" }];
 
+        $j("input[id=user_name]:checked").each(function(idx) {
+            formData.push({ "name": "user_name[]", "value": $j(this).val() });
+        });
+        
+        $j("input[id=user_tel]:checked").each(function(idx) {
+            formData.push({ "name": "user_tel[]", "value": $j(this).val() });
+        });
+
+        if (!confirm("알림톡 발송을 하시겠습니까?")) {
+            return;
+        }
+
+        $j.post("/act_2023/admin/sol/list_save.php", formData,
+            function(data, textStatus, jqXHR) {
+                alert("알림톡 발송이 완료되었습니다.");
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert(textStatus);
+        });
+    }
+</script>
+<input type="button" id="exceldown" class="btnsurfadd" style="width:160px;" value="알림톡" onclick="bbqKakao();">
 <table class="et_vars exForm bd_tb tbcenter" style="margin-bottom:1px;width:65%;">
     <colgroup>
         <col width="80px" />
