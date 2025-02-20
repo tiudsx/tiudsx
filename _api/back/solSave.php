@@ -4,11 +4,6 @@ $success = true;
 mysqli_query($conn, "SET AUTOCOMMIT=0");
 mysqli_query($conn, "BEGIN");
 
-
-$stayroom = 1;
-$staynum = 2;
-goto errGoRoom;
-
 if($code == "calendar"){ //달력 조회
     $Year = substr($selDate,0,4);
     $Mon = substr($selDate,4,2);
