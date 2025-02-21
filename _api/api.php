@@ -10,10 +10,28 @@ header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+header("Access-Control-Expose-Headers: Authorization");  // Authorization 헤더 노출 허용
 header("Content-type:text/html;charset=utf-8");
 
 header('Content-Type: application/json');
 
+// Bearer 토큰 추출
+$auth_header = apache_request_headers()['Authorization'] ?? '';
+$access_token = '';
+if (strpos($auth_header, 'Bearer') !== false) {
+    $access_token = trim(str_replace('Bearer', '', $auth_header));
+}
+
+// Refresh 토큰 추출 (쿠키에서)
+$refresh_token = $_COOKIE['refreshToken'] ?? '';
+
+// setcookie('refreshToken', $refresh_token, [
+//     'expires' => time() + (7 * 24 * 60 * 60), // 7일간 유효
+//     'path' => '/',
+//     'httponly' => true,     // JavaScript에서 접근 불가
+//     'secure' => true,       // HTTPS에서만 전송
+//     'samesite' => 'Strict'  // CSRF 방지
+// ]);
 
 $time = date("Y-m-d H시i분");
 $type = $_REQUEST["type"]; //호출 URL
@@ -50,7 +68,9 @@ $response = createResponse($success ?? "false", $message ?? "", $returnArray ?? 
     "returnCode" => $returnCode ?? "201",
     "message" => $message ?? "처리되지 않은 요청입니다.",
     "errCode" => $errCode ?? "",
-    "errMsg" => $errMsg ?? ""
+    "errMsg" => $errMsg ?? "",
+    "access_token" => $access_token,
+    "refresh_token" => $refresh_token
 ]);
 
 // echo $_SERVER['REQUEST_METHOD'];
